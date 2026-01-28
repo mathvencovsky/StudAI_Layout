@@ -1,50 +1,34 @@
-import {
-    defineConfig,
-    globalIgnores
-} from "eslint/config";
-
-import globals from "globals";
-
-import {
-    fixupConfigRules,
-} from "@eslint/compat";
-
-import tsParser from "@typescript-eslint/parser";
-import reactRefresh from "eslint-plugin-react-refresh";
 import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
+import pluginRouter from "@tanstack/eslint-plugin-router";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-import {
-    FlatCompat,
-} from "@eslint/eslintrc";
-
-const compat = new FlatCompat({
-    baseDirectory: import.meta.dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
-export default defineConfig([{
-    languageOptions: {
-        globals: {
-            ...globals.browser,
+export default defineConfig([
+    globalIgnores(["dist"]),
+    {
+        files: ["src/**/*.{ts,tsx}"],
+        ignores: ["vite.config.ts", "src/components/ui/*", "src/routeTree.gen.ts"],
+        extends: [
+            js.configs.recommended,
+            ...tseslint.configs.strict,
+            reactHooks.configs["recommended-latest"],
+            reactRefresh.configs.vite,
+            ...pluginRouter.configs["flat/recommended"],
+        ],
+        languageOptions: {
+            ecmaVersion: 2020,
+            globals: globals.browser,
+            parserOptions: {
+                project: "tsconfig.json",
+            },
         },
-
-        parser: tsParser,
+        rules: {
+            "@typescript-eslint/no-empty-object-type": "off",
+            "no-empty-pattern": "off",
+            "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+        },
     },
-
-    extends: fixupConfigRules(compat.extends(
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended",
-    )),
-
-    plugins: {
-        "react-refresh": reactRefresh,
-    },
-
-    rules: {
-        "react-refresh/only-export-components": ["warn", {
-            allowConstantExport: true,
-        }],
-    },
-}, globalIgnores(["**/dist"])]);
+]);
