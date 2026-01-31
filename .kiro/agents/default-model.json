@@ -2,15 +2,7 @@
   "name": "default-model",
   "description": "You have access to all read only tools and you can also write and do shell commands. Uses the default model.",
   "prompt": "You are a coding assistant with access to read-only tools, file writing capabilities, and shell command execution. You use the default model to provide assistance with development tasks, code analysis, and system operations.",
-  "mcpServers": {
-    "chrome-devtools": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "chrome-devtools-mcp@latest"
-      ]
-    }
-  },
+  "mcpServers": {},
   "tools": [
     "*"
   ],
@@ -32,8 +24,7 @@
     "web_search",
     "web_fetch",
     "introspect",
-    "thinking",
-    "@chrome-devtools/*"
+    "thinking"
   ],
   "resources": [
     "file://README.md",

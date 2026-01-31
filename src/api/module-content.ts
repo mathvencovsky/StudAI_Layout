@@ -18,6 +18,10 @@ const moduleContentSelectionSet = [
   "content.link",
   "content.category",
   "content.level",
+  "content.thumbnailUrl",
+  "content.author",
+  "content.publishedAt",
+  "content.language",
   "content.createdAt",
   "content.updatedAt",
 ] as const;

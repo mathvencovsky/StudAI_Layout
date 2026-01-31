@@ -5,4 +5,7 @@ export interface ExtractedMetadata {
   favicon?: string;
   url: string;
   durationInSeconds: number;
+  author?: string;
+  publishedAt?: string;
+  language?: string;
 }

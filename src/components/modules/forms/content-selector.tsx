@@ -248,6 +248,14 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
                     }
                   />
 
+                  {content.thumbnailUrl && (
+                    <img
+                      src={content.thumbnailUrl}
+                      alt=""
+                      className="w-16 h-12 object-cover rounded"
+                    />
+                  )}
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="font-medium text-sm">

@@ -1,5 +1,5 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,9 @@ import {
   type ContentType,
   type ContentLevel,
 } from "@/model/content";
+import { useFetchYouTubeMetadata } from "@/hooks/content/use-fetch-youtube-metadata";
+import { getYouTubeVideoId } from "@/api/metadata/youtube";
+import { useIsAdminUser } from "@/hooks/use-is-admin-user";
 
 export interface ContentFormProps {
   mode: "create" | "edit";
@@ -45,19 +48,56 @@ export const ContentForm: React.FC<ContentFormProps> = ({
   successMessage,
 }) => {
   const { t } = useTranslation();
+  const isAdminUser = useIsAdminUser();
+  const [autoFillError, setAutoFillError] = useState<string | null>(null);
+  const fetchMetadataMutation = useFetchYouTubeMetadata();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
+    control,
   } = useForm<CreateContentInput>({
     defaultValues,
     mode: "onChange",
   });
 
-  const typeValue = watch("type");
-  const levelValue = watch("level");
+  const typeValue = useWatch({ control, name: "type" });
+  const levelValue = useWatch({ control, name: "level" });
+  const linkValue = useWatch({ control, name: "link" });
+
+  const isYouTubeLink = linkValue ? !!getYouTubeVideoId(linkValue) : false;
+
+  const handleAutoFill = () => {
+    if (!linkValue) return;
+    setAutoFillError(null);
+    fetchMetadataMutation.mutate(linkValue, {
+      onSuccess: (metadata) => {
+        console.log("metadata", metadata);
+        if (!metadata) return;
+        const options = { shouldDirty: true };
+        setValue("type", "youtube_video", options);
+        if (metadata.title) setValue("title", metadata.title, options);
+        console.log("metadata.description", metadata.description);
+        if (metadata.description)
+          setValue("description", metadata.description, options);
+        if (metadata.durationInSeconds)
+          setValue("durationInSeconds", metadata.durationInSeconds, options);
+        if (metadata.image) setValue("thumbnailUrl", metadata.image, options);
+        if (metadata.author) setValue("author", metadata.author, options);
+        if (metadata.publishedAt) {
+          const formatted = metadata.publishedAt.slice(0, 16);
+          setValue("publishedAt", formatted, options);
+        }
+        if (metadata.language) setValue("language", metadata.language, options);
+      },
+      onError: (error) => {
+        console.error("Failed to fetch YouTube metadata:", error);
+        setAutoFillError(t("auto-fill-failed"));
+      },
+    });
+  };
 
   return (
     <form
@@ -162,14 +202,90 @@ export const ContentForm: React.FC<ContentFormProps> = ({
 
       <div>
         <Label htmlFor="link">{t("link")}</Label>
-        <Input
-          id="link"
-          placeholder={t("anything-accepted")}
-          {...register("link")}
-        />
+        <div className="flex gap-2">
+          <Input
+            id="link"
+            placeholder={t("anything-accepted")}
+            className="flex-1"
+            {...register("link")}
+          />
+          {isAdminUser && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleAutoFill}
+              disabled={!isYouTubeLink || fetchMetadataMutation.isPending}
+            >
+              {fetchMetadataMutation.isPending
+                ? t("loading")
+                : t("auto-fill-from-youtube")}
+            </Button>
+          )}
+        </div>
         {errors.link && (
           <p className="text-sm text-red-600 mt-1">{errors.link.message}</p>
         )}
+        {autoFillError && (
+          <p className="text-sm text-red-600 mt-1">{autoFillError}</p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="thumbnailUrl">{t("content-thumbnail-url")}</Label>
+          <Input
+            id="thumbnailUrl"
+            type="url"
+            placeholder={t("optional")}
+            {...register("thumbnailUrl")}
+          />
+          {errors.thumbnailUrl && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.thumbnailUrl.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="author">{t("content-author")}</Label>
+          <Input
+            id="author"
+            placeholder={t("optional")}
+            {...register("author")}
+          />
+          {errors.author && (
+            <p className="text-sm text-red-600 mt-1">{errors.author.message}</p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="publishedAt">{t("content-published-at")}</Label>
+          <Input
+            id="publishedAt"
+            type="datetime-local"
+            placeholder={t("optional")}
+            {...register("publishedAt")}
+          />
+          {errors.publishedAt && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.publishedAt.message}
+            </p>
+          )}
+        </div>
+
+        <div>
+          <Label htmlFor="language">{t("content-language")}</Label>
+          <Input
+            id="language"
+            placeholder={t("optional")}
+            {...register("language")}
+          />
+          {errors.language && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.language.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {errorMessage && (

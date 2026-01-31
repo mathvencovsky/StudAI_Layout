@@ -9,12 +9,17 @@ export interface ContentItemDisplayProps {
   onToggleCompletion: () => void;
 }
 
+/**
+ * Displays a content item with completion toggle and metadata
+ */
 export const ContentItemDisplay = ({
   content,
   isCompleted,
   onClick,
   onToggleCompletion,
 }: ContentItemDisplayProps) => {
+  const { thumbnailUrl, author } = content.content;
+
   return (
     <div className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
       <Button
@@ -33,6 +38,14 @@ export const ContentItemDisplay = ({
         )}
       </Button>
 
+      {thumbnailUrl && (
+        <img
+          src={thumbnailUrl}
+          alt=""
+          className="w-16 h-12 object-cover rounded"
+        />
+      )}
+
       <button
         onClick={onClick}
         className="flex-1 text-left hover:opacity-75 transition-opacity"
@@ -49,6 +62,7 @@ export const ContentItemDisplay = ({
             {content.content.type}
           </span>
         </div>
+        {author && <span className="text-xs text-gray-500">{author}</span>}
         {content.content.description && (
           <p className="text-xs text-gray-600 mt-1 line-clamp-2">
             {content.content.description}

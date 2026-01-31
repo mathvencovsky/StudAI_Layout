@@ -58,6 +58,22 @@ export const ContentHeader = ({
             {t("duration")}: {formatDuration(content.durationInSeconds)}
           </Badge>
         )}
+        {content.author && (
+          <Badge variant="secondary">
+            {t("content-author")}: {content.author}
+          </Badge>
+        )}
+        {content.publishedAt && (
+          <Badge variant="secondary">
+            {t("content-published-at")}:{" "}
+            {new Date(content.publishedAt).toLocaleDateString()}
+          </Badge>
+        )}
+        {content.language && (
+          <Badge variant="secondary">
+            {t("content-language")}: {content.language}
+          </Badge>
+        )}
       </div>
     </div>
   );

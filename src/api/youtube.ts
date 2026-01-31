@@ -62,7 +62,7 @@ async function fetchFromMicrolink(
  *   ]
  * }
  */
-async function fetchFromMattwApi(
+export async function fetchFromMattwApi(
   url: string,
   videoId: string,
 ): Promise<ExtractedMetadata | null> {
@@ -113,6 +113,9 @@ async function fetchFromMattwApi(
       favicon: undefined,
       durationInSeconds: Duration.fromISO(duration).as("seconds"),
       url,
+      author: snippet.channelTitle,
+      publishedAt: snippet.publishedAt,
+      language: snippet.defaultLanguage,
     };
 
     return metadata;

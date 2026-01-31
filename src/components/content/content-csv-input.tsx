@@ -19,6 +19,10 @@ type CsvRow = {
   title: string;
   description: string;
   link: string;
+  thumbnailUrl?: string;
+  author?: string;
+  publishedAt?: string;
+  language?: string;
 };
 
 function parseCsvFile(file: File): Promise<CsvRow[]> {
@@ -63,6 +67,7 @@ export const ContentCsvInput = () => {
           let finalTitle = row.title?.trim() ?? "";
           let finalDescription = row.description?.trim() ?? "";
           let durationInSeconds = 0;
+          let metadata = null;
 
           const needsTitle = !finalTitle;
           const needsDescription = !finalDescription;
@@ -70,7 +75,7 @@ export const ContentCsvInput = () => {
           const videoId = getYouTubeVideoId(row.link);
 
           if (videoId) {
-            const metadata = await extractYouTubeMetadata(row.link, videoId);
+            metadata = await extractYouTubeMetadata(row.link, videoId);
 
             if (metadata) {
               durationInSeconds = metadata.durationInSeconds;
@@ -99,6 +104,10 @@ export const ContentCsvInput = () => {
             description: finalDescription,
             link: row.link,
             durationInSeconds,
+            thumbnailUrl: metadata?.image ?? row.thumbnailUrl,
+            author: metadata?.author ?? row.author,
+            publishedAt: metadata?.publishedAt ?? row.publishedAt,
+            language: metadata?.language ?? row.language,
           };
 
           await createContent(input);

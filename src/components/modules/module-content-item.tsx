@@ -64,7 +64,7 @@ export const ModuleContentItem = ({
     metadata?.description ||
     item.content.description ||
     t("no-description-available");
-  const displayImage = metadata?.image;
+  const displayImage = item.content.thumbnailUrl ?? metadata?.image;
 
   return (
     <div

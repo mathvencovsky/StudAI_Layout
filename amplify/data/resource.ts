@@ -10,6 +10,10 @@ const schema = a.schema({
       link: a.url().required(),
       category: a.string().required(),
       level: a.enum(["beginner", "intermediate", "advanced"]),
+      thumbnailUrl: a.url(),
+      author: a.string(),
+      publishedAt: a.datetime(),
+      language: a.string(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),

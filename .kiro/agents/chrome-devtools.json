@@ -1,8 +1,16 @@
 {
-  "name": "best-model",
+  "name": "chrome-devtools",
   "description": "You have access to all read only tools and you can also write and do shell commands. You also has hardcoded to use the best model available",
   "prompt": "You are a coding assistant with access to read-only tools, file writing capabilities, and shell command execution. You use the best available model to provide optimal assistance with development tasks, code analysis, and system operations.",
-  "mcpServers": {},
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    }
+  },
   "tools": [
     "*"
   ],
@@ -24,7 +32,8 @@
     "web_search",
     "web_fetch",
     "introspect",
-    "thinking"
+    "thinking",
+    "@chrome-devtools/*"
   ],
   "resources": [
     "file://README.md",
