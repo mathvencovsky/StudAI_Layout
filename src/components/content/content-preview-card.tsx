@@ -1,4 +1,4 @@
-import type React from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import type { ExtractedMetadata } from "@/api/metadata";
 import { ContentMetadataDisplay } from "./content-metadata-display";
@@ -10,7 +10,6 @@ import type { Content } from "@/model/content";
 
 export interface ContentPreviewCardProps {
   item: Content;
-  ref: React.Ref<HTMLDivElement>;
   metadata?: ExtractedMetadata;
   isLoading?: boolean;
   onEdit?: (id: string) => void;
@@ -21,13 +20,10 @@ export interface ContentPreviewCardProps {
  * Shows loading state while metadata is being fetched and displays fallback
  * information when metadata extraction fails.
  */
-export const ContentPreviewCard: React.FC<ContentPreviewCardProps> = ({
-  item,
-  metadata,
-  isLoading = false,
-  onEdit,
-  ref,
-}) => {
+export const ContentPreviewCard = React.forwardRef<
+  HTMLDivElement,
+  ContentPreviewCardProps
+>(({ item, metadata, isLoading = false, onEdit }, ref) => {
   const { t } = useTranslation();
   const domain = extractDomain(item.link);
 
@@ -98,4 +94,5 @@ export const ContentPreviewCard: React.FC<ContentPreviewCardProps> = ({
       )}
     </Card>
   );
-};
+});
+ContentPreviewCard.displayName = "ContentPreviewCard";

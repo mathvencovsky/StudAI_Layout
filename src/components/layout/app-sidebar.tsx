@@ -66,6 +66,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         },
         icon: IconDashboard,
       },
+      {
+        title: t("tracks"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/track" });
+        },
+        icon: IconDashboard,
+      },
     ],
     navSecondary: [
       {

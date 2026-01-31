@@ -20,7 +20,7 @@ export interface ModuleHeaderProps {
   userProgress: UserModuleProgress | null;
   onStartModule: () => Promise<void>;
   isLoading?: boolean;
-  contents?: ModuleContentWithContentType[];
+  moduleContents?: ModuleContentWithContentType[];
 }
 
 export const ModuleHeader = ({
@@ -28,7 +28,7 @@ export const ModuleHeader = ({
   userProgress,
   onStartModule,
   isLoading = false,
-  contents = [],
+  moduleContents = [],
 }: ModuleHeaderProps) => {
   const { t } = useTranslation();
   const formatDate = (dateTimestamp: number) => {
@@ -40,7 +40,7 @@ export const ModuleHeader = ({
     });
   };
 
-  const totalDuration = contents.reduce((total, moduleContent) => {
+  const totalDuration = moduleContents.reduce((total, moduleContent) => {
     return total + (moduleContent.content.durationInSeconds || 0);
   }, 0);
   const formattedTotalDuration = formatDuration(totalDuration);

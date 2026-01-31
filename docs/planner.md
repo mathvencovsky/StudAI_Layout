@@ -79,7 +79,11 @@ _List the order in which implementation tasks should be executed, considering de
 - [] Task 2
 - [] Task 3
 
-## 5. Open Questions and missing details
+## 5. Side Navigation
+
+_Does this feature require a new side nav item? If yes, describe the label, icon, route, and placement._
+
+## 6. Open Questions and missing details
 
 _List any unresolved questions or missing details that need clarification before or during implementation._
 

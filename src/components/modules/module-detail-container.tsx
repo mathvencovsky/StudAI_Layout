@@ -196,14 +196,13 @@ export const ModuleDetailContainer = ({
 
   return (
     <div className="space-y-6">
-      {/* Module Header */}
       {module && (
         <ModuleHeader
           module={module}
           userProgress={userProgress ?? null}
           onStartModule={handleStartModule}
           isLoading={startModuleMutation.isPending}
-          contents={contentItems}
+          moduleContents={contentItems}
         />
       )}
 
@@ -241,7 +240,7 @@ export const ModuleDetailContainer = ({
 
       {/* Content List */}
       <ModuleContentList
-        items={contentItems}
+        moduleContents={contentItems}
         contentProgress={contentProgress}
         hasStarted={hasStarted}
         moduleId={moduleId}

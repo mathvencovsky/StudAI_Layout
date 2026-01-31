@@ -9,12 +9,12 @@ import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
 import { ContentItemDisplay } from "./content-item-display";
 import type { Module } from "@/model/module";
-import type { ContentWithCompletionStatus } from "@/hooks/modules/use-last-started-module-with-contents";
+import type { ModuleContentWithCompletionStatus } from "@/hooks/modules/use-last-started-module-with-contents";
 
 export interface LastStartedModuleDisplayProps {
   module: Module;
-  contents: ContentWithCompletionStatus[];
-  totalContents: number;
+  moduleContents: ModuleContentWithCompletionStatus[];
+  totalModuleContents: number;
   completedCount: number;
   onContentClick: (contentId: string) => void;
   onModuleClick: () => void;
@@ -23,8 +23,8 @@ export interface LastStartedModuleDisplayProps {
 
 export const LastStartedModuleDisplay = ({
   module,
-  contents,
-  totalContents,
+  moduleContents,
+  totalModuleContents,
   completedCount,
   onContentClick,
   onModuleClick,
@@ -32,7 +32,7 @@ export const LastStartedModuleDisplay = ({
 }: LastStartedModuleDisplayProps) => {
   const { t } = useTranslation();
   const progressPercentage =
-    totalContents > 0 ? (completedCount / totalContents) * 100 : 0;
+    totalModuleContents > 0 ? (completedCount / totalModuleContents) * 100 : 0;
 
   return (
     <Card className="w-full">
@@ -46,7 +46,7 @@ export const LastStartedModuleDisplay = ({
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">{t("progress-label")}</span>
             <span className="font-medium text-gray-900">
-              {completedCount} {t("of-completed")} {totalContents}{" "}
+              {completedCount} {t("of-completed")} {totalModuleContents}{" "}
               {t("completed")}
             </span>
           </div>
@@ -55,13 +55,15 @@ export const LastStartedModuleDisplay = ({
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          {contents.map((content) => (
+          {moduleContents.map((moduleContent) => (
             <ContentItemDisplay
-              key={content.id}
-              content={content}
-              isCompleted={content.isCompleted}
-              onClick={() => onContentClick(content.id)}
-              onToggleCompletion={() => onToggleCompletion(content.id)}
+              key={moduleContent.id}
+              moduleContent={moduleContent}
+              isCompleted={moduleContent.isCompleted}
+              onClick={() => onContentClick(moduleContent.contentId)}
+              onToggleCompletion={() =>
+                onToggleCompletion(moduleContent.contentId)
+              }
             />
           ))}
         </div>

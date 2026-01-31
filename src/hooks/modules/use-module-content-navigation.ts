@@ -28,20 +28,21 @@ export const useModuleContentNavigation = ({
     moduleId,
   });
 
-  const items = moduleContentsResponse ?? [];
-  const currentIndex = items.findIndex(
-    (item: ModuleContentWithContentType) => item.id === currentContentId,
+  const moduleContents = moduleContentsResponse ?? [];
+  const currentIndex = moduleContents.findIndex(
+    (moduleContent: ModuleContentWithContentType) =>
+      moduleContent.contentId === currentContentId,
   );
   const currentPosition = currentIndex + 1;
-  const totalItems = items.length;
+  const totalItems = moduleContents.length;
 
   const nextContentId =
-    currentIndex >= 0 && currentIndex < items.length - 1
-      ? items[currentIndex + 1].id
+    currentIndex >= 0 && currentIndex < moduleContents.length - 1
+      ? moduleContents[currentIndex + 1].contentId
       : null;
 
   const previousContentId =
-    currentIndex > 0 ? items[currentIndex - 1].id : null;
+    currentIndex > 0 ? moduleContents[currentIndex - 1].contentId : null;
 
   const canNavigateNext = nextContentId !== null;
   const canNavigatePrevious = previousContentId !== null;

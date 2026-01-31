@@ -37,7 +37,7 @@ export const ModuleEdit: React.FC<ModuleEditProps> = ({
 
     const contentIds = contents
       .sort((a, b) => a.position - b.position)
-      .map((item) => item.id);
+      .map((item) => item.contentId);
 
     return {
       title: module.title,

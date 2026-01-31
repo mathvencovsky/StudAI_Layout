@@ -7,14 +7,15 @@ import type { ModuleContentWithContentType } from "@/api/module-content";
 import type { UserContentProgress } from "@/model/user-content-progress";
 import { useModule } from "@/hooks/modules/use-module";
 
-export interface ContentWithCompletionStatus extends ModuleContentWithContentType {
+export interface ModuleContentWithCompletionStatus
+  extends ModuleContentWithContentType {
   isCompleted: boolean;
 }
 
 export interface LastStartedModuleWithContents {
   module: Module;
-  contents: ContentWithCompletionStatus[];
-  totalContents: number;
+  moduleContents: ModuleContentWithCompletionStatus[];
+  totalModuleContents: number;
   completedCount: number;
 }
 
@@ -58,25 +59,28 @@ export const useLastStartedModuleWithContents = () => {
               .map((status: UserContentProgress) => status.contentId),
           );
 
-          const selectedContents = selectContentsForDisplay(
+          const selectedModuleContents = selectContentsForDisplay(
             moduleContentsQuery.data,
             contentProgressQuery.data,
           );
 
-          const contentsWithStatus: ContentWithCompletionStatus[] =
-            selectedContents.map((content: ModuleContentWithContentType) => ({
-              ...content,
-              isCompleted: completedSet.has(content.id),
-            }));
+          const moduleContentsWithStatus: ModuleContentWithCompletionStatus[] =
+            selectedModuleContents.map(
+              (moduleContent: ModuleContentWithContentType) => ({
+                ...moduleContent,
+                isCompleted: completedSet.has(moduleContent.contentId),
+              }),
+            );
 
           const completedCount = moduleContentsQuery.data.filter(
-            (content: ModuleContentWithContentType) => completedSet.has(content.id),
+            (moduleContent: ModuleContentWithContentType) =>
+              completedSet.has(moduleContent.contentId),
           ).length;
 
           return {
             module: moduleDetailsQuery.data,
-            contents: contentsWithStatus,
-            totalContents: moduleContentsQuery.data.length,
+            moduleContents: moduleContentsWithStatus,
+            totalModuleContents: moduleContentsQuery.data.length,
             completedCount,
           };
         })()

@@ -22,7 +22,12 @@ export const ContentCreate: React.FC<ContentCreateProps> = ({
   const createMutation = useCreateContent();
 
   const handleSubmit = (values: CreateContentInput) => {
-    createMutation.mutate(values, {
+    const publishedAt =
+      values.publishedAt && !isNaN(Date.parse(values.publishedAt))
+        ? new Date(values.publishedAt).toISOString()
+        : undefined;
+
+    createMutation.mutate({ ...values, publishedAt }, {
       onSuccess: () => {
         setFeedback("Your content has been created successfully.");
         onSuccess();

@@ -62,8 +62,8 @@ export const LastStartedModuleSection = () => {
   return (
     <LastStartedModuleDisplay
       module={data.module}
-      contents={data.contents}
-      totalContents={data.totalContents}
+      moduleContents={data.moduleContents}
+      totalModuleContents={data.totalModuleContents}
       completedCount={data.completedCount}
       onModuleClick={handleModuleClick}
       onContentClick={handleContentClick}

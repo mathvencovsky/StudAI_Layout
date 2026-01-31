@@ -1,7 +1,11 @@
 #!/bin/bash
 
+ping() {
+  afplay /System/Library/Sounds/Glass.aiff
+}
+
 notify() {
-  osascript -e "display notification \"$1\" with title \"Ralph\" sound name \"Glass\""
+  osascript -e "display notification \"$1\" with title \"Ralph\" sound name \"Blow\""
 }
 
 MAX_ITERATIONS=${1:-50}
@@ -47,7 +51,14 @@ for i in $(seq 1 "$MAX_ITERATIONS"); do
   
   output=$(kiro-cli chat --agent "$AGENT" --no-interactive --trust-all-tools "$PROMPT" 2>&1 | tee /dev/tty)
   
-  echo "$i" > "$ITERATION_FILE"
+  current_iteration=$(cat "$ITERATION_FILE")
+  if [ "$current_iteration" -gt "$i" ]; then
+    echo "$((current_iteration + 1))" > "$ITERATION_FILE"
+  else
+    echo "$i" > "$ITERATION_FILE"
+  fi
+  
+  ping
   
   if echo "$output" | grep -q "<promise>COMPLETE</promise>"; then
     echo "=== Task completed at iteration $i ==="

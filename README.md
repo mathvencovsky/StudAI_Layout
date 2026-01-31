@@ -1,10 +1,30 @@
-## AWS Amplify React+Vite Starter Template
+## StudAI - AI-Powered Learning Module Platform
 
-This repository provides a starter template for creating applications using React+Vite and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+StudAI is a learning management platform that allows users to create, organize, and track progress through educational content modules. The platform will leverage AI to provide personalized learning recommendations, content suggestions, and adaptive learning paths (coming soon).
+
+## What is this app about?
+
+StudAI helps learners organize their self-study journey by:
+
+- **Creating Learning Modules**: Users can create modules containing curated educational content (YouTube videos, articles, quizzes, assignments, and labs)
+- **Tracking Progress**: Track completion status of individual content items and overall module progress
+- **Content Organization**: Organize content by category, difficulty level (beginner, intermediate, advanced), and duration
+- **Community Voting**: Upvote/downvote modules to help surface quality learning paths
+- **Learning Tracks**: Group related modules into structured learning tracks with parent-child relationships
+- **Multi-language Support**: Available in English and Portuguese (pt-BR)
+
+## Tech Stack
+
+- **Frontend**: React + Vite + TypeScript
+- **Routing**: TanStack Router
+- **State Management**: TanStack Query
+- **UI Components**: shadcn/ui
+- **Backend**: AWS Amplify (Cognito, AppSync, DynamoDB)
+- **Internationalization**: react-i18next
 
 ## Overview
 
-This template equips you with a foundational React application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+This application is built with React+Vite and AWS Amplify, providing authentication, GraphQL API, and real-time database capabilities.
 
 ## Features
 

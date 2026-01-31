@@ -2,7 +2,10 @@ import { useQuery, queryOptions } from "@tanstack/react-query";
 import { getModules, type GetModulesParams } from "@/api/modules";
 import { type Module } from "@/model/module";
 
-export const getModulesQueryOptions = (params: GetModulesParams) =>
+/**
+ * Query options for fetching modules
+ */
+export const getModulesQueryOptions = (params: GetModulesParams = {}) =>
   queryOptions<Module[]>({
     queryKey: ["modules", params],
     queryFn: () => getModules(params),
@@ -10,5 +13,8 @@ export const getModulesQueryOptions = (params: GetModulesParams) =>
     gcTime: 5 * 60_000,
   });
 
-export const useModules = (params: GetModulesParams) =>
+/**
+ * Hook to fetch modules with optional filtering
+ */
+export const useModules = (params: GetModulesParams = {}) =>
   useQuery(getModulesQueryOptions(params));

@@ -10,7 +10,7 @@ import useIsOnScreen from "@/hooks/use-is-on-screen";
 import { useRef } from "react";
 
 export interface ModuleContentItemProps {
-  item: ModuleContentWithContentType;
+  moduleContent: ModuleContentWithContentType;
   progress: UserContentProgress | undefined;
   hasStarted: boolean;
   moduleId: string;
@@ -22,11 +22,11 @@ export interface ModuleContentItemProps {
 }
 
 /**
- * Displays individual content item in a list format with checkbox, image, title, description, and view button.
+ * Displays individual module content item in a list format with checkbox, image, title, description, and view button.
  * Shows completion checkbox only if user has started the module.
  */
 export const ModuleContentItem = ({
-  item,
+  moduleContent,
   progress,
   hasStarted,
   moduleId,
@@ -38,18 +38,18 @@ export const ModuleContentItem = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useIsOnScreen(containerRef);
   const { data: metadata, isLoading: isMetadataLoading } = useExtractMetadata(
-    item.content.link ?? "",
+    moduleContent.content.link ?? "",
     isOnScreen,
   );
 
   const handleCheckboxChange = async (checked: boolean) => {
-    await onToggleCompletion(item.id, checked);
+    await onToggleCompletion(moduleContent.contentId, checked);
   };
 
   const handleItemClick = () => {
     navigate({
       to: "/module/$moduleId/content/$contentId",
-      params: { contentId: item.id, moduleId },
+      params: { contentId: moduleContent.contentId, moduleId },
     });
   };
 
@@ -59,12 +59,13 @@ export const ModuleContentItem = ({
     return lineArray.join("\n");
   };
 
-  const displayTitle = metadata?.title || item.content.title || t("untitled");
+  const displayTitle =
+    metadata?.title || moduleContent.content.title || t("untitled");
   const displayDescription =
     metadata?.description ||
-    item.content.description ||
+    moduleContent.content.description ||
     t("no-description-available");
-  const displayImage = item.content.thumbnailUrl ?? metadata?.image;
+  const displayImage = moduleContent.content.thumbnailUrl ?? metadata?.image;
 
   return (
     <div
@@ -72,7 +73,6 @@ export const ModuleContentItem = ({
       onClick={handleItemClick}
       className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-accent transition-colors cursor-pointer"
     >
-      {/* Checkbox - Only shown if module has been started */}
       {hasStarted && (
         <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>
           <Checkbox
@@ -83,7 +83,6 @@ export const ModuleContentItem = ({
         </div>
       )}
 
-      {/* Image */}
       <div className="flex-shrink-0">
         {isMetadataLoading ? (
           <Skeleton className="w-20 h-20 rounded-md" />
@@ -105,7 +104,6 @@ export const ModuleContentItem = ({
         )}
       </div>
 
-      {/* Content Details */}
       <div className="flex-1 min-w-0">
         {isMetadataLoading ? (
           <div className="space-y-2">
@@ -119,9 +117,9 @@ export const ModuleContentItem = ({
               <h3 className="font-semibold text-sm line-clamp-1">
                 {displayTitle}
               </h3>
-              {item.content.durationInSeconds && (
+              {moduleContent.content.durationInSeconds && (
                 <span className="text-xs text-muted-foreground flex-shrink-0">
-                  {formatDuration(item.content.durationInSeconds)}
+                  {formatDuration(moduleContent.content.durationInSeconds)}
                 </span>
               )}
             </div>

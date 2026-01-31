@@ -14,15 +14,12 @@ const schema = a.schema({
       author: a.string(),
       publishedAt: a.datetime(),
       language: a.string(),
-      owner: a
-        .string()
-        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
       moduleContents: a.hasMany("ModuleContent", "contentId"),
       userContentProgress: a.hasMany("UserContentProgress", "contentId"),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
-      allow.owner().to(["create", "update", "delete"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
     ]),
 
   Module: a
@@ -31,9 +28,6 @@ const schema = a.schema({
       description: a.string().required(),
       upvoteCount: a.integer().default(0),
       downvoteCount: a.integer().default(0),
-      owner: a
-        .string()
-        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
       moduleContents: a.hasMany("ModuleContent", "moduleId"),
       userModuleProgress: a.hasMany("UserModuleProgress", "moduleId"),
       userContentProgress: a.hasMany("UserContentProgress", "moduleId"),
@@ -41,7 +35,7 @@ const schema = a.schema({
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
-      allow.owner().to(["create", "update", "delete"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
     ]),
 
   ModuleContent: a
@@ -50,15 +44,12 @@ const schema = a.schema({
       contentId: a.id().required(),
       position: a.integer().required(),
       isRequired: a.boolean().default(true),
-      owner: a
-        .string()
-        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
       module: a.belongsTo("Module", "moduleId"),
       content: a.belongsTo("Content", "contentId"),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
-      allow.owner().to(["create", "update", "delete"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
     ]),
 
   UserModuleProgress: a
@@ -113,6 +104,19 @@ const schema = a.schema({
     .authorization((allow) => [
       allow.owner(),
       allow.authenticated().to(["read"]),
+    ]),
+
+  Track: a
+    .model({
+      title: a.string().required(),
+      description: a.string().required(),
+      rootModuleId: a.id().required(),
+      parentByModuleId: a.json().required(),
+      positionByModuleId: a.json(),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
     ]),
 });
 

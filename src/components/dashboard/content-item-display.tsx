@@ -3,22 +3,22 @@ import { Button } from "@/components/ui/button";
 import type { ModuleContentWithContentType } from "@/api/module-content";
 
 export interface ContentItemDisplayProps {
-  content: ModuleContentWithContentType;
+  moduleContent: ModuleContentWithContentType;
   isCompleted: boolean;
   onClick: () => void;
   onToggleCompletion: () => void;
 }
 
 /**
- * Displays a content item with completion toggle and metadata
+ * Displays a module content item with completion toggle and metadata
  */
 export const ContentItemDisplay = ({
-  content,
+  moduleContent,
   isCompleted,
   onClick,
   onToggleCompletion,
 }: ContentItemDisplayProps) => {
-  const { thumbnailUrl, author } = content.content;
+  const { thumbnailUrl, author } = moduleContent.content;
 
   return (
     <div className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
@@ -56,16 +56,16 @@ export const ContentItemDisplay = ({
               isCompleted ? "line-through text-gray-500" : "text-gray-900"
             }`}
           >
-            {content.content.title}
+            {moduleContent.content.title}
           </h4>
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-            {content.content.type}
+            {moduleContent.content.type}
           </span>
         </div>
         {author && <span className="text-xs text-gray-500">{author}</span>}
-        {content.content.description && (
+        {moduleContent.content.description && (
           <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-            {content.content.description}
+            {moduleContent.content.description}
           </p>
         )}
       </button>

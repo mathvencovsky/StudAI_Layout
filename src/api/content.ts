@@ -24,7 +24,9 @@ export const listContent = async (): Promise<Schema["Content"]["type"][]> => {
 export const getContent = async (
   identifier: Schema["Content"]["identifier"],
 ): Promise<Schema["Content"]["type"] | null> => {
+  console.log("getContent called with identifier:", identifier);
   const result = await client.models.Content.get(identifier);
+  console.log("getContent result:", { data: result.data, errors: result.errors });
   if (!result.data) {
     console.error("Failed to get content:", result.errors);
     return null;

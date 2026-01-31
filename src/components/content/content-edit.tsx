@@ -42,27 +42,31 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
 
   const defaultValues: CreateContentInput | null = useMemo(() => {
     if (!contentQuery.data) return null;
-    const content = contentQuery.data;
+    console.log("contentQuery.data", contentQuery.data);
+    const { id, createdAt, updatedAt, moduleContents, userContentProgress, ...content } = contentQuery.data;
+    console.log("defaultValues", content);
     return {
-      type: content.type,
-      category: content.category,
-      level: content.level,
-      title: content.title,
-      description: content.description,
-      link: content.link,
-      durationInSeconds: content.durationInSeconds,
+      ...content,
+      publishedAt: content.publishedAt?.slice(0, 16),
     };
   }, [contentQuery.data]);
 
   const handleSubmit = (values: CreateContentInput) => {
+    const publishedAt =
+      values.publishedAt && !isNaN(Date.parse(values.publishedAt))
+        ? new Date(values.publishedAt).toISOString()
+        : undefined;
+
     updateMutation.mutate(
-      { id, ...values },
+      { id, ...values, publishedAt },
       {
         onSuccess: () => {
+          console.log("Update success");
           setFeedback("Your changes have been saved.");
           onSuccess();
         },
-        onError: () => {
+        onError: (error) => {
+          console.error("Update error", error);
           setFeedback("We couldn't save your changes. Please try again.");
         },
       }

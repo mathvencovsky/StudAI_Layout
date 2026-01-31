@@ -96,6 +96,12 @@ export const ContentCsvInput = () => {
             ? (row.level as ContentLevel)
             : "beginner";
 
+          const rawPublishedAt = metadata?.publishedAt ?? row.publishedAt;
+          const publishedAt =
+            rawPublishedAt && !isNaN(Date.parse(rawPublishedAt))
+              ? new Date(rawPublishedAt).toISOString()
+              : undefined;
+
           const input: CreateContentInput = {
             type: parsedType,
             category: row.category,
@@ -106,7 +112,7 @@ export const ContentCsvInput = () => {
             durationInSeconds,
             thumbnailUrl: metadata?.image ?? row.thumbnailUrl,
             author: metadata?.author ?? row.author,
-            publishedAt: metadata?.publishedAt ?? row.publishedAt,
+            publishedAt,
             language: metadata?.language ?? row.language,
           };
 
