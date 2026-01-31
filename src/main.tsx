@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import outputs from "../amplify_outputs_prod.json";
+import outputs from "../amplify_outputs.json";
 Amplify.configure(outputs);
 
 import { StrictMode } from "react";
