@@ -1,12 +1,13 @@
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+import {
+  type UserContentProgress,
+  type UserContentProgressCreateInput,
+  type UserContentProgressUpdateInput,
+} from "@/model/user-content-progress";
 import { getCurrentUserId } from "./auth";
 
 const client = generateClient<Schema>();
-
-export interface GetUserContentProgressResponse {
-  items: Schema["UserContentProgress"]["type"][];
-}
 
 /**
  * Toggle content completion status for the current user
@@ -16,7 +17,7 @@ export const toggleContentCompletion = async (input: {
   moduleId: string;
   contentId: string;
   isCompleted: boolean;
-}): Promise<Schema["UserContentProgress"]["type"]> => {
+}): Promise<UserContentProgress> => {
   await getCurrentUserId();
 
   const existingResult = await client.models.UserContentProgress.list({
@@ -30,7 +31,7 @@ export const toggleContentCompletion = async (input: {
 
   if (existingResult.data && existingResult.data.length > 0) {
     const existing = existingResult.data[0];
-    const updateInput: Schema["UserContentProgress"]["updateType"] = {
+    const updateInput: UserContentProgressUpdateInput = {
       id: existing.id,
       isCompleted: input.isCompleted,
       completionDate: input.isCompleted ? Date.now() : undefined,
@@ -46,7 +47,7 @@ export const toggleContentCompletion = async (input: {
 
     return result.data;
   } else {
-    const createInput: Schema["UserContentProgress"]["createType"] = {
+    const createInput: UserContentProgressCreateInput = {
       moduleId: input.moduleId,
       contentId: input.contentId,
       isCompleted: input.isCompleted,
@@ -72,7 +73,7 @@ export const toggleContentCompletion = async (input: {
  */
 export const getUserContentProgress = async (
   moduleId: string,
-): Promise<GetUserContentProgressResponse> => {
+): Promise<UserContentProgress[]> => {
   await getCurrentUserId();
 
   const result = await client.models.UserContentProgress.list({
@@ -81,8 +82,8 @@ export const getUserContentProgress = async (
 
   if (!result.data) {
     console.error("Failed to get user content progress:", result.errors);
-    return { items: [] };
+    return [];
   }
 
-  return { items: result.data };
+  return result.data;
 };

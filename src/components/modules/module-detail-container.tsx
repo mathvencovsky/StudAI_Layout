@@ -65,8 +65,8 @@ export const ModuleDetailContainer = ({
   const startModuleMutation = useStartModule();
   const toggleCompletionMutation = useToggleContentCompletion();
 
-  const contentItems = contentsResponse?.items ?? [];
-  const contentProgress = contentProgressResponse?.items ?? [];
+  const contentItems = contentsResponse ?? [];
+  const contentProgress = contentProgressResponse ?? [];
   const hasStarted = userProgress !== null && userProgress !== undefined;
 
   const handleStartModule = async () => {

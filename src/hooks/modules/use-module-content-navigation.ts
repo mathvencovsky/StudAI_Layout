@@ -1,4 +1,5 @@
 import { useModuleContents } from "./use-module-contents";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 
 export interface UseModuleContentNavigationParams {
   moduleId: string;
@@ -27,8 +28,10 @@ export const useModuleContentNavigation = ({
     moduleId,
   });
 
-  const items = moduleContentsResponse?.items ?? [];
-  const currentIndex = items.findIndex((item) => item.id === currentContentId);
+  const items = moduleContentsResponse ?? [];
+  const currentIndex = items.findIndex(
+    (item: ModuleContentWithContentType) => item.id === currentContentId,
+  );
   const currentPosition = currentIndex + 1;
   const totalItems = items.length;
 

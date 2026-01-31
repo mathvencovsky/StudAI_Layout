@@ -1,5 +1,5 @@
 import { useModule } from "@/hooks/modules/use-module";
-import { type Schema } from "../../../amplify/data/resource";
+import { type Module } from "@/model/module";
 
 /**
  * Hook to fetch vote counts for a module
@@ -9,7 +9,7 @@ export function useModuleVoteCounts(moduleId: string) {
   const { data: module, ...rest } = useModule(moduleId);
 
   const voteCounts:
-    | Pick<Schema["Module"]["type"], "upvoteCount" | "downvoteCount">
+    | Pick<Module, "upvoteCount" | "downvoteCount">
     | undefined = module
     ? {
         upvoteCount: module.upvoteCount,

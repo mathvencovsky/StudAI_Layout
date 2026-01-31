@@ -1,5 +1,9 @@
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+import {
+  type UserModuleProgress,
+  type UserModuleProgressCreateInput,
+} from "@/model/user-module-progress";
 import { getCurrentUserId } from "./auth";
 
 const client = generateClient<Schema>();
@@ -10,10 +14,10 @@ const client = generateClient<Schema>();
  */
 export const startModule = async (input: {
   moduleId: string;
-}): Promise<Schema["UserModuleProgress"]["type"]> => {
+}): Promise<UserModuleProgress> => {
   await getCurrentUserId();
 
-  const createInput: Schema["UserModuleProgress"]["createType"] = {
+  const createInput: UserModuleProgressCreateInput = {
     moduleId: input.moduleId,
     startDate: Date.now(),
     createdAt: Date.now(),
@@ -36,7 +40,7 @@ export const startModule = async (input: {
  */
 export const getUserModuleProgress = async (
   moduleId: string,
-): Promise<Schema["UserModuleProgress"]["type"] | null> => {
+): Promise<UserModuleProgress | null> => {
   await getCurrentUserId();
 
   const result = await client.models.UserModuleProgress.list({
@@ -54,9 +58,7 @@ export const getUserModuleProgress = async (
  * Get the current user's most recently started module
  * Returns null if user hasn't started any modules
  */
-export const getLastStartedModule = async (): Promise<
-  Schema["UserModuleProgress"]["type"] | null
-> => {
+export const getLastStartedModule = async (): Promise<UserModuleProgress | null> => {
   await getCurrentUserId();
 
   const result = await client.models.UserModuleProgress.list();

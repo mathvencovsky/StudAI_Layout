@@ -39,8 +39,8 @@ export const ContentDetailContainer = ({
 
   const hasInvalidModuleContext = moduleId && navigationData.totalItems === 0;
 
-  const contentProgress = progressData?.items.find(
-    (item) => item.contentId === contentId
+  const contentProgress = progressData?.find(
+    (item) => item.contentId === contentId,
   );
   const isCompleted =
     optimisticCompleted !== null

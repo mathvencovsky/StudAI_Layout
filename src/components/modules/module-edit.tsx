@@ -33,7 +33,7 @@ export const ModuleEdit: React.FC<ModuleEditProps> = ({
     if (!moduleQuery.data || !moduleContentsQuery.data) return null;
 
     const module = moduleQuery.data;
-    const contents = moduleContentsQuery.data.items;
+    const contents = moduleContentsQuery.data;
 
     const contentIds = contents
       .sort((a, b) => a.position - b.position)

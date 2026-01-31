@@ -74,7 +74,7 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
     150,
   );
   const { data: suggestionsData } = useModuleSuggestions(suggestInput);
-  const suggestions = suggestionsData?.suggestions ?? [];
+  const suggestions = suggestionsData ?? [];
 
   const { data, isLoading, isError, refetch, error } = useModules({
     q: query,
@@ -87,7 +87,7 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
     setFilters({ type: "all", status: "all" });
   };
 
-  const items = data?.items ?? [];
+  const items = data ?? [];
 
   return (
     <div className="space-y-6">

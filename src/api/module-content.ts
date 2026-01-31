@@ -1,9 +1,9 @@
-import { generateClient, SelectionSet } from "aws-amplify/data";
+import { generateClient, type SelectionSet } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+import { type Content } from "@/model/content";
 
 const client = generateClient<Schema>();
 
-// Use selectionSet to define which fields to load for ModuleContent with related Content
 const moduleContentSelectionSet = [
   "id",
   "moduleId",
@@ -22,33 +22,24 @@ const moduleContentSelectionSet = [
   "content.updatedAt",
 ] as const;
 
-type ModuleContentWithContent = SelectionSet<
+export type ModuleContentWithContentType = SelectionSet<
   Schema["ModuleContent"]["type"],
   typeof moduleContentSelectionSet
 >;
 
-// Infer types from schema instead of creating custom interfaces
-export type ModuleContentWithContentType = ModuleContentWithContent;
-
-export type GetModuleContentsParams = {
+export interface GetModuleContentsParams {
   moduleId?: string;
   type?: Schema["Content"]["type"]["type"] | "all";
-};
-
-export type GetModuleContentsResponse = {
-  items: ModuleContentWithContentType[];
-};
+}
 
 /**
  * Get all contents for a module with optional type filtering
- * @param params - Query parameters including moduleId and optional type filter
- * @returns List of contents in the module with their position and metadata
  */
 export const getModuleContents = async (
   params: GetModuleContentsParams,
-): Promise<GetModuleContentsResponse> => {
+): Promise<ModuleContentWithContentType[]> => {
   if (!params.moduleId) {
-    return { items: [] };
+    return [];
   }
 
   const result = await client.models.ModuleContent.list({
@@ -58,11 +49,11 @@ export const getModuleContents = async (
 
   if (!result.data) {
     console.error("Failed to get module contents:", result.errors);
-    return { items: [] };
+    return [];
   }
 
   let filteredContents = result.data.filter(
-    (moduleContent): moduleContent is ModuleContentWithContent =>
+    (moduleContent): moduleContent is ModuleContentWithContentType =>
       moduleContent.content !== null,
   );
 
@@ -74,16 +65,13 @@ export const getModuleContents = async (
 
   filteredContents.sort((a, b) => a.position - b.position);
 
-  return { items: filteredContents };
+  return filteredContents;
 };
 
 /**
  * Get available content items for selection
- * @returns List of all available content items
  */
-export const getAvailableContent = async (): Promise<
-  Schema["Content"]["type"][]
-> => {
+export const getAvailableContent = async (): Promise<Content[]> => {
   const result = await client.models.Content.list();
   if (!result.data) {
     console.error("Failed to get available content:", result.errors);

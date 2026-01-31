@@ -1,11 +1,9 @@
-import {
-  getUserContentProgress,
-  type GetUserContentProgressResponse,
-} from "@/api/user-content-progress";
+import { getUserContentProgress } from "@/api/user-content-progress";
+import { type UserContentProgress } from "@/model/user-content-progress";
 import { useQuery, queryOptions } from "@tanstack/react-query";
 
 export const getUserContentProgressQueryOptions = (moduleId: string) =>
-  queryOptions<GetUserContentProgressResponse>({
+  queryOptions<UserContentProgress[]>({
     queryKey: ["userContentProgress", moduleId],
     queryFn: async () => {
       try {

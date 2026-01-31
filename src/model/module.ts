@@ -1,5 +1,7 @@
 import { type Schema } from "../../amplify/data/resource";
 
 export type Module = Schema["Module"]["type"];
+export type ModuleIdentifier = Schema["Module"]["identifier"];
 export type ModuleCreateInput = Schema["Module"]["createType"];
 export type ModuleUpdateInput = Schema["Module"]["updateType"];
+export type ModuleDeleteInput = Schema["Module"]["deleteType"];

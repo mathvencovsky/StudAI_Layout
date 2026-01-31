@@ -1,10 +1,17 @@
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+import {
+  type VoteCreateInput,
+  type VoteUpdateInput,
+  type VoteDeleteInput,
+  type UserVoteState,
+} from "@/model/vote";
+import { type ModuleUpdateInput } from "@/model/module";
 import { getCurrentUserId } from "./auth";
 
 const client = generateClient<Schema>();
 
-export type UserVoteState = 1 | -1 | null;
+export type { UserVoteState };
 
 /**
  * Fetches the current user's vote state for a module
@@ -26,8 +33,6 @@ export const getUserVote = async (moduleId: string): Promise<UserVoteState> => {
 
 /**
  * Records or updates a user's vote on a module
- * @param moduleId - The ID of the module being voted on
- * @param value - The vote value: 1 for upvote, -1 for downvote
  */
 export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
   await getCurrentUserId();
@@ -38,7 +43,7 @@ export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
 
   if (existingResult.data && existingResult.data.length > 0) {
     const existing = existingResult.data[0];
-    const updateInput: Schema["Vote"]["updateType"] = {
+    const updateInput: VoteUpdateInput = {
       id: existing.id,
       value,
       updatedAt: Date.now(),
@@ -51,7 +56,7 @@ export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
       throw new Error("Failed to update vote");
     }
   } else {
-    const createInput: Schema["Vote"]["createType"] = {
+    const createInput: VoteCreateInput = {
       moduleId,
       value,
       createdAt: Date.now(),
@@ -71,7 +76,6 @@ export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
 
 /**
  * Removes a user's vote from a module
- * @param moduleId - The ID of the module
  */
 export const clearVote = async (moduleId: string): Promise<void> => {
   await getCurrentUserId();
@@ -82,7 +86,7 @@ export const clearVote = async (moduleId: string): Promise<void> => {
 
   if (existingResult.data && existingResult.data.length > 0) {
     const existing = existingResult.data[0];
-    const deleteInput: Schema["Vote"]["deleteType"] = { id: existing.id };
+    const deleteInput: VoteDeleteInput = { id: existing.id };
 
     const result = await client.models.Vote.delete(deleteInput);
 
@@ -97,7 +101,6 @@ export const clearVote = async (moduleId: string): Promise<void> => {
 
 /**
  * Updates the vote counts for a module based on all votes
- * @param moduleId - The ID of the module to update counts for
  */
 const updateModuleVoteCounts = async (moduleId: string): Promise<void> => {
   const votesResult = await client.models.Vote.list({
@@ -120,7 +123,7 @@ const updateModuleVoteCounts = async (moduleId: string): Promise<void> => {
     }
   });
 
-  const updateInput: Schema["Module"]["updateType"] = {
+  const updateInput: ModuleUpdateInput = {
     id: moduleId,
     upvoteCount,
     downvoteCount,

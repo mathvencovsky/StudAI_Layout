@@ -1,5 +1,11 @@
 import { generateClient } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+import {
+  type Module,
+  type ModuleIdentifier,
+  type ModuleCreateInput,
+  type ModuleUpdateInput,
+} from "@/model/module";
 
 const client = generateClient<Schema>();
 
@@ -11,28 +17,16 @@ export interface GetModulesParams {
   uid?: string;
 }
 
-export interface GetModulesResponse {
-  items: Schema["Module"]["type"][];
-}
-
-export interface GetModuleSuggestionsResponse {
-  suggestions: string[];
-}
-
 /**
  * Get modules with optional filtering by text search and status
- * @param params - Query parameters including optional search text, status filter, and uid
- * @returns List of modules matching the criteria
  */
-export const getModules = async (
-  params: GetModulesParams,
-): Promise<GetModulesResponse> => {
+export const getModules = async (params: GetModulesParams): Promise<Module[]> => {
   console.log(client.models);
   const result = await client.models.Module.list();
 
   if (!result.data) {
     console.error("Failed to get modules:", result.errors);
-    return { items: [] };
+    return [];
   }
 
   let modules = result.data;
@@ -46,22 +40,18 @@ export const getModules = async (
     );
   }
 
-  return { items: modules };
+  return modules;
 };
 
 /**
  * Get module title suggestions based on search text
- * @param qText - Search query text
- * @returns List of unique module titles matching the query
  */
-export const getModuleSuggestions = async (
-  qText: string,
-): Promise<GetModuleSuggestionsResponse> => {
+export const getModuleSuggestions = async (qText: string): Promise<string[]> => {
   const result = await client.models.Module.list();
 
   if (!result.data) {
     console.error("Failed to get module suggestions:", result.errors);
-    return { suggestions: [] };
+    return [];
   }
 
   const searchTerm = qText.toLowerCase();
@@ -70,20 +60,18 @@ export const getModuleSuggestions = async (
     .map((module) => module.title)
     .slice(0, 10);
 
-  return { suggestions };
+  return suggestions;
 };
 
 /**
  * Create a new module with optional content associations
- * @param input - Module creation data including title, description, and optional content IDs
- * @returns The created module
  */
 export const createModule = async (input: {
   title: string;
   description: string;
   contentIds?: string[];
-}): Promise<Schema["Module"]["type"]> => {
-  const moduleInput: Schema["Module"]["createType"] = {
+}): Promise<Module> => {
+  const moduleInput: ModuleCreateInput = {
     title: input.title,
     description: input.description,
     upvoteCount: 0,
@@ -120,16 +108,14 @@ export const createModule = async (input: {
 
 /**
  * Update an existing module and its content associations
- * @param input - Module update data including ID, title, description, and optional content IDs
- * @returns The updated module
  */
 export const updateModule = async (input: {
   id: string;
   title?: string;
   description?: string;
   contentIds?: string[];
-}): Promise<Schema["Module"]["type"]> => {
-  const updateInput: Schema["Module"]["updateType"] = {
+}): Promise<Module> => {
+  const updateInput: ModuleUpdateInput = {
     id: input.id,
     title: input.title,
     description: input.description,
@@ -173,12 +159,10 @@ export const updateModule = async (input: {
 
 /**
  * Get a single module by ID
- * @param moduleId - The module ID
- * @returns The module or null if not found
  */
 export const getModule = async (
-  identifier: Schema["Module"]["identifier"],
-): Promise<Schema["Module"]["type"] | null> => {
+  identifier: ModuleIdentifier,
+): Promise<Module | null> => {
   const result = await client.models.Module.get(identifier);
 
   if (!result.data) {

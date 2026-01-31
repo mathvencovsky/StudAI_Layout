@@ -1,14 +1,14 @@
 import {
   type GetModuleContentsParams,
-  type GetModuleContentsResponse,
+  type ModuleContentWithContentType,
   getModuleContents,
 } from "@/api/module-content";
 import { useQuery, queryOptions } from "@tanstack/react-query";
 
 export const getModuleContentsQueryOptions = (
-  params: GetModuleContentsParams
+  params: GetModuleContentsParams,
 ) =>
-  queryOptions<GetModuleContentsResponse>({
+  queryOptions<ModuleContentWithContentType[]>({
     queryKey: ["moduleContents", params],
     queryFn: async () => {
       try {

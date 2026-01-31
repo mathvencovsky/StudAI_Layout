@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
 import { useCreateFeedback } from "@/hooks/feedback/use-create-feedback";
-import { type FeedbackInput } from "@/model/feedback";
+import { type FeedbackCreateInput } from "@/model/feedback";
 import { FeedbackForm } from "./feedback-form";
 import {
   Sheet,
@@ -26,14 +26,14 @@ export const FeedbackDialog = ({ isOpen, onClose }: FeedbackDialogProps) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { control, handleSubmit, reset, formState } = useForm<FeedbackInput>({
+  const { control, handleSubmit, reset, formState } = useForm<FeedbackCreateInput>({
     defaultValues: {
       rating: undefined,
       comment: "",
     },
   });
 
-  const onSubmit = handleSubmit(async (data: FeedbackInput) => {
+  const onSubmit = handleSubmit(async (data: FeedbackCreateInput) => {
     if (!user?.id) {
       setErrorMessage(t("must-be-logged-in"));
       return;

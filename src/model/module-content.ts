@@ -1,14 +1,7 @@
-import { z } from "zod";
+import { type Schema } from "../../amplify/data/resource";
 
-export const ModuleContentSchema = z.object({
-  moduleId: z.string(),
-  contentId: z.string(),
-  position: z.number(),
-});
-
-export const ModuleContentWithIdSchema = ModuleContentSchema.extend({
-  id: z.string(),
-});
-
-export type ModuleContent = z.infer<typeof ModuleContentWithIdSchema>;
-export type ModuleContentInput = z.infer<typeof ModuleContentSchema>;
+export type ModuleContent = Schema["ModuleContent"]["type"];
+export type ModuleContentIdentifier = Schema["ModuleContent"]["identifier"];
+export type ModuleContentCreateInput = Schema["ModuleContent"]["createType"];
+export type ModuleContentUpdateInput = Schema["ModuleContent"]["updateType"];
+export type ModuleContentDeleteInput = Schema["ModuleContent"]["deleteType"];

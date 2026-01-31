@@ -1,9 +1,9 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { getModule } from "@/api/modules";
-import { type Schema } from "../../../amplify/data/resource";
+import { type Module } from "@/model/module";
 
 export const getModuleQueryOptions = (moduleId?: string) =>
-  queryOptions<Schema["Module"]["type"] | null>({
+  queryOptions<Module | null>({
     queryKey: ["module", moduleId],
     queryFn: async () => {
       if (!moduleId) return null;

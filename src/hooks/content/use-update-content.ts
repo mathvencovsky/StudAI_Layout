@@ -1,12 +1,12 @@
 import { updateContent } from "@/api/content";
-import { type Schema } from "../../../amplify/data/resource";
+import { type Content, type ContentUpdateInput } from "@/model/content";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const useUpdateContent = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: Schema["Content"]["updateType"]) => updateContent(data),
-    onSuccess: (updated: Schema["Content"]["type"]) => {
+    mutationFn: (data: ContentUpdateInput) => updateContent(data),
+    onSuccess: (updated: Content) => {
       void qc.invalidateQueries({ queryKey: ["content", "list"] });
       void qc.invalidateQueries({
         queryKey: ["content", "detail", updated.id],

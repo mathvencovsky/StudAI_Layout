@@ -9,23 +9,33 @@ When making any call to CRUDL + observeQuery APIs, you can pass `selectionSet` t
 When passing the `selectionSet` parameter, you must always define a type with `SelectionSet` so it can correctly infer the type for the fields.
 
 ```ts
-import { generateClient, SelectionSet } from "aws-amplify/data";
+// src/model/foo.ts
+import { type SelectionSet } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
+
+export type Foo = Schema["Foo"]["type"];
+export type FooIdentifier = Schema["Foo"]["identifier"];
+
+// Use selectionSet to define which fields to load.
+const fooWithBarBazSelectionSet = ["id", "name", "bar.id", "bar.name", "baz.*"] as const;
+export type FooWithBarBaz = SelectionSet<Foo, typeof fooWithBarBazSelectionSet>;
+```
+
+```ts
+import { generateClient } from "aws-amplify/data";
+import { type Schema } from "../../amplify/data/resource";
+import { type FooIdentifier, type FooWithBarBaz } from "@/model/foo";
 
 const client = generateClient<Schema>();
 
 // Use selectionSet to define which fields to load.
 const selectionSet = ["id", "name", "bar.id", "bar.name", "baz.*"] as const;
 
-// You must always define a type with `SelectionSet` so it can correctly infer the type for the fields
-type FooWithBarBaz = SelectionSet<Schema["Foo"]["type"], typeof selectionSet>;
-
 /**
  * Gets foo with bar and baz
  */
 const getFooWithBarBaz = async (
-  identifier: Schema["Foo"]["identifier"], // Correctly inferring id type
-  // Using correct type for selectionSet
+  identifier: FooIdentifier,
 ): Promise<FooWithBarBaz | null> => {
   // Passing selectionSet to be able to get different set of fields
   const result = await client.models.Foo.get(identifier, { selectionSet });
@@ -46,6 +56,7 @@ Correct way:
 
 ```ts
 // src/model/foo.ts
+import { type SelectionSet } from "aws-amplify/data";
 import { type Schema } from "../../amplify/data/resource";
 
 export type Foo = Schema["Foo"]["type"];
@@ -53,6 +64,10 @@ export type FooIdentifier = Schema["Foo"]["identifier"];
 export type FooCreateInput = Schema["Foo"]["createType"];
 export type FooUpdateInput = Schema["Foo"]["updateType"];
 export type FooDeleteInput = Schema["Foo"]["deleteType"];
+
+// Use selectionSet to define which fields to load.
+const fooWithBarBazSelectionSet = ["id", "name", "bar.id", "bar.name", "baz.*"] as const;
+export type FooWithBarBaz = SelectionSet<Foo, typeof fooWithBarBazSelectionSet>;
 ```
 
 Wrong way:

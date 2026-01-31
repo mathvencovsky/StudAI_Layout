@@ -67,7 +67,7 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
       return;
     }
 
-    const sortedItems = [...moduleContentsData.items].sort(
+    const sortedItems = [...moduleContentsData].sort(
       (a, b) => a.position - b.position,
     );
     const initialContentIds = sortedItems.map((item) => item.id);
