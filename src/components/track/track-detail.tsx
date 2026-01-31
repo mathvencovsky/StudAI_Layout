@@ -32,7 +32,7 @@ export const TrackDetail = ({ trackId }: TrackDetailProps) => {
   const isAdminUser = useIsAdminUser();
 
   const handleEdit = () => {
-    navigate({ to: "/track-edit/$trackId", params: { trackId } });
+    navigate({ to: "/track/$trackId/edit", params: { trackId } });
   };
 
   const handleDelete = () => {

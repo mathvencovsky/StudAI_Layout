@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { useModules } from "@/hooks/modules/use-modules";
 import { ModuleNode } from "@/components/track/module-node";
+import { useResolvedColorMode } from "@/hooks/use-resolved-color-mode";
 
 type ParentMap = Record<string, string>;
 
@@ -135,6 +136,7 @@ export const TrackFlowEditor = ({
   onChange,
 }: TrackFlowEditorProps) => {
   const { t } = useTranslation();
+  const colorMode = useResolvedColorMode();
   const { data: modules } = useModules();
   const [selectedModuleToAdd, setSelectedModuleToAdd] = useState<string>("");
 
@@ -219,7 +221,7 @@ export const TrackFlowEditor = ({
   }, [modules, nodes]);
 
   return (
-    <div className="h-[500px] border rounded-lg">
+    <div className="h-[400px] border rounded-lg bg-muted/20">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -227,12 +229,13 @@ export const TrackFlowEditor = ({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        colorMode={colorMode}
         fitView
       >
         <Background />
         <Controls />
-        <Panel position="top-left" className="bg-white p-2 rounded shadow space-y-2">
-          <div className="flex gap-2">
+        <Panel position="top-left" className="bg-card p-3 rounded-lg border space-y-3">
+          <div className="flex gap-2 items-center">
             <Select value={selectedModuleToAdd} onValueChange={setSelectedModuleToAdd}>
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder={t("select-module")} />
@@ -245,18 +248,18 @@ export const TrackFlowEditor = ({
                 ))}
               </SelectContent>
             </Select>
-            <Button onClick={addModule} disabled={!selectedModuleToAdd} size="sm">
+            <Button onClick={addModule} disabled={!selectedModuleToAdd}>
               {t("add-module")}
             </Button>
           </div>
           <div className="flex gap-2">
-            <Button onClick={applyLayout} variant="outline" size="sm">
+            <Button variant="outline" onClick={applyLayout}>
               {t("auto-layout")}
             </Button>
-            <Button onClick={removeSelectedNodes} variant="destructive" size="sm">
+            <Button variant="secondary" onClick={removeSelectedNodes}>
               {t("remove-selected")}
             </Button>
-            <Button onClick={handleSave} size="sm">
+            <Button onClick={handleSave}>
               {t("save-structure")}
             </Button>
           </div>

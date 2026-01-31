@@ -11,12 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as TrackCreateRouteImport } from './routes/track-create'
+import { Route as TrackRouteImport } from './routes/track'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
 import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as ContentEditRouteImport } from './routes/content-edit'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
 import { Route as ContentRouteImport } from './routes/content'
 import { Route as IndexRouteImport } from './routes/index'
@@ -24,13 +24,13 @@ import { Route as TrackIndexRouteImport } from './routes/track/index'
 import { Route as ModuleIndexRouteImport } from './routes/module/index'
 import { Route as ContentIndexRouteImport } from './routes/content/index'
 import { Route as TrackTrackIdRouteImport } from './routes/track/$trackId'
-import { Route as TrackEditTrackIdRouteImport } from './routes/track-edit/$trackId'
 import { Route as ModuleModuleIdRouteImport } from './routes/module/$moduleId'
 import { Route as ModuleEditModuleIdRouteImport } from './routes/module-edit/$moduleId'
 import { Route as ContentContentIdRouteImport } from './routes/content/$contentId'
 import { Route as TrackTrackIdIndexRouteImport } from './routes/track/$trackId/index'
 import { Route as ModuleModuleIdIndexRouteImport } from './routes/module/$moduleId/index'
 import { Route as ContentContentIdIndexRouteImport } from './routes/content/$contentId/index'
+import { Route as TrackTrackIdEditRouteImport } from './routes/track/$trackId/edit'
 import { Route as ContentContentIdEditRouteImport } from './routes/content/$contentId/edit'
 import { Route as ModuleModuleIdContentContentIdRouteImport } from './routes/module/$moduleId/content/$contentId'
 
@@ -42,6 +42,11 @@ const VerifyEmailRoute = VerifyEmailRouteImport.update({
 const TrackCreateRoute = TrackCreateRouteImport.update({
   id: '/track-create',
   path: '/track-create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignUpRoute = SignUpRouteImport.update({
@@ -69,11 +74,6 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContentEditRoute = ContentEditRouteImport.update({
-  id: '/content-edit',
-  path: '/content-edit',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContentCreateRoute = ContentCreateRouteImport.update({
   id: '/content-create',
   path: '/content-create',
@@ -90,9 +90,9 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrackIndexRoute = TrackIndexRouteImport.update({
-  id: '/track/',
-  path: '/track/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => TrackRoute,
 } as any)
 const ModuleIndexRoute = ModuleIndexRouteImport.update({
   id: '/',
@@ -105,14 +105,9 @@ const ContentIndexRoute = ContentIndexRouteImport.update({
   getParentRoute: () => ContentRoute,
 } as any)
 const TrackTrackIdRoute = TrackTrackIdRouteImport.update({
-  id: '/track/$trackId',
-  path: '/track/$trackId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TrackEditTrackIdRoute = TrackEditTrackIdRouteImport.update({
-  id: '/track-edit/$trackId',
-  path: '/track-edit/$trackId',
-  getParentRoute: () => rootRouteImport,
+  id: '/$trackId',
+  path: '/$trackId',
+  getParentRoute: () => TrackRoute,
 } as any)
 const ModuleModuleIdRoute = ModuleModuleIdRouteImport.update({
   id: '/$moduleId',
@@ -144,6 +139,11 @@ const ContentContentIdIndexRoute = ContentContentIdIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ContentContentIdRoute,
 } as any)
+const TrackTrackIdEditRoute = TrackTrackIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => TrackTrackIdRoute,
+} as any)
 const ContentContentIdEditRoute = ContentContentIdEditRouteImport.update({
   id: '/edit',
   path: '/edit',
@@ -160,23 +160,23 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
-  '/content-edit': typeof ContentEditRoute
   '/dashboard': typeof DashboardRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
+  '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
-  '/track-edit/$trackId': typeof TrackEditTrackIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId/': typeof ContentContentIdIndexRoute
   '/module/$moduleId/': typeof ModuleModuleIdIndexRoute
   '/track/$trackId/': typeof TrackTrackIdIndexRoute
@@ -185,7 +185,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/content-create': typeof ContentCreateRoute
-  '/content-edit': typeof ContentEditRoute
   '/dashboard': typeof DashboardRoute
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -193,11 +192,11 @@ export interface FileRoutesByTo {
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
-  '/track-edit/$trackId': typeof TrackEditTrackIdRoute
   '/content': typeof ContentIndexRoute
   '/module': typeof ModuleIndexRoute
   '/track': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId': typeof ContentContentIdIndexRoute
   '/module/$moduleId': typeof ModuleModuleIdIndexRoute
   '/track/$trackId': typeof TrackTrackIdIndexRoute
@@ -208,23 +207,23 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
-  '/content-edit': typeof ContentEditRoute
   '/dashboard': typeof DashboardRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
+  '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
-  '/track-edit/$trackId': typeof TrackEditTrackIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId/': typeof ContentContentIdIndexRoute
   '/module/$moduleId/': typeof ModuleModuleIdIndexRoute
   '/track/$trackId/': typeof TrackTrackIdIndexRoute
@@ -236,23 +235,23 @@ export interface FileRouteTypes {
     | '/'
     | '/content'
     | '/content-create'
-    | '/content-edit'
     | '/dashboard'
     | '/module'
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
+    | '/track'
     | '/track-create'
     | '/verify-email'
     | '/content/$contentId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
-    | '/track-edit/$trackId'
     | '/track/$trackId'
     | '/content/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
+    | '/track/$trackId/edit'
     | '/content/$contentId/'
     | '/module/$moduleId/'
     | '/track/$trackId/'
@@ -261,7 +260,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/content-create'
-    | '/content-edit'
     | '/dashboard'
     | '/module-create'
     | '/reset-password'
@@ -269,11 +267,11 @@ export interface FileRouteTypes {
     | '/track-create'
     | '/verify-email'
     | '/module-edit/$moduleId'
-    | '/track-edit/$trackId'
     | '/content'
     | '/module'
     | '/track'
     | '/content/$contentId/edit'
+    | '/track/$trackId/edit'
     | '/content/$contentId'
     | '/module/$moduleId'
     | '/track/$trackId'
@@ -283,23 +281,23 @@ export interface FileRouteTypes {
     | '/'
     | '/content'
     | '/content-create'
-    | '/content-edit'
     | '/dashboard'
     | '/module'
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
+    | '/track'
     | '/track-create'
     | '/verify-email'
     | '/content/$contentId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
-    | '/track-edit/$trackId'
     | '/track/$trackId'
     | '/content/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
+    | '/track/$trackId/edit'
     | '/content/$contentId/'
     | '/module/$moduleId/'
     | '/track/$trackId/'
@@ -310,18 +308,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContentRoute: typeof ContentRouteWithChildren
   ContentCreateRoute: typeof ContentCreateRoute
-  ContentEditRoute: typeof ContentEditRoute
   DashboardRoute: typeof DashboardRoute
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignUpRoute: typeof SignUpRoute
+  TrackRoute: typeof TrackRouteWithChildren
   TrackCreateRoute: typeof TrackCreateRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
   ModuleEditModuleIdRoute: typeof ModuleEditModuleIdRoute
-  TrackEditTrackIdRoute: typeof TrackEditTrackIdRoute
-  TrackTrackIdRoute: typeof TrackTrackIdRouteWithChildren
-  TrackIndexRoute: typeof TrackIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -338,6 +333,13 @@ declare module '@tanstack/react-router' {
       path: '/track-create'
       fullPath: '/track-create'
       preLoaderRoute: typeof TrackCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sign-up': {
@@ -375,13 +377,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/content-edit': {
-      id: '/content-edit'
-      path: '/content-edit'
-      fullPath: '/content-edit'
-      preLoaderRoute: typeof ContentEditRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/content-create': {
       id: '/content-create'
       path: '/content-create'
@@ -405,10 +400,10 @@ declare module '@tanstack/react-router' {
     }
     '/track/': {
       id: '/track/'
-      path: '/track'
+      path: '/'
       fullPath: '/track/'
       preLoaderRoute: typeof TrackIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof TrackRoute
     }
     '/module/': {
       id: '/module/'
@@ -426,17 +421,10 @@ declare module '@tanstack/react-router' {
     }
     '/track/$trackId': {
       id: '/track/$trackId'
-      path: '/track/$trackId'
+      path: '/$trackId'
       fullPath: '/track/$trackId'
       preLoaderRoute: typeof TrackTrackIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/track-edit/$trackId': {
-      id: '/track-edit/$trackId'
-      path: '/track-edit/$trackId'
-      fullPath: '/track-edit/$trackId'
-      preLoaderRoute: typeof TrackEditTrackIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof TrackRoute
     }
     '/module/$moduleId': {
       id: '/module/$moduleId'
@@ -479,6 +467,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/content/$contentId/'
       preLoaderRoute: typeof ContentContentIdIndexRouteImport
       parentRoute: typeof ContentContentIdRoute
+    }
+    '/track/$trackId/edit': {
+      id: '/track/$trackId/edit'
+      path: '/edit'
+      fullPath: '/track/$trackId/edit'
+      preLoaderRoute: typeof TrackTrackIdEditRouteImport
+      parentRoute: typeof TrackTrackIdRoute
     }
     '/content/$contentId/edit': {
       id: '/content/$contentId/edit'
@@ -551,10 +546,12 @@ const ModuleRouteWithChildren =
   ModuleRoute._addFileChildren(ModuleRouteChildren)
 
 interface TrackTrackIdRouteChildren {
+  TrackTrackIdEditRoute: typeof TrackTrackIdEditRoute
   TrackTrackIdIndexRoute: typeof TrackTrackIdIndexRoute
 }
 
 const TrackTrackIdRouteChildren: TrackTrackIdRouteChildren = {
+  TrackTrackIdEditRoute: TrackTrackIdEditRoute,
   TrackTrackIdIndexRoute: TrackTrackIdIndexRoute,
 }
 
@@ -562,22 +559,31 @@ const TrackTrackIdRouteWithChildren = TrackTrackIdRoute._addFileChildren(
   TrackTrackIdRouteChildren,
 )
 
+interface TrackRouteChildren {
+  TrackTrackIdRoute: typeof TrackTrackIdRouteWithChildren
+  TrackIndexRoute: typeof TrackIndexRoute
+}
+
+const TrackRouteChildren: TrackRouteChildren = {
+  TrackTrackIdRoute: TrackTrackIdRouteWithChildren,
+  TrackIndexRoute: TrackIndexRoute,
+}
+
+const TrackRouteWithChildren = TrackRoute._addFileChildren(TrackRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContentRoute: ContentRouteWithChildren,
   ContentCreateRoute: ContentCreateRoute,
-  ContentEditRoute: ContentEditRoute,
   DashboardRoute: DashboardRoute,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignUpRoute: SignUpRoute,
+  TrackRoute: TrackRouteWithChildren,
   TrackCreateRoute: TrackCreateRoute,
   VerifyEmailRoute: VerifyEmailRoute,
   ModuleEditModuleIdRoute: ModuleEditModuleIdRoute,
-  TrackEditTrackIdRoute: TrackEditTrackIdRoute,
-  TrackTrackIdRoute: TrackTrackIdRouteWithChildren,
-  TrackIndexRoute: TrackIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

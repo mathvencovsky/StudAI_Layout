@@ -33,7 +33,7 @@ _List components to add or modify, including their props interface and a brief d
 
 ### 1.6 Translation keys
 
-_List all new i18n keys and for what they will be used_
+_List all new i18n keys and for what they will be used. You don't need to add the actuall translation, just add the keys._
 
 ## 2. Acceptance Criteria
 

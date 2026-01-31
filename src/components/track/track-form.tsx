@@ -112,7 +112,7 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="space-y-4 max-w-xl">
+      <div className="space-y-4 w-full max-w-2xl">
         <div className="space-y-2">
           <Label htmlFor="title">{t("title")}</Label>
           <Input

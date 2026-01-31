@@ -11,13 +11,24 @@ import {
 
 const client = generateClient<Schema>();
 
+const parseJsonField = (value: unknown): Record<string, string> => {
+  if (!value) return {};
+  const parsed = typeof value === "string" ? JSON.parse(value) : value;
+  if (typeof parsed !== "object") return {};
+  return parsed as Record<string, string>;
+};
+
 /**
  * Get all tracks
  */
 export const getTracks = async (): Promise<Track[]> => {
   const result = await client.models.Track.list();
   if (!result.data) return [];
-  return result.data;
+  return result.data.map((track) => ({
+    ...track,
+    parentByModuleId: parseJsonField(track.parentByModuleId),
+    positionByModuleId: parseJsonField(track.positionByModuleId),
+  }));
 };
 
 /**
@@ -30,14 +41,22 @@ export const getTrack = async (
     selectionSet: trackSelectionSet,
   });
   if (!result.data) return null;
-  return result.data;
+  return {
+    ...result.data,
+    parentByModuleId: parseJsonField(result.data.parentByModuleId),
+    positionByModuleId: parseJsonField(result.data.positionByModuleId),
+  };
 };
 
 /**
  * Create a new track
  */
 export const createTrack = async (input: TrackCreateInput): Promise<Track> => {
-  const result = await client.models.Track.create(input);
+  const result = await client.models.Track.create({
+    ...input,
+    parentByModuleId: JSON.stringify(input.parentByModuleId),
+    positionByModuleId: JSON.stringify(input.positionByModuleId),
+  });
   if (!result.data) throw new Error("Failed to create track");
   return result.data;
 };
@@ -46,7 +65,11 @@ export const createTrack = async (input: TrackCreateInput): Promise<Track> => {
  * Update a track
  */
 export const updateTrack = async (input: TrackUpdateInput): Promise<Track> => {
-  const result = await client.models.Track.update(input);
+  const result = await client.models.Track.update({
+    ...input,
+    parentByModuleId: JSON.stringify(input.parentByModuleId),
+    positionByModuleId: JSON.stringify(input.positionByModuleId),
+  });
   if (!result.data) throw new Error("Failed to update track");
   return result.data;
 };

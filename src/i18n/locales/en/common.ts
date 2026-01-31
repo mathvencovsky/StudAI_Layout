@@ -60,6 +60,8 @@ export default {
   "create-new-module-description":
     "Create a new learning module by adding content and organizing it for your students.",
   "create-track": "Create Track",
+  "create-track-description":
+    "Create a learning track by organizing modules into a structured path.",
   "cycle-detected": "Cycle detected. Remove circular connections to save.",
   dashboard: "Dashboard",
   delete: "Delete",
@@ -76,6 +78,8 @@ export default {
   "edit-module": "Edit Module",
   "edit-module-description":
     "Make changes to your module details and content selection.",
+  "edit-track": "Edit Track",
+  "edit-track-description": "Modify the track structure and details.",
   "enter-module-title": "Enter module title",
   "enter-verification-code": "000000",
   error: "Error",
@@ -122,6 +126,7 @@ export default {
   "no-results-found": "No results found",
   "no-title": "(no title)",
   "no-tracks": "No tracks available",
+  "no-tracks-match-search": "No tracks match your search",
   "not-started": "Not started",
   "of-completed": "of",
   open: "Open",
@@ -144,6 +149,7 @@ export default {
   "save-structure": "Save Structure",
   search: "Search",
   "search-modules": "Search modules by title or description",
+  "search-tracks": "Search tracks by title or description",
   seconds: "seconds",
   "select-level": "Select a level",
   "select-module": "Select a module",

@@ -68,6 +68,8 @@ export default {
   "create-new-module-description":
     "Crie um novo módulo de aprendizado adicionando conteúdo e organizando-o para seus alunos.",
   "create-track": "Criar Trilha",
+  "create-track-description":
+    "Crie uma trilha de aprendizado organizando módulos em um caminho estruturado.",
   "cycle-detected": "Ciclo detectado. Remova conexões circulares para salvar.",
   dashboard: "Painel",
   delete: "Excluir",
@@ -84,6 +86,8 @@ export default {
   "edit-module": "Editar Módulo",
   "edit-module-description":
     "Faça alterações nos detalhes do seu módulo e seleção de conteúdo.",
+  "edit-track": "Editar Trilha",
+  "edit-track-description": "Modifique a estrutura e detalhes da trilha.",
   "enter-module-title": "Digite o título do módulo",
   "enter-verification-code": "000000",
   error: "Erro",
@@ -131,6 +135,7 @@ export default {
   "no-results-found": "Nenhum resultado encontrado",
   "no-title": "(sem título)",
   "no-tracks": "Nenhuma trilha disponível",
+  "no-tracks-match-search": "Nenhuma trilha corresponde à sua pesquisa",
   "not-started": "Não iniciado",
   "of-completed": "de",
   open: "Abrir",
@@ -153,6 +158,7 @@ export default {
   "save-structure": "Salvar Estrutura",
   search: "Pesquisar",
   "search-modules": "Pesquisar módulos por título ou descrição",
+  "search-tracks": "Pesquisar trilhas por título ou descrição",
   seconds: "segundos",
   "select-level": "Selecione um nível",
   "select-module": "Selecione um módulo",

@@ -3,7 +3,6 @@ import {
   ReactFlow,
   Background,
   Controls,
-  MiniMap,
   type Node,
   type Edge,
 } from "@xyflow/react";
@@ -12,6 +11,7 @@ import dagre from "dagre";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useModules } from "@/hooks/modules/use-modules";
+import { useTheme } from "@/hooks/use-theme";
 import { ModuleNode } from "@/components/track/module-node";
 
 type ParentMap = Record<string, string>;
@@ -110,6 +110,7 @@ export const TrackFlowViewer = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: modules } = useModules();
+  const { mode } = useTheme();
 
   const parentBy = coerceParentMap(parentByModuleId);
   const moduleMap = useMemo(
@@ -136,6 +137,7 @@ export const TrackFlowViewer = ({
       edges={edges}
       nodeTypes={nodeTypes}
       onNodeClick={onNodeClick}
+      colorMode={mode}
       fitView
       nodesDraggable={false}
       nodesConnectable={false}
@@ -143,7 +145,6 @@ export const TrackFlowViewer = ({
     >
       <Background />
       <Controls showInteractive={false} />
-      <MiniMap />
     </ReactFlow>
   );
 };
