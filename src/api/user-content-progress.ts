@@ -35,7 +35,6 @@ export const toggleContentCompletion = async (input: {
       id: existing.id,
       isCompleted: input.isCompleted,
       completionDate: input.isCompleted ? Date.now() : undefined,
-      updatedAt: Date.now(),
     };
 
     const result = await client.models.UserContentProgress.update(updateInput);
@@ -52,8 +51,6 @@ export const toggleContentCompletion = async (input: {
       contentId: input.contentId,
       isCompleted: input.isCompleted,
       completionDate: input.isCompleted ? Date.now() : undefined,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     };
 
     const result = await client.models.UserContentProgress.create(createInput);

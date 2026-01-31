@@ -76,8 +76,6 @@ export const createModule = async (input: {
     description: input.description,
     upvoteCount: 0,
     downvoteCount: 0,
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
   };
 
   const result = await client.models.Module.create(moduleInput);
@@ -119,7 +117,6 @@ export const updateModule = async (input: {
     id: input.id,
     title: input.title,
     description: input.description,
-    updatedAt: Date.now(),
   };
 
   const result = await client.models.Module.update(updateInput);

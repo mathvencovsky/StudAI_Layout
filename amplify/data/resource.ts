@@ -1,7 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
-  // Core Entities
   Content: a
     .model({
       title: a.string().required(),
@@ -11,13 +10,9 @@ const schema = a.schema({
       link: a.url().required(),
       category: a.string().required(),
       level: a.enum(["beginner", "intermediate", "advanced"]),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       moduleContents: a.hasMany("ModuleContent", "contentId"),
       userContentProgress: a.hasMany("UserContentProgress", "contentId"),
     })
@@ -32,13 +27,9 @@ const schema = a.schema({
       description: a.string().required(),
       upvoteCount: a.integer().default(0),
       downvoteCount: a.integer().default(0),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       moduleContents: a.hasMany("ModuleContent", "moduleId"),
       userModuleProgress: a.hasMany("UserModuleProgress", "moduleId"),
       userContentProgress: a.hasMany("UserContentProgress", "moduleId"),
@@ -58,8 +49,6 @@ const schema = a.schema({
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       module: a.belongsTo("Module", "moduleId"),
       content: a.belongsTo("Content", "contentId"),
     })
@@ -68,19 +57,14 @@ const schema = a.schema({
       allow.owner().to(["create", "update", "delete"]),
     ]),
 
-  // Progress Tracking
   UserModuleProgress: a
     .model({
       moduleId: a.id().required(),
       startDate: a.timestamp().required(),
       completionDate: a.timestamp(),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       module: a.belongsTo("Module", "moduleId"),
     })
     .authorization((allow) => [allow.owner()]),
@@ -91,30 +75,21 @@ const schema = a.schema({
       contentId: a.id().required(),
       isCompleted: a.boolean().default(false),
       completionDate: a.timestamp(),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       module: a.belongsTo("Module", "moduleId"),
       content: a.belongsTo("Content", "contentId"),
     })
     .authorization((allow) => [allow.owner()]),
 
-  // Voting System
   Vote: a
     .model({
       moduleId: a.id().required(),
       value: a.integer().required(),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
-
-      // Relationships
       module: a.belongsTo("Module", "moduleId"),
     })
     .authorization((allow) => [
@@ -122,14 +97,11 @@ const schema = a.schema({
       allow.authenticated().to(["read"]),
     ]),
 
-  // Feedback System
   Feedback: a
     .model({
       rating: a.integer().required(),
       comment: a.string(),
       url: a.url().required(),
-      createdAt: a.timestamp().required(),
-      updatedAt: a.timestamp().required(),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
@@ -146,7 +118,6 @@ export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "userPool",
-    // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },

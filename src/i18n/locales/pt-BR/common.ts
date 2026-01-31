@@ -151,6 +151,12 @@ export default {
   "module-created-success": "Seu módulo foi criado com sucesso.",
   "couldnt-create-module":
     "Não foi possível criar seu módulo. Por favor, tente novamente.",
+  "content-delete-button": "Excluir",
+  "content-delete-confirm-description": "Esta ação não pode ser desfeita.",
+  "content-delete-confirm-title": "Excluir conteúdo?",
+  "content-delete-deleting": "Excluindo...",
+  "content-delete-error":
+    "Não foi possível excluir este conteúdo. Por favor, tente novamente.",
   "no-image": "Sem imagem",
   progress: "Progresso",
   "started-on-date": "Iniciado em",

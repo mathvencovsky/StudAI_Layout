@@ -3,23 +3,15 @@ import { type Schema } from "../../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
-export type CreateFeedbackInput = Omit<
-  Schema["Feedback"]["createType"],
-  "createdAt" | "updatedAt"
->;
+export type CreateFeedbackInput = Schema["Feedback"]["createType"];
 
 /**
- * Creates a new feedback document in Amplify with URL, rating, comment, and timestamp.
+ * Creates a new feedback entry
  */
 export const createFeedback = async (
   feedback: CreateFeedbackInput,
 ): Promise<Schema["Feedback"]["type"]> => {
-  const now = Date.now();
-  const result = await client.models.Feedback.create({
-    ...feedback,
-    createdAt: now,
-    updatedAt: now,
-  });
+  const result = await client.models.Feedback.create(feedback);
 
   if (!result.data) {
     console.error("Failed to create feedback:", result.errors);

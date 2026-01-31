@@ -20,8 +20,6 @@ export const startModule = async (input: {
   const createInput: UserModuleProgressCreateInput = {
     moduleId: input.moduleId,
     startDate: Date.now(),
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
   };
 
   const result = await client.models.UserModuleProgress.create(createInput);

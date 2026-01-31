@@ -3,12 +3,11 @@ import { type Schema } from "../../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
-export type CreateContentInput = Omit<
-  Schema["Content"]["createType"],
-  "createdAt" | "updatedAt"
->;
+export type CreateContentInput = Schema["Content"]["createType"];
 
-/** API: list all content */
+/**
+ * List all content
+ */
 export const listContent = async (): Promise<Schema["Content"]["type"][]> => {
   const result = await client.models.Content.list();
   if (!result.data) {
@@ -19,7 +18,9 @@ export const listContent = async (): Promise<Schema["Content"]["type"][]> => {
   return result.data;
 };
 
-/** API: get single content */
+/**
+ * Get single content by identifier
+ */
 export const getContent = async (
   identifier: Schema["Content"]["identifier"],
 ): Promise<Schema["Content"]["type"] | null> => {
@@ -32,33 +33,29 @@ export const getContent = async (
   return result.data;
 };
 
-/** API: create content (stores all strings exactly as provided; no trimming/validation here) */
+/**
+ * Create content
+ */
 export const createContent = async (
   input: CreateContentInput,
 ): Promise<Schema["Content"]["type"]> => {
-  const now = Date.now();
-  const result = await client.models.Content.create({
-    ...input,
-    createdAt: now,
-    updatedAt: now,
-  });
+  const result = await client.models.Content.create(input);
 
   if (!result.data) {
-    console.error("Failed to create content:", result.errors);
+    console.error("Failed to create content:", JSON.stringify(result.errors, null, 2));
     throw new Error("Failed to create content");
   }
 
   return result.data;
 };
 
-/** API: update content (preserves createdAt, only updates updatedAt) */
+/**
+ * Update content
+ */
 export const updateContent = async (
   input: Schema["Content"]["updateType"],
 ): Promise<Schema["Content"]["type"]> => {
-  const result = await client.models.Content.update({
-    ...input,
-    updatedAt: Date.now(),
-  });
+  const result = await client.models.Content.update(input);
 
   if (!result.data) {
     console.error("Failed to update content:", result.errors);

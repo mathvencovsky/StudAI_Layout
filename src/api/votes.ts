@@ -46,7 +46,6 @@ export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
     const updateInput: VoteUpdateInput = {
       id: existing.id,
       value,
-      updatedAt: Date.now(),
     };
 
     const result = await client.models.Vote.update(updateInput);
@@ -59,8 +58,6 @@ export const vote = async (moduleId: string, value: 1 | -1): Promise<void> => {
     const createInput: VoteCreateInput = {
       moduleId,
       value,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     };
 
     const result = await client.models.Vote.create(createInput);
@@ -127,7 +124,6 @@ const updateModuleVoteCounts = async (moduleId: string): Promise<void> => {
     id: moduleId,
     upvoteCount,
     downvoteCount,
-    updatedAt: Date.now(),
   };
 
   const result = await client.models.Module.update(updateInput);
