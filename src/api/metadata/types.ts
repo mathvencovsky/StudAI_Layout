@@ -1,12 +1,8 @@
-import { z } from "zod";
-
-export const ExtractedMetadataSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  image: z.string().optional(),
-  favicon: z.string().optional(),
-  url: z.string(),
-  durationInSeconds: z.number(),
-});
-
-export type ExtractedMetadata = z.infer<typeof ExtractedMetadataSchema>;
+export interface ExtractedMetadata {
+  title: string;
+  description: string;
+  image?: string;
+  favicon?: string;
+  url: string;
+  durationInSeconds: number;
+}

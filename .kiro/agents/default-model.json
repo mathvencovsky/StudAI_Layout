@@ -32,7 +32,8 @@
     "web_search",
     "web_fetch",
     "introspect",
-    "thinking"
+    "thinking",
+    "@chrome-devtools/*"
   ],
   "resources": [
     "file://README.md",

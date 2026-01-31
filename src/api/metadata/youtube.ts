@@ -1,11 +1,4 @@
-import { z } from "zod";
-import { type ExtractedMetadata, ExtractedMetadataSchema } from "./types";
-
-const YouTubeOEmbedSchema = z.object({
-  title: z.string(),
-  author_name: z.string().optional(),
-  thumbnail_url: z.string().optional(),
-});
+import { type ExtractedMetadata } from "./types";
 
 /**
  * Extracts the video ID from a YouTube URL.
@@ -48,29 +41,17 @@ export async function extractYouTubeMetadata(
 
     const data = await response.json();
 
-    const parsed = YouTubeOEmbedSchema.safeParse(data);
-    if (!parsed.success) {
-      console.error("YouTube oEmbed validation failed:", parsed.error);
-      return null;
-    }
-
     const metadata: ExtractedMetadata = {
-      title: parsed.data.title,
-      description: parsed.data.author_name || "",
-      image: parsed.data.thumbnail_url,
+      title: data.title,
+      description: data.author_name || "",
+      image: data.thumbnail_url,
       favicon:
         "https://www.youtube.com/s/desktop/2731d6a3/img/favicon_144x144.png",
       url,
       durationInSeconds: 0,
     };
 
-    const metadataValidation = ExtractedMetadataSchema.safeParse(metadata);
-    if (!metadataValidation.success) {
-      console.error("Metadata validation failed:", metadataValidation.error);
-      return null;
-    }
-
-    return metadataValidation.data;
+    return metadata;
   } catch (error) {
     console.error(`Error extracting YouTube metadata for ${url}:`, error);
     return null;

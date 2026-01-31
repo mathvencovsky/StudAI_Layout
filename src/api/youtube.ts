@@ -1,4 +1,4 @@
-import { type ExtractedMetadata, ExtractedMetadataSchema } from "./metadata";
+import { type ExtractedMetadata } from "./metadata";
 import { Duration } from "luxon";
 
 const MATTW_YT_API_BASE = "/ytapi/v3/videos";
@@ -18,7 +18,6 @@ async function fetchFromMicrolink(
     );
 
     if (!response.ok) {
-      // let caller decide to fallback
       return null;
     }
 
@@ -37,16 +36,7 @@ async function fetchFromMicrolink(
       durationInSeconds: 0,
     };
 
-    const parsed = ExtractedMetadataSchema.safeParse(metadata);
-    if (!parsed.success) {
-      console.error(
-        "YouTube metadata (Microlink) validation failed:",
-        parsed.error,
-      );
-      return null;
-    }
-
-    return parsed.data;
+    return metadata;
   } catch (error) {
     console.error(`Error calling Microlink for ${url}:`, error);
     return null;
@@ -77,18 +67,14 @@ async function fetchFromMattwApi(
   videoId: string,
 ): Promise<ExtractedMetadata | null> {
   try {
-    const apiKey = "foo1"; // replace with your real key or env var
-    const quotaUser =
-      // process.env.MATTW_YT_QUOTA_USER ||
-      "OahQi27TmlgO0nFFARoJ7z16muvV1SGXjJdeQFJZ";
+    const apiKey = "foo1";
+    const quotaUser = "OahQi27TmlgO0nFFARoJ7z16muvV1SGXjJdeQFJZ";
 
     const params = new URLSearchParams({
       key: apiKey,
       quotaUser,
       part: "snippet,statistics,recordingDetails,status,liveStreamingDetails,localizations,contentDetails,paidProductPlacementDetails,player,topicDetails",
       id: videoId,
-      // optional cache-busting param if you want:
-      // _: Date.now().toString(),
     });
 
     const response = await fetch(`${MATTW_YT_API_BASE}?${params.toString()}`);
@@ -101,9 +87,7 @@ async function fetchFromMattwApi(
     }
 
     const data = await response.json();
-    console.log("matt data", data);
 
-    // ✅ New shape: data.items[0].snippet
     const item = data?.items?.[0];
     if (!item || !item.snippet) {
       console.error("Mattw YouTube API: no items/snippet in response");
@@ -126,22 +110,12 @@ async function fetchFromMattwApi(
       title: snippet.title || "YouTube Video",
       description: snippet.description || "",
       image: thumbnail,
-      // This API doesn’t return a favicon; you can keep undefined
       favicon: undefined,
       durationInSeconds: Duration.fromISO(duration).as("seconds"),
       url,
     };
 
-    const parsed = ExtractedMetadataSchema.safeParse(metadata);
-    if (!parsed.success) {
-      console.error(
-        "YouTube metadata (Mattw API) validation failed:",
-        parsed.error,
-      );
-      return null;
-    }
-
-    return parsed.data;
+    return metadata;
   } catch (error) {
     console.error(`Error calling Mattw YouTube API for ${url}:`, error);
     return null;
@@ -160,19 +134,16 @@ export async function extractYouTubeMetadata(
   videoId: string,
 ): Promise<ExtractedMetadata | null> {
   try {
-    // 2) Fallback to Mattw API
     const mattwResult = await fetchFromMattwApi(url, videoId);
     if (mattwResult) {
       return mattwResult;
     }
 
-    // 1) Try Microlink
     const microlinkResult = await fetchFromMicrolink(url, videoId);
     if (microlinkResult) {
       return microlinkResult;
     }
 
-    // 3) Complete failure
     console.error(
       `Failed to extract YouTube metadata from both Microlink and Mattw for ${url}`,
     );

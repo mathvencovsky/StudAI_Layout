@@ -1,7 +1,7 @@
 import { getYouTubeVideoId, extractYouTubeMetadata } from "./youtube.js";
-import { ExtractedMetadataSchema, type ExtractedMetadata } from "./types.js";
+import { type ExtractedMetadata } from "./types.js";
 
-export { ExtractedMetadataSchema, type ExtractedMetadata } from "./types.js";
+export { type ExtractedMetadata } from "./types.js";
 
 /**
  * Extracts metadata from a given URL.
@@ -37,21 +37,16 @@ export const extractMetadataFromUrl = async (
       return null;
     }
 
-    const metadata = {
+    const metadata: ExtractedMetadata = {
       title: data.data.title || data.data.publisher || "",
       description: data.data.description || "",
       image: data.data.image?.url || data.data.logo?.url,
       favicon: data.data.logo?.url,
       url: data.data.url || url,
+      durationInSeconds: 0,
     };
 
-    const parsed = ExtractedMetadataSchema.safeParse(metadata);
-    if (!parsed.success) {
-      console.error("Metadata validation failed:", parsed.error);
-      return null;
-    }
-
-    return parsed.data;
+    return metadata;
   } catch (error) {
     console.error(`Error extracting metadata from ${url}:`, error);
     return null;

@@ -68,11 +68,9 @@ export const ContentCsvInput = () => {
           const needsDescription = !finalDescription;
 
           const videoId = getYouTubeVideoId(row.link);
-          console.log("videoId:", videoId);
 
           if (videoId) {
             const metadata = await extractYouTubeMetadata(row.link, videoId);
-            console.log("metadata:", metadata);
 
             if (metadata) {
               durationInSeconds = metadata.durationInSeconds;
@@ -102,7 +100,6 @@ export const ContentCsvInput = () => {
             link: row.link,
             durationInSeconds,
           };
-          console.log("input:", input);
 
           await createContent(input);
           await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -21,7 +21,6 @@ export interface GetModulesParams {
  * Get modules with optional filtering by text search and status
  */
 export const getModules = async (params: GetModulesParams): Promise<Module[]> => {
-  console.log(client.models);
   const result = await client.models.Module.list();
 
   if (!result.data) {
