@@ -4,12 +4,27 @@ import {
   resetPassword,
   signOut,
   signInWithRedirect,
+  confirmSignUp,
+  getCurrentUser,
 } from "aws-amplify/auth";
 
 export interface User {
   email?: string;
   displayName?: string;
 }
+
+/**
+ * Get the current user ID from Amplify auth
+ * @throws Error if user is not authenticated
+ */
+export const getCurrentUserId = async (): Promise<string> => {
+  try {
+    const user = await getCurrentUser();
+    return user.userId;
+  } catch {
+    throw new Error("User not authenticated");
+  }
+};
 
 /**
  * Sign in with Google using Amplify
@@ -56,4 +71,17 @@ export const signUpWithEmailApi = async (
  */
 export const signOutApi = async (): Promise<void> => {
   await signOut();
+};
+
+/**
+ * Verify email with confirmation code
+ */
+export const verifyEmailApi = async (
+  email: string,
+  code: string,
+): Promise<void> => {
+  await confirmSignUp({
+    username: email,
+    confirmationCode: code,
+  });
 };

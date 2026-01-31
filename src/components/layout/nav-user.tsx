@@ -19,6 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { LanguageSelector } from "@/components/language-selector";
+import { ThemeSelector } from "@/components/theme-selector";
 
 export interface NavUserProps {
   items: {
@@ -80,7 +81,8 @@ export function NavUser({ user, items }: NavUserProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <LanguageSelector className="w-full" />
+              <LanguageSelector />
+              <ThemeSelector />
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

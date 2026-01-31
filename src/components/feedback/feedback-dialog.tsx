@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/hooks/use-auth";
 import { useCreateFeedback } from "@/hooks/feedback/use-create-feedback";
-import { FeedbackInputSchema, type FeedbackInput } from "@/model/feedback";
+import { type FeedbackInput } from "@/model/feedback";
 import { FeedbackForm } from "./feedback-form";
 import {
   Sheet,
@@ -28,7 +27,6 @@ export const FeedbackDialog = ({ isOpen, onClose }: FeedbackDialogProps) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const { control, handleSubmit, reset, formState } = useForm<FeedbackInput>({
-    resolver: zodResolver(FeedbackInputSchema),
     defaultValues: {
       rating: undefined,
       comment: "",
@@ -48,7 +46,6 @@ export const FeedbackDialog = ({ isOpen, onClose }: FeedbackDialogProps) => {
       await createFeedbackMutation.mutateAsync({
         ...data,
         url: currentUrl,
-        uid: user.id,
       });
 
       setSuccessMessage(t("thank-you-feedback"));

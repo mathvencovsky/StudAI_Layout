@@ -71,12 +71,12 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
   const [suggestInput, setSuggestInput] = React.useState<string>(query);
   const debounced = useDebouncedCallback(
     (v: string) => setSuggestInput(v),
-    150
+    150,
   );
   const { data: suggestionsData } = useModuleSuggestions(suggestInput);
   const suggestions = suggestionsData?.suggestions ?? [];
 
-  const { data, isLoading, isError, refetch } = useModules({
+  const { data, isLoading, isError, refetch, error } = useModules({
     q: query,
     // type: filters.type,
     status: filters.status,
@@ -135,6 +135,7 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
           <AlertTitle>{t("couldnt-load-modules")}</AlertTitle>
           <AlertDescription>
             {t("something-went-wrong-modules")}
+            {error.message}
           </AlertDescription>
         </Alert>
       )}

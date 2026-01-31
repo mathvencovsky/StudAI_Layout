@@ -1,48 +1,43 @@
-import { z } from "zod";
+import { generateClient, SelectionSet } from "aws-amplify/data";
+import { type Schema } from "../../amplify/data/resource";
 
-// TODO: migrate to amplify - define proper module content types
-export interface ModuleContent {
-  moduleId: string;
-  contentId: string;
-  position: number;
-}
+const client = generateClient<Schema>();
 
-// TODO: migrate to amplify - define proper content types
-export const ContentTypeEnum = z.enum(["video", "article", "tutorial"]);
+// Use selectionSet to define which fields to load for ModuleContent with related Content
+const moduleContentSelectionSet = [
+  "id",
+  "moduleId",
+  "contentId",
+  "position",
+  "isRequired",
+  "content.id",
+  "content.title",
+  "content.description",
+  "content.type",
+  "content.durationInSeconds",
+  "content.link",
+  "content.category",
+  "content.level",
+  "content.createdAt",
+  "content.updatedAt",
+] as const;
 
-export interface Content {
-  id: string;
-  type: z.infer<typeof ContentTypeEnum>;
-  category: string;
-  level: string;
-  title: string;
-  description: string;
-  link: string;
-  durationInSeconds: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-/* ========================== Zod Schemas & Types ========================== */
-
-export type ContentInModuleView = Content & {
-  moduleId: string;
-  position: number;
-};
-
-export const GetModuleContentsParamsSchema = z.object({
-  moduleId: z.string().optional(),
-  type: z.union([ContentTypeEnum, z.literal("all")]).optional(),
-});
-export type GetModuleContentsParams = z.infer<
-  typeof GetModuleContentsParamsSchema
+type ModuleContentWithContent = SelectionSet<
+  Schema["ModuleContent"]["type"],
+  typeof moduleContentSelectionSet
 >;
 
-export type GetModuleContentsResponse = {
-  items: ContentInModuleView[];
+// Infer types from schema instead of creating custom interfaces
+export type ModuleContentWithContentType = ModuleContentWithContent;
+
+export type GetModuleContentsParams = {
+  moduleId?: string;
+  type?: Schema["Content"]["type"]["type"] | "all";
 };
 
-/* ====================== API: getModuleContents ======================= */
+export type GetModuleContentsResponse = {
+  items: ModuleContentWithContentType[];
+};
 
 /**
  * Get all contents for a module with optional type filtering
@@ -52,15 +47,48 @@ export type GetModuleContentsResponse = {
 export const getModuleContents = async (
   params: GetModuleContentsParams,
 ): Promise<GetModuleContentsResponse> => {
-  // TODO: migrate to amplify
-  return {} as GetModuleContentsResponse;
+  if (!params.moduleId) {
+    return { items: [] };
+  }
+
+  const result = await client.models.ModuleContent.list({
+    filter: { moduleId: { eq: params.moduleId } },
+    selectionSet: moduleContentSelectionSet,
+  });
+
+  if (!result.data) {
+    console.error("Failed to get module contents:", result.errors);
+    return { items: [] };
+  }
+
+  let filteredContents = result.data.filter(
+    (moduleContent): moduleContent is ModuleContentWithContent =>
+      moduleContent.content !== null,
+  );
+
+  if (params.type && params.type !== "all") {
+    filteredContents = filteredContents.filter(
+      (moduleContent) => moduleContent.content.type === params.type,
+    );
+  }
+
+  filteredContents.sort((a, b) => a.position - b.position);
+
+  return { items: filteredContents };
 };
 
 /**
  * Get available content items for selection
  * @returns List of all available content items
  */
-export const getAvailableContent = async (): Promise<Content[]> => {
-  // TODO: migrate to amplify
-  return {} as Content[];
+export const getAvailableContent = async (): Promise<
+  Schema["Content"]["type"][]
+> => {
+  const result = await client.models.Content.list();
+  if (!result.data) {
+    console.error("Failed to get available content:", result.errors);
+    return [];
+  }
+
+  return result.data;
 };

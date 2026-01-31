@@ -3,10 +3,10 @@ import { useModuleContents } from "./use-module-contents";
 import { useGetUserContentProgress } from "./use-get-user-content-progress";
 import { selectContentsForDisplay } from "@/lib/content-selection";
 import type { Module } from "@/model/module";
-import type { ContentInModuleView } from "@/api/module-content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 import { useModule } from "@/hooks/modules/use-module";
 
-export interface ContentWithCompletionStatus extends ContentInModuleView {
+export interface ContentWithCompletionStatus extends ModuleContentWithContentType {
   isCompleted: boolean;
 }
 
@@ -54,12 +54,12 @@ export const useLastStartedModuleWithContents = () => {
           const completedSet = new Set(
             contentProgressQuery.data.items
               .filter((status) => status.isCompleted)
-              .map((status) => status.contentId)
+              .map((status) => status.contentId),
           );
 
           const selectedContents = selectContentsForDisplay(
             moduleContentsQuery.data.items,
-            contentProgressQuery.data.items
+            contentProgressQuery.data.items,
           );
 
           const contentsWithStatus: ContentWithCompletionStatus[] =
@@ -69,7 +69,7 @@ export const useLastStartedModuleWithContents = () => {
             }));
 
           const completedCount = moduleContentsQuery.data.items.filter(
-            (content) => completedSet.has(content.id)
+            (content) => completedSet.has(content.id),
           ).length;
 
           return {

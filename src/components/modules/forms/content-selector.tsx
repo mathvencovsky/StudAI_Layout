@@ -68,7 +68,7 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
     }
 
     const sortedItems = [...moduleContentsData.items].sort(
-      (a, b) => a.position - b.position
+      (a, b) => a.position - b.position,
     );
     const initialContentIds = sortedItems.map((item) => item.id);
 
@@ -89,7 +89,7 @@ export const ContentSelector: React.FC<ContentSelectorProps> = ({
     return (
       content.title.toLowerCase().includes(lowerSearch) ||
       content.description.toLowerCase().includes(lowerSearch) ||
-      content.type.toLowerCase().includes(lowerSearch)
+      (content.type?.toLowerCase().includes(lowerSearch) ?? false)
     );
   });
 

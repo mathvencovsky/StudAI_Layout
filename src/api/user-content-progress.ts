@@ -1,50 +1,69 @@
-import { z } from "zod";
+import { generateClient } from "aws-amplify/data";
+import { type Schema } from "../../amplify/data/resource";
+import { getCurrentUserId } from "./auth";
 
-// TODO: migrate to amplify - define proper user content progress types
-export interface UserContentProgress {
-  id: string;
-  uid: string;
-  moduleId: string;
-  contentId: string;
-  isCompleted: boolean;
-  completionDate?: string;
+const client = generateClient<Schema>();
+
+export interface GetUserContentProgressResponse {
+  items: Schema["UserContentProgress"]["type"][];
 }
-
-export const ToggleContentCompletionInputSchema = z.object({
-  moduleId: z.string(),
-  contentId: z.string(),
-  isCompleted: z.boolean(),
-});
-export type ToggleContentCompletionInput = z.infer<
-  typeof ToggleContentCompletionInputSchema
->;
-
-export type GetUserContentProgressResponse = {
-  items: UserContentProgress[];
-};
-
-/* ========================== Utilities ========================== */
-
-/**
- * Get the current user ID from Firebase auth
- * @throws Error if user is not authenticated
- */
-const getCurrentUserId = (): string => {
-  // TODO: migrate to amplify - get current user ID
-  throw new Error("User not authenticated");
-};
-
-/* ========================== API Functions ========================== */
 
 /**
  * Toggle content completion status for the current user
  * Creates or updates entry in userContentProgress collection
  */
-export const toggleContentCompletion = async (
-  input: ToggleContentCompletionInput,
-): Promise<UserContentProgress> => {
-  // TODO: migrate to amplify
-  return {} as UserContentProgress;
+export const toggleContentCompletion = async (input: {
+  moduleId: string;
+  contentId: string;
+  isCompleted: boolean;
+}): Promise<Schema["UserContentProgress"]["type"]> => {
+  await getCurrentUserId();
+
+  const existingResult = await client.models.UserContentProgress.list({
+    filter: {
+      and: [
+        { moduleId: { eq: input.moduleId } },
+        { contentId: { eq: input.contentId } },
+      ],
+    },
+  });
+
+  if (existingResult.data && existingResult.data.length > 0) {
+    const existing = existingResult.data[0];
+    const updateInput: Schema["UserContentProgress"]["updateType"] = {
+      id: existing.id,
+      isCompleted: input.isCompleted,
+      completionDate: input.isCompleted ? Date.now() : undefined,
+      updatedAt: Date.now(),
+    };
+
+    const result = await client.models.UserContentProgress.update(updateInput);
+
+    if (!result.data) {
+      console.error("Failed to update content progress:", result.errors);
+      throw new Error("Failed to update content progress");
+    }
+
+    return result.data;
+  } else {
+    const createInput: Schema["UserContentProgress"]["createType"] = {
+      moduleId: input.moduleId,
+      contentId: input.contentId,
+      isCompleted: input.isCompleted,
+      completionDate: input.isCompleted ? Date.now() : undefined,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+
+    const result = await client.models.UserContentProgress.create(createInput);
+
+    if (!result.data) {
+      console.error("Failed to create content progress:", result.errors);
+      throw new Error("Failed to create content progress");
+    }
+
+    return result.data;
+  }
 };
 
 /**
@@ -54,6 +73,16 @@ export const toggleContentCompletion = async (
 export const getUserContentProgress = async (
   moduleId: string,
 ): Promise<GetUserContentProgressResponse> => {
-  // TODO: migrate to amplify
-  return {} as GetUserContentProgressResponse;
+  await getCurrentUserId();
+
+  const result = await client.models.UserContentProgress.list({
+    filter: { moduleId: { eq: moduleId } },
+  });
+
+  if (!result.data) {
+    console.error("Failed to get user content progress:", result.errors);
+    return { items: [] };
+  }
+
+  return { items: result.data };
 };

@@ -1,41 +1,33 @@
-import { z } from "zod";
+import { generateClient } from "aws-amplify/data";
+import { type Schema } from "../../amplify/data/resource";
+import { getCurrentUserId } from "./auth";
 
-// TODO: migrate to amplify - define proper user module progress types
-export interface UserModuleProgress {
-  id: string;
-  uid: string;
-  moduleId: string;
-  startDate: string;
-  completionDate?: string;
-}
-
-export const StartModuleInputSchema = z.object({
-  moduleId: z.string(),
-});
-export type StartModuleInput = z.infer<typeof StartModuleInputSchema>;
-
-/* ========================== Utilities ========================== */
-
-/**
- * Get the current user ID from Firebase auth
- * @throws Error if user is not authenticated
- */
-const getCurrentUserId = (): string => {
-  // TODO: migrate to amplify - get current user ID
-  throw new Error("User not authenticated");
-};
-
-/* ========================== API Functions ========================== */
+const client = generateClient<Schema>();
 
 /**
  * Start a module for the current user
  * Creates a new entry in userModuleProgress collection with current timestamp
  */
-export const startModule = async (
-  input: StartModuleInput,
-): Promise<UserModuleProgress> => {
-  // TODO: migrate to amplify
-  return {} as UserModuleProgress;
+export const startModule = async (input: {
+  moduleId: string;
+}): Promise<Schema["UserModuleProgress"]["type"]> => {
+  await getCurrentUserId();
+
+  const createInput: Schema["UserModuleProgress"]["createType"] = {
+    moduleId: input.moduleId,
+    startDate: Date.now(),
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  };
+
+  const result = await client.models.UserModuleProgress.create(createInput);
+
+  if (!result.data) {
+    console.error("Failed to start module:", result.errors);
+    throw new Error("Failed to start module");
+  }
+
+  return result.data;
 };
 
 /**
@@ -44,17 +36,36 @@ export const startModule = async (
  */
 export const getUserModuleProgress = async (
   moduleId: string,
-): Promise<UserModuleProgress | null> => {
-  // TODO: migrate to amplify
-  return {} as UserModuleProgress | null;
+): Promise<Schema["UserModuleProgress"]["type"] | null> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserModuleProgress.list({
+    filter: { moduleId: { eq: moduleId } },
+  });
+
+  if (!result.data || result.data.length === 0) {
+    return null;
+  }
+
+  return result.data[0];
 };
 
 /**
  * Get the current user's most recently started module
  * Returns null if user hasn't started any modules
  */
-export const getLastStartedModule =
-  async (): Promise<UserModuleProgress | null> => {
-    // TODO: migrate to amplify
-    return {} as UserModuleProgress | null;
-  };
+export const getLastStartedModule = async (): Promise<
+  Schema["UserModuleProgress"]["type"] | null
+> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserModuleProgress.list();
+
+  if (!result.data || result.data.length === 0) {
+    return null;
+  }
+
+  const sortedProgress = result.data.sort((a, b) => b.startDate - a.startDate);
+
+  return sortedProgress[0];
+};

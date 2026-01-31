@@ -1,4 +1,1 @@
-export {
-  LanguageSelector,
-  type LanguageSelectorProps,
-} from "./language-selector";
+export { LanguageSelector } from "./language-selector";

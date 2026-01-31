@@ -16,7 +16,5 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { isAuthenticated } = useAuth();
   const { redirect } = Route.useSearch();
-  return <HomePage />;
-  //  isAuthenticated ?
-  // : <LoginPage redirect={redirect} />;
+  return isAuthenticated ? <HomePage /> : <LoginPage redirect={redirect} />;
 }

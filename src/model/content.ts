@@ -1,36 +1,21 @@
-import { z } from "zod";
+import { type Schema } from "../../amplify/data/resource";
 
-export const ContentTypeEnum = z.enum([
-  "youtube-video",
+export type Content = Schema["Content"]["type"];
+export type ContentCreateInput = Schema["Content"]["createType"];
+export type ContentUpdateInput = Schema["Content"]["updateType"];
+export type ContentType = NonNullable<Content["type"]>;
+export type ContentLevel = NonNullable<Content["level"]>;
+
+export const CONTENT_TYPES: ContentType[] = [
+  "youtube_video",
   "article",
   "quiz",
   "assignment",
   "lab",
-]);
+];
 
-export const ContentLevelEnum = z.enum([
+export const CONTENT_LEVELS: ContentLevel[] = [
   "beginner",
   "intermediate",
   "advanced",
-]);
-
-export const ContentSchema = z.object({
-  title: z.string(),
-  description: z.string(),
-  type: ContentTypeEnum,
-  durationInSeconds: z.number().int().positive(),
-  link: z.string(),
-  category: z.string(),
-  level: ContentLevelEnum,
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
-
-export const ContentWithIdSchema = ContentSchema.extend({
-  id: z.string(),
-});
-
-export type Content = z.infer<typeof ContentWithIdSchema>;
-export type ContentInput = z.infer<typeof ContentSchema>;
-export type ContentType = z.infer<typeof ContentTypeEnum>;
-export type ContentLevel = z.infer<typeof ContentLevelEnum>;
+];

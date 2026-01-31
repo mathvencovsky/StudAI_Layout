@@ -19,16 +19,16 @@ export interface RouterContext {
 const RootLayout = () => {
   const { user } = useAuth();
 
-  // const isAuthenticated = !!user;
+  const isAuthenticated = !!user;
 
-  // if (!isAuthenticated) {
-  //   return (
-  //     <>
-  //       <Outlet />
-  //       <TanStackRouterDevtools />
-  //     </>
-  //   );
-  // }
+  if (!isAuthenticated) {
+    return (
+      <>
+        <Outlet />
+        <TanStackRouterDevtools />
+      </>
+    );
+  }
 
   return (
     <>

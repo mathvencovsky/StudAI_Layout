@@ -7,7 +7,7 @@ import { getUserVote } from "@/api/votes";
 export function getUserVoteQueryOptions(moduleId: string, uid: string) {
   return queryOptions({
     queryKey: ["userVote", moduleId, uid],
-    queryFn: () => getUserVote(moduleId, uid),
+    queryFn: () => getUserVote(moduleId),
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 }

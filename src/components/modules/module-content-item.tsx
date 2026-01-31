@@ -4,19 +4,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useExtractMetadata } from "@/hooks/metadata/use-extract-metadata";
 import { useNavigate } from "@tanstack/react-router";
 import { formatDuration } from "@/lib/duration-utils";
-import type { ContentInModuleView } from "@/api/module-content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 import type { UserContentProgress } from "@/model/user-content-progress";
 import useIsOnScreen from "@/hooks/use-is-on-screen";
 import { useRef } from "react";
 
 export interface ModuleContentItemProps {
-  item: ContentInModuleView;
+  item: ModuleContentWithContentType;
   progress: UserContentProgress | undefined;
   hasStarted: boolean;
   moduleId: string;
   onToggleCompletion: (
     contentId: string,
-    isCompleted: boolean
+    isCompleted: boolean,
   ) => Promise<void>;
   isLoading?: boolean;
 }
@@ -38,8 +38,8 @@ export const ModuleContentItem = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useIsOnScreen(containerRef);
   const { data: metadata, isLoading: isMetadataLoading } = useExtractMetadata(
-    item.link ?? "",
-    isOnScreen
+    item.content.link ?? "",
+    isOnScreen,
   );
 
   const handleCheckboxChange = async (checked: boolean) => {
@@ -59,9 +59,11 @@ export const ModuleContentItem = ({
     return lineArray.join("\n");
   };
 
-  const displayTitle = metadata?.title || item.title || t("untitled");
+  const displayTitle = metadata?.title || item.content.title || t("untitled");
   const displayDescription =
-    metadata?.description || item.description || t("no-description-available");
+    metadata?.description ||
+    item.content.description ||
+    t("no-description-available");
   const displayImage = metadata?.image;
 
   return (
@@ -117,9 +119,9 @@ export const ModuleContentItem = ({
               <h3 className="font-semibold text-sm line-clamp-1">
                 {displayTitle}
               </h3>
-              {item.durationInSeconds && (
+              {item.content.durationInSeconds && (
                 <span className="text-xs text-muted-foreground flex-shrink-0">
-                  {formatDuration(item.durationInSeconds)}
+                  {formatDuration(item.content.durationInSeconds)}
                 </span>
               )}
             </div>

@@ -8,13 +8,10 @@ import {
   CardContent,
   CardAction,
 } from "@/components/ui/card";
-import {
-  calculateModuleTotalDuration,
-  formatDuration,
-} from "@/lib/duration-utils";
+import { formatDuration } from "@/lib/duration-utils";
 import type { Module } from "@/model/module";
 import type { UserModuleProgress } from "@/model/user-module-progress";
-import type { Content } from "@/model/content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 import { Loader2 } from "lucide-react";
 import { VoteButtonsContainer } from "@/components/voting/vote-buttons-container";
 
@@ -23,7 +20,7 @@ export interface ModuleHeaderProps {
   userProgress: UserModuleProgress | null;
   onStartModule: () => Promise<void>;
   isLoading?: boolean;
-  contents?: Content[];
+  contents?: ModuleContentWithContentType[];
 }
 
 export const ModuleHeader = ({
@@ -34,8 +31,8 @@ export const ModuleHeader = ({
   contents = [],
 }: ModuleHeaderProps) => {
   const { t } = useTranslation();
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (dateTimestamp: number) => {
+    const date = new Date(dateTimestamp);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -43,7 +40,9 @@ export const ModuleHeader = ({
     });
   };
 
-  const totalDuration = calculateModuleTotalDuration(contents);
+  const totalDuration = contents.reduce((total, moduleContent) => {
+    return total + (moduleContent.content.durationInSeconds || 0);
+  }, 0);
   const formattedTotalDuration = formatDuration(totalDuration);
 
   return (

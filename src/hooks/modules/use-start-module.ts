@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { startModule } from "@/api/module-progress";
-import type { StartModuleInput } from "@/api/module-progress";
+import { type Schema } from "../../../amplify/data/resource";
 
 /**
  * Mutation hook for starting a module
@@ -9,9 +9,8 @@ import type { StartModuleInput } from "@/api/module-progress";
 export const useStartModule = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: StartModuleInput) => startModule(data),
-    onSuccess: (data) => {
-      // Invalidate module progress queries to refresh data after starting
+    mutationFn: (data: { moduleId: string }) => startModule(data),
+    onSuccess: (data: Schema["UserModuleProgress"]["type"]) => {
       void qc.invalidateQueries({
         queryKey: ["userModuleProgress", data.moduleId],
       });

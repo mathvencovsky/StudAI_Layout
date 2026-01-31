@@ -1,17 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateModule } from "@/api/modules";
-import type { UpdateModuleInput } from "@/api/modules";
+import { type Schema } from "../../../amplify/data/resource";
 
 export const useUpdateModule = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: UpdateModuleInput) => updateModule(data),
-    onSuccess: (updatedModule) => {
-      // Invalidate module lists to refresh data after update
+    mutationFn: (data: {
+      id: string;
+      title?: string;
+      description?: string;
+      contentIds?: string[];
+    }) => updateModule(data),
+    onSuccess: (updatedModule: Schema["Module"]["type"]) => {
       void qc.invalidateQueries({ queryKey: ["modules"] });
-      // Invalidate specific module data if it exists
       void qc.invalidateQueries({ queryKey: ["module", updatedModule.id] });
-      // Invalidate module contents as the content list may have changed
       void qc.invalidateQueries({
         queryKey: ["moduleContents", updatedModule.id],
       });

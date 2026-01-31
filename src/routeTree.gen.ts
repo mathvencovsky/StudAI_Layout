@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
@@ -28,6 +29,11 @@ import { Route as ContentContentIdIndexRouteImport } from './routes/content/$con
 import { Route as ContentContentIdEditRouteImport } from './routes/content/$contentId/edit'
 import { Route as ModuleModuleIdContentContentIdRouteImport } from './routes/module/$moduleId/content/$contentId'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignUpRoute = SignUpRouteImport.update({
   id: '/sign-up',
   path: '/sign-up',
@@ -130,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
@@ -148,6 +155,7 @@ export interface FileRoutesByTo {
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/content': typeof ContentIndexRoute
   '/module': typeof ModuleIndexRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
@@ -189,6 +198,7 @@ export interface FileRouteTypes {
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
+    | '/verify-email'
     | '/content/$contentId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
@@ -207,6 +217,7 @@ export interface FileRouteTypes {
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
+    | '/verify-email'
     | '/module-edit/$moduleId'
     | '/content'
     | '/module'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
+    | '/verify-email'
     | '/content/$contentId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
@@ -246,11 +258,19 @@ export interface RootRouteChildren {
   ModuleCreateRoute: typeof ModuleCreateRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignUpRoute: typeof SignUpRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
   ModuleEditModuleIdRoute: typeof ModuleEditModuleIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-up': {
       id: '/sign-up'
       path: '/sign-up'
@@ -443,6 +463,7 @@ const rootRouteChildren: RootRouteChildren = {
   ModuleCreateRoute: ModuleCreateRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignUpRoute: SignUpRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
   ModuleEditModuleIdRoute: ModuleEditModuleIdRoute,
 }
 export const routeTree = rootRouteImport

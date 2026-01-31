@@ -45,6 +45,14 @@ export default {
   "submit-feedback": "Enviar Feedback",
   submitting: "Enviando...",
   "title-min-length": "O título deve ter pelo menos 3 caracteres",
+  "theme-color": "Cor",
+  "theme-color-default": "Padrão",
+  "theme-color-studai": "StudAI",
+  "theme-mode": "Modo",
+  "theme-mode-dark": "Escuro",
+  "theme-mode-light": "Claro",
+  "theme-mode-system": "Sistema",
+  "theme-selector": "Tema",
   "this-field-is-required": "Este campo é obrigatório.",
   type: "Tipo",
   "upload-csv": "Enviar CSV",
@@ -152,4 +160,13 @@ export default {
     "Falha ao carregar seu último módulo iniciado. Por favor, tente novamente mais tarde.",
   "rate-stars": "Avaliar",
   stars: "estrelas",
+  "verify-email-title": "Verifique Seu Email",
+  "verify-email-description":
+    "Digite o código de 6 dígitos enviado para seu endereço de email",
+  "verify-email-description-with-email":
+    "Digite o código de 6 dígitos enviado para {{email}}",
+  "verification-code": "Código de Verificação",
+  "enter-verification-code": "000000",
+  "verify-email": "Verificar Email",
+  verifying: "Verificando...",
 };

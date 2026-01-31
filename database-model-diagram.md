@@ -17,7 +17,7 @@ erDiagram
         string id PK "Auto-generated Firestore ID"
         string title "Content title"
         string description "Content description"
-        string type "youtube-video | article | quiz | assignment | lab"
+        string type "youtube_video | article | quiz | assignment | lab"
         number durationInSeconds "Duration in seconds (positive integer)"
         string link "URL to the content resource"
         string category "Content category"

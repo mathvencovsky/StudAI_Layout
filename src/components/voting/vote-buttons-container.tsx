@@ -21,7 +21,7 @@ export const VoteButtonsContainer = ({
 
   const { data: userVoteState, isLoading: isLoadingUserVote } = useGetUserVote(
     moduleId,
-    user?.id ?? ""
+    user?.id ?? "",
   );
 
   const { data: voteCounts, isLoading: isLoadingCounts } =
@@ -58,8 +58,8 @@ export const VoteButtonsContainer = ({
 
   return (
     <VoteButtons
-      upvoteCount={voteCounts?.upvoteCount}
-      downvoteCount={voteCounts?.downvoteCount}
+      upvoteCount={voteCounts?.upvoteCount ?? 0}
+      downvoteCount={voteCounts?.downvoteCount ?? 0}
       userVoteState={userVoteState ?? null}
       onUpvote={handleUpvote}
       onDownvote={handleDownvote}

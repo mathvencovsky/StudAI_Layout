@@ -1,9 +1,9 @@
 import { CheckCircle2, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { ContentInModuleView } from "@/api/module-content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 
 export interface ContentItemDisplayProps {
-  content: ContentInModuleView;
+  content: ModuleContentWithContentType;
   isCompleted: boolean;
   onClick: () => void;
   onToggleCompletion: () => void;
@@ -43,15 +43,15 @@ export const ContentItemDisplay = ({
               isCompleted ? "line-through text-gray-500" : "text-gray-900"
             }`}
           >
-            {content.title}
+            {content.content.title}
           </h4>
           <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
-            {content.type}
+            {content.content.type}
           </span>
         </div>
-        {content.description && (
+        {content.content.description && (
           <p className="text-xs text-gray-600 mt-1 line-clamp-2">
-            {content.description}
+            {content.content.description}
           </p>
         )}
       </button>

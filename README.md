@@ -16,10 +16,15 @@ This template equips you with a foundational React application integrated with A
 
 For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/react/start/quickstart/#deploy-a-fullstack-app-to-aws) of our documentation.
 
-## Security
+## Troubleshooting
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+### AWS SSO Token Expired
 
-## License
+If you see this error:
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+```
+[InvalidCredentialError] Failed to load AWS credentials for profile 'default'
+  ∟ Caused by: [CredentialsProviderError] Token is expired. To refresh this SSO session run 'aws sso login' with the corresponding profile.
+```
+
+Run `aws sso login` to refresh your SSO session.

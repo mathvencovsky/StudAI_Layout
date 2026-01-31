@@ -1,15 +1,15 @@
-import type { ContentInModuleView } from "@/api/module-content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 import { ModuleContentItem } from "@/components/modules/module-content-item";
 import type { UserContentProgress } from "@/model/user-content-progress";
 
 export interface ModuleContentListProps {
-  items: ContentInModuleView[];
+  items: ModuleContentWithContentType[];
   contentProgress: UserContentProgress[];
   hasStarted: boolean;
   moduleId: string;
   onToggleCompletion: (
     contentId: string,
-    isCompleted: boolean
+    isCompleted: boolean,
   ) => Promise<void>;
   isLoading?: boolean;
 }

@@ -20,13 +20,13 @@ export const ProgressBar = ({
 }: ProgressBarProps) => {
   const { t } = useTranslation();
   const completedCount = contentProgress.filter(
-    (item) => item.isCompleted
+    (item) => item.isCompleted,
   ).length;
   const completionPercentage =
     totalContentCount > 0 ? (completedCount / totalContentCount) * 100 : 0;
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (dateTimestamp: number) => {
+    const date = new Date(dateTimestamp);
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",

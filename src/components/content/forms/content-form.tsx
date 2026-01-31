@@ -1,7 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,11 +13,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { type CreateContentInput } from "@/api/content";
 import {
-  CreateContentInputSchema,
-  type CreateContentInput,
-} from "@/api/content";
-import { ContentTypeEnum, ContentLevelEnum } from "@/model/content";
+  CONTENT_TYPES,
+  CONTENT_LEVELS,
+  type ContentType,
+  type ContentLevel,
+} from "@/model/content";
 
 export interface ContentFormProps {
   mode: "create" | "edit";
@@ -51,7 +52,6 @@ export const ContentForm: React.FC<ContentFormProps> = ({
     setValue,
     watch,
   } = useForm<CreateContentInput>({
-    resolver: zodResolver(CreateContentInputSchema),
     defaultValues,
     mode: "onChange",
   });
@@ -71,17 +71,14 @@ export const ContentForm: React.FC<ContentFormProps> = ({
           <Select
             value={typeValue || ""}
             onValueChange={(value) => {
-              const result = ContentTypeEnum.safeParse(value);
-              if (result.success) {
-                setValue("type", result.data);
-              }
+              setValue("type", value as ContentType);
             }}
           >
             <SelectTrigger id="type">
               <SelectValue placeholder={t("select-type")} />
             </SelectTrigger>
             <SelectContent>
-              {ContentTypeEnum.options.map((option) => (
+              {CONTENT_TYPES.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
                 </SelectItem>
@@ -108,17 +105,14 @@ export const ContentForm: React.FC<ContentFormProps> = ({
           <Select
             value={levelValue || ""}
             onValueChange={(value) => {
-              const result = ContentLevelEnum.safeParse(value);
-              if (result.success) {
-                setValue("level", result.data);
-              }
+              setValue("level", value as ContentLevel);
             }}
           >
             <SelectTrigger id="level">
               <SelectValue placeholder={t("select-level")} />
             </SelectTrigger>
             <SelectContent>
-              {ContentLevelEnum.options.map((option) => (
+              {CONTENT_LEVELS.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
                 </SelectItem>

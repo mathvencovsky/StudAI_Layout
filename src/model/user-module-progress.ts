@@ -1,15 +1,7 @@
-import { z } from "zod";
+import { type Schema } from "../../amplify/data/resource";
 
-export const UserModuleProgressSchema = z.object({
-  uid: z.string(),
-  moduleId: z.string(),
-  startDate: z.string(),
-  completionDate: z.string().optional(),
-});
-
-export const UserModuleProgressWithIdSchema = UserModuleProgressSchema.extend({
-  id: z.string(),
-});
-
-export type UserModuleProgress = z.infer<typeof UserModuleProgressWithIdSchema>;
-export type UserModuleProgressInput = z.infer<typeof UserModuleProgressSchema>;
+export type UserModuleProgress = Schema["UserModuleProgress"]["type"];
+export type UserModuleProgressCreateInput =
+  Schema["UserModuleProgress"]["createType"];
+export type UserModuleProgressUpdateInput =
+  Schema["UserModuleProgress"]["updateType"];

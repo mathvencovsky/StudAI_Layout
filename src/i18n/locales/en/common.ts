@@ -45,6 +45,14 @@ export default {
   "submit-feedback": "Submit Feedback",
   submitting: "Submitting...",
   "title-min-length": "Title must be at least 3 characters long",
+  "theme-color": "Color",
+  "theme-color-default": "Default",
+  "theme-color-studai": "StudAI",
+  "theme-mode": "Mode",
+  "theme-mode-dark": "Dark",
+  "theme-mode-light": "Light",
+  "theme-mode-system": "System",
+  "theme-selector": "Theme",
   "this-field-is-required": "This field is required.",
   type: "Type",
   "upload-csv": "Upload CSV",
@@ -146,4 +154,13 @@ export default {
   "rate-stars": "Rate",
   stars: "stars",
   "test-bar": "Bar {{bar}}",
+  "verify-email-title": "Verify Your Email",
+  "verify-email-description":
+    "Enter the 6-digit code sent to your email address",
+  "verify-email-description-with-email":
+    "Enter the 6-digit code sent to {{email}}",
+  "verification-code": "Verification Code",
+  "enter-verification-code": "000000",
+  "verify-email": "Verify Email",
+  verifying: "Verifying...",
 } as const;

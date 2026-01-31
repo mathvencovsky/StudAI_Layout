@@ -1,75 +1,69 @@
-import { z } from "zod";
+import { generateClient } from "aws-amplify/data";
+import { type Schema } from "../../amplify/data/resource";
 
-// TODO: migrate to amplify - define proper content types
-export const ContentLevelEnum = z.enum([
-  "beginner",
-  "intermediate",
-  "advanced",
-]);
-export const ContentTypeEnum = z.enum(["video", "article", "tutorial"]);
+const client = generateClient<Schema>();
 
-export interface Content {
-  id: string;
-  type: z.infer<typeof ContentTypeEnum>;
-  category: string;
-  level: z.infer<typeof ContentLevelEnum>;
-  title: string;
-  description: string;
-  link: string;
-  durationInSeconds: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export const CreateContentInputSchema = z.object({
-  type: ContentTypeEnum,
-  category: z.string(),
-  level: ContentLevelEnum,
-  title: z.string(),
-  description: z.string(),
-  link: z.string(),
-  durationInSeconds: z.number().int().positive(),
-});
-
-export type CreateContentInput = z.infer<typeof CreateContentInputSchema>;
-
-export const UpdateContentInputSchema = z.object({
-  id: z.string(),
-  type: ContentTypeEnum,
-  category: z.string(),
-  level: ContentLevelEnum,
-  title: z.string(),
-  description: z.string(),
-  link: z.string(),
-  durationInSeconds: z.number().int().positive(),
-});
-
-export type UpdateContentInput = z.infer<typeof UpdateContentInputSchema>;
+export type CreateContentInput = Omit<
+  Schema["Content"]["createType"],
+  "createdAt" | "updatedAt"
+>;
 
 /** API: list all content */
-export const listContent = async (): Promise<Content[]> => {
-  // TODO: migrate to amplify
-  return {} as Content[];
+export const listContent = async (): Promise<Schema["Content"]["type"][]> => {
+  const result = await client.models.Content.list();
+  if (!result.data) {
+    console.error("Failed to list content:", result.errors);
+    return [];
+  }
+
+  return result.data;
 };
 
 /** API: get single content */
-export const getContent = async (id: string): Promise<Content | null> => {
-  // TODO: migrate to amplify
-  return {} as Content | null;
+export const getContent = async (
+  identifier: Schema["Content"]["identifier"],
+): Promise<Schema["Content"]["type"] | null> => {
+  const result = await client.models.Content.get(identifier);
+  if (!result.data) {
+    console.error("Failed to get content:", result.errors);
+    return null;
+  }
+
+  return result.data;
 };
 
 /** API: create content (stores all strings exactly as provided; no trimming/validation here) */
 export const createContent = async (
   input: CreateContentInput,
-): Promise<Content> => {
-  // TODO: migrate to amplify
-  return {} as Content;
+): Promise<Schema["Content"]["type"]> => {
+  const now = Date.now();
+  const result = await client.models.Content.create({
+    ...input,
+    createdAt: now,
+    updatedAt: now,
+  });
+
+  if (!result.data) {
+    console.error("Failed to create content:", result.errors);
+    throw new Error("Failed to create content");
+  }
+
+  return result.data;
 };
 
 /** API: update content (preserves createdAt, only updates updatedAt) */
 export const updateContent = async (
-  input: UpdateContentInput,
-): Promise<Content> => {
-  // TODO: migrate to amplify
-  return {} as Content;
+  input: Schema["Content"]["updateType"],
+): Promise<Schema["Content"]["type"]> => {
+  const result = await client.models.Content.update({
+    ...input,
+    updatedAt: Date.now(),
+  });
+
+  if (!result.data) {
+    console.error("Failed to update content:", result.errors);
+    throw new Error("Failed to update content");
+  }
+
+  return result.data;
 };

@@ -14,12 +14,12 @@ interface VoteMutationParams {
  * Handles vote mutations (upvote, downvote, and vote removal)
  */
 async function handleVoteMutation(params: VoteMutationParams): Promise<void> {
-  const { moduleId, uid, currentVoteState, voteValue } = params;
+  const { moduleId, currentVoteState, voteValue } = params;
 
   if (currentVoteState === voteValue) {
-    await clearVote(moduleId, uid);
+    await clearVote(moduleId);
   } else {
-    await vote(moduleId, uid, voteValue);
+    await vote(moduleId, voteValue);
   }
 }
 
@@ -36,7 +36,7 @@ export function useVoteMutation() {
 
       const getUserVoteQueryKey = getUserVoteQueryOptions(
         moduleId,
-        uid
+        uid,
       ).queryKey;
 
       await queryClient.cancelQueries({
@@ -56,19 +56,19 @@ export function useVoteMutation() {
       if (context?.previousVoteState !== undefined) {
         const getUserVoteQueryKey = getUserVoteQueryOptions(
           params.moduleId,
-          params.uid
+          params.uid,
         ).queryKey;
 
         queryClient.setQueryData(
           getUserVoteQueryKey,
-          context.previousVoteState
+          context.previousVoteState,
         );
       }
     },
     onSuccess: (_, params) => {
       const getUserVoteQueryKey = getUserVoteQueryOptions(
         params.moduleId,
-        params.uid
+        params.uid,
       ).queryKey;
 
       queryClient.invalidateQueries({

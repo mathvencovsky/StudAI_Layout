@@ -1,4 +1,4 @@
-import type { ContentInModuleView } from "@/api/module-content";
+import type { ModuleContentWithContentType } from "@/api/module-content";
 import type { UserContentProgress } from "@/model/user-content-progress";
 
 /**
@@ -11,9 +11,9 @@ import type { UserContentProgress } from "@/model/user-content-progress";
  * Results are returned in original module order
  */
 export const selectContentsForDisplay = (
-  allContents: ContentInModuleView[],
-  completionStatus: UserContentProgress[]
-): ContentInModuleView[] => {
+  allContents: ModuleContentWithContentType[],
+  completionStatus: UserContentProgress[],
+): ModuleContentWithContentType[] => {
   if (allContents.length === 0) {
     return [];
   }
@@ -25,14 +25,14 @@ export const selectContentsForDisplay = (
   const completedSet = new Set(
     completionStatus
       .filter((status) => status.isCompleted)
-      .map((status) => status.contentId)
+      .map((status) => status.contentId),
   );
 
   const completed = allContents.filter((content) =>
-    completedSet.has(content.id)
+    completedSet.has(content.id),
   );
   const incomplete = allContents.filter(
-    (content) => !completedSet.has(content.id)
+    (content) => !completedSet.has(content.id),
   );
 
   const selectedIds: Set<string> = new Set();

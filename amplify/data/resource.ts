@@ -1,17 +1,143 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any user authenticated via an API key can "create", "read",
-"update", and "delete" any "Todo" records.
-=========================================================================*/
 const schema = a.schema({
-  Todo: a
+  // Core Entities
+  Content: a
     .model({
-      content: a.string(),
+      title: a.string().required(),
+      description: a.string().required(),
+      type: a.enum(["youtube_video", "article", "quiz", "assignment", "lab"]),
+      durationInSeconds: a.integer().required(),
+      link: a.url().required(),
+      category: a.string().required(),
+      level: a.enum(["beginner", "intermediate", "advanced"]),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      moduleContents: a.hasMany("ModuleContent", "contentId"),
+      userContentProgress: a.hasMany("UserContentProgress", "contentId"),
     })
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.owner().to(["create", "update", "delete"]),
+    ]),
+
+  Module: a
+    .model({
+      title: a.string().required(),
+      description: a.string().required(),
+      upvoteCount: a.integer().default(0),
+      downvoteCount: a.integer().default(0),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      moduleContents: a.hasMany("ModuleContent", "moduleId"),
+      userModuleProgress: a.hasMany("UserModuleProgress", "moduleId"),
+      userContentProgress: a.hasMany("UserContentProgress", "moduleId"),
+      votes: a.hasMany("Vote", "moduleId"),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.owner().to(["create", "update", "delete"]),
+    ]),
+
+  ModuleContent: a
+    .model({
+      moduleId: a.id().required(),
+      contentId: a.id().required(),
+      position: a.integer().required(),
+      isRequired: a.boolean().default(true),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      module: a.belongsTo("Module", "moduleId"),
+      content: a.belongsTo("Content", "contentId"),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.owner().to(["create", "update", "delete"]),
+    ]),
+
+  // Progress Tracking
+  UserModuleProgress: a
+    .model({
+      moduleId: a.id().required(),
+      startDate: a.timestamp().required(),
+      completionDate: a.timestamp(),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      module: a.belongsTo("Module", "moduleId"),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  UserContentProgress: a
+    .model({
+      moduleId: a.id().required(),
+      contentId: a.id().required(),
+      isCompleted: a.boolean().default(false),
+      completionDate: a.timestamp(),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      module: a.belongsTo("Module", "moduleId"),
+      content: a.belongsTo("Content", "contentId"),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  // Voting System
+  Vote: a
+    .model({
+      moduleId: a.id().required(),
+      value: a.integer().required(),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+
+      // Relationships
+      module: a.belongsTo("Module", "moduleId"),
+    })
+    .authorization((allow) => [
+      allow.owner(),
+      allow.authenticated().to(["read"]),
+    ]),
+
+  // Feedback System
+  Feedback: a
+    .model({
+      rating: a.integer().required(),
+      comment: a.string(),
+      url: a.url().required(),
+      createdAt: a.timestamp().required(),
+      updatedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [
+      allow.owner(),
+      allow.authenticated().to(["read"]),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,39 +145,10 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
+    defaultAuthorizationMode: "userPool",
     // API Key is used for a.allow.public() rules
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
   },
 });
-
-/*== STEP 2 ===============================================================
-Go to your frontend source code. From your client-side code, generate a
-Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
-WORK IN THE FRONTEND CODE FILE.)
-
-Using JavaScript or Next.js React Server Components, Middleware, Server 
-Actions or Pages Router? Review how to generate Data clients for those use
-cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
-=========================================================================*/
-
-/*
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
-*/
-
-/*== STEP 3 ===============================================================
-Fetch records from the database and use them in your frontend component.
-(THIS SNIPPET WILL ONLY WORK IN THE FRONTEND CODE FILE.)
-=========================================================================*/
-
-/* For example, in a React component, you can use this snippet in your
-  function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
-
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>

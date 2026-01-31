@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContent } from "@/api/content";
-import type { CreateContentInput } from "@/api/content";
+import { createContent, type CreateContentInput } from "@/api/content";
 
 export const useCreateContent = () => {
   const qc = useQueryClient();

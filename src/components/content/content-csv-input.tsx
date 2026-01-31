@@ -1,7 +1,12 @@
 import { type CreateContentInput, createContent } from "@/api/content";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { ContentTypeEnum, ContentLevelEnum } from "@/model/content";
+import {
+  CONTENT_TYPES,
+  CONTENT_LEVELS,
+  type ContentType,
+  type ContentLevel,
+} from "@/model/content";
 import { useRef, useState } from "react";
 import Papa from "papaparse";
 import { extractYouTubeMetadata } from "@/api/youtube";
@@ -78,10 +83,17 @@ export const ContentCsvInput = () => {
             }
           }
 
+          const parsedType = CONTENT_TYPES.includes(row.type as ContentType)
+            ? (row.type as ContentType)
+            : "article";
+          const parsedLevel = CONTENT_LEVELS.includes(row.level as ContentLevel)
+            ? (row.level as ContentLevel)
+            : "beginner";
+
           const input: CreateContentInput = {
-            type: ContentTypeEnum.parse(row.type),
+            type: parsedType,
             category: row.category,
-            level: ContentLevelEnum.parse(row.level),
+            level: parsedLevel,
             title: finalTitle,
             description: finalDescription,
             link: row.link,

@@ -1,14 +1,37 @@
+import { fetchAuthSession } from "aws-amplify/auth";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
-import { useMemo } from "react";
 
-// Hard coding this just to hide in the UI
-// Even if non admin users see the pages from these, the backend should block them from performing actions
-const adminIds = [
-  "yiK5uEKnIDVasOQIeIQ6s0IXYlk1",
-  "jKb8DeqQZ1VvApXSSAWXGmtVbJ32",
-];
-
+/**
+ * Hook to check if the current user is an admin by checking Cognito groups
+ */
 export const useIsAdminUser = () => {
-  const { user } = useAuth();
-  return useMemo(() => user && adminIds.includes(user.id), [user]);
+  const { user, loading } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const checkAdminStatus = async () => {
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const session = await fetchAuthSession({ forceRefresh: true });
+        const groups =
+          (session.tokens?.accessToken?.payload?.["cognito:groups"] as
+            | string[]
+            | undefined) ?? [];
+        setIsAdmin(groups.includes("Admin"));
+      } catch {
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, [user, loading]);
+
+  return isAdmin;
 };

@@ -2,12 +2,11 @@ import { type SupportedLocale, supportedLocales } from "@/i18n/i18n";
 import { useLocale } from "@/hooks/use-locale";
 import { IconLanguage } from "@tabler/icons-react";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { isSupportedLocale } from "@/i18n/i18n-utils";
 import { useCallback } from "react";
@@ -20,15 +19,11 @@ const languageDisplayNames: Record<SupportedLocale, string> = {
   "pt-BR": "Português (Brasil)",
 };
 
-export interface LanguageSelectorProps {
-  className?: string;
-}
-
 /**
  * LanguageSelector component that allows users to switch between supported languages.
- * Integrates with the existing i18n setup and persists language preferences to local storage.
+ * Uses submenu pattern to work inside a parent DropdownMenu.
  */
-export const LanguageSelector = ({ className }: LanguageSelectorProps) => {
+export const LanguageSelector = () => {
   const [currentLocale, setLocale] = useLocale();
   const { t } = useTranslation();
 
@@ -42,14 +37,12 @@ export const LanguageSelector = ({ className }: LanguageSelectorProps) => {
   );
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className={className}>
-          <IconLanguage className="size-4" />
-          {t("language-selector")}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={className}>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <IconLanguage className="size-4" />
+        {t("language-selector")}
+      </DropdownMenuSubTrigger>
+      <DropdownMenuSubContent>
         {supportedLocales.map((locale) => (
           <DropdownMenuItem
             key={locale}
@@ -59,7 +52,7 @@ export const LanguageSelector = ({ className }: LanguageSelectorProps) => {
             {languageDisplayNames[locale]}
           </DropdownMenuItem>
         ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenuSubContent>
+    </DropdownMenuSub>
   );
 };

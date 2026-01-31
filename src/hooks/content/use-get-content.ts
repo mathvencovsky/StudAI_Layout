@@ -6,7 +6,7 @@ export const getContentQueryOptions = (id: string) =>
     queryKey: ["content", "detail", id],
     queryFn: async () => {
       try {
-        return await getContent(id);
+        return await getContent({ id });
       } catch (error) {
         console.error(error);
         throw error;

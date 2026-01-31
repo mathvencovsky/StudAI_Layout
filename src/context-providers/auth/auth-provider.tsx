@@ -18,6 +18,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const initializeAuth = async () => {
       try {
         const currentUser = await getCurrentUser();
+        console.log(currentUser);
         setUser({
           id: currentUser.userId,
           email: currentUser.signInDetails?.loginId,

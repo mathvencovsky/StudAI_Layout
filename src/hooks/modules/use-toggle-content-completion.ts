@@ -1,8 +1,6 @@
-import {
-  toggleContentCompletion,
-  type ToggleContentCompletionInput,
-} from "@/api/user-content-progress";
+import { toggleContentCompletion } from "@/api/user-content-progress";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { type Schema } from "../../../amplify/data/resource";
 
 /**
  * Mutation hook for toggling content completion status
@@ -11,10 +9,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 export const useToggleContentCompletion = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: ToggleContentCompletionInput) =>
-      toggleContentCompletion(data),
-    onSuccess: (data) => {
-      // Invalidate content progress queries to refresh data after toggling
+    mutationFn: (data: {
+      moduleId: string;
+      contentId: string;
+      isCompleted: boolean;
+    }) => toggleContentCompletion(data),
+    onSuccess: (data: Schema["UserContentProgress"]["type"]) => {
       void qc.invalidateQueries({
         queryKey: ["userContentProgress", data.moduleId],
       });
