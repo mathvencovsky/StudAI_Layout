@@ -15,6 +15,7 @@ export interface ContentDetailViewProps {
   totalItems?: number;
   onNavigatePrevious?: () => void;
   onNavigateNext?: () => void;
+  onCompleteModule?: () => void;
   isNavigating?: boolean;
 }
 
@@ -32,6 +33,7 @@ export const ContentDetailView = ({
   totalItems,
   onNavigatePrevious,
   onNavigateNext,
+  onCompleteModule,
   isNavigating = false,
 }: ContentDetailViewProps) => {
   const isYouTube = isYouTubeUrl(content.link);
@@ -61,6 +63,7 @@ export const ContentDetailView = ({
               totalItems={totalItems}
               onPrevious={onNavigatePrevious}
               onNext={onNavigateNext}
+              onCompleteModule={onCompleteModule}
               isLoading={isNavigating}
             />
           </div>

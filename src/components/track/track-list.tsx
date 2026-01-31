@@ -60,7 +60,7 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
         {filteredTracks.map((track) => (
           <Card
             key={track.id}
-            className="cursor-pointer hover:bg-accent"
+            className="cursor-pointer hover:bg-accent/20"
             onClick={() =>
               navigate({
                 to: "/track/$trackId",

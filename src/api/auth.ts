@@ -59,10 +59,16 @@ export const signInWithEmailApi = async (
 export const signUpWithEmailApi = async (
   email: string,
   password: string,
+  name: string,
 ): Promise<void> => {
   await signUp({
     username: email,
     password,
+    options: {
+      userAttributes: {
+        preferred_username: name,
+      },
+    },
   });
 };
 

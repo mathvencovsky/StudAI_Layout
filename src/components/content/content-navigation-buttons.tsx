@@ -1,29 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle } from "lucide-react";
 
 export interface ContentNavigationButtonsProps {
   currentPosition: number;
   totalItems: number;
   onPrevious: () => void;
   onNext: () => void;
+  onCompleteModule?: () => void;
   isLoading?: boolean;
 }
 
 /**
  * Displays Previous and Next navigation buttons with position indicator.
- * Buttons are conditionally rendered and disabled based on position within the module.
+ * Shows Complete Module button when on the last item.
  */
 export const ContentNavigationButtons = ({
   currentPosition,
   totalItems,
   onPrevious,
   onNext,
+  onCompleteModule,
   isLoading = false,
 }: ContentNavigationButtonsProps) => {
   const { t } = useTranslation();
   const canNavigatePrevious = currentPosition > 1;
-  const canNavigateNext = currentPosition < totalItems;
+  const isLastItem = currentPosition === totalItems;
 
   return (
     <div className="flex items-center justify-between gap-4">
@@ -42,16 +44,28 @@ export const ContentNavigationButtons = ({
         {currentPosition} {t("of-completed")} {totalItems}
       </div>
 
-      <Button
-        onClick={onNext}
-        disabled={!canNavigateNext || isLoading}
-        variant="outline"
-        size="sm"
-        className="gap-2"
-      >
-        {t("next")}
-        <ChevronRight className="h-4 w-4" />
-      </Button>
+      {isLastItem && onCompleteModule ? (
+        <Button
+          onClick={onCompleteModule}
+          disabled={isLoading}
+          size="sm"
+          className="gap-2"
+        >
+          <CheckCircle className="h-4 w-4" />
+          {t("complete-module")}
+        </Button>
+      ) : (
+        <Button
+          onClick={onNext}
+          disabled={isLastItem || isLoading}
+          variant="outline"
+          size="sm"
+          className="gap-2"
+        >
+          {t("next")}
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      )}
     </div>
   );
 };

@@ -17,6 +17,7 @@ export default {
   "clear-filters": "Clear filters",
   "clear-search": "Clear search",
   "comments-optional": "Comments (Optional)",
+  "complete-module": "Complete Module",
   completed: "Completed",
   "content-author": "Author",
   "content-created": "Content created",

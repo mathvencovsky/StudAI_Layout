@@ -2,6 +2,7 @@ import { useGetContent } from "@/hooks/content/use-get-content";
 import { useGetUserContentProgress } from "@/hooks/modules/use-get-user-content-progress";
 import { useToggleContentCompletion } from "@/hooks/modules/use-toggle-content-completion";
 import { useModuleContentNavigation } from "@/hooks/modules/use-module-content-navigation";
+import { useCompleteModule } from "@/hooks/modules/use-complete-module";
 import { ContentDetailView } from "./content-detail-view";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -27,6 +28,7 @@ export const ContentDetailContainer = ({
   const { data: content, isLoading, isError } = useGetContent(contentId);
   const { data: progressData } = useGetUserContentProgress(moduleId || "");
   const toggleMutation = useToggleContentCompletion();
+  const completeModuleMutation = useCompleteModule();
   const [optimisticCompleted, setOptimisticCompleted] = useState<
     boolean | null
   >(null);
@@ -91,6 +93,21 @@ export const ContentDetailContainer = ({
           moduleId,
           contentId: navigationData.nextContentId,
         },
+      });
+    } finally {
+      setIsNavigating(false);
+    }
+  };
+
+  const handleCompleteModule = async () => {
+    if (!moduleId) return;
+
+    setIsNavigating(true);
+    try {
+      await completeModuleMutation.mutateAsync(moduleId);
+      await navigate({
+        to: "/module/$moduleId",
+        params: { moduleId },
       });
     } finally {
       setIsNavigating(false);
@@ -167,6 +184,7 @@ export const ContentDetailContainer = ({
         totalItems={navigationData.totalItems}
         onNavigatePrevious={handleNavigatePrevious}
         onNavigateNext={handleNavigateNext}
+        onCompleteModule={handleCompleteModule}
         isNavigating={isNavigating}
       />
     );

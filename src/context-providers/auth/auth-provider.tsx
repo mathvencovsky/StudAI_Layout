@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { getCurrentUser } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 import {
   AuthContext,
@@ -18,10 +18,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const initializeAuth = async () => {
       try {
         const currentUser = await getCurrentUser();
+        const attributes = await fetchUserAttributes();
         setUser({
           id: currentUser.userId,
-          email: currentUser.signInDetails?.loginId,
-          displayName: currentUser.username,
+          email: attributes.email ?? currentUser.signInDetails?.loginId,
+          displayName:
+            attributes.preferred_username ?? attributes.email ?? attributes.name,
         });
       } catch {
         setUser(null);

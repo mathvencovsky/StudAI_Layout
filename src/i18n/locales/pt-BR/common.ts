@@ -17,6 +17,7 @@ export default {
   "clear-filters": "Limpar filtros",
   "clear-search": "Limpar pesquisa",
   "comments-optional": "Comentários (Opcional)",
+  "complete-module": "Concluir Módulo",
   completed: "Concluído",
   "content-author": "Autor",
   "content-created": "Conteúdo criado",

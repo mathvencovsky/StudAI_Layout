@@ -71,7 +71,7 @@ export const ModuleContentItem = ({
     <div
       ref={containerRef}
       onClick={handleItemClick}
-      className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-accent transition-colors cursor-pointer"
+      className="flex items-center gap-3 p-3 rounded-lg border bg-card hover:bg-accent/20 transition-colors cursor-pointer"
     >
       {hasStarted && (
         <div className="flex-shrink-0" onClick={(e) => e.stopPropagation()}>

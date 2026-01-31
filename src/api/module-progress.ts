@@ -69,3 +69,61 @@ export const getLastStartedModule = async (): Promise<UserModuleProgress | null>
 
   return sortedProgress[0];
 };
+
+/**
+ * Mark a module as completed for the current user
+ */
+export const completeModule = async (
+  moduleId: string,
+): Promise<UserModuleProgress> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserModuleProgress.list({
+    filter: { moduleId: { eq: moduleId } },
+  });
+
+  if (!result.data || result.data.length === 0) {
+    throw new Error("Module progress not found");
+  }
+
+  const updateResult = await client.models.UserModuleProgress.update({
+    id: result.data[0].id,
+    completionDate: Date.now(),
+  });
+
+  if (!updateResult.data) {
+    console.error("Failed to complete module:", updateResult.errors);
+    throw new Error("Failed to complete module");
+  }
+
+  return updateResult.data;
+};
+
+/**
+ * Mark a module as incomplete for the current user
+ */
+export const uncompleteModule = async (
+  moduleId: string,
+): Promise<UserModuleProgress> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserModuleProgress.list({
+    filter: { moduleId: { eq: moduleId } },
+  });
+
+  if (!result.data || result.data.length === 0) {
+    throw new Error("Module progress not found");
+  }
+
+  const updateResult = await client.models.UserModuleProgress.update({
+    id: result.data[0].id,
+    completionDate: null,
+  });
+
+  if (!updateResult.data) {
+    console.error("Failed to uncomplete module:", updateResult.errors);
+    throw new Error("Failed to uncomplete module");
+  }
+
+  return updateResult.data;
+};

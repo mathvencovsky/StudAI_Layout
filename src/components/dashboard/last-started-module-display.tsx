@@ -37,15 +37,15 @@ export const LastStartedModuleDisplay = ({
   return (
     <Card className="w-full">
       <CardHeader
-        className="cursor-pointer hover:bg-gray-50 transition-colors"
+        className="cursor-pointer hover:bg-accent/20 transition-colors"
         onClick={onModuleClick}
       >
         <CardTitle className="text-lg">{module.title}</CardTitle>
         <CardDescription>{module.description}</CardDescription>
         <div className="mt-4 space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">{t("progress-label")}</span>
-            <span className="font-medium text-gray-900">
+            <span className="text-muted-foreground">{t("progress-label")}</span>
+            <span className="font-medium text-foreground">
               {completedCount} {t("of-completed")} {totalModuleContents}{" "}
               {t("completed")}
             </span>

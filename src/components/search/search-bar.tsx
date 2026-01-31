@@ -61,7 +61,7 @@ export const SearchBar = ({
             {suggestions.map((s) => (
               <li
                 key={s}
-                className="px-3 py-2 hover:bg-accent cursor-pointer text-sm"
+                className="px-3 py-2 hover:bg-accent/20 cursor-pointer text-sm"
                 onMouseDown={() => onPickSuggestion && onPickSuggestion(s)}
               >
                 {s}

@@ -12,14 +12,17 @@ import { formatDuration } from "@/lib/duration-utils";
 import type { Module } from "@/model/module";
 import type { UserModuleProgress } from "@/model/user-module-progress";
 import type { ModuleContentWithContentType } from "@/api/module-content";
-import { Loader2 } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 import { VoteButtonsContainer } from "@/components/voting/vote-buttons-container";
 
 export interface ModuleHeaderProps {
   module: Module;
   userProgress: UserModuleProgress | null;
   onStartModule: () => Promise<void>;
+  onCompleteModule?: () => Promise<void>;
+  onUncompleteModule?: () => Promise<void>;
   isLoading?: boolean;
+  isCompleting?: boolean;
   moduleContents?: ModuleContentWithContentType[];
 }
 
@@ -27,10 +30,16 @@ export const ModuleHeader = ({
   module,
   userProgress,
   onStartModule,
+  onCompleteModule,
+  onUncompleteModule,
   isLoading = false,
+  isCompleting = false,
   moduleContents = [],
 }: ModuleHeaderProps) => {
   const { t } = useTranslation();
+  const hasStarted = userProgress !== null;
+  const isCompleted = userProgress?.completionDate != null;
+
   const formatDate = (dateTimestamp: number) => {
     const date = new Date(dateTimestamp);
     return date.toLocaleDateString("en-US", {
@@ -55,6 +64,30 @@ export const ModuleHeader = ({
             <Button onClick={onStartModule} disabled={isLoading}>
               {isLoading && <Loader2 className="animate-spin" />}
               {t("start-module")}
+            </Button>
+          </CardAction>
+        )}
+        {hasStarted && !isCompleted && onCompleteModule && (
+          <CardAction>
+            <Button onClick={onCompleteModule} disabled={isCompleting}>
+              {isCompleting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <CheckCircle className="h-4 w-4" />
+              )}
+              {t("complete-module")}
+            </Button>
+          </CardAction>
+        )}
+        {isCompleted && onUncompleteModule && (
+          <CardAction>
+            <Button
+              variant="outline"
+              onClick={onUncompleteModule}
+              disabled={isCompleting}
+            >
+              {isCompleting && <Loader2 className="animate-spin" />}
+              {t("mark-as-incomplete")}
             </Button>
           </CardAction>
         )}

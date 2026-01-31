@@ -21,7 +21,7 @@ export const ContentItemDisplay = ({
   const { thumbnailUrl, author } = moduleContent.content;
 
   return (
-    <div className="flex items-start gap-3 p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+    <div className="flex items-start gap-3 p-3 rounded-lg border hover:bg-accent/20 transition-colors">
       <Button
         variant="ghost"
         size="sm"
@@ -34,7 +34,7 @@ export const ContentItemDisplay = ({
         {isCompleted ? (
           <CheckCircle2 className="w-5 h-5 text-green-600" />
         ) : (
-          <Circle className="w-5 h-5 text-gray-400" />
+          <Circle className="w-5 h-5 text-muted-foreground" />
         )}
       </Button>
 
@@ -53,18 +53,18 @@ export const ContentItemDisplay = ({
         <div className="flex items-center gap-2">
           <h4
             className={`font-medium text-sm ${
-              isCompleted ? "line-through text-gray-500" : "text-gray-900"
+              isCompleted ? "line-through text-muted-foreground" : "text-foreground"
             }`}
           >
             {moduleContent.content.title}
           </h4>
-          <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+          <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
             {moduleContent.content.type}
           </span>
         </div>
-        {author && <span className="text-xs text-gray-500">{author}</span>}
+        {author && <span className="text-xs text-muted-foreground">{author}</span>}
         {moduleContent.content.description && (
-          <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
             {moduleContent.content.description}
           </p>
         )}

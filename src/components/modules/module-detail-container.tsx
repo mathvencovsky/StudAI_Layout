@@ -13,6 +13,7 @@ import { useGetUserModuleProgress } from "@/hooks/modules/use-get-user-module-pr
 import { useGetUserContentProgress } from "@/hooks/modules/use-get-user-content-progress";
 import { useStartModule } from "@/hooks/modules/use-start-module";
 import { useToggleContentCompletion } from "@/hooks/modules/use-toggle-content-completion";
+import { useCompleteModule, useUncompleteModule } from "@/hooks/modules/use-complete-module";
 
 export interface ModuleDetailContainerProps {
   moduleId: string;
@@ -64,10 +65,13 @@ export const ModuleDetailContainer = ({
   // Mutations
   const startModuleMutation = useStartModule();
   const toggleCompletionMutation = useToggleContentCompletion();
+  const completeModuleMutation = useCompleteModule();
+  const uncompleteModuleMutation = useUncompleteModule();
 
   const contentItems = contentsResponse ?? [];
   const contentProgress = contentProgressResponse ?? [];
   const hasStarted = userProgress !== null && userProgress !== undefined;
+  const isCompleted = userProgress?.completionDate != null;
 
   const handleStartModule = async () => {
     setStartError("");
@@ -109,6 +113,22 @@ export const ModuleDetailContainer = ({
           !progress.isCompleted
         );
       }
+    }
+  };
+
+  const handleCompleteModule = async () => {
+    try {
+      await completeModuleMutation.mutateAsync(moduleId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleUncompleteModule = async () => {
+    try {
+      await uncompleteModuleMutation.mutateAsync(moduleId);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -201,7 +221,13 @@ export const ModuleDetailContainer = ({
           module={module}
           userProgress={userProgress ?? null}
           onStartModule={handleStartModule}
+          onCompleteModule={handleCompleteModule}
+          onUncompleteModule={handleUncompleteModule}
           isLoading={startModuleMutation.isPending}
+          isCompleting={
+            completeModuleMutation.isPending ||
+            uncompleteModuleMutation.isPending
+          }
           moduleContents={contentItems}
         />
       )}

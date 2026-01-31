@@ -17,6 +17,7 @@ export const RegistrationPage: React.FC = () => {
       await mutation.mutateAsync({
         email: values.email,
         password: values.password,
+        name: values.name,
       });
       navigate({
         to: "/verify-email",

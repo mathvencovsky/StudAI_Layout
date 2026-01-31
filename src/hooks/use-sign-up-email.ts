@@ -3,7 +3,14 @@ import { useMutation } from "@tanstack/react-query";
 
 export const useSignUpWithEmail = () => {
   return useMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      signUpWithEmailApi(email, password),
+    mutationFn: ({
+      email,
+      password,
+      name,
+    }: {
+      email: string;
+      password: string;
+      name: string;
+    }) => signUpWithEmailApi(email, password, name),
   });
 };
