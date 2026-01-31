@@ -79,9 +79,9 @@ _List the order in which implementation tasks should be executed, considering de
 - [] Task 2
 - [] Task 3
 
-## 5. Side Navigation
+## 5. Sidebar
 
-_Does this feature require a new side nav item? If yes, describe the label, icon, route, and placement._
+_Does this feature require a new Sidebar item? If yes, describe the label, icon, route, and placement._
 
 ## 6. Open Questions and missing details
 

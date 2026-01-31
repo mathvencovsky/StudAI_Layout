@@ -118,6 +118,15 @@ const schema = a.schema({
       allow.authenticated().to(["read"]),
       allow.group("Admin").to(["create", "update", "delete"]),
     ]),
+
+  UserLoginDay: a
+    .model({
+      date: a.string().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

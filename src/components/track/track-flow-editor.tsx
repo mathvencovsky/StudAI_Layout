@@ -136,12 +136,42 @@ export const TrackFlowEditor = ({
   onChange,
 }: TrackFlowEditorProps) => {
   const { t } = useTranslation();
+  const { data: modules, isLoading: isLoadingModules } = useModules();
+
+  if (isLoadingModules) {
+    return (
+      <div className="h-[400px] border rounded-lg bg-muted/20 flex items-center justify-center">
+        <p className="text-muted-foreground">{t("loading")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <TrackFlowEditorInner
+      initialParentByModuleId={initialParentByModuleId}
+      onChange={onChange}
+      modules={modules ?? []}
+    />
+  );
+};
+
+interface TrackFlowEditorInnerProps {
+  initialParentByModuleId?: ParentMap;
+  onChange: (rootModuleId: string, parentByModuleId: ParentMap, hasCycle: boolean) => void;
+  modules: { id: string; title: string }[];
+}
+
+const TrackFlowEditorInner = ({
+  initialParentByModuleId,
+  onChange,
+  modules,
+}: TrackFlowEditorInnerProps) => {
+  const { t } = useTranslation();
   const colorMode = useResolvedColorMode();
-  const { data: modules } = useModules();
   const [selectedModuleToAdd, setSelectedModuleToAdd] = useState<string>("");
 
   const moduleMap = useMemo(
-    () => new Map((modules ?? []).map((m) => [m.id, m])),
+    () => new Map(modules.map((m) => [m.id, m])),
     [modules],
   );
 
@@ -161,7 +191,6 @@ export const TrackFlowEditor = ({
         id: `${parentId}-${moduleId}`,
         source: parentId,
         target: moduleId,
-        type: "smoothstep",
       }));
 
     return { initialNodes: applyDagreLayout(nodes, edges), initialEdges: edges };
@@ -174,7 +203,7 @@ export const TrackFlowEditor = ({
 
   const onConnect: OnConnect = useCallback(
     (connection: Connection) => {
-      setEdges((eds) => addEdge({ ...connection, type: "smoothstep" }, eds));
+      setEdges((eds) => addEdge(connection, eds));
     },
     [setEdges],
   );
@@ -217,7 +246,7 @@ export const TrackFlowEditor = ({
 
   const availableModules = useMemo(() => {
     const usedIds = new Set(nodes.map((n) => n.id));
-    return (modules ?? []).filter((m) => !usedIds.has(m.id));
+    return modules.filter((m) => !usedIds.has(m.id));
   }, [modules, nodes]);
 
   return (
@@ -226,6 +255,7 @@ export const TrackFlowEditor = ({
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        defaultEdgeOptions={{ type: "default" }}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
@@ -248,18 +278,18 @@ export const TrackFlowEditor = ({
                 ))}
               </SelectContent>
             </Select>
-            <Button onClick={addModule} disabled={!selectedModuleToAdd}>
+            <Button type="button" onClick={addModule} disabled={!selectedModuleToAdd}>
               {t("add-module")}
             </Button>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" onClick={applyLayout}>
+            <Button type="button" variant="outline" onClick={applyLayout}>
               {t("auto-layout")}
             </Button>
-            <Button variant="secondary" onClick={removeSelectedNodes}>
+            <Button type="button" variant="secondary" onClick={removeSelectedNodes}>
               {t("remove-selected")}
             </Button>
-            <Button onClick={handleSave}>
+            <Button type="button" onClick={handleSave}>
               {t("save-structure")}
             </Button>
           </div>

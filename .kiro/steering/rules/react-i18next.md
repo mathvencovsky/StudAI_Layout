@@ -47,7 +47,7 @@ const Foo = () => {
 
 ## When adding new translations, always translate them in all languages
 
-When adding new translations, always translate them in all languages. Translation files are stored in a json file.
+When adding new translations, always translate them in all languages. Translation files are stored in `.ts` files.
 
 ## Always use lowercase separated by `-` for the translation keys
 

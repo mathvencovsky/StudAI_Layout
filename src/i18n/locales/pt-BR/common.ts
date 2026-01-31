@@ -25,7 +25,7 @@ export default {
   "content-delete-confirm-title": "Excluir conteúdo?",
   "content-delete-deleting": "Excluindo...",
   "content-delete-error":
-    "Não foi possível excluir este conteúdo. Por favor, tente novamente.",
+    "Não foi possível excluir este conteúdo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "content-items": "Itens de Conteúdo",
   "content-language": "Idioma",
   "content-published-at": "Publicado Em",
@@ -33,35 +33,35 @@ export default {
   "content-updated": "Conteúdo atualizado",
   "continue-learning": "Continuar Aprendendo",
   "couldnt-create-module":
-    "Não foi possível criar seu módulo. Por favor, tente novamente.",
+    "Não foi possível criar seu módulo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-content":
     "Não foi possível carregar seu conteúdo agora. Por favor, atualize a página.",
   "couldnt-load-content-progress":
     "Não foi possível carregar o progresso do conteúdo",
   "couldnt-load-content-progress-description":
-    "Algo deu errado ao carregar o progresso do conteúdo. Por favor, tente novamente.",
+    "Algo deu errado ao carregar o progresso do conteúdo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-module-contents":
     "Não foi possível carregar o conteúdo do módulo",
   "couldnt-load-module-contents-description":
-    "Algo deu errado ao carregar o conteúdo. Por favor, tente novamente.",
+    "Algo deu errado ao carregar o conteúdo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-module-details":
     "Não foi possível carregar os detalhes do módulo",
   "couldnt-load-module-details-description":
-    "Algo deu errado ao carregar o módulo. Por favor, tente novamente.",
+    "Algo deu errado ao carregar o módulo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-module-edit":
     "Não foi possível carregar este módulo para edição. O módulo pode não existir ou houve um erro ao carregar os dados.",
   "couldnt-load-modules": "Não foi possível carregar os módulos",
   "couldnt-load-progress": "Não foi possível carregar seu progresso",
   "couldnt-load-progress-description":
-    "Algo deu errado ao carregar seu progresso. Por favor, tente novamente.",
+    "Algo deu errado ao carregar seu progresso. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-save": "Não foi possível salvar",
   "couldnt-save-changes":
-    "Não foi possível salvar suas alterações. Por favor, tente novamente.",
+    "Não foi possível salvar suas alterações. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-save-module": "Não foi possível salvar o módulo",
   "couldnt-save-progress":
-    "Não foi possível salvar o progresso. Por favor, tente novamente.",
+    "Não foi possível salvar o progresso. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-start-module":
-    "Não foi possível iniciar o módulo. Por favor, tente novamente.",
+    "Não foi possível iniciar o módulo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   create: "Criar",
   "create-module": "Criar Módulo",
   "create-new-module": "Criar Novo Módulo",
@@ -72,6 +72,7 @@ export default {
     "Crie uma trilha de aprendizado organizando módulos em um caminho estruturado.",
   "cycle-detected": "Ciclo detectado. Remova conexões circulares para salvar.",
   dashboard: "Painel",
+  "days-logged-in": "Dias Conectado",
   delete: "Excluir",
   "delete-track-confirm-description":
     "Esta ação não pode ser desfeita. A trilha será excluída permanentemente.",
@@ -94,10 +95,15 @@ export default {
   "error-loading-track": "Erro ao carregar trilha",
   "error-loading-tracks": "Erro ao carregar trilhas",
   "failed-load-last-module":
-    "Falha ao carregar seu último módulo iniciado. Por favor, tente novamente mais tarde.",
+    "Falha ao carregar seu último módulo iniciado. Por favor, tente novamente mais tarde. Se o problema persistir, envie-nos um feedback.",
+  "failed-to-load-stats":
+    "Falha ao carregar estatísticas. Por favor, tente novamente mais tarde. Se o problema persistir, envie-nos um feedback.",
   "failed-save-feedback":
     "Falha ao salvar feedback. Por favor, tente novamente.",
   "go-back-to-modules": "Voltar para a lista de módulos",
+  "greeting-afternoon": "Boa tarde, {{name}}!",
+  "greeting-evening": "Boa noite, {{name}}!",
+  "greeting-morning": "Bom dia, {{name}}!",
   "help-us-improve": "Ajude-nos a melhorar compartilhando sua experiência",
   "in-progress": "Em progresso",
   lab: "Laboratório",
@@ -119,8 +125,12 @@ export default {
   "module-not-found": "Módulo não encontrado",
   "module-not-found-description":
     "O módulo que você está procurando não existe.",
+  "module-progress-completed": "Concluído",
+  "module-progress-in-progress": "Em Progresso",
+  "module-progress-not-started": "Não Iniciado",
   "module-title": "Título do Módulo",
   "module-updated": "Módulo atualizado",
+  "modules-completed": "Módulos Concluídos",
   modules: "Módulos",
   "must-be-logged-in": "Você deve estar conectado para enviar feedback.",
   "new-content": "Novo Conteúdo",
@@ -168,7 +178,7 @@ export default {
   "share-feedback": "Compartilhe seu feedback...",
   "share-feedback-title": "Compartilhe Seu Feedback",
   "something-went-wrong-modules":
-    "Algo deu errado ao carregar os módulos. Por favor, tente novamente.",
+    "Algo deu errado ao carregar os módulos. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   stars: "estrelas",
   "start-module": "Iniciar Módulo",
   "started-on": "Iniciado em",
@@ -190,6 +200,7 @@ export default {
   "title-min-length": "O título deve ter pelo menos 3 caracteres",
   "title-required": "Título é obrigatório",
   "total-duration": "Duração total:",
+  "total-hours-studied": "Horas Estudadas",
   "track-not-found": "Trilha não encontrada",
   "track-structure": "Estrutura da Trilha",
   "track-structure-help":
@@ -201,6 +212,7 @@ export default {
   untitled: "Sem título",
   "upload-csv": "Enviar CSV",
   uploading: "Enviando...",
+  user: "Usuário",
   "validation-description-min":
     "A descrição deve ter pelo menos 10 caracteres",
   "verification-code": "Código de Verificação",

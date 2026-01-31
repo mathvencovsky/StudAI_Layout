@@ -11,8 +11,13 @@ import dagre from "dagre";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useModules } from "@/hooks/modules/use-modules";
+import { useBatchModuleProgress } from "@/hooks/track/use-batch-module-progress";
 import { useTheme } from "@/hooks/use-theme";
 import { ModuleNode } from "@/components/track/module-node";
+import {
+  type ModuleProgressMap,
+  type ModuleProgressInfo,
+} from "@/api/batch-module-progress";
 
 type ParentMap = Record<string, string>;
 
@@ -24,7 +29,7 @@ export interface TrackFlowViewerProps {
 
 const ROOT = "ROOT";
 const NODE_WIDTH = 200;
-const NODE_HEIGHT = 60;
+const NODE_HEIGHT = 80;
 
 const nodeTypes = { module: ModuleNode };
 
@@ -68,30 +73,68 @@ const applyDagreLayout = (nodes: Node[], edges: Edge[]): Node[] => {
 };
 
 /**
- * Converts track JSON structure to React Flow nodes and edges
+ * Determines edge color based on connected nodes' progress status
+ */
+const getEdgeColor = (
+  sourceStatus: ModuleProgressInfo["status"] | undefined,
+  targetStatus: ModuleProgressInfo["status"] | undefined,
+): string | undefined => {
+  const source = sourceStatus ?? "not_started";
+  const target = targetStatus ?? "not_started";
+
+  if (source === "completed" && target === "completed") {
+    return "#22c55e";
+  }
+  if (
+    source === "in_progress" ||
+    target === "in_progress" ||
+    source === "completed" ||
+    target === "completed"
+  ) {
+    return "#eab308";
+  }
+  return undefined;
+};
+
+/**
+ * Converts track JSON structure to React Flow nodes and edges with progress data
  */
 const buildFlowElements = (
   parentBy: ParentMap,
   moduleMap: Map<string, { id: string; title: string }>,
+  progressMap: ModuleProgressMap,
+  isLoadingProgress: boolean,
 ): { nodes: Node[]; edges: Edge[] } => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 
   for (const [moduleId, parentId] of Object.entries(parentBy)) {
     const module = moduleMap.get(moduleId);
+    const progress = progressMap[moduleId];
+
     nodes.push({
       id: moduleId,
       type: "module",
       position: { x: 0, y: 0 },
-      data: { label: module?.title ?? "Missing module", moduleId },
+      data: {
+        label: module?.title ?? "Missing module",
+        moduleId,
+        progress,
+        isLoadingProgress,
+      },
     });
 
     if (parentId !== ROOT) {
+      const edgeColor = getEdgeColor(
+        progressMap[parentId]?.status,
+        progress?.status,
+      );
       edges.push({
         id: `${parentId}-${moduleId}`,
         source: parentId,
         target: moduleId,
         type: "smoothstep",
+        style: edgeColor ? { stroke: edgeColor, strokeWidth: 2 } : undefined,
       });
     }
   }
@@ -101,26 +144,67 @@ const buildFlowElements = (
 };
 
 /**
- * Read-only React Flow visualization for track structure
+ * Read-only React Flow visualization for track structure with module progress
  */
 export const TrackFlowViewer = ({
   rootModuleId,
   parentByModuleId,
 }: TrackFlowViewerProps) => {
   const { t } = useTranslation();
+  const { data: modules, isLoading: isLoadingModules } = useModules();
+
+  if (isLoadingModules) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <p className="text-muted-foreground">{t("loading")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <TrackFlowViewerInner
+      rootModuleId={rootModuleId}
+      parentByModuleId={parentByModuleId}
+      modules={modules ?? []}
+    />
+  );
+};
+
+interface TrackFlowViewerInnerProps {
+  rootModuleId: string;
+  parentByModuleId: unknown;
+  modules: { id: string; title: string }[];
+}
+
+const TrackFlowViewerInner = ({
+  rootModuleId,
+  parentByModuleId,
+  modules,
+}: TrackFlowViewerInnerProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: modules } = useModules();
   const { mode } = useTheme();
 
   const parentBy = coerceParentMap(parentByModuleId);
+  const moduleIds = useMemo(() => Object.keys(parentBy), [parentBy]);
+
+  const { data: progressMap, isLoading: isLoadingProgress } =
+    useBatchModuleProgress(moduleIds);
+
   const moduleMap = useMemo(
-    () => new Map((modules ?? []).map((m) => [m.id, m])),
+    () => new Map(modules.map((m) => [m.id, m])),
     [modules],
   );
 
   const { nodes, edges } = useMemo(
-    () => buildFlowElements(parentBy, moduleMap),
-    [parentBy, moduleMap],
+    () =>
+      buildFlowElements(
+        parentBy,
+        moduleMap,
+        progressMap ?? {},
+        isLoadingProgress,
+      ),
+    [parentBy, moduleMap, progressMap, isLoadingProgress],
   );
 
   const onNodeClick = (_: React.MouseEvent, node: Node) => {
@@ -136,6 +220,7 @@ export const TrackFlowViewer = ({
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
+      defaultEdgeOptions={{ type: "default" }}
       onNodeClick={onNodeClick}
       colorMode={mode}
       fitView

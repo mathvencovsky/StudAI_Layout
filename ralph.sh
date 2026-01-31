@@ -40,7 +40,8 @@ PROMPT="You are an autonomous coding agent.
 5. After marking it as complete, append the progress of what was done to the progress file
 
 ## Completion
-- Work on only ONE task per iteration
+- Work on only ONE task per iteration.
+- Do not work on multiple tasks at the same time.
 - When a task is complete, mark it in the spec file and update the progress file
 - When ALL tasks are complete, output <promise>COMPLETE</promise>
 - Do not output <promise>COMPLETE</promise> until everything is done
