@@ -85,58 +85,62 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
     );
   };
 
-  if (contentQuery.isLoading) {
-    return <Skeleton className="h-48 w-full" />;
-  }
+  const renderContent = () => {
+    if (contentQuery.isLoading) {
+      return <Skeleton className="h-48 w-full" />;
+    }
 
-  if (contentQuery.isError || !defaultValues) {
+    if (contentQuery.isError || !defaultValues) {
+      return (
+        <p className="text-sm text-red-600">
+          We couldn't load this item for editing.
+        </p>
+      );
+    }
+
     return (
-      <p className="text-sm text-red-600">
-        We couldn't load this item for editing.
-      </p>
+      <>
+        <ContentForm
+          mode="edit"
+          defaultValues={defaultValues}
+          isSubmitting={updateMutation.isPending}
+          onSubmit={handleSubmit}
+          onCancel={onCancel}
+          errorMessage={
+            updateMutation.isError
+              ? "We couldn't save your changes. Please try again."
+              : feedback || undefined
+          }
+          successMessage={
+            updateMutation.isSuccess ? "Your changes have been saved." : undefined
+          }
+        />
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" disabled={deleteMutation.isPending}>
+              {deleteMutation.isPending
+                ? t("content-delete-deleting")
+                : t("content-delete-button")}
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("content-delete-confirm-title")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("content-delete-confirm-description")}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete}>
+                {t("content-delete-button")}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </>
     );
-  }
+  };
 
-  return (
-    <div className="space-y-4">
-      <ContentForm
-        mode="edit"
-        defaultValues={defaultValues}
-        isSubmitting={updateMutation.isPending}
-        onSubmit={handleSubmit}
-        onCancel={onCancel}
-        errorMessage={
-          updateMutation.isError
-            ? "We couldn't save your changes. Please try again."
-            : feedback || undefined
-        }
-        successMessage={
-          updateMutation.isSuccess ? "Your changes have been saved." : undefined
-        }
-      />
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <Button variant="destructive" disabled={deleteMutation.isPending}>
-            {deleteMutation.isPending
-              ? t("content-delete-deleting")
-              : t("content-delete-button")}
-          </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{t("content-delete-confirm-title")}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t("content-delete-confirm-description")}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
-              {t("content-delete-button")}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-    </div>
-  );
+  return <div className="space-y-4">{renderContent()}</div>;
 };

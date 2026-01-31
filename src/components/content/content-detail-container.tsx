@@ -97,76 +97,80 @@ export const ContentDetailContainer = ({
     }
   };
 
-  if (isLoading || navigationData.isLoading) {
-    return (
-      <div className="space-y-6">
-        <Skeleton className="w-full h-[400px] rounded-lg" />
-        <div className="space-y-4">
-          <Skeleton className="h-10 w-3/4" />
-          <Skeleton className="h-20 w-full" />
-          <div className="flex gap-2">
-            <Skeleton className="h-6 w-24" />
-            <Skeleton className="h-6 w-24" />
-            <Skeleton className="h-6 w-24" />
+  const renderContent = () => {
+    if (isLoading || navigationData.isLoading) {
+      return (
+        <>
+          <Skeleton className="w-full h-[400px] rounded-lg" />
+          <div className="space-y-4">
+            <Skeleton className="h-10 w-3/4" />
+            <Skeleton className="h-20 w-full" />
+            <div className="flex gap-2">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-6 w-24" />
+            </div>
           </div>
-        </div>
-      </div>
-    );
-  }
+        </>
+      );
+    }
 
-  if (isError) {
+    if (isError) {
+      return (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            Couldn't load content details. Please try again.
+          </AlertDescription>
+        </Alert>
+      );
+    }
+
+    if (!content) {
+      return (
+        <Alert>
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Not Found</AlertTitle>
+          <AlertDescription>Content not found.</AlertDescription>
+        </Alert>
+      );
+    }
+
+    if (hasInvalidModuleContext) {
+      return (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Module Not Found</AlertTitle>
+          <AlertDescription className="flex flex-col gap-4">
+            <span>The module context is invalid or no longer available.</span>
+            <Button
+              onClick={() => navigate({ to: "/module" })}
+              variant="outline"
+              size="sm"
+            >
+              Return to Modules
+            </Button>
+          </AlertDescription>
+        </Alert>
+      );
+    }
+
     return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Couldn't load content details. Please try again.
-        </AlertDescription>
-      </Alert>
+      <ContentDetailView
+        content={content}
+        moduleId={moduleId}
+        isCompleted={isCompleted}
+        isLoading={toggleMutation.isPending}
+        onToggleCompletion={handleToggleCompletion}
+        currentPosition={navigationData.currentPosition}
+        totalItems={navigationData.totalItems}
+        onNavigatePrevious={handleNavigatePrevious}
+        onNavigateNext={handleNavigateNext}
+        isNavigating={isNavigating}
+      />
     );
-  }
+  };
 
-  if (!content) {
-    return (
-      <Alert>
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Not Found</AlertTitle>
-        <AlertDescription>Content not found.</AlertDescription>
-      </Alert>
-    );
-  }
-
-  if (hasInvalidModuleContext) {
-    return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Module Not Found</AlertTitle>
-        <AlertDescription className="flex flex-col gap-4">
-          <span>The module context is invalid or no longer available.</span>
-          <Button
-            onClick={() => navigate({ to: "/module" })}
-            variant="outline"
-            size="sm"
-          >
-            Return to Modules
-          </Button>
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
-  return (
-    <ContentDetailView
-      content={content}
-      moduleId={moduleId}
-      isCompleted={isCompleted}
-      isLoading={toggleMutation.isPending}
-      onToggleCompletion={handleToggleCompletion}
-      currentPosition={navigationData.currentPosition}
-      totalItems={navigationData.totalItems}
-      onNavigatePrevious={handleNavigatePrevious}
-      onNavigateNext={handleNavigateNext}
-      isNavigating={isNavigating}
-    />
-  );
+  return <div className="space-y-6">{renderContent()}</div>;
 };

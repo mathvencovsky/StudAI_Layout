@@ -23,21 +23,40 @@ export const ContentList: React.FC<ContentListProps> = ({
   const { t } = useTranslation();
   const listQ = useListContent();
   const isAdminUser = useIsAdminUser();
-  if (listQ.isLoading) {
+
+  const renderContent = () => {
+    if (listQ.isLoading) {
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Skeleton key={i} className="h-48 w-full" />
+          ))}
+        </div>
+      );
+    }
+
+    if (listQ.isError) {
+      return <p className="text-sm text-red-600">{t("couldnt-load-content")}</p>;
+    }
+
+    const items = listQ.data ?? [];
+
+    if (items.length === 0) {
+      return <p className="text-sm text-muted-foreground">{t("no-content-yet")}</p>;
+    }
+
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-48 w-full" />
+        {items.map((item) => (
+          <ContentPreviewCardContainer
+            key={item.id}
+            item={item}
+            onEdit={onEdit}
+          />
         ))}
       </div>
     );
-  }
-
-  if (listQ.isError) {
-    return <p className="text-sm text-red-600">{t("couldnt-load-content")}</p>;
-  }
-
-  const items = listQ.data ?? [];
+  };
 
   return (
     <div className="space-y-4">
@@ -48,20 +67,7 @@ export const ContentList: React.FC<ContentListProps> = ({
           <Button onClick={onCreateNew}>{t("new-content")}</Button>
         </div>
       </div>
-
-      {items.length === 0 ? (
-        <p className="text-sm text-muted-foreground">{t("no-content-yet")}</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {items.map((item) => (
-            <ContentPreviewCardContainer
-              key={item.id}
-              item={item}
-              onEdit={onEdit}
-            />
-          ))}
-        </div>
-      )}
+      {renderContent()}
     </div>
   );
 };

@@ -21,13 +21,41 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
   const { data: tracks, isLoading, isError } = useTracks();
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <div>{t("loading")}</div>;
-  }
+  const renderContent = () => {
+    if (isLoading) {
+      return <div>{t("loading")}</div>;
+    }
 
-  if (isError) {
-    return <div>{t("error-loading-tracks")}</div>;
-  }
+    if (isError) {
+      return <div>{t("error-loading-tracks")}</div>;
+    }
+
+    if (tracks?.length === 0) {
+      return <p className="text-muted-foreground">{t("no-tracks")}</p>;
+    }
+
+    return (
+      <div className="grid gap-4">
+        {tracks?.map((track) => (
+          <Card
+            key={track.id}
+            className="cursor-pointer hover:bg-accent"
+            onClick={() =>
+              navigate({
+                to: "/track/$trackId",
+                params: { trackId: track.id },
+              })
+            }
+          >
+            <CardHeader>
+              <CardTitle>{track.title}</CardTitle>
+              <CardDescription>{track.description}</CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-4">
@@ -37,29 +65,7 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
           <Button onClick={onCreateTrack}>{t("create-track")}</Button>
         )}
       </div>
-      {tracks?.length === 0 ? (
-        <p className="text-muted-foreground">{t("no-tracks")}</p>
-      ) : (
-        <div className="grid gap-4">
-          {tracks?.map((track) => (
-            <Card
-              key={track.id}
-              className="cursor-pointer hover:bg-accent"
-              onClick={() =>
-                navigate({
-                  to: "/track/$trackId",
-                  params: { trackId: track.id },
-                })
-              }
-            >
-              <CardHeader>
-                <CardTitle>{track.title}</CardTitle>
-                <CardDescription>{track.description}</CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      )}
+      {renderContent()}
     </div>
   );
 };
