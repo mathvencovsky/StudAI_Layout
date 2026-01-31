@@ -54,7 +54,8 @@
     "zod": "^4.3.6"
   },
   "optionalDependencies": {
-    "@parcel/watcher-linux-x64-glibc": "2.5.1"
+    "@parcel/watcher-linux-x64-glibc": "2.5.1",
+    "@rollup/rollup-linux-x64-gnu": "4.41.1"
   },
   "devDependencies": {
     "@aws-amplify/backend": "~1.19.0",
