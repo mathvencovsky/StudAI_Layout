@@ -20,7 +20,7 @@ export const HomePage = () => {
   }, [recordLogin]);
 
   return (
-    <div className="p-6 max-w-4xl space-y-8">
+    <div className="max-w-4xl space-y-8">
       <UserGreeting displayName={user?.displayName} />
       <StatsCards />
       <div>

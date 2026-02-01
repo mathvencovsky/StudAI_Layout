@@ -12,6 +12,7 @@ export default {
   "auto-fill-from-youtube": "Preencher do vídeo",
   "auto-layout": "Layout Automático",
   "back-to-modules": "Voltar para módulos",
+  "browse-modules": "Explorar Módulos",
   "browse-tracks": "Explorar Trilhas",
   cancel: "Cancelar",
   category: "Categoria",
@@ -160,6 +161,7 @@ export default {
   "no-image": "Sem imagem",
   "no-modules-in-track": "Nenhum módulo nesta trilha",
   "no-results-found": "Nenhum resultado encontrado",
+  "no-modules-to-continue": "Você não tem módulos em andamento. Comece um novo módulo para continuar sua jornada de aprendizado.",
   "no-title": "(sem título)",
   "no-tracks": "Nenhuma trilha disponível",
   "no-tracks-match-search": "Nenhuma trilha corresponde à sua pesquisa",
@@ -226,6 +228,7 @@ export default {
   "track-structure-help":
     "Adicione módulos e conecte-os para definir o caminho de aprendizado",
   tracks: "Trilhas",
+  "tracks-description": "Trilhas são caminhos de aprendizado estruturados que agrupam módulos relacionados. Siga uma trilha para aprender tópicos em uma sequência recomendada.",
   type: "Tipo",
   "type-filter": "Tipo:",
   "unknown-source": "Fonte desconhecida",

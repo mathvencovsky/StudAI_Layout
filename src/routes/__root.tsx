@@ -17,9 +17,13 @@ export interface RouterContext {
 }
 
 const RootLayout = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const isAuthenticated = !!user;
+
+  if (loading) {
+    return null;
+  }
 
   if (!isAuthenticated) {
     return (
@@ -43,7 +47,7 @@ const RootLayout = () => {
         <AppSidebar variant="inset" />
         <SidebarInset>
           <SiteHeader />
-          <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-col p-6">
             <div className="@container/main flex flex-1 flex-col gap-2">
               <Outlet />
             </div>

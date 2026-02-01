@@ -6,16 +6,13 @@ import { LastStartedModuleDisplay } from "./last-started-module-display";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const LastStartedModuleSection = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useLastStartedModuleWithContents();
   const toggleContentCompletionMutation = useToggleContentCompletion();
-
-  if (!data && !isLoading && !isError) {
-    return null;
-  }
 
   const handleModuleClick = () => {
     if (!data) return;
@@ -62,7 +59,16 @@ export const LastStartedModuleSection = () => {
       );
     }
 
-    if (!data) return null;
+    if (!data) {
+      return (
+        <div className="border rounded-lg p-6 text-center space-y-4">
+          <p className="text-muted-foreground">{t("no-modules-to-continue")}</p>
+          <Button onClick={() => navigate({ to: "/module" })}>
+            {t("browse-modules")}
+          </Button>
+        </div>
+      );
+    }
 
     return (
       <LastStartedModuleDisplay

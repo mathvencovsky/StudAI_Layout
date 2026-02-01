@@ -86,6 +86,7 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
           <Button onClick={onCreateTrack}>{t("create-track")}</Button>
         )}
       </div>
+      <p className="text-muted-foreground">{t("tracks-description")}</p>
       <Input
         placeholder={t("search-tracks")}
         value={searchQuery}

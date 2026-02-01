@@ -12,6 +12,7 @@ export default {
   "auto-fill-from-youtube": "Auto-fill from video",
   "auto-layout": "Auto Layout",
   "back-to-modules": "Back to modules",
+  "browse-modules": "Browse Modules",
   "browse-tracks": "Browse Tracks",
   cancel: "Cancel",
   category: "Category",
@@ -152,6 +153,7 @@ export default {
   "no-modules-in-track": "No modules in this track",
   "no-results-found": "No results found",
   "no-title": "(no title)",
+  "no-modules-to-continue": "You don't have any modules in progress. Start a new module to continue your learning journey.",
   "no-tracks": "No tracks available",
   "no-tracks-match-search": "No tracks match your search",
   "no-tracks-to-continue": "You don't have any tracks in progress. Start a new track to continue your learning journey.",
@@ -218,6 +220,7 @@ export default {
   "track-structure-help":
     "Add modules and connect them to define the learning path",
   tracks: "Tracks",
+  "tracks-description": "Tracks are structured learning paths that group related modules together. Follow a track to learn topics in a recommended sequence.",
   type: "Type",
   "type-filter": "Type:",
   "unknown-source": "Unknown source",
