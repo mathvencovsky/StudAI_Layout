@@ -17,7 +17,6 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
 import { Route as FavouritesRouteImport } from './routes/favourites'
-import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
 import { Route as ContentRouteImport } from './routes/content'
 import { Route as IndexRouteImport } from './routes/index'
@@ -74,11 +73,6 @@ const ModuleRoute = ModuleRouteImport.update({
 const FavouritesRoute = FavouritesRouteImport.update({
   id: '/favourites',
   path: '/favourites',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContentCreateRoute = ContentCreateRouteImport.update({
@@ -172,7 +166,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
-  '/dashboard': typeof DashboardRoute
   '/favourites': typeof FavouritesRouteWithChildren
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
@@ -199,7 +192,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/content-create': typeof ContentCreateRoute
-  '/dashboard': typeof DashboardRoute
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
@@ -222,7 +214,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
-  '/dashboard': typeof DashboardRoute
   '/favourites': typeof FavouritesRouteWithChildren
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
@@ -252,7 +243,6 @@ export interface FileRouteTypes {
     | '/'
     | '/content'
     | '/content-create'
-    | '/dashboard'
     | '/favourites'
     | '/module'
     | '/module-create'
@@ -279,7 +269,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/content-create'
-    | '/dashboard'
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
@@ -301,7 +290,6 @@ export interface FileRouteTypes {
     | '/'
     | '/content'
     | '/content-create'
-    | '/dashboard'
     | '/favourites'
     | '/module'
     | '/module-create'
@@ -330,7 +318,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContentRoute: typeof ContentRouteWithChildren
   ContentCreateRoute: typeof ContentCreateRoute
-  DashboardRoute: typeof DashboardRoute
   FavouritesRoute: typeof FavouritesRouteWithChildren
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
@@ -398,13 +385,6 @@ declare module '@tanstack/react-router' {
       path: '/favourites'
       fullPath: '/favourites'
       preLoaderRoute: typeof FavouritesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/content-create': {
@@ -624,7 +604,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContentRoute: ContentRouteWithChildren,
   ContentCreateRoute: ContentCreateRoute,
-  DashboardRoute: DashboardRoute,
   FavouritesRoute: FavouritesRouteWithChildren,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,

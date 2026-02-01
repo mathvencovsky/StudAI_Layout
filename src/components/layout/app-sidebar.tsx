@@ -4,7 +4,6 @@ import {
   IconHeart,
   IconHome,
   IconInnerShadowTop,
-  IconLayoutDashboard,
   IconMessageCircle,
   IconRoute,
   IconSettings,
@@ -61,15 +60,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           navigate({ to: "/" });
         },
         icon: IconHome,
-      },
-      {
-        title: t("dashboard"),
-        onClick: () => {
-          setOpen(false);
-          setOpenMobile(false);
-          navigate({ to: "/dashboard" });
-        },
-        icon: IconLayoutDashboard,
       },
       {
         title: t("tracks"),
