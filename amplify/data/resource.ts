@@ -16,6 +16,7 @@ const schema = a.schema({
       language: a.string(),
       moduleContents: a.hasMany("ModuleContent", "contentId"),
       userContentProgress: a.hasMany("UserContentProgress", "contentId"),
+      favourites: a.hasMany("FavouriteContent", "contentId"),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
@@ -32,11 +33,32 @@ const schema = a.schema({
       userModuleProgress: a.hasMany("UserModuleProgress", "moduleId"),
       userContentProgress: a.hasMany("UserContentProgress", "moduleId"),
       votes: a.hasMany("Vote", "moduleId"),
+      favourites: a.hasMany("FavouriteModule", "moduleId"),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
       allow.group("Admin").to(["create", "update", "delete"]),
     ]),
+
+  FavouriteContent: a
+    .model({
+      contentId: a.id().required(),
+      content: a.belongsTo("Content", "contentId"),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  FavouriteModule: a
+    .model({
+      moduleId: a.id().required(),
+      module: a.belongsTo("Module", "moduleId"),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 
   ModuleContent: a
     .model({
@@ -118,6 +140,17 @@ const schema = a.schema({
       allow.authenticated().to(["read"]),
       allow.group("Admin").to(["create", "update", "delete"]),
     ]),
+
+  UserTrackProgress: a
+    .model({
+      trackId: a.id().required(),
+      startDate: a.timestamp().required(),
+      completionDate: a.timestamp(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 
   UserLoginDay: a
     .model({

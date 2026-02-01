@@ -14,6 +14,7 @@ import type { UserModuleProgress } from "@/model/user-module-progress";
 import type { ModuleContentWithContentType } from "@/api/module-content";
 import { CheckCircle, Loader2 } from "lucide-react";
 import { VoteButtonsContainer } from "@/components/voting/vote-buttons-container";
+import { FavouriteModuleButton } from "@/components/favourites/favourite-module-button";
 
 export interface ModuleHeaderProps {
   module: Module;
@@ -57,7 +58,10 @@ export const ModuleHeader = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{module.title}</CardTitle>
+        <div className="flex items-center gap-2">
+          <CardTitle>{module.title}</CardTitle>
+          <FavouriteModuleButton moduleId={module.id} />
+        </div>
         <CardDescription>{module.description}</CardDescription>
         {userProgress === null && (
           <CardAction>

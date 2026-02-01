@@ -16,12 +16,14 @@ import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
+import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
 import { Route as ContentRouteImport } from './routes/content'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrackIndexRouteImport } from './routes/track/index'
 import { Route as ModuleIndexRouteImport } from './routes/module/index'
+import { Route as FavouritesIndexRouteImport } from './routes/favourites/index'
 import { Route as ContentIndexRouteImport } from './routes/content/index'
 import { Route as TrackTrackIdRouteImport } from './routes/track/$trackId'
 import { Route as ModuleModuleIdRouteImport } from './routes/module/$moduleId'
@@ -69,6 +71,11 @@ const ModuleRoute = ModuleRouteImport.update({
   path: '/module',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FavouritesRoute = FavouritesRouteImport.update({
+  id: '/favourites',
+  path: '/favourites',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -98,6 +105,11 @@ const ModuleIndexRoute = ModuleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ModuleRoute,
+} as any)
+const FavouritesIndexRoute = FavouritesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FavouritesRoute,
 } as any)
 const ContentIndexRoute = ContentIndexRouteImport.update({
   id: '/',
@@ -161,6 +173,7 @@ export interface FileRoutesByFullPath {
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
   '/dashboard': typeof DashboardRoute
+  '/favourites': typeof FavouritesRouteWithChildren
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -173,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
+  '/favourites/': typeof FavouritesIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
@@ -193,6 +207,7 @@ export interface FileRoutesByTo {
   '/verify-email': typeof VerifyEmailRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/content': typeof ContentIndexRoute
+  '/favourites': typeof FavouritesIndexRoute
   '/module': typeof ModuleIndexRoute
   '/track': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
@@ -208,6 +223,7 @@ export interface FileRoutesById {
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
   '/dashboard': typeof DashboardRoute
+  '/favourites': typeof FavouritesRouteWithChildren
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -220,6 +236,7 @@ export interface FileRoutesById {
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
+  '/favourites/': typeof FavouritesIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
@@ -236,6 +253,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/content-create'
     | '/dashboard'
+    | '/favourites'
     | '/module'
     | '/module-create'
     | '/reset-password'
@@ -248,6 +266,7 @@ export interface FileRouteTypes {
     | '/module/$moduleId'
     | '/track/$trackId'
     | '/content/'
+    | '/favourites/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
@@ -268,6 +287,7 @@ export interface FileRouteTypes {
     | '/verify-email'
     | '/module-edit/$moduleId'
     | '/content'
+    | '/favourites'
     | '/module'
     | '/track'
     | '/content/$contentId/edit'
@@ -282,6 +302,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/content-create'
     | '/dashboard'
+    | '/favourites'
     | '/module'
     | '/module-create'
     | '/reset-password'
@@ -294,6 +315,7 @@ export interface FileRouteTypes {
     | '/module/$moduleId'
     | '/track/$trackId'
     | '/content/'
+    | '/favourites/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
@@ -309,6 +331,7 @@ export interface RootRouteChildren {
   ContentRoute: typeof ContentRouteWithChildren
   ContentCreateRoute: typeof ContentCreateRoute
   DashboardRoute: typeof DashboardRoute
+  FavouritesRoute: typeof FavouritesRouteWithChildren
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -370,6 +393,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModuleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/favourites': {
+      id: '/favourites'
+      path: '/favourites'
+      fullPath: '/favourites'
+      preLoaderRoute: typeof FavouritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -411,6 +441,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/module/'
       preLoaderRoute: typeof ModuleIndexRouteImport
       parentRoute: typeof ModuleRoute
+    }
+    '/favourites/': {
+      id: '/favourites/'
+      path: '/'
+      fullPath: '/favourites/'
+      preLoaderRoute: typeof FavouritesIndexRouteImport
+      parentRoute: typeof FavouritesRoute
     }
     '/content/': {
       id: '/content/'
@@ -518,6 +555,18 @@ const ContentRouteChildren: ContentRouteChildren = {
 const ContentRouteWithChildren =
   ContentRoute._addFileChildren(ContentRouteChildren)
 
+interface FavouritesRouteChildren {
+  FavouritesIndexRoute: typeof FavouritesIndexRoute
+}
+
+const FavouritesRouteChildren: FavouritesRouteChildren = {
+  FavouritesIndexRoute: FavouritesIndexRoute,
+}
+
+const FavouritesRouteWithChildren = FavouritesRoute._addFileChildren(
+  FavouritesRouteChildren,
+)
+
 interface ModuleModuleIdRouteChildren {
   ModuleModuleIdIndexRoute: typeof ModuleModuleIdIndexRoute
   ModuleModuleIdContentContentIdRoute: typeof ModuleModuleIdContentContentIdRoute
@@ -576,6 +625,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContentRoute: ContentRouteWithChildren,
   ContentCreateRoute: ContentCreateRoute,
   DashboardRoute: DashboardRoute,
+  FavouritesRoute: FavouritesRouteWithChildren,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,
   ResetPasswordRoute: ResetPasswordRoute,

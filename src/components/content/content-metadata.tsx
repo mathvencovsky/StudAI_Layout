@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { formatDuration } from "@/lib/duration-utils";
 import { ContentCompletionButton } from "./content-completion-button";
+import { FavouriteContentButton } from "@/components/favourites/favourite-content-button";
 import type { Content } from "@/model/content";
 
 export interface ContentHeaderProps {
@@ -27,7 +28,10 @@ export const ContentHeader = ({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">{content.title}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-3xl font-bold tracking-tight">{content.title}</h1>
+          <FavouriteContentButton contentId={content.id} />
+        </div>
         {moduleId && onToggleCompletion && (
           <ContentCompletionButton
             contentId={content.id}

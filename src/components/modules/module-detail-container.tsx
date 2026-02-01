@@ -71,7 +71,6 @@ export const ModuleDetailContainer = ({
   const contentItems = contentsResponse ?? [];
   const contentProgress = contentProgressResponse ?? [];
   const hasStarted = userProgress !== null && userProgress !== undefined;
-  const isCompleted = userProgress?.completionDate != null;
 
   const handleStartModule = async () => {
     setStartError("");

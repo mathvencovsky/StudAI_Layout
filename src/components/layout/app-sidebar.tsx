@@ -1,8 +1,13 @@
 import React from "react";
 import {
-  IconDashboard,
+  IconBooks,
+  IconHeart,
+  IconHome,
   IconInnerShadowTop,
+  IconLayoutDashboard,
   IconMessageCircle,
+  IconRoute,
+  IconSettings,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/layout/nav-main";
@@ -49,22 +54,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     userNav: [{ title: t("log-out"), onClick: onLogOut }],
     navMain: [
       {
+        title: t("home"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/" });
+        },
+        icon: IconHome,
+      },
+      {
         title: t("dashboard"),
         onClick: () => {
           setOpen(false);
           setOpenMobile(false);
           navigate({ to: "/dashboard" });
         },
-        icon: IconDashboard,
-      },
-      {
-        title: t("modules"),
-        onClick: () => {
-          setOpen(false);
-          setOpenMobile(false);
-          navigate({ to: "/module" });
-        },
-        icon: IconDashboard,
+        icon: IconLayoutDashboard,
       },
       {
         title: t("tracks"),
@@ -73,7 +78,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           setOpenMobile(false);
           navigate({ to: "/track" });
         },
-        icon: IconDashboard,
+        icon: IconRoute,
+      },
+      {
+        title: t("modules"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/module" });
+        },
+        icon: IconBooks,
+      },
+      {
+        title: t("favourites"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/favourites" });
+        },
+        icon: IconHeart,
       },
     ],
     navSecondary: [
@@ -93,7 +116,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 setOpenMobile(false);
                 navigate({ to: "/content" });
               },
-              icon: IconDashboard,
+              icon: IconSettings,
             },
           ]
         : []),

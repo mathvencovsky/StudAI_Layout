@@ -8,6 +8,7 @@ export const getTrackQueryOptions = (trackId: string) =>
   queryOptions({
     queryKey: ["track", trackId],
     queryFn: () => getTrack({ id: trackId }),
+    enabled: !!trackId,
   });
 
 /**

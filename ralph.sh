@@ -31,6 +31,8 @@ fi
 
 PROMPT="You are an autonomous coding agent.
 
+ALWAYS THINK HARD!
+
 ## Instructions
 1. Read the progress file at: $PROGRESS_FILE
 2. Read the spec file at: $SPEC_FILE

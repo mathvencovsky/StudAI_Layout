@@ -1,6 +1,7 @@
 export default {
   "add-content-to-module": "Adicionar Conteúdo ao Módulo",
   "add-module": "Adicionar Módulo",
+  "add-to-favourites": "Adicionar aos favoritos",
   all: "Todos",
   "all-status": "Todos os status",
   "all-types": "Todos os tipos",
@@ -19,6 +20,7 @@ export default {
   "comments-optional": "Comentários (Opcional)",
   "complete-module": "Concluir Módulo",
   completed: "Concluído",
+  "complete-track": "Concluir Trilha",
   "content-author": "Autor",
   "content-created": "Conteúdo criado",
   "content-delete-button": "Excluir",
@@ -28,11 +30,13 @@ export default {
   "content-delete-error":
     "Não foi possível excluir este conteúdo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "content-items": "Itens de Conteúdo",
+  contents: "Conteúdos",
   "content-language": "Idioma",
   "content-published-at": "Publicado Em",
   "content-thumbnail-url": "URL da Miniatura",
   "content-updated": "Conteúdo atualizado",
   "continue-learning": "Continuar Aprendendo",
+  "continue-track": "Continuar Trilha",
   "couldnt-create-module":
     "Não foi possível criar seu módulo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-content":
@@ -41,6 +45,8 @@ export default {
     "Não foi possível carregar o progresso do conteúdo",
   "couldnt-load-content-progress-description":
     "Algo deu errado ao carregar o progresso do conteúdo. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
+  "couldnt-load-favourites":
+    "Não foi possível carregar seus favoritos. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   "couldnt-load-module-contents":
     "Não foi possível carregar o conteúdo do módulo",
   "couldnt-load-module-contents-description":
@@ -97,8 +103,14 @@ export default {
   "error-loading-tracks": "Erro ao carregar trilhas",
   "failed-load-last-module":
     "Falha ao carregar seu último módulo iniciado. Por favor, tente novamente mais tarde. Se o problema persistir, envie-nos um feedback.",
+  "failed-load-last-track": "Falha ao carregar sua trilha atual.",
+  "failed-complete-track": "Falha ao concluir trilha. Tente novamente.",
+  "failed-start-track": "Falha ao iniciar trilha. Tente novamente.",
   "failed-to-load-stats":
     "Falha ao carregar estatísticas. Por favor, tente novamente mais tarde. Se o problema persistir, envie-nos um feedback.",
+  "failed-uncomplete-track":
+    "Falha ao marcar trilha como incompleta. Tente novamente.",
+  favourites: "Favoritos",
   "failed-save-feedback":
     "Falha ao salvar feedback. Por favor, tente novamente.",
   "go-back-to-modules": "Voltar para a lista de módulos",
@@ -106,6 +118,7 @@ export default {
   "greeting-evening": "Boa noite, {{name}}!",
   "greeting-morning": "Bom dia, {{name}}!",
   "help-us-improve": "Ajude-nos a melhorar compartilhando sua experiência",
+  home: "Início",
   "in-progress": "Em progresso",
   lab: "Laboratório",
   "language-selector": "Selecionar Idioma",
@@ -117,6 +130,7 @@ export default {
   "log-out": "Sair",
   "manage-content": "Gerenciar Conteúdo",
   "manage-modules": "Gerencie seus módulos de aprendizado e crie novos.",
+  "mark-incomplete": "Marcar como Incompleto",
   "mark-as-complete": "Marcar como Concluído",
   "mark-as-incomplete": "Marcar como Incompleto",
   "module-created": "Módulo criado",
@@ -141,6 +155,7 @@ export default {
   "no-content-yet": "Nenhum conteúdo ainda. Crie seu primeiro item.",
   "no-description": "(sem descrição)",
   "no-description-available": "Nenhuma descrição disponível",
+  "no-favourites": "Você ainda não adicionou nenhum favorito.",
   "no-image": "Sem imagem",
   "no-modules-in-track": "Nenhum módulo nesta trilha",
   "no-results-found": "Nenhum resultado encontrado",
@@ -159,6 +174,7 @@ export default {
   quiz: "Quiz",
   "rate-stars": "Avaliar",
   rating: "Avaliação",
+  "remove-from-favourites": "Remover dos favoritos",
   "remove-selected": "Remover Selecionados",
   "reset-search-filters": "Redefinir pesquisa e filtros",
   retry: "Tentar novamente",
@@ -182,6 +198,7 @@ export default {
     "Algo deu errado ao carregar os módulos. Por favor, tente novamente. Se o problema persistir, envie-nos um feedback.",
   stars: "estrelas",
   "start-module": "Iniciar Módulo",
+  "start-track": "Iniciar Trilha",
   "started-on": "Iniciado em",
   "started-on-date": "Iniciado em",
   "status-filter": "Status:",
@@ -225,4 +242,5 @@ export default {
   "verify-email-title": "Verifique Seu Email",
   verifying: "Verificando...",
   video: "Vídeo",
+  "view-track": "Ver Trilha",
 } as const;
