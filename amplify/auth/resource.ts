@@ -9,8 +9,11 @@ export const auth = defineAuth({
     email: true,
   },
   userAttributes: {
-    preferredUsername: {
+    "custom:display_name": {
+      dataType: "String",
       mutable: true,
+      maxLen: 50,
+      minLen: 1,
     },
   },
   groups: ["Admin"],

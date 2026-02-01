@@ -66,7 +66,7 @@ export const signUpWithEmailApi = async (
     password,
     options: {
       userAttributes: {
-        preferred_username: name,
+        "custom:display_name": name,
       },
     },
   });

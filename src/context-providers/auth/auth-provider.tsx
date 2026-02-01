@@ -23,7 +23,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           id: currentUser.userId,
           email: attributes.email ?? currentUser.signInDetails?.loginId,
           displayName:
-            attributes.preferred_username ?? attributes.email ?? attributes.name,
+            attributes["custom:display_name"] ?? attributes.email ?? attributes.name,
         });
       } catch {
         setUser(null);
