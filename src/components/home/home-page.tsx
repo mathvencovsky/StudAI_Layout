@@ -24,12 +24,12 @@ export const HomePage = () => {
       <UserGreeting displayName={user?.displayName} />
       <StatsCards />
       <div>
-        <h2 className="text-xl font-semibold mb-4">{t("continue-track")}</h2>
-        <LastStartedTrackSection />
-      </div>
-      <div>
         <h2 className="text-xl font-semibold mb-4">{t("continue-learning")}</h2>
         <LastStartedModuleSection />
+      </div>
+      <div>
+        <h2 className="text-xl font-semibold mb-4">{t("continue-track")}</h2>
+        <LastStartedTrackSection />
       </div>
     </div>
   );

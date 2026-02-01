@@ -4,17 +4,16 @@ import { TrackViewerCard } from "@/components/track/track-viewer-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "@tanstack/react-router";
 
 /**
  * Displays the last started incomplete track on the home page
  */
 export const LastStartedTrackSection = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useLastStartedTrackWithDetails();
-
-  if (!data && !isLoading && !isError) {
-    return null;
-  }
 
   if (isLoading) {
     return (
@@ -34,7 +33,16 @@ export const LastStartedTrackSection = () => {
     );
   }
 
-  if (!data) return null;
+  if (!data) {
+    return (
+      <div className="border rounded-lg p-6 text-center space-y-4">
+        <p className="text-muted-foreground">{t("no-tracks-to-continue")}</p>
+        <Button onClick={() => navigate({ to: "/track" })}>
+          {t("browse-tracks")}
+        </Button>
+      </div>
+    );
+  }
 
   return <TrackViewerCard track={data.track} />;
 };

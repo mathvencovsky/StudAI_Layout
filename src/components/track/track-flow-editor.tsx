@@ -32,7 +32,11 @@ type ParentMap = Record<string, string>;
 export interface TrackFlowEditorProps {
   initialRootModuleId?: string;
   initialParentByModuleId?: ParentMap;
-  onChange: (rootModuleId: string, parentByModuleId: ParentMap, hasCycle: boolean) => void;
+  onChange: (
+    rootModuleId: string,
+    parentByModuleId: ParentMap,
+    hasCycle: boolean,
+  ) => void;
 }
 
 const ROOT = "ROOT";
@@ -157,7 +161,11 @@ export const TrackFlowEditor = ({
 
 interface TrackFlowEditorInnerProps {
   initialParentByModuleId?: ParentMap;
-  onChange: (rootModuleId: string, parentByModuleId: ParentMap, hasCycle: boolean) => void;
+  onChange: (
+    rootModuleId: string,
+    parentByModuleId: ParentMap,
+    hasCycle: boolean,
+  ) => void;
   modules: { id: string; title: string }[];
 }
 
@@ -178,12 +186,17 @@ const TrackFlowEditorInner = ({
   const { initialNodes, initialEdges } = useMemo(() => {
     if (!initialParentByModuleId) return { initialNodes: [], initialEdges: [] };
 
-    const nodes: Node[] = Object.keys(initialParentByModuleId).map((moduleId) => ({
-      id: moduleId,
-      type: "module",
-      position: { x: 0, y: 0 },
-      data: { label: moduleMap.get(moduleId)?.title ?? "Missing module", moduleId },
-    }));
+    const nodes: Node[] = Object.keys(initialParentByModuleId).map(
+      (moduleId) => ({
+        id: moduleId,
+        type: "module",
+        position: { x: 0, y: 0 },
+        data: {
+          label: moduleMap.get(moduleId)?.title ?? "Missing module",
+          moduleId,
+        },
+      }),
+    );
 
     const edges: Edge[] = Object.entries(initialParentByModuleId)
       .filter(([, parentId]) => parentId !== ROOT)
@@ -193,7 +206,10 @@ const TrackFlowEditorInner = ({
         target: moduleId,
       }));
 
-    return { initialNodes: applyDagreLayout(nodes, edges), initialEdges: edges };
+    return {
+      initialNodes: applyDagreLayout(nodes, edges),
+      initialEdges: edges,
+    };
   }, [initialParentByModuleId, moduleMap]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -232,15 +248,22 @@ const TrackFlowEditorInner = ({
   }, [selectedModuleToAdd, moduleMap, edges, setNodes]);
 
   const removeSelectedNodes = useCallback(() => {
-    const selectedIds = new Set(nodes.filter((n) => n.selected).map((n) => n.id));
+    const selectedIds = new Set(
+      nodes.filter((n) => n.selected).map((n) => n.id),
+    );
     setNodes((nds) => nds.filter((n) => !n.selected));
     setEdges((eds) =>
-      eds.filter((e) => !selectedIds.has(e.source) && !selectedIds.has(e.target)),
+      eds.filter(
+        (e) => !selectedIds.has(e.source) && !selectedIds.has(e.target),
+      ),
     );
   }, [nodes, setNodes, setEdges]);
 
   const handleSave = useCallback(() => {
-    const { rootModuleId, parentByModuleId } = flowToTrackStructure(nodes, edges);
+    const { rootModuleId, parentByModuleId } = flowToTrackStructure(
+      nodes,
+      edges,
+    );
     onChange(rootModuleId, parentByModuleId, hasCycle);
   }, [nodes, edges, hasCycle, onChange]);
 
@@ -261,12 +284,19 @@ const TrackFlowEditorInner = ({
         onConnect={onConnect}
         colorMode={colorMode}
         fitView
+        proOptions={{ hideAttribution: true }}
       >
         <Background />
         <Controls />
-        <Panel position="top-left" className="bg-card p-3 rounded-lg border space-y-3">
+        <Panel
+          position="top-left"
+          className="bg-card p-3 rounded-lg border space-y-3"
+        >
           <div className="flex gap-2 items-center">
-            <Select value={selectedModuleToAdd} onValueChange={setSelectedModuleToAdd}>
+            <Select
+              value={selectedModuleToAdd}
+              onValueChange={setSelectedModuleToAdd}
+            >
               <SelectTrigger className="w-[200px]">
                 <SelectValue placeholder={t("select-module")} />
               </SelectTrigger>
@@ -278,7 +308,11 @@ const TrackFlowEditorInner = ({
                 ))}
               </SelectContent>
             </Select>
-            <Button type="button" onClick={addModule} disabled={!selectedModuleToAdd}>
+            <Button
+              type="button"
+              onClick={addModule}
+              disabled={!selectedModuleToAdd}
+            >
               {t("add-module")}
             </Button>
           </div>
@@ -286,7 +320,11 @@ const TrackFlowEditorInner = ({
             <Button type="button" variant="outline" onClick={applyLayout}>
               {t("auto-layout")}
             </Button>
-            <Button type="button" variant="secondary" onClick={removeSelectedNodes}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={removeSelectedNodes}
+            >
               {t("remove-selected")}
             </Button>
             <Button type="button" onClick={handleSave}>

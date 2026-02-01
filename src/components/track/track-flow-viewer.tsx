@@ -224,6 +224,7 @@ const TrackFlowViewerInner = ({
       onNodeClick={onNodeClick}
       colorMode={mode}
       fitView
+      proOptions={{ hideAttribution: true }}
       nodesDraggable={false}
       nodesConnectable={false}
       elementsSelectable={false}
