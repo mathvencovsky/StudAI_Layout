@@ -1,4 +1,15 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { defineConversationHandlerFunction } from "@aws-amplify/backend-ai/conversation";
+
+export const chatHandler = defineConversationHandlerFunction({
+  name: "chatHandler",
+  entry: "./chat/handler.ts",
+  models: [
+    {
+      modelId: a.ai.model("Amazon Nova Micro"),
+    },
+  ],
+});
 
 const schema = a.schema({
   Content: a
@@ -160,6 +171,14 @@ const schema = a.schema({
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
     .authorization((allow) => [allow.owner()]),
+
+  Chat: a
+    .conversation({
+      aiModel: a.ai.model("Amazon Nova Micro"),
+      systemPrompt: "You are a helpful learning assistant for StudAI.",
+      handler: chatHandler,
+    })
+    .authorization((allow) => allow.owner()),
 });
 
 export type Schema = ClientSchema<typeof schema>;
