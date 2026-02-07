@@ -201,6 +201,36 @@ export const ContentForm: React.FC<ContentFormProps> = ({
       </div>
 
       <div>
+        <Label htmlFor="aiTranscript">{t("content-ai-transcript")}</Label>
+        <Textarea
+          id="aiTranscript"
+          rows={6}
+          placeholder={t("optional")}
+          {...register("aiTranscript")}
+        />
+        {errors.aiTranscript && (
+          <p className="text-sm text-red-600 mt-1">
+            {errors.aiTranscript.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <Label htmlFor="aiSummary">{t("content-ai-summary")}</Label>
+        <Textarea
+          id="aiSummary"
+          rows={6}
+          placeholder={t("optional")}
+          {...register("aiSummary")}
+        />
+        {errors.aiSummary && (
+          <p className="text-sm text-red-600 mt-1">
+            {errors.aiSummary.message}
+          </p>
+        )}
+      </div>
+
+      <div>
         <Label htmlFor="link">{t("link")}</Label>
         <div className="flex gap-2">
           <Input

@@ -8,17 +8,14 @@ import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
 import { useIsAiUser } from "@/hooks/use-is-ai-user";
 import { useMyAiWaitlist } from "@/hooks/ai-waitlist/use-my-ai-waitlist";
 import { useCreateAiWaitlist } from "@/hooks/ai-waitlist/use-create-ai-waitlist";
+import { type Content } from "@/model/content";
 import { AiChatWaitlist } from "./ai-chat-waitlist";
 
 export interface AiChatPanelProps {
-  contentId: string;
-  contentTitle: string;
+  content: Content;
 }
 
-export const AiChatPanel = ({
-  contentId: _contentId,
-  contentTitle: _contentTitle,
-}: AiChatPanelProps) => {
+export const AiChatPanel = ({ content }: AiChatPanelProps) => {
   const { t } = useTranslation();
   const { isAiUser, isLoading: isChecking } = useIsAiUser();
   const { data: waitlistEntry, isLoading: isLoadingWaitlist } =
@@ -47,7 +44,11 @@ export const AiChatPanel = ({
 
   const handleSend = () => {
     if (!input.trim()) return;
-    sendMessage({ content: [{ text: input }] });
+    const aiContext =
+      data.messages.length === 0
+        ? { contentTitle: content.title, aiSummary: content.aiSummary }
+        : undefined;
+    sendMessage({ content: [{ text: input }], aiContext });
     setInput("");
   };
 

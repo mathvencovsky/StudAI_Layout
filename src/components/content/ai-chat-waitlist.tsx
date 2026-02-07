@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Bot } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export interface AiChatWaitlistProps {
@@ -20,7 +20,7 @@ export const AiChatWaitlist = ({
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-      <Bot className="h-12 w-12 text-muted-foreground mb-4" />
+      <Sparkles className="h-12 w-12 text-muted-foreground mb-4" />
       <h2 className="font-semibold text-lg mb-2">
         {t("ai-chat-waitlist-title")}
       </h2>

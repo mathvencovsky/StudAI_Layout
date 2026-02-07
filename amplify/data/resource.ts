@@ -25,6 +25,8 @@ const schema = a.schema({
       author: a.string(),
       publishedAt: a.datetime(),
       language: a.string(),
+      aiTranscript: a.string(),
+      aiSummary: a.string(),
       moduleContents: a.hasMany("ModuleContent", "contentId"),
       userContentProgress: a.hasMany("UserContentProgress", "contentId"),
       favourites: a.hasMany("FavouriteContent", "contentId"),

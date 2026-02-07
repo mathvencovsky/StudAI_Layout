@@ -43,10 +43,6 @@ export const ContentHeader = ({
         )}
       </div>
 
-      <p className="text-muted-foreground whitespace-pre-wrap">
-        {content.description}
-      </p>
-
       <div className="flex flex-wrap gap-2">
         <Badge variant="secondary">
           {t("type")}: {content.type}

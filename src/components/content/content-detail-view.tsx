@@ -2,6 +2,7 @@ import { isYouTubeUrl } from "@/lib/youtube-utils";
 import { YouTubeEmbed } from "./youtube-embed";
 import { ExternalLink } from "./external-link";
 import { ContentHeader } from "./content-metadata";
+import { ContentDetailTabs } from "./content-detail-tabs";
 import { ContentNavigationButtons } from "./content-navigation-buttons";
 import type { Content } from "@/model/content";
 
@@ -51,6 +52,11 @@ export const ContentDetailView = ({
         isCompleted={isCompleted}
         isLoading={isLoading}
         onToggleCompletion={onToggleCompletion}
+      />
+      <ContentDetailTabs
+        description={content.description}
+        aiTranscript={content.aiTranscript}
+        aiSummary={content.aiSummary}
       />
       {moduleId &&
         currentPosition !== undefined &&
