@@ -51,12 +51,13 @@ fi
 PROMPT="You are an autonomous coding agent.
 
 ALWAYS THINK HARD!
+CRITICAL: NEVER pick more than one task to work on. Only work on one task at a time.
 
 ## Instructions
 1. Read the progress file at: $PROGRESS_FILE
 2. Read the spec file at: $SPEC_FILE
 3. Work on ONE task at a time from the spec file
-4. After making all the changes for the task, run npm run build and make sure everything is working. If it's not, fix it.
+4. After making the changes for the task, run npm run build and make sure everything is working. If it's not, fix it.
 4. When a task is done and build is passing, mark the task as complete in the spec file by adding [x]
 5. After marking it as complete, append the progress of what was done to the progress file
 

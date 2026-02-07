@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context-providers/auth/auth-provider";
 import { ThemeProvider } from "@/context-providers/theme/theme-provider";
 import { useAuth } from "@/hooks/use-auth";
+import { Toaster } from "@/components/ui/sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 0 } },
@@ -34,7 +35,12 @@ declare module "@tanstack/react-router" {
 // eslint-disable-next-line react-refresh/only-export-components
 const InnerApp = () => {
   const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth }} />;
+  return (
+    <>
+      <RouterProvider router={router} context={{ auth }} />
+      <Toaster />
+    </>
+  );
 };
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -262,4 +262,61 @@ export default {
   verifying: "Verifying...",
   video: "Video",
   "view-track": "View Track",
+  "learning-preferences": "Learning Preferences",
+  "learning-preferences-subtitle":
+    "These preferences help AI recommend learning paths tailored to you. The more you add, the better the recommendations.",
+  "learning-preferences-required": "required",
+  "learning-preferences-optional": "optional",
+  "learning-preferences-step-of": "Step {{current}} of {{total}}",
+  "learning-preferences-next": "Next",
+  "learning-preferences-back": "Back",
+  "learning-preferences-skip": "Skip",
+  "learning-preferences-save": "Save preferences",
+  "learning-preferences-edit": "Edit",
+  "learning-preferences-interests-title": "What are you interested in learning?",
+  "learning-preferences-interests-helper":
+    "Pick 1–3 to start. You can change later.",
+  "learning-preferences-interests-selected": "{{count}} selected",
+  "learning-preferences-interests-error":
+    "Select at least one area of interest.",
+  "learning-preferences-minutes-title":
+    "How much time can you dedicate daily?",
+  "learning-preferences-minutes-value": "{{count}} minutes/day",
+  "learning-preferences-minutes-not-set": "Not set",
+  "learning-preferences-minutes-clear": "Clear",
+  "learning-preferences-minutes-tip":
+    "Even 10 minutes helps — consistency beats intensity.",
+  "learning-preferences-days-title": "Which days work best for you?",
+  "learning-preferences-days-selected": "{{count}} days selected",
+  "learning-preferences-formats-title": "How do you prefer to learn?",
+  "learning-preferences-content-length-title":
+    "What content length do you prefer?",
+  "learning-preferences-confirmation-message":
+    "Done — we'll tailor your learning path.",
+  "learning-preferences-optional-hint":
+    "Optional — skip if you're not sure.",
+  "learning-preferences-change-later": "You can change this later.",
+  "learning-preferences-save-success":
+    "Preferences saved successfully!",
+  "learning-preferences-save-error":
+    "Something went wrong while saving your preferences.",
+  "learning-preferences-interest-web-development": "Web Development",
+  "learning-preferences-interest-mobile-development": "Mobile Development",
+  "learning-preferences-interest-data-science": "Data Science",
+  "learning-preferences-interest-machine-learning": "Machine Learning",
+  "learning-preferences-interest-cloud-computing": "Cloud Computing",
+  "learning-preferences-interest-devops": "DevOps",
+  "learning-preferences-interest-cybersecurity": "Cybersecurity",
+  "learning-preferences-interest-databases": "Databases",
+  "learning-preferences-interest-ui-ux-design": "UI/UX Design",
+  "learning-preferences-interest-game-development": "Game Development",
+  "learning-preferences-interest-blockchain": "Blockchain",
+  "learning-preferences-interest-embedded-systems": "Embedded Systems",
+  "learning-preferences-format-video": "Video",
+  "learning-preferences-format-reading": "Reading",
+  "learning-preferences-format-hands-on": "Hands-on Exercises",
+  "learning-preferences-content-length-bite-sized": "Bite-sized (2–5 min)",
+  "learning-preferences-content-length-short": "Short (5–15 min)",
+  "learning-preferences-content-length-medium": "Medium (15–30 min)",
+  "learning-preferences-content-length-deep-dive": "Deep dive (30+ min)",
 } as const;

@@ -17,7 +17,13 @@ export type Foo = Schema["Foo"]["type"];
 export type FooIdentifier = Schema["Foo"]["identifier"];
 
 // Use selectionSet to define which fields to load.
-const fooWithBarBazSelectionSet = ["id", "name", "bar.id", "bar.name", "baz.*"] as const;
+const fooWithBarBazSelectionSet = [
+  "id",
+  "name",
+  "bar.id",
+  "bar.name",
+  "baz.*",
+] as const;
 export type FooWithBarBaz = SelectionSet<Foo, typeof fooWithBarBazSelectionSet>;
 ```
 
@@ -66,7 +72,13 @@ export type FooUpdateInput = Schema["Foo"]["updateType"];
 export type FooDeleteInput = Schema["Foo"]["deleteType"];
 
 // Use selectionSet to define which fields to load.
-const fooWithBarBazSelectionSet = ["id", "name", "bar.id", "bar.name", "baz.*"] as const;
+const fooWithBarBazSelectionSet = [
+  "id",
+  "name",
+  "bar.id",
+  "bar.name",
+  "baz.*",
+] as const;
 export type FooWithBarBaz = SelectionSet<Foo, typeof fooWithBarBazSelectionSet>;
 ```
 
@@ -223,4 +235,27 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.owner()]),
 });
+```
+
+## Understand list nullability in generated TypeScript types
+
+Amplify Gen 2 generates TypeScript types based on GraphQL nullability rules. For list fields, there are two separate “required” concepts:
+
+- **Is the list itself required?** (can the entire field be `null` / omitted?)
+- **Are the items inside the list required?** (can an element inside the array be `null`?)
+
+If you only mark the list field as required, Amplify may still generate list item types as nullable, resulting in types like:
+
+`Nullable<string>[] | undefined`
+
+Wrong way (list required, items can still be nullable):
+
+```ts
+interests: a.string().array().required(),
+```
+
+Correct way (make items required _and_ the list required):
+
+```ts
+interests: a.string().required().array().required(),
 ```

@@ -16,6 +16,7 @@ import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
+import { Route as LearningPreferencesRouteImport } from './routes/learning-preferences'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
 import { Route as ContentRouteImport } from './routes/content'
@@ -69,6 +70,11 @@ const ModuleCreateRoute = ModuleCreateRouteImport.update({
 const ModuleRoute = ModuleRouteImport.update({
   id: '/module',
   path: '/module',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningPreferencesRoute = LearningPreferencesRouteImport.update({
+  id: '/learning-preferences',
+  path: '/learning-preferences',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavouritesRoute = FavouritesRouteImport.update({
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
   '/favourites': typeof FavouritesRouteWithChildren
+  '/learning-preferences': typeof LearningPreferencesRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/chat': typeof ChatRoute
   '/content-create': typeof ContentCreateRoute
+  '/learning-preferences': typeof LearningPreferencesRoute
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
   '/sign-up': typeof SignUpRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
   '/favourites': typeof FavouritesRouteWithChildren
+  '/learning-preferences': typeof LearningPreferencesRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/content-create'
     | '/favourites'
+    | '/learning-preferences'
     | '/module'
     | '/module-create'
     | '/reset-password'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/'
     | '/chat'
     | '/content-create'
+    | '/learning-preferences'
     | '/module-create'
     | '/reset-password'
     | '/sign-up'
@@ -303,6 +314,7 @@ export interface FileRouteTypes {
     | '/content'
     | '/content-create'
     | '/favourites'
+    | '/learning-preferences'
     | '/module'
     | '/module-create'
     | '/reset-password'
@@ -332,6 +344,7 @@ export interface RootRouteChildren {
   ContentRoute: typeof ContentRouteWithChildren
   ContentCreateRoute: typeof ContentCreateRoute
   FavouritesRoute: typeof FavouritesRouteWithChildren
+  LearningPreferencesRoute: typeof LearningPreferencesRoute
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -391,6 +404,13 @@ declare module '@tanstack/react-router' {
       path: '/module'
       fullPath: '/module'
       preLoaderRoute: typeof ModuleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning-preferences': {
+      id: '/learning-preferences'
+      path: '/learning-preferences'
+      fullPath: '/learning-preferences'
+      preLoaderRoute: typeof LearningPreferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favourites': {
@@ -626,6 +646,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContentRoute: ContentRouteWithChildren,
   ContentCreateRoute: ContentCreateRoute,
   FavouritesRoute: FavouritesRouteWithChildren,
+  LearningPreferencesRoute: LearningPreferencesRoute,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,
   ResetPasswordRoute: ResetPasswordRoute,

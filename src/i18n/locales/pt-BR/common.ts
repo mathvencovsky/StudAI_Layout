@@ -270,4 +270,63 @@ export default {
   verifying: "Verificando...",
   video: "Vídeo",
   "view-track": "Ver Trilha",
+  "learning-preferences": "Preferências de Aprendizado",
+  "learning-preferences-subtitle":
+    "Essas preferências ajudam a IA a recomendar caminhos de aprendizado personalizados para você. Quanto mais você adicionar, melhores serão as recomendações.",
+  "learning-preferences-required": "obrigatório",
+  "learning-preferences-optional": "opcional",
+  "learning-preferences-step-of": "Etapa {{current}} de {{total}}",
+  "learning-preferences-next": "Próximo",
+  "learning-preferences-back": "Voltar",
+  "learning-preferences-skip": "Pular",
+  "learning-preferences-save": "Salvar preferências",
+  "learning-preferences-edit": "Editar",
+  "learning-preferences-interests-title":
+    "Em que você está interessado em aprender?",
+  "learning-preferences-interests-helper":
+    "Escolha 1–3 para começar. Você pode mudar depois.",
+  "learning-preferences-interests-selected": "{{count}} selecionado(s)",
+  "learning-preferences-interests-error":
+    "Selecione pelo menos uma área de interesse.",
+  "learning-preferences-minutes-title":
+    "Quanto tempo você pode dedicar diariamente?",
+  "learning-preferences-minutes-value": "{{count}} minutos/dia",
+  "learning-preferences-minutes-not-set": "Não definido",
+  "learning-preferences-minutes-clear": "Limpar",
+  "learning-preferences-minutes-tip":
+    "Até 10 minutos ajuda — consistência vence intensidade.",
+  "learning-preferences-days-title": "Quais dias funcionam melhor para você?",
+  "learning-preferences-days-selected": "{{count}} dias selecionados",
+  "learning-preferences-formats-title": "Como você prefere aprender?",
+  "learning-preferences-content-length-title":
+    "Qual duração de conteúdo você prefere?",
+  "learning-preferences-confirmation-message":
+    "Pronto — vamos personalizar seu caminho de aprendizado.",
+  "learning-preferences-optional-hint":
+    "Opcional — pule se não tiver certeza.",
+  "learning-preferences-change-later": "Você pode mudar isso depois.",
+  "learning-preferences-save-success":
+    "Preferências salvas com sucesso!",
+  "learning-preferences-save-error":
+    "Algo deu errado ao salvar suas preferências.",
+  "learning-preferences-interest-web-development": "Desenvolvimento Web",
+  "learning-preferences-interest-mobile-development":
+    "Desenvolvimento Mobile",
+  "learning-preferences-interest-data-science": "Ciência de Dados",
+  "learning-preferences-interest-machine-learning": "Machine Learning",
+  "learning-preferences-interest-cloud-computing": "Computação em Nuvem",
+  "learning-preferences-interest-devops": "DevOps",
+  "learning-preferences-interest-cybersecurity": "Cibersegurança",
+  "learning-preferences-interest-databases": "Bancos de Dados",
+  "learning-preferences-interest-ui-ux-design": "Design UI/UX",
+  "learning-preferences-interest-game-development": "Desenvolvimento de Jogos",
+  "learning-preferences-interest-blockchain": "Blockchain",
+  "learning-preferences-interest-embedded-systems": "Sistemas Embarcados",
+  "learning-preferences-format-video": "Vídeo",
+  "learning-preferences-format-reading": "Leitura",
+  "learning-preferences-format-hands-on": "Exercícios Práticos",
+  "learning-preferences-content-length-bite-sized": "Pequeno (2–5 min)",
+  "learning-preferences-content-length-short": "Curto (5–15 min)",
+  "learning-preferences-content-length-medium": "Médio (15–30 min)",
+  "learning-preferences-content-length-deep-dive": "Aprofundado (30+ min)",
 } as const;

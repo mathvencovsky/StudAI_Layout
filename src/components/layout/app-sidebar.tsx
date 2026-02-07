@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  IconAdjustments,
   IconBooks,
   IconHeart,
   IconHome,
@@ -97,6 +98,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           navigate({ to: "/favourites" });
         },
         icon: IconHeart,
+      },
+      {
+        title: t("learning-preferences"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/learning-preferences" });
+        },
+        icon: IconAdjustments,
       },
     ],
     navSecondary: [

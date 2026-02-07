@@ -190,6 +190,19 @@ const schema = a.schema({
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
     .authorization((allow) => [allow.owner()]),
+
+  LearningPreference: a
+    .model({
+      interests: a.string().required().array().required(),
+      minutesPerDay: a.integer(),
+      days: a.string().required().array(),
+      formats: a.string().required().array(),
+      contentLength: a.enum(["bite-sized", "short", "medium", "deep-dive"]),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

@@ -33,7 +33,7 @@ _List components to add or modify, including their props interface and a brief d
 
 ### 1.6 Translation keys
 
-_List all new i18n keys and for what they will be used. You don't need to add the actuall translation, just add the keys._
+_List all new i18n keys and for what they will be used. DO NOT add the actual translations for each language, just the keys that will be used._
 
 ## 1.7. Sidebar
 
@@ -58,7 +58,7 @@ _Define testable acceptance criteria using Given/When/Then format. Include edge 
 
 _Break down the implementation into specific file-level tasks. Each task should include the file path, a title, description, and summarized code snippets showing what to add or change._
 
-### 3.1 `path/to/file.ts` - <title>
+### [ ] 3.1 `path/to/file.ts` - <title>
 
 Description of changes.
 
@@ -66,7 +66,7 @@ Description of changes.
 // Summarized code to add/change
 ```
 
-### 3.2 `path/to/file.ts` - <title>
+### [ ] 3.2 `path/to/file.ts` - <title>
 
 - Specific change 1
 - Specific change 2
@@ -75,15 +75,7 @@ Description of changes.
 // Summarized code to add/change
 ```
 
-## 4. Execution Order
-
-_List the order in which implementation tasks should be executed, considering dependencies between changes._
-
-- [] Task 1
-- [] Task 2
-- [] Task 3
-
-## 5. Open Questions and missing details
+## 4. Open Questions and missing details
 
 _List any unresolved questions or missing details that need clarification before or during implementation._
 
