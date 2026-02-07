@@ -58,7 +58,7 @@ export const AiChatPanel = ({ content }: AiChatPanelProps) => {
         <h2 className="font-semibold">{t("ai-chat-title")}</h2>
         <p className="text-sm text-muted-foreground">{t("ai-chat-subtitle")}</p>
       </div>
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 min-h-0 p-4">
         {data.messages.length === 0 ? (
           <p className="text-sm text-muted-foreground text-center mt-8">
             {t("ai-chat-empty-state")}

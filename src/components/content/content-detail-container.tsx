@@ -16,7 +16,7 @@ import {
   ResizablePanel,
   ResizableHandle,
 } from "@/components/ui/resizable";
-import { useAiChat } from "@/contexts/ai-chat-context";
+import { useAiChat } from "@/hooks/ai/use-ai-chat";
 
 export interface ContentDetailContainerProps {
   contentId: string;

@@ -3,13 +3,15 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
-import { useAiChat } from "@/contexts/ai-chat-context";
+import { useAiChatContext } from "@/contexts/ai-chat-context";
+import { useAiIconVisible } from "@/contexts/ai-icon-context";
 import { useTranslation } from "react-i18next";
 
 export interface SiteHeaderProps {}
 
 export function SiteHeader({}: SiteHeaderProps) {
-  const { toggleChat, isOpen } = useAiChat();
+  const { toggleChat, isOpen } = useAiChatContext();
+  const showAiIcon = useAiIconVisible();
   const { t } = useTranslation();
 
   return (
@@ -22,14 +24,16 @@ export function SiteHeader({}: SiteHeaderProps) {
         />
         <AppBreadcrumbs />
         <div className="ml-auto">
-          <Button
-            variant={isOpen ? "default" : "outline"}
-            size="icon"
-            onClick={toggleChat}
-            aria-label={t("ai-chat-toggle")}
-          >
-            <Sparkles className="h-4 w-4" />
-          </Button>
+          {showAiIcon && (
+            <Button
+              variant={isOpen ? "default" : "outline"}
+              size="icon"
+              onClick={toggleChat}
+              aria-label={t("ai-chat-toggle")}
+            >
+              <Sparkles className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       </div>
     </header>

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/module/$moduleId/content/$contentId")({
     return {
       crumb: (
         await context.queryClient.ensureQueryData(
-          getContentQueryOptions(params.contentId)
+          getContentQueryOptions(params.contentId),
         )
       )?.title,
     };
@@ -19,7 +19,7 @@ function RouteComponent() {
   const { contentId, moduleId } = Route.useParams();
 
   return (
-    <div className="h-full -m-6">
+    <div className="h-full">
       <ContentDetailContainer contentId={contentId} moduleId={moduleId} />
     </div>
   );
