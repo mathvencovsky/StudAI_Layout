@@ -76,12 +76,6 @@ export const LearningPreferencesForm = ({
     }
   }, [currentStep, form]);
 
-  const handleSkip = useCallback(() => {
-    if (currentStep < TOTAL_STEPS) {
-      setCurrentStep(currentStep + 1);
-    }
-  }, [currentStep]);
-
   const handleBack = useCallback(() => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
