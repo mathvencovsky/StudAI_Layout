@@ -52,7 +52,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       email: user?.email ?? undefined,
       avatar: user?.photoURL ?? undefined,
     },
-    userNav: [{ title: t("log-out"), onClick: onLogOut }],
+    userNav: [
+      {
+        title: t("learning-preferences"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/learning-preferences" });
+        },
+        icon: IconAdjustments,
+      },
+      { title: t("log-out"), onClick: onLogOut, separator: true },
+    ],
     navMain: [
       {
         title: t("home"),
@@ -102,15 +113,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           navigate({ to: "/favourites" });
         },
         icon: IconHeart,
-      },
-      {
-        title: t("learning-preferences"),
-        onClick: () => {
-          setOpen(false);
-          setOpenMobile(false);
-          navigate({ to: "/learning-preferences" });
-        },
-        icon: IconAdjustments,
       },
     ],
     navSecondary: [

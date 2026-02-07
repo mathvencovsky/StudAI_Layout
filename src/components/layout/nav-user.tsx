@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { IconDotsVertical, type Icon } from "@tabler/icons-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -26,6 +27,7 @@ export interface NavUserProps {
     title: string;
     onClick: () => void;
     icon?: Icon;
+    separator?: boolean;
   }[];
   user: {
     name?: string;
@@ -87,10 +89,13 @@ export function NavUser({ user, items }: NavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               {items.map((item) => (
-                <DropdownMenuItem key={item.title} onClick={item.onClick}>
-                  {item.icon ? <item.icon /> : null}
-                  {item.title}
-                </DropdownMenuItem>
+                <React.Fragment key={item.title}>
+                  {item.separator && <DropdownMenuSeparator />}
+                  <DropdownMenuItem onClick={item.onClick}>
+                    {item.icon ? <item.icon /> : null}
+                    {item.title}
+                  </DropdownMenuItem>
+                </React.Fragment>
               ))}
             </DropdownMenuGroup>
           </DropdownMenuContent>
