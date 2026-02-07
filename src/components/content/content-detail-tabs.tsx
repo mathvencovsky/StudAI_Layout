@@ -11,6 +11,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useIsAiUser } from "@/hooks/use-is-ai-user";
+import { AiChatWaitlist } from "@/components/content/ai-chat-waitlist";
 
 export interface ContentDetailTabsProps {
   description: string;
@@ -21,6 +23,7 @@ export interface ContentDetailTabsProps {
 /**
  * Displays content details in a tabbed interface with Description, AI Transcript, and AI Summary tabs.
  * Includes a Hide/Show toggle button to collapse/expand all tab content.
+ * Shows waitlist for users not in the AI group.
  */
 export const ContentDetailTabs = ({
   description,
@@ -29,6 +32,7 @@ export const ContentDetailTabs = ({
 }: ContentDetailTabsProps) => {
   const { t } = useTranslation();
   const [isHidden, setIsHidden] = useState(true);
+  const { isAiUser } = useIsAiUser();
 
   const onShow = useCallback(() => {
     setIsHidden(false);
@@ -108,14 +112,22 @@ export const ContentDetailTabs = ({
               </p>
             </TabsContent>
             <TabsContent value="ai-transcript">
-              <p className="text-muted-foreground whitespace-pre-wrap">
-                {aiTranscript}
-              </p>
+              {!isAiUser ? (
+                <AiChatWaitlist />
+              ) : (
+                <p className="text-muted-foreground whitespace-pre-wrap">
+                  {aiTranscript}
+                </p>
+              )}
             </TabsContent>
             <TabsContent value="ai-summary">
-              <div className="text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
-                <ReactMarkdown {...markdownConfig}>{aiSummary}</ReactMarkdown>
-              </div>
+              {!isAiUser ? (
+                <AiChatWaitlist />
+              ) : (
+                <div className="text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
+                  <ReactMarkdown {...markdownConfig}>{aiSummary}</ReactMarkdown>
+                </div>
+              )}
             </TabsContent>
           </>
         )}

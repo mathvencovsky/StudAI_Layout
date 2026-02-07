@@ -7,8 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
 import { useIsAiUser } from "@/hooks/use-is-ai-user";
-import { useMyAiWaitlist } from "@/hooks/ai-waitlist/use-my-ai-waitlist";
-import { useCreateAiWaitlist } from "@/hooks/ai-waitlist/use-create-ai-waitlist";
 import { type Content } from "@/model/content";
 import { markdownConfig } from "@/lib/markdown-config";
 import { AiChatWaitlist } from "./ai-chat-waitlist";
@@ -20,13 +18,10 @@ export interface AiChatPanelProps {
 export const AiChatPanel = ({ content }: AiChatPanelProps) => {
   const { t } = useTranslation();
   const { isAiUser, isLoading: isChecking } = useIsAiUser();
-  const { data: waitlistEntry, isLoading: isLoadingWaitlist } =
-    useMyAiWaitlist();
-  const { mutate: joinWaitlist, isPending: isJoining } = useCreateAiWaitlist();
   const [input, setInput] = useState("");
   const [{ data, isLoading }, sendMessage] = useAIConversation("Chat");
 
-  if (isChecking || isLoadingWaitlist) {
+  if (isChecking) {
     return (
       <div className="flex items-center justify-center h-full">
         <Loader2 className="h-6 w-6 animate-spin" />
@@ -35,13 +30,7 @@ export const AiChatPanel = ({ content }: AiChatPanelProps) => {
   }
 
   if (!isAiUser) {
-    return (
-      <AiChatWaitlist
-        isOnWaitlist={!!waitlistEntry}
-        isLoading={isJoining}
-        onJoinWaitlist={() => joinWaitlist()}
-      />
-    );
+    return <AiChatWaitlist />;
   }
 
   const handleSend = () => {
