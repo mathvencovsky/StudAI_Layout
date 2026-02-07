@@ -20,16 +20,18 @@ export const HomePage = () => {
   }, [recordLogin]);
 
   return (
-    <div className="max-w-4xl space-y-8">
-      <UserGreeting displayName={user?.displayName} />
-      <StatsCards />
-      <div>
-        <h2 className="text-xl font-semibold mb-4">{t("continue-learning")}</h2>
-        <LastStartedModuleSection />
-      </div>
-      <div>
-        <h2 className="text-xl font-semibold mb-4">{t("continue-track")}</h2>
-        <LastStartedTrackSection />
+    <div className="flex justify-center">
+      <div className="max-w-4xl space-y-8">
+        <UserGreeting displayName={user?.displayName} />
+        <StatsCards />
+        <div>
+          <h2 className="text-xl font-semibold mb-4">{t("continue-learning")}</h2>
+          <LastStartedModuleSection />
+        </div>
+        <div>
+          <h2 className="text-xl font-semibold mb-4">{t("continue-track")}</h2>
+          <LastStartedTrackSection />
+        </div>
       </div>
     </div>
   );
