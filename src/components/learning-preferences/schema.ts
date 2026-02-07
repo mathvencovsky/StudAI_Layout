@@ -6,7 +6,7 @@ export const learningPreferencesSchema = z.object({
   days: z.array(z.string()).optional(),
   formats: z.array(z.string()).optional(),
   contentLength: z
-    .enum(["bite-sized", "short", "medium", "deep-dive"])
+    .enum(["bite_sized", "short", "medium", "deep_dive"])
     .optional(),
 });
 

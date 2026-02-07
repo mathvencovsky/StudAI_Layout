@@ -197,7 +197,7 @@ const schema = a.schema({
       minutesPerDay: a.integer(),
       days: a.string().required().array(),
       formats: a.string().required().array(),
-      contentLength: a.enum(["bite-sized", "short", "medium", "deep-dive"]),
+      contentLength: a.enum(["bite_sized", "short", "medium", "deep_dive"]),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),

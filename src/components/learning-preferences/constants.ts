@@ -27,10 +27,10 @@ export const FORMAT_OPTIONS = [
 ] as const;
 
 export const CONTENT_LENGTH_OPTIONS = [
-  { value: "bite-sized", label: "2–5 min" },
+  { value: "bite_sized", label: "2–5 min" },
   { value: "short", label: "5–15 min" },
   { value: "medium", label: "15–30 min" },
-  { value: "deep-dive", label: "30+ min" },
+  { value: "deep_dive", label: "30+ min" },
 ] as const;
 
 export const TOTAL_STEPS = 5;
