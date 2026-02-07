@@ -21,19 +21,23 @@ _Define new TypeScript types or modifications to existing types in model files. 
 
 ### 1.3 API / Data fetching changes
 
-_Describe changes, with code samples, to React Query hooks, query options, selection sets, or Amplify client calls needed to fetch or mutate the new data._
+_Describe changes, with summarized code samples, to React Query hooks, query options, selection sets, or Amplify client calls needed to fetch or mutate the new data._
 
 ### 1.4 Page changes
 
-_List all pages that need modification, their routes, and a brief description and code samples of what changes are required._
+_List all pages that need modification, their routes, and a brief description and summarized code samples of what changes are required._
 
 ### 1.5 Component changes
 
-_List components to add or modify, including their props interface and a brief description of the changes with code samples_
+_List components to add or modify, including their props interface and a brief description of the changes with summarized code samples_
 
 ### 1.6 Translation keys
 
 _List all new i18n keys and for what they will be used. You don't need to add the actuall translation, just add the keys._
+
+## 1.7. Sidebar
+
+_Does this feature require a new Sidebar item? If yes, describe the label, icon, route, and placement._
 
 ## 2. Acceptance Criteria
 
@@ -52,14 +56,14 @@ _Define testable acceptance criteria using Given/When/Then format. Include edge 
 
 ## 3. Implementation Tasks
 
-_Break down the implementation into specific file-level tasks. Each task should include the file path, a title, description, and code snippets showing what to add or change._
+_Break down the implementation into specific file-level tasks. Each task should include the file path, a title, description, and summarized code snippets showing what to add or change._
 
 ### 3.1 `path/to/file.ts` - <title>
 
 Description of changes.
 
 ```ts
-// Code to add/change
+// Summarized code to add/change
 ```
 
 ### 3.2 `path/to/file.ts` - <title>
@@ -68,7 +72,7 @@ Description of changes.
 - Specific change 2
 
 ```ts
-// Code to add/change
+// Summarized code to add/change
 ```
 
 ## 4. Execution Order
@@ -79,11 +83,7 @@ _List the order in which implementation tasks should be executed, considering de
 - [] Task 2
 - [] Task 3
 
-## 5. Sidebar
-
-_Does this feature require a new Sidebar item? If yes, describe the label, icon, route, and placement._
-
-## 6. Open Questions and missing details
+## 5. Open Questions and missing details
 
 _List any unresolved questions or missing details that need clarification before or during implementation._
 

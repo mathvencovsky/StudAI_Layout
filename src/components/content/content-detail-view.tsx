@@ -40,6 +40,11 @@ export const ContentDetailView = ({
 
   return (
     <div className="space-y-6">
+      {isYouTube ? (
+        <YouTubeEmbed url={content.link} />
+      ) : (
+        <ExternalLink url={content.link} />
+      )}
       <ContentHeader
         content={content}
         moduleId={moduleId}
@@ -47,11 +52,6 @@ export const ContentDetailView = ({
         isLoading={isLoading}
         onToggleCompletion={onToggleCompletion}
       />
-      {isYouTube ? (
-        <YouTubeEmbed url={content.link} />
-      ) : (
-        <ExternalLink url={content.link} />
-      )}
       {moduleId &&
         currentPosition !== undefined &&
         totalItems !== undefined &&

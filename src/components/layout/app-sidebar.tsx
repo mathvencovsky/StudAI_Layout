@@ -4,6 +4,7 @@ import {
   IconHeart,
   IconHome,
   IconInnerShadowTop,
+  IconMessage,
   IconMessageCircle,
   IconRoute,
   IconSettings,
@@ -60,6 +61,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           navigate({ to: "/" });
         },
         icon: IconHome,
+      },
+      {
+        title: t("chat"),
+        onClick: () => {
+          setOpen(false);
+          setOpenMobile(false);
+          navigate({ to: "/chat" });
+        },
+        icon: IconMessage,
       },
       {
         title: t("tracks"),

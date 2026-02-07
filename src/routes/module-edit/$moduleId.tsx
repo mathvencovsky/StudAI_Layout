@@ -26,22 +26,20 @@ function RouteComponent() {
 
   if (!moduleId) {
     return (
-      <div className="container mx-auto py-6">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{t("module-id-required")}</p>
-          <button
-            onClick={() => navigate({ to: "/module" })}
-            className="text-blue-600 hover:text-blue-800 underline"
-          >
-            {t("go-back-to-modules")}
-          </button>
-        </div>
+      <div className="text-center">
+        <p className="text-red-600 mb-4">{t("module-id-required")}</p>
+        <button
+          onClick={() => navigate({ to: "/module" })}
+          className="text-blue-600 hover:text-blue-800 underline"
+        >
+          {t("go-back-to-modules")}
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="max-w-4xl mx-auto">
       <ModuleEdit
         moduleId={moduleId}
         onCancel={onFinish}

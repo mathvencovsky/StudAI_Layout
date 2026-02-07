@@ -4,12 +4,19 @@ import { useToggleContentCompletion } from "@/hooks/modules/use-toggle-content-c
 import { useModuleContentNavigation } from "@/hooks/modules/use-module-content-navigation";
 import { useCompleteModule } from "@/hooks/modules/use-complete-module";
 import { ContentDetailView } from "./content-detail-view";
+import { AiChatPanel } from "./ai-chat-panel";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
+import { useAiChat } from "@/contexts/ai-chat-context";
 
 export interface ContentDetailContainerProps {
   contentId: string;
@@ -25,6 +32,7 @@ export const ContentDetailContainer = ({
   moduleId,
 }: ContentDetailContainerProps) => {
   const navigate = useNavigate();
+  const { isOpen } = useAiChat();
   const { data: content, isLoading, isError } = useGetContent(contentId);
   const { data: progressData } = useGetUserContentProgress(moduleId || "");
   const toggleMutation = useToggleContentCompletion();
@@ -190,5 +198,23 @@ export const ContentDetailContainer = ({
     );
   };
 
-  return <div className="space-y-6">{renderContent()}</div>;
+  return (
+    <ResizablePanelGroup orientation="horizontal" className="h-full">
+      <ResizablePanel defaultSize={isOpen ? 60 : 100} minSize={30}>
+        <div className="h-full overflow-y-auto">
+          <div className="container mx-auto py-8 px-4 space-y-6">
+            {renderContent()}
+          </div>
+        </div>
+      </ResizablePanel>
+      {isOpen && content && (
+        <>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={40} minSize={25}>
+            <AiChatPanel contentId={content.id} contentTitle={content.title} />
+          </ResizablePanel>
+        </>
+      )}
+    </ResizablePanelGroup>
+  );
 };

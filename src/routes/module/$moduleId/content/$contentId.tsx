@@ -19,7 +19,7 @@ function RouteComponent() {
   const { contentId, moduleId } = Route.useParams();
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="h-full -m-6">
       <ContentDetailContainer contentId={contentId} moduleId={moduleId} />
     </div>
   );
