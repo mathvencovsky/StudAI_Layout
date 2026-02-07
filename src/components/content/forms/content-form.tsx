@@ -48,7 +48,7 @@ export const ContentForm: React.FC<ContentFormProps> = ({
   successMessage,
 }) => {
   const { t } = useTranslation();
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
   const [autoFillError, setAutoFillError] = useState<string | null>(null);
   const fetchMetadataMutation = useFetchYouTubeMetadata();
 

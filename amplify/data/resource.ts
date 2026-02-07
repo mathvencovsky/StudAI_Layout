@@ -179,6 +179,15 @@ const schema = a.schema({
       handler: chatHandler,
     })
     .authorization((allow) => allow.owner()),
+
+  AiWaitlist: a
+    .model({
+      requestedAt: a.timestamp().required(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

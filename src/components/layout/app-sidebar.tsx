@@ -38,7 +38,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { mutateAsync: logOut } = useSignOut();
   const [isFeedbackOpen, setIsFeedbackOpen] = React.useState(false);
 
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
 
   const onLogOut = React.useCallback(async () => {
     await logOut();

@@ -30,7 +30,7 @@ export const TrackDetail = ({ trackId }: TrackDetailProps) => {
   const navigate = useNavigate();
   const { data: track, isLoading, isError } = useTrack(trackId);
   const deleteTrackMutation = useDeleteTrack();
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
 
   const handleEdit = () => {
     navigate({ to: "/track/$trackId/edit", params: { trackId } });

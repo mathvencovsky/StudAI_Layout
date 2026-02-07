@@ -1,5 +1,24 @@
 #!/bin/bash
 
+# Usage: ./ralph.sh [MAX_ITERATIONS] [SPEC_FOLDER] [AGENT]
+#
+# Parameters:
+#   MAX_ITERATIONS - Maximum number of iterations to run (default: 50)
+#   SPEC_FOLDER    - Path to folder containing SPEC.md and PROGRESS.md (default: specs)
+#   AGENT          - Kiro agent to use (default: default-model)
+#
+# Examples:
+#   ./ralph.sh                              # Uses all defaults
+#   ./ralph.sh 100                          # 100 iterations, default folder and agent
+#   ./ralph.sh 100 my-specs                 # 100 iterations, custom folder
+#   ./ralph.sh 100 my-specs my-agent        # All custom parameters
+#
+# If parameters fail or are invalid:
+#   - MAX_ITERATIONS must be a positive integer
+#   - SPEC_FOLDER must exist and contain SPEC.md
+#   - AGENT must be a valid Kiro agent name
+#   - Script will exit with error if SPEC.md is not found
+
 ping() {
   afplay /System/Library/Sounds/Glass.aiff
 }

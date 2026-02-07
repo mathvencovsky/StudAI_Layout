@@ -22,7 +22,7 @@ export const ContentList: React.FC<ContentListProps> = ({
 }) => {
   const { t } = useTranslation();
   const listQ = useListContent();
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
 
   const renderContent = () => {
     if (listQ.isLoading) {

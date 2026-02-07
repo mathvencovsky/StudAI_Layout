@@ -21,7 +21,7 @@ function ModulesPage() {
     [navigate]
   );
 
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
   return (
     <ModuleSearch
       onCreateModule={isAdminUser ? onCreateModule : undefined}

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/track/")({
 
 function TracksPage() {
   const navigate = useNavigate();
-  const isAdminUser = useIsAdminUser();
+  const { isAdmin: isAdminUser } = useIsAdminUser();
 
   const onCreateTrack = useCallback(() => {
     navigate({ to: "/track-create" });
