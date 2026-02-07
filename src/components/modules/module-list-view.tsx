@@ -5,7 +5,6 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HighlightText } from "@/components/highlight-text";
 import { VoteButtonsContainer } from "@/components/voting/vote-buttons-container";
@@ -14,8 +13,6 @@ import type { Module } from "@/model/module";
 export interface ModuleListViewProps {
   items: Module[];
   query: string;
-  activeFilters: { type?: string; status?: string } | null;
-  onClearFilters: () => void;
   onOpenModule: (moduleId: string) => void;
   onEditModule?: (moduleId: string) => void;
   emptyMessage?: string;
@@ -24,8 +21,6 @@ export interface ModuleListViewProps {
 export const ModuleListView = ({
   items,
   query,
-  activeFilters,
-  onClearFilters,
   onOpenModule,
   onEditModule,
   emptyMessage,
@@ -33,25 +28,6 @@ export const ModuleListView = ({
   const { t } = useTranslation();
   return (
     <div className="space-y-4">
-      {activeFilters &&
-        (activeFilters.type !== "all" || activeFilters.status !== "all") && (
-          <div className="flex items-center gap-2 flex-wrap">
-            {activeFilters.type !== "all" && (
-              <Badge variant="secondary">
-                {t("type-filter")} {activeFilters.type}
-              </Badge>
-            )}
-            {activeFilters.status !== "all" && (
-              <Badge variant="secondary">
-                {t("status-filter")} {activeFilters.status}
-              </Badge>
-            )}
-            <Button variant="ghost" size="sm" onClick={onClearFilters}>
-              {t("clear-filters")}
-            </Button>
-          </div>
-        )}
-
       {items.length === 0 ? (
         <p className="text-sm text-muted-foreground">
           {emptyMessage ?? t("no-results-found")}

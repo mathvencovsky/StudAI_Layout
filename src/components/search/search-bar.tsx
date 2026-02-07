@@ -6,7 +6,7 @@ import { X, Search } from "lucide-react";
 export interface SearchBarProps {
   value: string;
   onChange: (v: string) => void;
-  placeholder?: string;
+  placeholder: string;
   onClear?: () => void;
   onSubmit?: () => void;
   suggestions?: string[];
@@ -16,11 +16,9 @@ export interface SearchBarProps {
 export const SearchBar = ({
   value,
   onChange,
-  placeholder = "Search...",
+  placeholder,
   onClear,
   onSubmit,
-  suggestions = [],
-  onPickSuggestion,
 }: SearchBarProps) => {
   const { t } = useTranslation();
   const hasValue = value.trim().length > 0;
@@ -53,23 +51,6 @@ export const SearchBar = ({
           {t("search")}
         </Button>
       </div>
-
-      {/* Real-time suggestions */}
-      {suggestions.length > 0 && (
-        <div className="absolute z-10 mt-1 w-full rounded-md border bg-background shadow">
-          <ul className="max-h-56 overflow-auto">
-            {suggestions.map((s) => (
-              <li
-                key={s}
-                className="px-3 py-2 hover:bg-accent/20 cursor-pointer text-sm"
-                onMouseDown={() => onPickSuggestion && onPickSuggestion(s)}
-              >
-                {s}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
     </div>
   );
 };

@@ -18,9 +18,9 @@ export interface GetModulesParams {
 }
 
 /**
- * Get modules with optional filtering by text search and status
+ * Get all modules
  */
-export const getModules = async (params: GetModulesParams): Promise<Module[]> => {
+export const getModules = async (): Promise<Module[]> => {
   const result = await client.models.Module.list();
 
   if (!result.data) {
@@ -28,18 +28,7 @@ export const getModules = async (params: GetModulesParams): Promise<Module[]> =>
     return [];
   }
 
-  let modules = result.data;
-
-  if (params.q) {
-    const searchTerm = params.q.toLowerCase();
-    modules = modules.filter(
-      (module) =>
-        module.title.toLowerCase().includes(searchTerm) ||
-        module.description.toLowerCase().includes(searchTerm),
-    );
-  }
-
-  return modules;
+  return result.data;
 };
 
 /**

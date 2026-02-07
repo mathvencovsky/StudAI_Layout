@@ -205,7 +205,6 @@ export default {
   rating: "Avaliação",
   "remove-from-favourites": "Remover dos favoritos",
   "remove-selected": "Remover Selecionados",
-  "reset-search-filters": "Redefinir pesquisa e filtros",
   retry: "Tentar novamente",
   retrying: "Tentando novamente…",
   "root-module-required": "Pelo menos um módulo é obrigatório",
