@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader2 } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,6 +10,7 @@ import { useIsAiUser } from "@/hooks/use-is-ai-user";
 import { useMyAiWaitlist } from "@/hooks/ai-waitlist/use-my-ai-waitlist";
 import { useCreateAiWaitlist } from "@/hooks/ai-waitlist/use-create-ai-waitlist";
 import { type Content } from "@/model/content";
+import { markdownConfig } from "@/lib/markdown-config";
 import { AiChatWaitlist } from "./ai-chat-waitlist";
 
 export interface AiChatPanelProps {
@@ -68,10 +70,14 @@ export const AiChatPanel = ({ content }: AiChatPanelProps) => {
             {data.messages.map((msg) => (
               <div
                 key={msg.id}
-                className={msg.role === "user" ? "text-right" : "text-left"}
+                className={msg.role === "user" ? "flex justify-end" : "flex justify-start"}
               >
-                <div className="inline-block p-3 rounded-lg bg-muted">
-                  {msg.content[0].text}
+                <div className="p-3 rounded-lg bg-muted w-96 overflow-hidden">
+                  <div className="prose prose-sm dark:prose-invert max-w-none [&_*]:break-words [&_code]:break-all [&_pre]:overflow-x-auto">
+                    <ReactMarkdown {...markdownConfig}>
+                      {msg.content[0].text}
+                    </ReactMarkdown>
+                  </div>
                 </div>
               </div>
             ))}

@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Eye, EyeOff, Sparkles } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { markdownConfig } from "@/lib/markdown-config";
 import {
   Tooltip,
   TooltipContent,
@@ -111,9 +113,9 @@ export const ContentDetailTabs = ({
               </p>
             </TabsContent>
             <TabsContent value="ai-summary">
-              <p className="text-muted-foreground whitespace-pre-wrap">
-                {aiSummary}
-              </p>
+              <div className="text-muted-foreground prose prose-sm dark:prose-invert max-w-none">
+                <ReactMarkdown {...markdownConfig}>{aiSummary}</ReactMarkdown>
+              </div>
             </TabsContent>
           </>
         )}
