@@ -211,7 +211,7 @@ export const ContentDetailContainer = ({
         <>
           <ResizableHandle withHandle />
           <ResizablePanel defaultSize={40} minSize={25}>
-            <AiChatPanel contentId={content.id} contentTitle={content.title} />
+            <AiChatPanel content={content} />
           </ResizablePanel>
         </>
       )}
