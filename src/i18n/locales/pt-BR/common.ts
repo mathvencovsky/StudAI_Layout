@@ -9,12 +9,12 @@ export default {
   "ai-chat-title": "Assistente de IA",
   "ai-chat-toggle": "Alternar chat de IA",
   "ai-chat-waitlist-already-joined":
-    "Você está na lista de espera! Avisaremos quando o Chat de IA estiver disponível.",
+    "Você está na lista de espera! Avisaremos quando os recursos de IA estiverem disponíveis.",
   "ai-chat-waitlist-description":
-    "O Chat de IA está com acesso limitado. Entre na lista de espera para ser notificado quando estiver disponível.",
+    "Os recursos de IA estão com acesso limitado. Entre na lista de espera para ser notificado quando estiverem disponíveis.",
   "ai-chat-waitlist-join": "Entrar na Lista",
   "ai-chat-waitlist-joining": "Entrando...",
-  "ai-chat-waitlist-title": "Lista de Espera do Chat de IA",
+  "ai-chat-waitlist-title": "Lista de Espera de IA",
   all: "Todos",
   "all-status": "Todos os status",
   "all-types": "Todos os tipos",

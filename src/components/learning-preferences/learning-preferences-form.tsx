@@ -177,11 +177,7 @@ export const LearningPreferencesForm = ({
         </Card>
 
         <div className="flex gap-3 justify-between items-center">
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            disabled={isFirstStep}
-          >
+          <Button variant="outline" onClick={handleBack} disabled={isFirstStep}>
             {t("learning-preferences-back")}
           </Button>
 
@@ -193,11 +189,6 @@ export const LearningPreferencesForm = ({
 
           {!isConfirmationStep && (
             <div className="flex gap-2">
-              {currentStep > 0 && (
-                <Button variant="outline" onClick={handleSkip}>
-                  {t("learning-preferences-skip")}
-                </Button>
-              )}
               <Button onClick={handleNext}>
                 {t("learning-preferences-next")}
               </Button>

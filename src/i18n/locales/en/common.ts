@@ -9,12 +9,12 @@ export default {
   "ai-chat-title": "AI Assistant",
   "ai-chat-toggle": "Toggle AI chat",
   "ai-chat-waitlist-already-joined":
-    "You're on the waitlist! We'll notify you when AI Chat is available.",
+    "You're on the waitlist! We'll notify you when AI features are available.",
   "ai-chat-waitlist-description":
-    "AI Chat is currently in limited access. Join the waitlist to be notified when it's available for you.",
+    "AI features are currently in limited access. Join the waitlist to be notified when they're available for you.",
   "ai-chat-waitlist-join": "Join Waitlist",
   "ai-chat-waitlist-joining": "Joining...",
-  "ai-chat-waitlist-title": "AI Chat Waitlist",
+  "ai-chat-waitlist-title": "AI Waitlist",
   all: "All",
   "all-status": "All status",
   "all-types": "All types",
