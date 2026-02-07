@@ -8,8 +8,10 @@ export default {
   "ai-chat-subtitle": "Faça perguntas sobre este conteúdo",
   "ai-chat-title": "Assistente de IA",
   "ai-chat-toggle": "Alternar chat de IA",
-  "ai-chat-waitlist-already-joined": "Você está na lista de espera! Avisaremos quando o Chat de IA estiver disponível.",
-  "ai-chat-waitlist-description": "O Chat de IA está com acesso limitado. Entre na lista de espera para ser notificado quando estiver disponível.",
+  "ai-chat-waitlist-already-joined":
+    "Você está na lista de espera! Avisaremos quando o Chat de IA estiver disponível.",
+  "ai-chat-waitlist-description":
+    "O Chat de IA está com acesso limitado. Entre na lista de espera para ser notificado quando estiver disponível.",
   "ai-chat-waitlist-join": "Entrar na Lista",
   "ai-chat-waitlist-joining": "Entrando...",
   "ai-chat-waitlist-title": "Lista de Espera do Chat de IA",
@@ -182,11 +184,13 @@ export default {
   "no-image": "Sem imagem",
   "no-modules-in-track": "Nenhum módulo nesta trilha",
   "no-results-found": "Nenhum resultado encontrado",
-  "no-modules-to-continue": "Você não tem módulos em andamento. Comece um novo módulo para continuar sua jornada de aprendizado.",
+  "no-modules-to-continue":
+    "Você não tem módulos em andamento. Comece um novo módulo para continuar sua jornada de aprendizado.",
   "no-title": "(sem título)",
   "no-tracks": "Nenhuma trilha disponível",
   "no-tracks-match-search": "Nenhuma trilha corresponde à sua pesquisa",
-  "no-tracks-to-continue": "Você não tem trilhas em andamento. Comece uma nova trilha para continuar sua jornada de aprendizado.",
+  "no-tracks-to-continue":
+    "Você não tem trilhas em andamento. Comece uma nova trilha para continuar sua jornada de aprendizado.",
   "not-started": "Não iniciado",
   "of-completed": "de",
   open: "Abrir",
@@ -250,7 +254,8 @@ export default {
   "track-structure-help":
     "Adicione módulos e conecte-os para definir o caminho de aprendizado",
   tracks: "Trilhas",
-  "tracks-description": "Trilhas são caminhos de aprendizado estruturados que agrupam módulos relacionados. Siga uma trilha para aprender tópicos em uma sequência recomendada.",
+  "tracks-description":
+    "Trilhas são caminhos de aprendizado estruturados que agrupam módulos relacionados. Siga uma trilha para aprender tópicos em uma sequência recomendada.",
   type: "Tipo",
   "type-filter": "Tipo:",
   "unknown-source": "Fonte desconhecida",
@@ -258,8 +263,7 @@ export default {
   "upload-csv": "Enviar CSV",
   uploading: "Enviando...",
   user: "Usuário",
-  "validation-description-min":
-    "A descrição deve ter pelo menos 10 caracteres",
+  "validation-description-min": "A descrição deve ter pelo menos 10 caracteres",
   "verification-code": "Código de Verificação",
   "verify-email": "Verificar Email",
   "verify-email-description":
@@ -284,7 +288,7 @@ export default {
   "learning-preferences-interests-title":
     "Em que você está interessado em aprender?",
   "learning-preferences-interests-helper":
-    "Escolha 1–3 para começar. Você pode mudar depois.",
+    "Escolha 1-3 para começar. Você pode mudar depois.",
   "learning-preferences-interests-selected": "{{count}} selecionado(s)",
   "learning-preferences-interests-error":
     "Selecione pelo menos uma área de interesse.",
@@ -302,16 +306,13 @@ export default {
     "Qual duração de conteúdo você prefere?",
   "learning-preferences-confirmation-message":
     "Pronto — vamos personalizar seu caminho de aprendizado.",
-  "learning-preferences-optional-hint":
-    "Opcional — pule se não tiver certeza.",
+  "learning-preferences-optional-hint": "Opcional — pule se não tiver certeza.",
   "learning-preferences-change-later": "Você pode mudar isso depois.",
-  "learning-preferences-save-success":
-    "Preferências salvas com sucesso!",
+  "learning-preferences-save-success": "Preferências salvas com sucesso!",
   "learning-preferences-save-error":
     "Algo deu errado ao salvar suas preferências.",
   "learning-preferences-interest-web-development": "Desenvolvimento Web",
-  "learning-preferences-interest-mobile-development":
-    "Desenvolvimento Mobile",
+  "learning-preferences-interest-mobile-development": "Desenvolvimento Mobile",
   "learning-preferences-interest-data-science": "Ciência de Dados",
   "learning-preferences-interest-machine-learning": "Machine Learning",
   "learning-preferences-interest-cloud-computing": "Computação em Nuvem",
@@ -325,8 +326,8 @@ export default {
   "learning-preferences-format-video": "Vídeo",
   "learning-preferences-format-reading": "Leitura",
   "learning-preferences-format-hands-on": "Exercícios Práticos",
-  "learning-preferences-content-length-bite-sized": "Pequeno (2–5 min)",
-  "learning-preferences-content-length-short": "Curto (5–15 min)",
-  "learning-preferences-content-length-medium": "Médio (15–30 min)",
-  "learning-preferences-content-length-deep-dive": "Aprofundado (30+ min)",
+  "learning-preferences-content-length-bite_sized": "Pequeno (2-5 min)",
+  "learning-preferences-content-length-short": "Curto (5-15 min)",
+  "learning-preferences-content-length-medium": "Médio (15-30 min)",
+  "learning-preferences-content-length-deep_dive": "Aprofundado (30+ min)",
 } as const;

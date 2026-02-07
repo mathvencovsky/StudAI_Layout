@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type CreateContentInput } from "@/api/content";
 import {
   CONTENT_TYPES,
   CONTENT_LEVELS,
@@ -23,12 +23,16 @@ import {
 import { useFetchYouTubeMetadata } from "@/hooks/content/use-fetch-youtube-metadata";
 import { getYouTubeVideoId } from "@/api/metadata/youtube";
 import { useIsAdminUser } from "@/hooks/use-is-admin-user";
+import {
+  contentFormSchema,
+  type ContentFormInput,
+} from "@/components/content/forms/content-form-schema";
 
 export interface ContentFormProps {
   mode: "create" | "edit";
-  defaultValues: Partial<CreateContentInput>;
+  defaultValues: Partial<ContentFormInput>;
   isSubmitting: boolean;
-  onSubmit: (values: CreateContentInput) => void;
+  onSubmit: (values: ContentFormInput) => void;
   onCancel: () => void;
   errorMessage?: string;
   successMessage?: string;
@@ -58,8 +62,9 @@ export const ContentForm: React.FC<ContentFormProps> = ({
     formState: { errors },
     setValue,
     control,
-  } = useForm<CreateContentInput>({
-    defaultValues,
+  } = useForm<ContentFormInput>({
+    resolver: zodResolver(contentFormSchema),
+    defaultValues: defaultValues as ContentFormInput,
     mode: "onChange",
   });
 
@@ -74,12 +79,10 @@ export const ContentForm: React.FC<ContentFormProps> = ({
     setAutoFillError(null);
     fetchMetadataMutation.mutate(linkValue, {
       onSuccess: (metadata) => {
-        console.log("metadata", metadata);
         if (!metadata) return;
         const options = { shouldDirty: true };
         setValue("type", "youtube_video", options);
         if (metadata.title) setValue("title", metadata.title, options);
-        console.log("metadata.description", metadata.description);
         if (metadata.description)
           setValue("description", metadata.description, options);
         if (metadata.durationInSeconds)

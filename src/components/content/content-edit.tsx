@@ -42,9 +42,14 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
 
   const defaultValues: CreateContentInput | null = useMemo(() => {
     if (!contentQuery.data) return null;
-    console.log("contentQuery.data", contentQuery.data);
-    const { id, createdAt, updatedAt, moduleContents, userContentProgress, ...content } = contentQuery.data;
-    console.log("defaultValues", content);
+    const {
+      id,
+      createdAt,
+      updatedAt,
+      moduleContents,
+      userContentProgress,
+      ...content
+    } = contentQuery.data;
     return {
       ...content,
       publishedAt: content.publishedAt?.slice(0, 16),
@@ -61,7 +66,6 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
       { id, ...values, publishedAt },
       {
         onSuccess: () => {
-          console.log("Update success");
           setFeedback("Your changes have been saved.");
           onSuccess();
         },
@@ -69,7 +73,7 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
           console.error("Update error", error);
           setFeedback("We couldn't save your changes. Please try again.");
         },
-      }
+      },
     );
   };
 
@@ -81,7 +85,7 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
         onError: () => {
           setFeedback(t("content-delete-error"));
         },
-      }
+      },
     );
   };
 
@@ -112,7 +116,9 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
               : feedback || undefined
           }
           successMessage={
-            updateMutation.isSuccess ? "Your changes have been saved." : undefined
+            updateMutation.isSuccess
+              ? "Your changes have been saved."
+              : undefined
           }
         />
         <AlertDialog>
@@ -125,7 +131,9 @@ export const ContentEdit: React.FC<ContentEditProps> = ({
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>{t("content-delete-confirm-title")}</AlertDialogTitle>
+              <AlertDialogTitle>
+                {t("content-delete-confirm-title")}
+              </AlertDialogTitle>
               <AlertDialogDescription>
                 {t("content-delete-confirm-description")}
               </AlertDialogDescription>

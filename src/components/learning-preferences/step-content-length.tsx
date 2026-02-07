@@ -49,7 +49,9 @@ export const StepContentLength = ({ control }: StepContentLengthProps) => {
                   value={option.value}
                   className="justify-start px-4 py-3 text-sm"
                 >
-                  {t(`learning-preferences-content-length-${option.value}`)}
+                  {t(
+                    `learning-preferences-content-length-${option.value}` as const,
+                  )}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>

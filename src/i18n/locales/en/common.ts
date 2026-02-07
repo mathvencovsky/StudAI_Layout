@@ -8,8 +8,10 @@ export default {
   "ai-chat-subtitle": "Ask questions about this content",
   "ai-chat-title": "AI Assistant",
   "ai-chat-toggle": "Toggle AI chat",
-  "ai-chat-waitlist-already-joined": "You're on the waitlist! We'll notify you when AI Chat is available.",
-  "ai-chat-waitlist-description": "AI Chat is currently in limited access. Join the waitlist to be notified when it's available for you.",
+  "ai-chat-waitlist-already-joined":
+    "You're on the waitlist! We'll notify you when AI Chat is available.",
+  "ai-chat-waitlist-description":
+    "AI Chat is currently in limited access. Join the waitlist to be notified when it's available for you.",
   "ai-chat-waitlist-join": "Join Waitlist",
   "ai-chat-waitlist-joining": "Joining...",
   "ai-chat-waitlist-title": "AI Chat Waitlist",
@@ -46,7 +48,8 @@ export default {
   "content-delete-confirm-description": "This action cannot be undone.",
   "content-delete-confirm-title": "Delete content?",
   "content-delete-deleting": "Deleting...",
-  "content-delete-error": "We couldn't delete this content. Please try again. If the problem persists, please send us feedback.",
+  "content-delete-error":
+    "We couldn't delete this content. Please try again. If the problem persists, please send us feedback.",
   "content-items": "Content Items",
   contents: "Contents",
   "content-language": "Language",
@@ -58,7 +61,8 @@ export default {
   "content-updated": "Content updated",
   "continue-learning": "Continue Learning",
   "continue-track": "Continue Track",
-  "couldnt-create-module": "We couldn't create your module. Please try again. If the problem persists, please send us feedback.",
+  "couldnt-create-module":
+    "We couldn't create your module. Please try again. If the problem persists, please send us feedback.",
   "couldnt-load-content":
     "We couldn't load your content right now. Please refresh the page.",
   "couldnt-load-content-progress": "Couldn't load content progress",
@@ -79,10 +83,13 @@ export default {
   "couldnt-load-progress-description":
     "Something went wrong while loading your progress. Please try again. If the problem persists, please send us feedback.",
   "couldnt-save": "Couldn't save",
-  "couldnt-save-changes": "We couldn't save your changes. Please try again. If the problem persists, please send us feedback.",
+  "couldnt-save-changes":
+    "We couldn't save your changes. Please try again. If the problem persists, please send us feedback.",
   "couldnt-save-module": "Couldn't save module",
-  "couldnt-save-progress": "Couldn't save progress. Please try again. If the problem persists, please send us feedback.",
-  "couldnt-start-module": "Couldn't start module. Please try again. If the problem persists, please send us feedback.",
+  "couldnt-save-progress":
+    "Couldn't save progress. Please try again. If the problem persists, please send us feedback.",
+  "couldnt-start-module":
+    "Couldn't start module. Please try again. If the problem persists, please send us feedback.",
   create: "Create",
   "create-module": "Create Module",
   "create-new-module": "Create New Module",
@@ -115,13 +122,13 @@ export default {
   error: "Error",
   "error-loading-track": "Error loading track",
   "error-loading-tracks": "Error loading tracks",
-  "failed-complete-track":
-    "Failed to complete track. Please try again.",
+  "failed-complete-track": "Failed to complete track. Please try again.",
   "failed-load-last-module":
     "Failed to load your last started module. Please try again later. If the problem persists, please send us feedback.",
   "failed-load-last-track": "Failed to load your current track.",
   "failed-start-track": "Failed to start track. Please try again.",
-  "failed-to-load-stats": "Failed to load statistics. Please try again later. If the problem persists, please send us feedback.",
+  "failed-to-load-stats":
+    "Failed to load statistics. Please try again later. If the problem persists, please send us feedback.",
   "failed-uncomplete-track":
     "Failed to mark track as incomplete. Please try again.",
   favourites: "Favourites",
@@ -174,10 +181,12 @@ export default {
   "no-modules-in-track": "No modules in this track",
   "no-results-found": "No results found",
   "no-title": "(no title)",
-  "no-modules-to-continue": "You don't have any modules in progress. Start a new module to continue your learning journey.",
+  "no-modules-to-continue":
+    "You don't have any modules in progress. Start a new module to continue your learning journey.",
   "no-tracks": "No tracks available",
   "no-tracks-match-search": "No tracks match your search",
-  "no-tracks-to-continue": "You don't have any tracks in progress. Start a new track to continue your learning journey.",
+  "no-tracks-to-continue":
+    "You don't have any tracks in progress. Start a new track to continue your learning journey.",
   "not-started": "Not started",
   "of-completed": "of",
   open: "Open",
@@ -242,7 +251,8 @@ export default {
   "track-structure-help":
     "Add modules and connect them to define the learning path",
   tracks: "Tracks",
-  "tracks-description": "Tracks are structured learning paths that group related modules together. Follow a track to learn topics in a recommended sequence.",
+  "tracks-description":
+    "Tracks are structured learning paths that group related modules together. Follow a track to learn topics in a recommended sequence.",
   type: "Type",
   "type-filter": "Type:",
   "unknown-source": "Unknown source",
@@ -273,14 +283,14 @@ export default {
   "learning-preferences-skip": "Skip",
   "learning-preferences-save": "Save preferences",
   "learning-preferences-edit": "Edit",
-  "learning-preferences-interests-title": "What are you interested in learning?",
+  "learning-preferences-interests-title":
+    "What are you interested in learning?",
   "learning-preferences-interests-helper":
     "Pick 1–3 to start. You can change later.",
   "learning-preferences-interests-selected": "{{count}} selected",
   "learning-preferences-interests-error":
     "Select at least one area of interest.",
-  "learning-preferences-minutes-title":
-    "How much time can you dedicate daily?",
+  "learning-preferences-minutes-title": "How much time can you dedicate daily?",
   "learning-preferences-minutes-value": "{{count}} minutes/day",
   "learning-preferences-minutes-not-set": "Not set",
   "learning-preferences-minutes-clear": "Clear",
@@ -293,11 +303,9 @@ export default {
     "What content length do you prefer?",
   "learning-preferences-confirmation-message":
     "Done — we'll tailor your learning path.",
-  "learning-preferences-optional-hint":
-    "Optional — skip if you're not sure.",
+  "learning-preferences-optional-hint": "Optional — skip if you're not sure.",
   "learning-preferences-change-later": "You can change this later.",
-  "learning-preferences-save-success":
-    "Preferences saved successfully!",
+  "learning-preferences-save-success": "Preferences saved successfully!",
   "learning-preferences-save-error":
     "Something went wrong while saving your preferences.",
   "learning-preferences-interest-web-development": "Web Development",
@@ -315,8 +323,8 @@ export default {
   "learning-preferences-format-video": "Video",
   "learning-preferences-format-reading": "Reading",
   "learning-preferences-format-hands-on": "Hands-on Exercises",
-  "learning-preferences-content-length-bite-sized": "Bite-sized (2–5 min)",
+  "learning-preferences-content-length-bite_sized": "Bite-sized (2–5 min)",
   "learning-preferences-content-length-short": "Short (5–15 min)",
   "learning-preferences-content-length-medium": "Medium (15–30 min)",
-  "learning-preferences-content-length-deep-dive": "Deep dive (30+ min)",
+  "learning-preferences-content-length-deep_dive": "Deep dive (30+ min)",
 } as const;

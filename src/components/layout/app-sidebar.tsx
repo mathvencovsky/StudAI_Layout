@@ -63,15 +63,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         },
         icon: IconHome,
       },
-      {
-        title: t("chat"),
-        onClick: () => {
-          setOpen(false);
-          setOpenMobile(false);
-          navigate({ to: "/chat" });
-        },
-        icon: IconMessage,
-      },
+      ...(isAdminUser
+        ? [
+            {
+              title: t("chat"),
+              onClick: () => {
+                setOpen(false);
+                setOpenMobile(false);
+                navigate({ to: "/chat" });
+              },
+              icon: IconMessage,
+            },
+          ]
+        : []),
       {
         title: t("tracks"),
         onClick: () => {

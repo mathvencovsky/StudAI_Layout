@@ -19,12 +19,9 @@ export const ChatPage = () => {
     {
       data: { messages },
       isLoading,
-      errors,
     },
     handleSendMessage,
   ] = useAIConversation("Chat");
-  console.log("messages", messages);
-  console.log("errors", errors);
   const onSend = useCallback(() => {
     handleSendMessage({ content: [{ text: input }] });
     setInput("");
