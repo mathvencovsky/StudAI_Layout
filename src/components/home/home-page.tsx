@@ -59,21 +59,45 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="max-w-4xl space-y-8">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto">
+      <div className="space-y-6">
+        {/* Hero - Minimal greeting */}
         <UserGreeting displayName={user?.displayName} />
+
+        {/* Stats overview */}
         <StatsCards />
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            {t("continue-learning")}
-          </h2>
-          <LastStartedModuleSection />
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            {t("continue-track")}
-          </h2>
-          <LastStartedTrackSection />
+
+        {/* Two-column layout for continue sections */}
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          {/* Left column - Continue Module */}
+          <section className="border rounded-lg bg-card overflow-hidden">
+            <div className="p-4 border-b">
+              <h3 className="font-medium text-foreground">
+                {t("continue-learning")}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {t("continue-learning-description") ?? "Pick up where you left off."}
+              </p>
+            </div>
+            <div className="p-4">
+              <LastStartedModuleSection />
+            </div>
+          </section>
+
+          {/* Right column - Continue Track */}
+          <section className="border rounded-lg bg-card overflow-hidden">
+            <div className="p-4 border-b">
+              <h3 className="font-medium text-foreground">
+                {t("continue-track")}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {t("continue-track-description") ?? "Your active learning path."}
+              </p>
+            </div>
+            <div className="p-4">
+              <LastStartedTrackSection />
+            </div>
+          </section>
         </div>
       </div>
     </div>

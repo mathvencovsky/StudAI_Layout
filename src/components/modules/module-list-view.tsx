@@ -1,9 +1,3 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { HighlightText } from "@/components/highlight-text";
@@ -35,34 +29,39 @@ export const ModuleListView = ({
       ) : (
         <div className="grid gap-3 md:grid-cols-2">
           {items.map((m) => (
-            <Card key={m.id} className="hover:shadow-md transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-lg">
+            <div
+              key={m.id}
+              className="border rounded-lg bg-card hover:bg-muted/50 transition-colors overflow-hidden"
+            >
+              <div className="p-4">
+                <h3 className="text-sm font-medium text-foreground">
                   <HighlightText text={m.title} query={query} />
-                </CardTitle>
-                <CardDescription>
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                   <HighlightText text={m.description} query={query} />
-                </CardDescription>
-                <div className="mt-3 space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex gap-2">
-                      <Button onClick={() => onOpenModule(m.id.toString())}>
-                        {t("open")}
+                </p>
+                <div className="mt-3 flex items-center justify-between gap-3">
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => onOpenModule(m.id.toString())}
+                    >
+                      {t("open")}
+                    </Button>
+                    {onEditModule && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onEditModule(m.id)}
+                      >
+                        {t("edit")}
                       </Button>
-                      {onEditModule && (
-                        <Button
-                          variant="outline"
-                          onClick={() => onEditModule(m.id)}
-                        >
-                          {t("edit")}
-                        </Button>
-                      )}
-                    </div>
-                    <VoteButtonsContainer moduleId={m.id} />
+                    )}
                   </div>
+                  <VoteButtonsContainer moduleId={m.id} />
                 </div>
-              </CardHeader>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       )}
