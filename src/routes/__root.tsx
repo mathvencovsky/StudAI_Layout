@@ -1,6 +1,4 @@
-import { AppSidebar } from "@/components/layout/app-sidebar";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { AppLayout } from "@/components/layout/app-layout";
 import type { AuthContextValue } from "@/context-providers/auth/auth-context";
 import { useAuth } from "@/hooks/use-auth";
 import { AiChatProvider } from "@/contexts/ai-chat-context";
@@ -39,23 +37,9 @@ const RootLayout = () => {
   return (
     <AiChatProvider>
       <AiIconProvider>
-        <SidebarProvider
-          style={
-            {
-              "--sidebar-width": "calc(var(--spacing) * 72)",
-              "--header-height": "calc(var(--spacing) * 12)",
-              height: "100svh",
-            } as React.CSSProperties
-          }
-        >
-          <AppSidebar variant="inset" />
-          <SidebarInset>
-            <SiteHeader />
-            <div className="flex-1 overflow-y-auto">
-              <Outlet />
-            </div>
-          </SidebarInset>
-        </SidebarProvider>
+        <AppLayout>
+          <Outlet />
+        </AppLayout>
         <TanStackRouterDevtools />
       </AiIconProvider>
     </AiChatProvider>
