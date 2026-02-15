@@ -326,4 +326,11 @@ export default {
   "learning-preferences-content-length-short": "Short (5–15 min)",
   "learning-preferences-content-length-medium": "Medium (15–30 min)",
   "learning-preferences-content-length-deep_dive": "Deep dive (30+ min)",
+  admin: "Admin",
+  navigation: "Navigation",
+  support: "Support",
+  "dashboard-overview": "Overview of your progress.",
+  "continue-learning-description": "Pick up where you left off.",
+  "continue-track-description": "Your active learning path.",
+  "favourites-description": "Your saved items.",
 } as const;

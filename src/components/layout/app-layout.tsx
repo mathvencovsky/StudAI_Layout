@@ -15,13 +15,10 @@ import {
   ChevronLeft,
   GraduationCap,
   Search,
-  Plus,
   ChevronDown,
   User,
-  HelpCircle,
   LogOut,
   MessageCircle,
-  BarChart3,
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
