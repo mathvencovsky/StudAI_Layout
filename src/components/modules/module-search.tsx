@@ -39,12 +39,12 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
   const items = data ?? [];
 
   return (
-    <div className="space-y-6">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       {/* Header with Create Module button */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("modules")}</h1>
-          <p className="text-muted-foreground">{t("manage-modules")}</p>
+          <h1 className="text-lg font-medium text-foreground">{t("modules")}</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">{t("manage-modules")}</p>
         </div>
         {onCreateModule && (
           <Button onClick={onCreateModule} className="flex items-center gap-2">

@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { useUserStats } from "@/hooks/user/use-user-stats";
-import { StatCard } from "@/components/home/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Clock, BookCheck, CalendarDays, AlertCircle } from "lucide-react";
@@ -14,11 +13,13 @@ export const StatsCards = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Skeleton className="h-24" />
-        <Skeleton className="h-24" />
-        <Skeleton className="h-24" />
-      </div>
+      <section className="border rounded-lg bg-card overflow-hidden">
+        <div className="grid grid-cols-3 divide-x text-center">
+          <Skeleton className="h-16 m-2" />
+          <Skeleton className="h-16 m-2" />
+          <Skeleton className="h-16 m-2" />
+        </div>
+      </section>
     );
   }
 
@@ -33,22 +34,36 @@ export const StatsCards = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <StatCard
-        icon={Clock}
-        label={t("total-hours-studied")}
-        value={data?.totalHoursStudied ?? 0}
-      />
-      <StatCard
-        icon={BookCheck}
-        label={t("modules-completed")}
-        value={data?.totalModulesCompleted ?? 0}
-      />
-      <StatCard
-        icon={CalendarDays}
-        label={t("days-logged-in")}
-        value={data?.totalDaysLoggedIn ?? 0}
-      />
-    </div>
+    <section className="border rounded-lg bg-card overflow-hidden">
+      <div className="grid grid-cols-3 divide-x text-center">
+        <div className="p-4">
+          <Clock className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+          <span className="text-sm font-medium text-foreground">
+            {data?.totalHoursStudied ?? 0}
+          </span>
+          <p className="text-[10px] text-muted-foreground">
+            {t("total-hours-studied")}
+          </p>
+        </div>
+        <div className="p-4">
+          <BookCheck className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+          <span className="text-sm font-medium text-foreground">
+            {data?.totalModulesCompleted ?? 0}
+          </span>
+          <p className="text-[10px] text-muted-foreground">
+            {t("modules-completed")}
+          </p>
+        </div>
+        <div className="p-4">
+          <CalendarDays className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
+          <span className="text-sm font-medium text-foreground">
+            {data?.totalDaysLoggedIn ?? 0}
+          </span>
+          <p className="text-[10px] text-muted-foreground">
+            {t("days-logged-in")}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 };

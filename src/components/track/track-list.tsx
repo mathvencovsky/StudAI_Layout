@@ -4,12 +4,6 @@ import { useNavigate } from "@tanstack/react-router";
 import { useTracks } from "@/hooks/track/use-tracks";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
 
 export interface TrackListProps {
   onCreateTrack?: () => void;
@@ -56,11 +50,11 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
     }
 
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-3">
         {filteredTracks.map((track) => (
-          <Card
+          <button
             key={track.id}
-            className="cursor-pointer hover:bg-accent/20"
+            className="w-full border rounded-lg bg-card hover:bg-muted/50 transition-colors text-left p-4"
             onClick={() =>
               navigate({
                 to: "/track/$trackId",
@@ -68,25 +62,25 @@ export const TrackList = ({ onCreateTrack }: TrackListProps) => {
               })
             }
           >
-            <CardHeader>
-              <CardTitle>{track.title}</CardTitle>
-              <CardDescription>{track.description}</CardDescription>
-            </CardHeader>
-          </Card>
+            <h3 className="text-sm font-medium text-foreground">{track.title}</h3>
+            <p className="text-xs text-muted-foreground mt-1">{track.description}</p>
+          </button>
         ))}
       </div>
     );
   };
 
   return (
-    <div className="space-y-4">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-4">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">{t("tracks")}</h1>
+        <div>
+          <h1 className="text-lg font-medium text-foreground">{t("tracks")}</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">{t("tracks-description")}</p>
+        </div>
         {onCreateTrack && (
-          <Button onClick={onCreateTrack}>{t("create-track")}</Button>
+          <Button onClick={onCreateTrack} size="sm">{t("create-track")}</Button>
         )}
       </div>
-      <p className="text-muted-foreground">{t("tracks-description")}</p>
       <Input
         placeholder={t("search-tracks")}
         value={searchQuery}
