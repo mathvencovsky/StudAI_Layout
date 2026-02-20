@@ -1,4 +1,4 @@
-import { LoginPage } from "@/components/auth/pages/login-page";
+import { LandingPage } from "@/components/landing/landing-page";
 import { HomePage } from "@/components/home/home-page";
 import { useAuth } from "@/hooks/use-auth";
 import { createFileRoute } from "@tanstack/react-router";
@@ -6,6 +6,7 @@ import { z } from "zod";
 
 const indexSearchSchema = z.object({
   redirect: z.string().optional(),
+  perfil: z.enum(["concurso", "certificacao", "faculdade"]).optional(),
 });
 
 export const Route = createFileRoute("/")({
@@ -14,7 +15,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { isAuthenticated } = useAuth();
-  const { redirect } = Route.useSearch();
-  return isAuthenticated ? <HomePage /> : <LoginPage redirect={redirect} />;
+  const { isAuthenticated, loading } = useAuth();
+  
+  // Show nothing while checking auth status
+  if (loading) {
+    return null;
+  }
+  
+  return isAuthenticated ? <HomePage /> : <LandingPage />;
 }

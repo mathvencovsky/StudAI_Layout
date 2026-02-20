@@ -4,7 +4,7 @@ export const ptBR: TranslationKeys = {
   // Common
   "common.startFree": "Comecar gratis",
   "common.login": "Entrar",
-  "common.supportEmail": "support@studai.app",
+  "common.supportEmail": "support@studi.app",
   "common.privacy": "Privacidade",
   "common.security": "Seguranca",
   "common.terms": "Termos",

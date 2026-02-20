@@ -1,7 +1,7 @@
 import {
-  ContentList,
-  type ContentListProps,
-} from "@/components/content/content-list";
+  ContentListWithTabs,
+  type ContentListWithTabsProps,
+} from "@/components/content/content-list-with-tabs";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
@@ -16,12 +16,12 @@ function RouteComponent() {
     navigate({ to: "/content-create" });
   }, [navigate]);
 
-  const onEdit: ContentListProps["onEdit"] = useCallback(
+  const onEdit: ContentListWithTabsProps["onEdit"] = useCallback(
     (contentId) => {
       navigate({ to: "/content/$contentId/edit", params: { contentId } });
     },
     [navigate]
   );
 
-  return <ContentList onCreateNew={onCreateNew} onEdit={onEdit} />;
+  return <ContentListWithTabs onCreateNew={onCreateNew} onEdit={onEdit} />;
 }

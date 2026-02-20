@@ -4,7 +4,7 @@ export const enUS: TranslationKeys = {
   // Common
   "common.startFree": "Start for free",
   "common.login": "Sign in",
-  "common.supportEmail": "support@studai.app",
+  "common.supportEmail": "support@studi.app",
   "common.privacy": "Privacy",
   "common.security": "Security",
   "common.terms": "Terms",
