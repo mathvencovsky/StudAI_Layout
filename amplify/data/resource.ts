@@ -501,7 +501,7 @@ const schema = a.schema({
     })
     .authorization((allow) => [allow.owner()]),
 
-  Subscription: a
+  UserSubscription: a
     .model({
       plan: a.enum(["free", "pro"]),
       status: a.enum(["active", "cancelled", "expired", "trial"]),

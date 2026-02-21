@@ -3,16 +3,16 @@ import { type Schema } from "../../amplify/data/resource";
 
 const client = generateClient<Schema>();
 
-export type CreateSubscriptionInput = Schema["Subscription"]["createType"];
-export type UpdateSubscriptionInput = Schema["Subscription"]["updateType"];
+export type CreateSubscriptionInput = Schema["UserSubscription"]["createType"];
+export type UpdateSubscriptionInput = Schema["UserSubscription"]["updateType"];
 
 /**
  * List user's subscriptions
  */
 export const listSubscriptions = async (): Promise<
-  Schema["Subscription"]["type"][]
+  Schema["UserSubscription"]["type"][]
 > => {
-  const result = await client.models.Subscription.list();
+  const result = await client.models.UserSubscription.list();
   if (!result.data) {
     console.error("Failed to list subscriptions:", result.errors);
     return [];
@@ -24,9 +24,9 @@ export const listSubscriptions = async (): Promise<
  * Get subscription by ID
  */
 export const getSubscription = async (
-  identifier: Schema["Subscription"]["identifier"],
-): Promise<Schema["Subscription"]["type"] | null> => {
-  const result = await client.models.Subscription.get(identifier);
+  identifier: Schema["UserSubscription"]["identifier"],
+): Promise<Schema["UserSubscription"]["type"] | null> => {
+  const result = await client.models.UserSubscription.get(identifier);
   if (!result.data) {
     console.error("Failed to get subscription:", result.errors);
     return null;
@@ -39,8 +39,8 @@ export const getSubscription = async (
  */
 export const createSubscription = async (
   input: CreateSubscriptionInput,
-): Promise<Schema["Subscription"]["type"]> => {
-  const result = await client.models.Subscription.create(input);
+): Promise<Schema["UserSubscription"]["type"]> => {
+  const result = await client.models.UserSubscription.create(input);
 
   if (!result.data) {
     console.error("Failed to create subscription:", result.errors);
@@ -55,8 +55,8 @@ export const createSubscription = async (
  */
 export const updateSubscription = async (
   input: UpdateSubscriptionInput,
-): Promise<Schema["Subscription"]["type"]> => {
-  const result = await client.models.Subscription.update(input);
+): Promise<Schema["UserSubscription"]["type"]> => {
+  const result = await client.models.UserSubscription.update(input);
 
   if (!result.data) {
     console.error("Failed to update subscription:", result.errors);
@@ -70,9 +70,9 @@ export const updateSubscription = async (
  * Delete subscription
  */
 export const deleteSubscription = async (
-  identifier: Schema["Subscription"]["identifier"],
+  identifier: Schema["UserSubscription"]["identifier"],
 ): Promise<void> => {
-  const result = await client.models.Subscription.delete(identifier);
+  const result = await client.models.UserSubscription.delete(identifier);
 
   if (result.errors) {
     console.error("Failed to delete subscription:", result.errors);

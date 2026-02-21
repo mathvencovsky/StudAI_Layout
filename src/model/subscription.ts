@@ -1,10 +1,10 @@
 import { type Schema } from "../../amplify/data/resource";
 
-export type Subscription = Schema["Subscription"]["type"];
-export type SubscriptionIdentifier = Schema["Subscription"]["identifier"];
-export type SubscriptionCreateInput = Schema["Subscription"]["createType"];
-export type SubscriptionUpdateInput = Schema["Subscription"]["updateType"];
-export type SubscriptionDeleteInput = Schema["Subscription"]["deleteType"];
+export type Subscription = Schema["UserSubscription"]["type"];
+export type SubscriptionIdentifier = Schema["UserSubscription"]["identifier"];
+export type SubscriptionCreateInput = Schema["UserSubscription"]["createType"];
+export type SubscriptionUpdateInput = Schema["UserSubscription"]["updateType"];
+export type SubscriptionDeleteInput = Schema["UserSubscription"]["deleteType"];
 export type SubscriptionPlan = NonNullable<Subscription["plan"]>;
 export type SubscriptionStatus = NonNullable<Subscription["status"]>;
 

@@ -42,7 +42,7 @@ export async function checkPlanLimit(
   try {
     // 1. Get user's subscription with timeout
     const subscriptions = await Promise.race([
-      client.models.Subscription.list({
+      client.models.UserSubscription.list({
         filter: { owner: { eq: userId } },
       }),
       new Promise<never>((_, reject) =>
@@ -176,7 +176,7 @@ export async function incrementUsage(
       const today = getPeriodDay();
 
       // Get subscription
-      const subscriptions = await client.models.Subscription.list({
+      const subscriptions = await client.models.UserSubscription.list({
         filter: { owner: { eq: userId } },
       });
 
@@ -241,7 +241,7 @@ export async function incrementUsage(
  */
 export async function getUserPlan(userId: string): Promise<PlanType> {
   try {
-    const subscriptions = await client.models.Subscription.list({
+    const subscriptions = await client.models.UserSubscription.list({
       filter: { owner: { eq: userId } },
     });
 
@@ -336,7 +336,7 @@ export async function createDefaultSubscription(
   userId: string
 ): Promise<void> {
   try {
-    const existing = await client.models.Subscription.list({
+    const existing = await client.models.UserSubscription.list({
       filter: { owner: { eq: userId } },
     });
 
@@ -345,7 +345,7 @@ export async function createDefaultSubscription(
       return;
     }
 
-    await client.models.Subscription.create({
+    await client.models.UserSubscription.create({
       plan: "free",
       status: "active",
       startDate: Date.now(),
