@@ -26,7 +26,7 @@ export async function getReportDataStub(
     for (let i = days - 1; i >= 0; i--) {
       const date = new Date(Date.now() - i * 86400000);
       data.push({
-        date: date.toISOString().split("T")[0],
+        date: date.toISOString().split("t")[0],
         minutes: Math.floor(Math.random() * 120) + 30,
       });
     }

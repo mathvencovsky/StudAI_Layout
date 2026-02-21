@@ -24,7 +24,7 @@ export async function getMetricsDataStub(
   for (let i = 29; i >= 0; i--) {
     const date = new Date(Date.now() - i * 86400000);
     performanceData.push({
-      date: date.toISOString().split("T")[0],
+      date: date.toISOString().split("t")[0],
       score: Math.floor(Math.random() * 30) + 70,
     });
   }

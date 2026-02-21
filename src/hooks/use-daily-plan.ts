@@ -12,7 +12,7 @@ function loadMission(): DailyMission {
     const parsed = JSON.parse(stored) as DailyMission;
 
     // Check if mission is from today
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("t")[0];
     if (parsed.date !== today) {
       // New day, new mission
       const newMission = getTodayMission();

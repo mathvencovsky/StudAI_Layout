@@ -17,7 +17,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { KickerBadge, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 export type ProfileKey = "concurso" | "certificacao" | "faculdade";
 
@@ -26,22 +26,22 @@ const STORAGE_KEY = "studai_perfil";
 export function getProfileData(t: (key: any) => string) {
   return {
     concurso: {
-      label: t("hero.profileConcurso"),
-      benefits: [t("hero.concurso.benefit1"), t("hero.concurso.benefit2"), t("hero.concurso.benefit3")],
-      microcopy: t("hero.concurso.microcopy"),
-      contextLine: t("hero.concurso.contextLine"),
+      label: t("hero-profile-concurso"),
+      benefits: [t("hero-concurso-benefit1"), t("hero-concurso-benefit2"), t("hero-concurso-benefit3")],
+      microcopy: t("hero-concurso-microcopy"),
+      contextLine: t("hero-concurso-context-line"),
     },
     certificacao: {
-      label: t("hero.profileCertificacao"),
-      benefits: [t("hero.certificacao.benefit1"), t("hero.certificacao.benefit2"), t("hero.certificacao.benefit3")],
-      microcopy: t("hero.certificacao.microcopy"),
-      contextLine: t("hero.certificacao.contextLine"),
+      label: t("hero-profile-certificacao"),
+      benefits: [t("hero-certificacao-benefit1"), t("hero-certificacao-benefit2"), t("hero-certificacao-benefit3")],
+      microcopy: t("hero-certificacao-microcopy"),
+      contextLine: t("hero-certificacao-context-line"),
     },
     faculdade: {
-      label: t("hero.profileFaculdade"),
-      benefits: [t("hero.faculdade.benefit1"), t("hero.faculdade.benefit2"), t("hero.faculdade.benefit3")],
-      microcopy: t("hero.faculdade.microcopy"),
-      contextLine: t("hero.faculdade.contextLine"),
+      label: t("hero-profile-faculdade"),
+      benefits: [t("hero-faculdade-benefit1"), t("hero-faculdade-benefit2"), t("hero-faculdade-benefit3")],
+      microcopy: t("hero-faculdade-microcopy"),
+      contextLine: t("hero-faculdade-context-line"),
     },
   };
 }
@@ -97,20 +97,20 @@ function MiniProductPreview() {
   const { t } = useI18n();
 
   const todayTasks = [
-    { label: t("preview.task1"), done: true },
-    { label: t("preview.task2"), done: true },
-    { label: t("preview.task3"), done: false },
+    { label: t("preview-task1"), done: true },
+    { label: t("preview-task2"), done: true },
+    { label: t("preview-task3"), done: false },
   ];
 
   const reviewQueue = [
-    { subject: t("preview.review1"), dueIn: t("preview.reviewDueToday") },
-    { subject: t("preview.review2"), dueIn: t("preview.reviewDueTomorrow") },
-    { subject: t("preview.review3"), dueIn: t("preview.reviewDue3Days") },
+    { subject: t("preview-review1"), dueIn: t("preview-review-due-today") },
+    { subject: t("preview-review2"), dueIn: t("preview-review-due-tomorrow") },
+    { subject: t("preview-review3"), dueIn: t("preview-review-due3days") },
   ];
 
   return (
     <div className="relative w-full min-w-0">
-      <p className="text-xs text-muted-foreground text-center mb-2 font-medium">{t("common.illustrativeExample")}</p>
+      <p className="text-xs text-muted-foreground text-center mb-2 font-medium">{t("common-illustrative-example")}</p>
       <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-hide -mx-4 px-4 pb-4 pr-8 [scroll-padding-left:1rem] [scroll-padding-right:1rem] md:mx-0 md:px-0 md:pr-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0">
         {/* Card 1: Today */}
         <Card className="w-[88vw] max-w-[340px] shrink-0 snap-start bg-card border-2 border-border hover:border-primary/40 transition-all duration-300 shadow-lg md:w-auto md:max-w-none md:shrink md:snap-none">
@@ -119,9 +119,9 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-primary/10">
                 <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.today")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-today")}</span>
               <span className="ml-auto text-[9px] sm:text-[10px] font-semibold bg-accent-warm/15 text-accent-warm px-1.5 sm:px-2 py-0.5 rounded-full truncate max-w-[72px]">
-                {t("preview.tasks")}
+                {t("preview-tasks")}
               </span>
             </div>
             <ul className="space-y-1.5 sm:space-y-2">
@@ -145,7 +145,7 @@ function MiniProductPreview() {
               ))}
             </ul>
             <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 font-semibold">
-              {t("preview.completedOf")}
+              {t("preview-completed-of")}
             </p>
           </CardContent>
         </Card>
@@ -157,7 +157,7 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-accent-warm/10">
                 <RotateCcw className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-accent-warm" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.reviews")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-reviews")}</span>
             </div>
             <ul className="space-y-1.5 sm:space-y-2">
               {reviewQueue.map((item, i) => (
@@ -167,7 +167,7 @@ function MiniProductPreview() {
                   </span>
                   <span
                     className={`text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold shrink-0 ${
-                      item.dueIn === t("preview.reviewDueToday")
+                      item.dueIn === t("preview-review-due-today")
                         ? "bg-accent-warm/15 text-accent-warm"
                         : "bg-muted text-muted-foreground"
                     }`}
@@ -178,7 +178,7 @@ function MiniProductPreview() {
               ))}
             </ul>
             <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 font-semibold">
-              {t("preview.pending")}
+              {t("preview-pending")}
             </p>
           </CardContent>
         </Card>
@@ -190,22 +190,22 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-success/10">
                 <TrendingUp className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-success" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.week")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-week")}</span>
             </div>
             <div className="space-y-2 sm:space-y-2.5">
               <div>
                 <div className="flex justify-between text-[11px] sm:text-xs mb-1">
-                  <span className="text-muted-foreground">{t("preview.progress")}</span>
+                  <span className="text-muted-foreground">{t("preview-progress")}</span>
                   <span className="text-foreground font-bold">68%</span>
                 </div>
                 <Progress value={68} className="h-1.5 sm:h-2" />
               </div>
               <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview.hours")}</span>
+                <span className="text-muted-foreground">{t("preview-hours")}</span>
                 <span className="text-foreground font-bold">8h 30min</span>
               </div>
               <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview.goal")}</span>
+                <span className="text-muted-foreground">{t("preview-goal")}</span>
                 <span className="text-foreground font-bold">12h</span>
               </div>
             </div>
@@ -268,21 +268,21 @@ export function LandingHero() {
             <div className="flex justify-center lg:justify-start mb-4">
               <KickerBadge variant="warm" className="max-w-[calc(100vw-2rem)] sm:max-w-none">
                 <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                <span className="min-w-0 whitespace-normal text-center">{t("hero.kicker")}</span>
+                <span className="min-w-0 whitespace-normal text-center">{t("hero-kicker")}</span>
               </KickerBadge>
             </div>
 
             <h1 className="display-h1 text-foreground">
-              {t("hero.headline")}
-              <HeadlineHighlight>{t("hero.headlineHighlight")}</HeadlineHighlight>
+              {t("hero-headline")}
+              <HeadlineHighlight>{t("hero-headline-highlight")}</HeadlineHighlight>
             </h1>
 
             <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-              {t("hero.subheadline")}
+              {t("hero-subheadline")}
             </p>
 
             <div className="mt-6">
-              <p className="text-sm text-foreground font-semibold mb-2">{t("hero.studyingFor")}</p>
+              <p className="text-sm text-foreground font-semibold mb-2">{t("hero-studying-for")}</p>
               <ToggleGroup
                 type="single"
                 value={profile}
@@ -298,7 +298,7 @@ export function LandingHero() {
                   >
                     {key === "certificacao" ? (
                       <>
-                        <span className="sm:hidden">{t("hero.profileCertificacaoShort")}</span>
+                        <span className="sm:hidden">{t("hero-profile-certificacao-short")}</span>
                         <span className="hidden sm:inline">{profileData[key].label}</span>
                       </>
                     ) : (
@@ -324,7 +324,7 @@ export function LandingHero() {
                 onClick={() => scrollToId("auth-card")}
                 className="w-full lg:w-auto text-base font-semibold min-h-[48px] bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-xl shadow-primary/30 hover:shadow-2xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                {t("hero.ctaPrimary")}
+                {t("hero-cta-primary")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
@@ -333,7 +333,7 @@ export function LandingHero() {
                 onClick={() => scrollToId("como-funciona")}
                 className="w-full lg:w-auto text-base font-semibold min-h-[48px] border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                {t("hero.ctaSecondary")}
+                {t("hero-cta-secondary")}
               </Button>
             </div>
 
@@ -354,14 +354,14 @@ export function LandingHero() {
                 className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
               >
                 <Shield className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common.security")}</span>
+                <span className="text-xs sm:text-sm">{t("common-security")}</span>
               </Link>
               <Link
                 to="/privacidade"
                 className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
               >
                 <FileText className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common.privacy")}</span>
+                <span className="text-xs sm:text-sm">{t("common-privacy")}</span>
               </Link>
             </div>
 

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { GraduationCap, Globe } from "lucide-react";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 const SUPPORT_EMAIL = "support@studi.app";
 
@@ -28,24 +28,24 @@ export function LandingFooter() {
 
   const footerLinks: Record<string, FooterLink[]> = {
     produto: [
-      { label: t("footer.resources"), href: "#produto", kind: "hash" },
-      { label: t("footer.howItWorks"), href: "#como-funciona", kind: "hash" },
-      { label: t("footer.plans"), href: "#planos", kind: "hash" },
-      { label: t("footer.faqLink"), href: "#faq", kind: "hash" },
+      { label: t("footer-resources"), href: "#produto", kind: "hash" },
+      { label: t("footer-how-it-works"), href: "#como-funciona", kind: "hash" },
+      { label: t("footer-plans"), href: "#planos", kind: "hash" },
+      { label: t("footer-faq-link"), href: "#faq", kind: "hash" },
     ],
     empresa: [
-      { label: t("common.about"), href: "/sobre", kind: "route" },
-      { label: t("common.contact"), href: "/contato", kind: "route" },
+      { label: t("common-about"), href: "/sobre", kind: "route" },
+      { label: t("common-contact"), href: "/contato", kind: "route" },
     ],
     suporte: [
-      { label: t("footer.talkToSupport"), href: `mailto:${SUPPORT_EMAIL}`, kind: "external" },
-      { label: t("common.security"), href: "/seguranca", kind: "route" },
-      { label: t("common.privacy"), href: "/privacidade", kind: "route" },
+      { label: t("footer-talk-to-support"), href: `mailto:${SUPPORT_EMAIL}`, kind: "external" },
+      { label: t("common-security"), href: "/seguranca", kind: "route" },
+      { label: t("common-privacy"), href: "/privacidade", kind: "route" },
     ],
     legal: [
-      { label: t("common.privacy"), href: "/privacidade", kind: "route" },
-      { label: t("common.terms"), href: "/termos", kind: "route" },
-      { label: t("common.security"), href: "/seguranca", kind: "route" },
+      { label: t("common-privacy"), href: "/privacidade", kind: "route" },
+      { label: t("common-terms"), href: "/termos", kind: "route" },
+      { label: t("common-security"), href: "/seguranca", kind: "route" },
     ],
   };
 
@@ -87,10 +87,10 @@ export function LandingFooter() {
               <span className="font-bold text-foreground text-lg">StudAI</span>
             </div>
             <p className="text-xs text-muted-foreground mb-3 leading-relaxed font-medium max-w-xs">
-              {t("footer.tagline")}
+              {t("footer-tagline")}
             </p>
             <p className="text-xs text-muted-foreground font-medium">
-              {t("common.support")}:{" "}
+              {t("common-support")}:{" "}
               <a
                 href={`mailto:${SUPPORT_EMAIL}`}
                 className="text-primary font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded"
@@ -110,8 +110,8 @@ export function LandingFooter() {
             </button>
           </div>
 
-          <nav aria-label={t("common.product")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common.product")}</h4>
+          <nav aria-label={t("common-product")}>
+            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-product")}</h4>
             <ul className="space-y-1">
               {footerLinks.produto.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -119,8 +119,8 @@ export function LandingFooter() {
             </ul>
           </nav>
 
-          <nav aria-label={t("common.company")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common.company")}</h4>
+          <nav aria-label={t("common-company")}>
+            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-company")}</h4>
             <ul className="space-y-1">
               {footerLinks.empresa.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -128,8 +128,8 @@ export function LandingFooter() {
             </ul>
           </nav>
 
-          <nav aria-label={t("common.support")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common.support")}</h4>
+          <nav aria-label={t("common-support")}>
+            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-support")}</h4>
             <ul className="space-y-1">
               {footerLinks.suporte.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -137,8 +137,8 @@ export function LandingFooter() {
             </ul>
           </nav>
 
-          <nav aria-label={t("common.legal")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common.legal")}</h4>
+          <nav aria-label={t("common-legal")}>
+            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-legal")}</h4>
             <ul className="space-y-1">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -149,7 +149,7 @@ export function LandingFooter() {
 
         <div className="mt-8 pt-5 border-t-2 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-xs text-muted-foreground font-medium">
-            © {new Date().getFullYear()} StudAI. {t("footer.allRights")}
+            © {new Date().getFullYear()} StudAI. {t("footer-all-rights")}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs">
@@ -163,19 +163,19 @@ export function LandingFooter() {
               to="/privacidade"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
-              {t("common.privacy")}
+              {t("common-privacy")}
             </Link>
             <Link
               to="/termos"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
-              {t("common.terms")}
+              {t("common-terms")}
             </Link>
             <Link
               to="/seguranca"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
-              {t("common.security")}
+              {t("common-security")}
             </Link>
           </div>
         </div>

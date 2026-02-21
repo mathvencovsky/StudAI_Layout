@@ -74,7 +74,7 @@ export function MeuPlanoPage() {
     }
 
     // Abre email para lista de espera
-    const subject = encodeURIComponent("Interesse no Plano Pro - StudAI");
+    const subject = encodeURIComponent("interesse no plano pro - stud-ai");
     const body = encodeURIComponent(
       "Olá! Tenho interesse em fazer upgrade para o plano Pro.\n\nPor favor, me avise quando estiver disponível."
     );

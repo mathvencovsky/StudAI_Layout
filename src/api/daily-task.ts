@@ -22,7 +22,7 @@ export const listDailyTasks = async (): Promise<Schema["DailyTask"]["type"][]> =
  * Get today's tasks
  */
 export const getTodayTasks = async (): Promise<Schema["DailyTask"]["type"][]> => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("t")[0];
   const result = await client.models.DailyTask.list();
   
   if (!result.data) {

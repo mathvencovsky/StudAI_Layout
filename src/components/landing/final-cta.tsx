@@ -2,7 +2,7 @@ import { ArrowRight, Mail, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionWrapper, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 const SUPPORT_EMAIL = "support@studi.app";
 
@@ -29,16 +29,16 @@ export function FinalCTA() {
           <CardContent className="py-8 sm:py-10 px-5 sm:px-8 text-center relative">
             <div className="inline-flex items-center gap-1.5 bg-accent-warm/15 text-accent-warm px-3 py-1.5 rounded-full text-xs font-bold mb-4">
               <Sparkles className="h-3.5 w-3.5" />
-              {t("finalCta.kicker")}
+              {t("final-cta-kicker")}
             </div>
 
             <h2 className="display-h2 text-foreground mb-3">
-              {t("finalCta.headline")}
-              <HeadlineHighlight>{t("finalCta.headlineHighlight")}</HeadlineHighlight>?
+              {t("final-cta-headline")}
+              <HeadlineHighlight>{t("final-cta-headline-highlight")}</HeadlineHighlight>?
             </h2>
 
             <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm sm:text-base font-medium">
-              {t("finalCta.subheadline")}
+              {t("final-cta-subheadline")}
             </p>
 
             <div className="flex flex-col gap-3">
@@ -47,7 +47,7 @@ export function FinalCTA() {
                 onClick={scrollToAuth}
                 className="w-full text-base font-semibold min-h-[48px] bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-xl shadow-primary/30 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
               >
-                {t("common.startFree")}
+                {t("common-start-free")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
 
@@ -56,7 +56,7 @@ export function FinalCTA() {
                 className="inline-flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded px-4 py-2.5 min-h-[44px] font-semibold"
               >
                 <Mail className="h-4 w-4" />
-                {t("finalCta.talkToSupport")}
+                {t("final-cta-talk-to-support")}
               </a>
             </div>
           </CardContent>

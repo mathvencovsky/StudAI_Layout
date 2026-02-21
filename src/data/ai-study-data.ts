@@ -1217,7 +1217,7 @@ function generateMockSessionHistory(): StudySessionHistory[] {
           id: `hist-${i}-${j}`,
           moduleId: modules[moduleIndex],
           competency: "Quantitative Methods",
-          date: date.toISOString().split("T")[0],
+          date: date.toISOString().split("t")[0],
           durationMinutes: Math.floor(Math.random() * 45) + 15,
           type: types[Math.floor(Math.random() * types.length)],
           score: Math.random() < 0.5 ? Math.floor(Math.random() * 30) + 70 : undefined,

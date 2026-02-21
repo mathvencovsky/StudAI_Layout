@@ -23,12 +23,12 @@ export function SessoesPage() {
 
   const getTypeLabel = (type: string | null | undefined) => {
     switch (type) {
-      case "ai_session": return t("pages.sessions.type-ai");
-      case "quiz": return t("pages.sessions.type-quiz");
-      case "review": return t("pages.sessions.type-review");
-      case "reading": return t("pages.sessions.type-reading");
-      case "practice": return t("pages.sessions.type-practice");
-      default: return type || t("pages.sessions.type-other");
+      case "ai_session": return t("pages-sessions-type-ai");
+      case "quiz": return t("pages-sessions-type-quiz");
+      case "review": return t("pages-sessions-type-review");
+      case "reading": return t("pages-sessions-type-reading");
+      case "practice": return t("pages-sessions-type-practice");
+      default: return type || t("pages-sessions-type-other");
     }
   };
 
@@ -49,8 +49,8 @@ export function SessoesPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">{t("pages.sessions.title")}</h1>
-        <p className="text-muted-foreground">{t("pages.sessions.description")}</p>
+        <h1 className="text-3xl font-bold">{t("pages-sessions-title")}</h1>
+        <p className="text-muted-foreground">{t("pages-sessions-description")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -58,12 +58,12 @@ export function SessoesPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-primary" />
-              {t("pages.sessions.total-hours")}
+              {t("pages-sessions-total-hours")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{totalHours}h</div>
-            <p className="text-sm text-muted-foreground">{totalMinutes} {t("pages.sessions.minutes")}</p>
+            <p className="text-sm text-muted-foreground">{totalMinutes} {t("pages-sessions-minutes")}</p>
           </CardContent>
         </Card>
 
@@ -71,12 +71,12 @@ export function SessoesPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Brain className="h-5 w-5 text-primary" />
-              {t("pages.sessions.total-sessions")}
+              {t("pages-sessions-total-sessions")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{totalSessions}</div>
-            <p className="text-sm text-muted-foreground">{t("pages.sessions.complete-sessions")}</p>
+            <p className="text-sm text-muted-foreground">{t("pages-sessions-complete-sessions")}</p>
           </CardContent>
         </Card>
 
@@ -84,20 +84,20 @@ export function SessoesPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <BookOpen className="h-5 w-5 text-primary" />
-              {t("pages.sessions.average")}
+              {t("pages-sessions-average")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">{avgMinutes} min</div>
-            <p className="text-sm text-muted-foreground">{t("pages.sessions.average-duration")}</p>
+            <p className="text-sm text-muted-foreground">{t("pages-sessions-average-duration")}</p>
           </CardContent>
         </Card>
       </div>
 
       {sortedSessions.length === 0 && (
         <EmptyState
-          title={t("pages.sessions.empty")}
-          description={t("pages.sessions.empty-description")}
+          title={t("pages-sessions-empty")}
+          description={t("pages-sessions-empty-description")}
           icon={Brain}
         />
       )}
@@ -110,7 +110,7 @@ export function SessoesPage() {
                 <div className="space-y-1 flex-1">
                   <div className="flex items-center gap-2">
                     <CardTitle className="text-lg">
-                      {session.type ? getTypeLabel(session.type) : t("pages.sessions.session")}
+                      {session.type ? getTypeLabel(session.type) : t("pages-sessions-session")}
                     </CardTitle>
                     <Badge className={getTypeBadge(session.type)}>
                       {getTypeLabel(session.type)}
@@ -141,7 +141,7 @@ export function SessoesPage() {
                 )}
                 {session.score !== null && session.score !== undefined && (
                   <div className="flex items-center gap-1">
-                    <span>{t("pages.sessions.score")}: {session.score}%</span>
+                    <span>{t("pages-sessions-score")}: {session.score}%</span>
                   </div>
                 )}
               </div>

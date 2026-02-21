@@ -1,39 +1,39 @@
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { Card, CardContent } from "@/components/ui/card";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 export function Testimonials() {
   const { t } = useI18n();
 
   const items = [
     {
-      role: t("testimonials.concurso.role"),
-      context: t("testimonials.concurso.context"),
-      quote: t("testimonials.concurso.quote"),
+      role: t("testimonials-concurso-role"),
+      context: t("testimonials-concurso-context"),
+      quote: t("testimonials-concurso-quote"),
       changes: [
-        t("testimonials.concurso.change1"),
-        t("testimonials.concurso.change2"),
-        t("testimonials.concurso.change3"),
+        t("testimonials-concurso-change1"),
+        t("testimonials-concurso-change2"),
+        t("testimonials-concurso-change3"),
       ],
     },
     {
-      role: t("testimonials.certificacao.role"),
-      context: t("testimonials.certificacao.context"),
-      quote: t("testimonials.certificacao.quote"),
+      role: t("testimonials-certificacao-role"),
+      context: t("testimonials-certificacao-context"),
+      quote: t("testimonials-certificacao-quote"),
       changes: [
-        t("testimonials.certificacao.change1"),
-        t("testimonials.certificacao.change2"),
-        t("testimonials.certificacao.change3"),
+        t("testimonials-certificacao-change1"),
+        t("testimonials-certificacao-change2"),
+        t("testimonials-certificacao-change3"),
       ],
     },
     {
-      role: t("testimonials.faculdade.role"),
-      context: t("testimonials.faculdade.context"),
-      quote: t("testimonials.faculdade.quote"),
+      role: t("testimonials-faculdade-role"),
+      context: t("testimonials-faculdade-context"),
+      quote: t("testimonials-faculdade-quote"),
       changes: [
-        t("testimonials.faculdade.change1"),
-        t("testimonials.faculdade.change2"),
-        t("testimonials.faculdade.change3"),
+        t("testimonials-faculdade-change1"),
+        t("testimonials-faculdade-change2"),
+        t("testimonials-faculdade-change3"),
       ],
     },
   ];
@@ -41,13 +41,13 @@ export function Testimonials() {
   return (
     <SectionWrapper id="depoimentos" variant="tint">
       <div className="text-center mb-8">
-        <KickerBadge className="mb-3">{t("testimonials.kicker")}</KickerBadge>
+        <KickerBadge className="mb-3">{t("testimonials-kicker")}</KickerBadge>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          {t("testimonials.headline")}
-          <HeadlineHighlight>{t("testimonials.headlineHighlight")}</HeadlineHighlight>
+          {t("testimonials-headline")}
+          <HeadlineHighlight>{t("testimonials-headline-highlight")}</HeadlineHighlight>
         </h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
-          {t("testimonials.subheadline")}
+          {t("testimonials-subheadline")}
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export function Testimonials() {
                 "{it.quote}"
               </p>
               <p className="mt-4 text-xs font-extrabold text-foreground">
-                {t("testimonials.whatChanged")}
+                {t("testimonials-what-changed")}
               </p>
               <ul className="mt-2 space-y-2">
                 {it.changes.map((c) => (
@@ -85,7 +85,7 @@ export function Testimonials() {
       </div>
 
       <p className="mt-6 text-xs text-muted-foreground text-center font-semibold">
-        {t("testimonials.disclaimer")}
+        {t("testimonials-disclaimer")}
       </p>
     </SectionWrapper>
   );

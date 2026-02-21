@@ -74,19 +74,19 @@ export const navigationGroups: NavigationGroup[] = [
     label: "DADOS",
     items: [
       {
-        to: "/relatorios",
+        to: "/reports",
         icon: FileText,
         label: "reports",
         requiresAuth: true,
       },
       {
-        to: "/metricas",
+        to: "/metrics",
         icon: BarChart,
         label: "metrics",
         requiresAuth: true,
       },
       {
-        to: "/atividade",
+        to: "/activity",
         icon: Activity,
         label: "activity",
         requiresAuth: true,
@@ -96,7 +96,7 @@ export const navigationGroups: NavigationGroup[] = [
   {
     label: "CONFIG",
     items: [
-      { to: "/salvos", icon: Bookmark, label: "saved", requiresAuth: true },
+      { to: "/saved", icon: Bookmark, label: "saved", requiresAuth: true },
       {
         to: "/admin",
         icon: Shield,
@@ -105,7 +105,7 @@ export const navigationGroups: NavigationGroup[] = [
         requiresRole: "admin",
       },
       {
-        to: "/configuracoes",
+        to: "/settings",
         icon: Settings,
         label: "settings",
         requiresAuth: true,

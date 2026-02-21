@@ -63,20 +63,20 @@ export function AtividadePage() {
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return t("pages.activity.just-now");
+    if (diffMins < 1) return t("pages-activity-just-now");
     if (diffMins < 60) return t("pages.activity.minutes-ago", { count: diffMins });
     if (diffHours < 24) return t("pages.activity.hours-ago", { count: diffHours });
-    if (diffDays === 1) return t("pages.activity.yesterday");
+    if (diffDays === 1) return t("pages-activity-yesterday");
     return t("pages.activity.days-ago", { count: diffDays });
   };
 
   const getActivityTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      course_completed: t("pages.activity.course-completed"),
-      module_completed: t("pages.activity.module-completed"),
-      task_completed: t("pages.activity.task-completed"),
-      quiz_completed: t("pages.activity.quiz-completed"),
-      study_session: t("pages.activity.study-session"),
+      course_completed: t("pages-activity-course-completed"),
+      module_completed: t("pages-activity-module-completed"),
+      task_completed: t("pages-activity-task-completed"),
+      quiz_completed: t("pages-activity-quiz-completed"),
+      study_session: t("pages-activity-study-session"),
     };
     return labels[type] || type;
   };
@@ -87,12 +87,12 @@ export function AtividadePage() {
     return (
       <div className="container mx-auto p-6">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{t("pages.activity.title")}</h1>
-          <p className="text-muted-foreground">{t("pages.activity.description")}</p>
+          <h1 className="text-3xl font-bold mb-2">{t("pages-activity-title")}</h1>
+          <p className="text-muted-foreground">{t("pages-activity-description")}</p>
         </div>
         <EmptyState
-          title={t("pages.activity.empty")}
-          description={t("pages.activity.empty-description")}
+          title={t("pages-activity-empty")}
+          description={t("pages-activity-empty-description")}
           icon={Activity}
         />
       </div>
@@ -118,8 +118,8 @@ export function AtividadePage() {
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("pages.activity.title")}</h1>
-        <p className="text-muted-foreground">{t("pages.activity.description")}</p>
+        <h1 className="text-3xl font-bold mb-2">{t("pages-activity-title")}</h1>
+        <p className="text-muted-foreground">{t("pages-activity-description")}</p>
       </div>
 
       {/* Stats */}
@@ -127,14 +127,14 @@ export function AtividadePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.activity.today")}
+              {t("pages-activity-today")}
             </CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{todayActivity.length}</div>
             <p className="text-xs text-muted-foreground">
-              {todayXP} XP {t("pages.activity.earned")}
+              {todayXP} XP {t("pages-activity-earned")}
             </p>
           </CardContent>
         </Card>
@@ -142,14 +142,14 @@ export function AtividadePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.activity.this-week")}
+              {t("pages-activity-this-week")}
             </CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{thisWeek.length}</div>
             <p className="text-xs text-muted-foreground">
-              {weekXP} XP {t("pages.activity.earned")}
+              {weekXP} XP {t("pages-activity-earned")}
             </p>
           </CardContent>
         </Card>
@@ -157,14 +157,14 @@ export function AtividadePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.activity.total")}
+              {t("pages-activity-total")}
             </CardTitle>
             <Trophy className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activities.length}</div>
             <p className="text-xs text-muted-foreground">
-              {activities.reduce((sum, a) => sum + a.xp, 0)} XP {t("pages.activity.earned")}
+              {activities.reduce((sum, a) => sum + a.xp, 0)} XP {t("pages-activity-earned")}
             </p>
           </CardContent>
         </Card>
@@ -173,16 +173,16 @@ export function AtividadePage() {
       {/* Tabs */}
       <Tabs defaultValue="all" className="w-full">
         <TabsList>
-          <TabsTrigger value="all">{t("pages.activity.all")}</TabsTrigger>
-          <TabsTrigger value="today">{t("pages.activity.today")}</TabsTrigger>
-          <TabsTrigger value="week">{t("pages.activity.this-week")}</TabsTrigger>
+          <TabsTrigger value="all">{t("pages-activity-all")}</TabsTrigger>
+          <TabsTrigger value="today">{t("pages-activity-today")}</TabsTrigger>
+          <TabsTrigger value="week">{t("pages-activity-this-week")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="space-y-4 mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.activity.history")}</CardTitle>
-              <CardDescription>{t("pages.activity.history-description")}</CardDescription>
+              <CardTitle>{t("pages-activity-history")}</CardTitle>
+              <CardDescription>{t("pages-activity-history-description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -219,9 +219,9 @@ export function AtividadePage() {
         <TabsContent value="today" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.activity.today-activities")}</CardTitle>
+              <CardTitle>{t("pages-activity-today-activities")}</CardTitle>
               <CardDescription>
-                {todayActivity.length} {t("pages.activity.activities-today")}
+                {todayActivity.length} {t("pages-activity-activities-today")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -251,8 +251,8 @@ export function AtividadePage() {
                 </div>
               ) : (
                 <EmptyState 
-                  title={t("pages.activity.no-activities-today")} 
-                  description={t("pages.activity.empty-description")}
+                  title={t("pages-activity-no-activities-today")} 
+                  description={t("pages-activity-empty-description")}
                 />
               )}
             </CardContent>
@@ -262,9 +262,9 @@ export function AtividadePage() {
         <TabsContent value="week" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.activity.week-activities")}</CardTitle>
+              <CardTitle>{t("pages-activity-week-activities")}</CardTitle>
               <CardDescription>
-                {thisWeek.length} {t("pages.activity.activities-week")}
+                {thisWeek.length} {t("pages-activity-activities-week")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -294,8 +294,8 @@ export function AtividadePage() {
                 </div>
               ) : (
                 <EmptyState 
-                  title={t("pages.activity.no-activities-week")} 
-                  description={t("pages.activity.empty-description")}
+                  title={t("pages-activity-no-activities-week")} 
+                  description={t("pages-activity-empty-description")}
                 />
               )}
             </CardContent>

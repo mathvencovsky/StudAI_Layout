@@ -4,7 +4,7 @@ import { CheckCircle2, Sparkles, Mail } from "lucide-react";
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 type ProfileKey = "concurso" | "certificacao" | "faculdade";
 
@@ -22,19 +22,19 @@ export function PricingSection() {
   }, [search]);
 
   const freeFeatures = [
-    t("pricing.free.feature1"),
-    t("pricing.free.feature2"),
-    t("pricing.free.feature3"),
-    t("pricing.free.feature4"),
-    t("pricing.free.feature5"),
+    t("pricing-free-feature1"),
+    t("pricing-free-feature2"),
+    t("pricing-free-feature3"),
+    t("pricing-free-feature4"),
+    t("pricing-free-feature5"),
   ];
 
   const proFeatures = [
-    t("pricing.pro.feature1"),
-    t("pricing.pro.feature2"),
-    t("pricing.pro.feature3"),
-    t("pricing.pro.feature4"),
-    t("pricing.pro.feature5"),
+    t("pricing-pro-feature1"),
+    t("pricing-pro-feature2"),
+    t("pricing-pro-feature3"),
+    t("pricing-pro-feature4"),
+    t("pricing-pro-feature5"),
   ];
 
   const scrollToAuth = () => {
@@ -48,9 +48,9 @@ export function PricingSection() {
   };
 
   const waitlistMailTo = () => {
-    const subject = encodeURIComponent(t("pricing.waitlistSubject"));
+    const subject = encodeURIComponent(t("pricing-waitlist-subject"));
     const body = encodeURIComponent(
-      t("pricing.waitlistBody").replace("{profile}", profile)
+      t("pricing-waitlist-body").replace("{profile}", profile)
     );
     return `mailto:support@studi.app?subject=${subject}&body=${body}`;
   };
@@ -58,13 +58,13 @@ export function PricingSection() {
   return (
     <SectionWrapper id="planos" variant="plain" withNoise>
       <div className="text-center mb-8">
-        <KickerBadge className="mb-3">{t("pricing.kicker")}</KickerBadge>
+        <KickerBadge className="mb-3">{t("pricing-kicker")}</KickerBadge>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-          {t("pricing.headline")}
-          <HeadlineHighlight>{t("pricing.headlineHighlight")}</HeadlineHighlight>
+          {t("pricing-headline")}
+          <HeadlineHighlight>{t("pricing-headline-highlight")}</HeadlineHighlight>
         </h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
-          {t("pricing.subheadline")}
+          {t("pricing-subheadline")}
         </p>
       </div>
 
@@ -74,24 +74,24 @@ export function PricingSection() {
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-xl font-extrabold text-foreground">
-                  {t("pricing.free.name")}
+                  {t("pricing-free-name")}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {t("pricing.free.tagline")}
+                  {t("pricing-free-tagline")}
                 </p>
               </div>
               <div className="text-right">
                 <p className="text-2xl font-extrabold text-foreground">
-                  {t("pricing.free.price")}
+                  {t("pricing-free-price")}
                 </p>
                 <p className="text-xs font-bold text-muted-foreground">
-                  {t("pricing.free.forever")}
+                  {t("pricing-free-forever")}
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              {t("pricing.free.desc")}
+              {t("pricing-free-desc")}
             </p>
 
             <ul className="mt-4 space-y-2">
@@ -108,12 +108,12 @@ export function PricingSection() {
                 onClick={scrollToAuth}
                 className="w-full font-extrabold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
               >
-                {t("pricing.free.cta")}
+                {t("pricing-free-cta")}
               </Button>
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground font-semibold">
-              {t("pricing.trustNotice")}
+              {t("pricing-trust-notice")}
             </p>
           </CardContent>
         </Card>
@@ -122,7 +122,7 @@ export function PricingSection() {
           <div className="absolute -top-3 right-4">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-extrabold bg-primary/15 text-primary border-2 border-primary/30">
               <Sparkles className="h-3.5 w-3.5" />
-              {t("pricing.recommended")}
+              {t("pricing-recommended")}
             </span>
           </div>
 
@@ -130,24 +130,24 @@ export function PricingSection() {
             <div className="flex items-start justify-between">
               <div>
                 <h3 className="text-xl font-extrabold text-foreground">
-                  {t("pricing.pro.name")}
+                  {t("pricing-pro-name")}
                 </h3>
                 <p className="text-sm text-muted-foreground mt-1">
-                  {t("pricing.pro.tagline")}
+                  {t("pricing-pro-tagline")}
                 </p>
               </div>
               <div className="text-right">
                 <p className="text-base font-extrabold text-foreground">
-                  {t("pricing.pro.price")}
+                  {t("pricing-pro-price")}
                 </p>
                 <p className="text-xs font-bold text-muted-foreground">
-                  {t("pricing.comingSoon")}
+                  {t("pricing-coming-soon")}
                 </p>
               </div>
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              {t("pricing.pro.desc")}
+              {t("pricing-pro-desc")}
             </p>
 
             <ul className="mt-4 space-y-2">
@@ -166,17 +166,17 @@ export function PricingSection() {
               >
                 <a href={waitlistMailTo()}>
                   <Mail className="h-4 w-4 mr-2" />
-                  {t("pricing.pro.cta")}
+                  {t("pricing-pro-cta")}
                 </a>
               </Button>
               <p className="mt-2 text-xs text-muted-foreground font-semibold">
-                {t("pricing.pro.noSpam")}
+                {t("pricing-pro-no-spam")}
               </p>
             </div>
 
             <div className="mt-6 border-t-2 pt-4">
               <p className="text-xs font-extrabold text-foreground">
-                {t("pricing.questions")}
+                {t("pricing-questions")}
               </p>
               <a
                 className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"

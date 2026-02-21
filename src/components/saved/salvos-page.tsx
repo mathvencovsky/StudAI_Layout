@@ -33,10 +33,10 @@ export function SalvosPage() {
 
   const getTypeLabel = (type: string) => {
     const labels: Record<string, string> = {
-      track: t("pages.saved.type-track"),
-      module: t("pages.saved.type-module"),
-      content: t("pages.saved.type-content"),
-      resource: t("pages.saved.type-resource"),
+      track: t("pages-saved-type-track"),
+      module: t("pages-saved-type-module"),
+      content: t("pages-saved-type-content"),
+      resource: t("pages-saved-type-resource"),
     };
     return labels[type] || type;
   };
@@ -53,9 +53,9 @@ export function SalvosPage() {
   const handleRemove = async (id: string) => {
     try {
       await removeSavedItem.mutateAsync(id);
-      toast.success(t("pages.saved.removed"));
+      toast.success(t("pages-saved-removed"));
     } catch (error) {
-      toast.error(t("pages.saved.remove-error"));
+      toast.error(t("pages-saved-remove-error"));
     }
   };
 
@@ -65,15 +65,15 @@ export function SalvosPage() {
     return (
       <div className="container mx-auto p-6">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold mb-2">{t("pages.saved.title")}</h1>
-          <p className="text-muted-foreground">{t("pages.saved.description")}</p>
+          <h1 className="text-3xl font-bold mb-2">{t("pages-saved-title")}</h1>
+          <p className="text-muted-foreground">{t("pages-saved-description")}</p>
         </div>
         <EmptyState
-          title={t("pages.saved.empty")}
-          description={t("pages.saved.empty-description")}
+          title={t("pages-saved-empty")}
+          description={t("pages-saved-empty-description")}
           icon={Bookmark}
           action={{
-            label: t("pages.saved.explore"),
+            label: t("pages-saved-explore"),
             onClick: () => window.location.href = "/explorar",
           }}
         />
@@ -89,15 +89,15 @@ export function SalvosPage() {
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("pages.saved.title")}</h1>
-        <p className="text-muted-foreground">{t("pages.saved.description")}</p>
+        <h1 className="text-3xl font-bold mb-2">{t("pages-saved-title")}</h1>
+        <p className="text-muted-foreground">{t("pages-saved-description")}</p>
       </div>
 
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("pages.saved.total")}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("pages-saved-total")}</CardTitle>
             <Bookmark className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -107,7 +107,7 @@ export function SalvosPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("pages.saved.tracks")}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("pages-saved-tracks")}</CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -117,7 +117,7 @@ export function SalvosPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("pages.saved.modules")}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("pages-saved-modules")}</CardTitle>
             <Video className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -127,7 +127,7 @@ export function SalvosPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("pages.saved.resources")}</CardTitle>
+            <CardTitle className="text-sm font-medium">{t("pages-saved-resources")}</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -139,10 +139,10 @@ export function SalvosPage() {
       {/* Tabs */}
       <Tabs defaultValue="all" className="w-full">
         <TabsList>
-          <TabsTrigger value="all">{t("pages.saved.all")}</TabsTrigger>
-          <TabsTrigger value="tracks">{t("pages.saved.tracks")}</TabsTrigger>
-          <TabsTrigger value="modules">{t("pages.saved.modules")}</TabsTrigger>
-          <TabsTrigger value="resources">{t("pages.saved.resources")}</TabsTrigger>
+          <TabsTrigger value="all">{t("pages-saved-all")}</TabsTrigger>
+          <TabsTrigger value="tracks">{t("pages-saved-tracks")}</TabsTrigger>
+          <TabsTrigger value="modules">{t("pages-saved-modules")}</TabsTrigger>
+          <TabsTrigger value="resources">{t("pages-saved-resources")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="space-y-4 mt-6">
@@ -174,7 +174,7 @@ export function SalvosPage() {
                     <Badge variant="outline">{getTypeLabel(item.type)}</Badge>
                     <Badge variant="secondary">{item.category}</Badge>
                     <span className="text-sm text-muted-foreground">
-                      {t("pages.saved.saved-on")} {formatDate(item.savedAt)}
+                      {t("pages-saved-saved-on")} {formatDate(item.savedAt)}
                     </span>
                   </div>
                   <Button variant="outline" size="sm" asChild>
@@ -188,7 +188,7 @@ export function SalvosPage() {
 
         <TabsContent value="tracks" className="mt-6 space-y-4">
           {trackItems.length === 0 ? (
-            <EmptyState title={t("pages.saved.no-tracks")} />
+            <EmptyState title={t("pages-saved-no-tracks")} />
           ) : (
             trackItems.map((item) => (
               <Card key={item.id}>
@@ -220,7 +220,7 @@ export function SalvosPage() {
 
         <TabsContent value="modules" className="mt-6 space-y-4">
           {moduleItems.length === 0 ? (
-            <EmptyState title={t("pages.saved.no-modules")} />
+            <EmptyState title={t("pages-saved-no-modules")} />
           ) : (
             moduleItems.map((item) => (
               <Card key={item.id}>
@@ -252,7 +252,7 @@ export function SalvosPage() {
 
         <TabsContent value="resources" className="mt-6 space-y-4">
           {resourceItems.length === 0 ? (
-            <EmptyState title={t("pages.saved.no-resources")} />
+            <EmptyState title={t("pages-saved-no-resources")} />
           ) : (
             resourceItems.map((item) => (
               <Card key={item.id}>

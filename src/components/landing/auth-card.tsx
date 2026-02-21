@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Eye, EyeOff, HelpCircle } from "lucide-react";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -44,7 +44,7 @@ export function AuthCard({ className }: { className?: string }) {
 
   async function handleLogin() {
     if (!email || !password) {
-      toastFallback(t("auth.toast.fillFields"));
+      toastFallback(t("auth-toast-fill-fields"));
       return;
     }
     setBusy(true);
@@ -57,9 +57,9 @@ export function AuthCard({ className }: { className?: string }) {
         return;
       }
       await adapter.signIn(email.trim(), password);
-      toastFallback(t("auth.toast.welcomeBack"));
+      toastFallback(t("auth-toast-welcome-back"));
     } catch {
-      toastFallback(t("auth.toast.loginError"));
+      toastFallback(t("auth-toast-login-error"));
     } finally {
       setBusy(false);
     }
@@ -67,15 +67,15 @@ export function AuthCard({ className }: { className?: string }) {
 
   async function handleRegister() {
     if (!email || !password || !confirmPassword) {
-      toastFallback(t("auth.toast.fillAllFields"));
+      toastFallback(t("auth-toast-fill-all-fields"));
       return;
     }
     if (!minPasswordOk) {
-      toastFallback(t("auth.toast.minPassword"));
+      toastFallback(t("auth-toast-min-password"));
       return;
     }
     if (!passwordsMatch) {
-      toastFallback(t("auth.toast.passwordsDontMatch"));
+      toastFallback(t("auth-toast-passwords-dont-match"));
       return;
     }
     setBusy(true);
@@ -88,10 +88,10 @@ export function AuthCard({ className }: { className?: string }) {
         return;
       }
       await adapter.signUp(email.trim(), password);
-      toastFallback(t("auth.toast.accountCreated"));
+      toastFallback(t("auth-toast-account-created"));
       setTab("login");
     } catch {
-      toastFallback(t("auth.toast.registerError"));
+      toastFallback(t("auth-toast-register-error"));
     } finally {
       setBusy(false);
     }
@@ -103,33 +103,33 @@ export function AuthCard({ className }: { className?: string }) {
         <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
           <TabsList className="grid grid-cols-2 w-full">
             <TabsTrigger value="login" className="font-bold">
-              {t("auth.tabLogin")}
+              {t("auth-tab-login")}
             </TabsTrigger>
             <TabsTrigger value="register" className="font-bold">
-              {t("auth.tabRegister")}
+              {t("auth-tab-register")}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="login" className="mt-5 space-y-4">
             <div>
               <h3 className="text-lg font-extrabold text-foreground">
-                {t("auth.loginTitle")}
+                {t("auth-login-title")}
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                {t("auth.loginDesc")}
+                {t("auth-login-desc")}
               </p>
             </div>
 
             <div className="space-y-3">
               <div className="space-y-2">
                 <Label htmlFor="login-email" className="font-semibold">
-                  {t("auth.email")}
+                  {t("auth-email")}
                 </Label>
                 <Input
                   id="login-email"
                   type="email"
                   autoComplete="email"
-                  placeholder={t("auth.emailPlaceholder")}
+                  placeholder={t("auth-email-placeholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -137,14 +137,14 @@ export function AuthCard({ className }: { className?: string }) {
 
               <div className="space-y-2">
                 <Label htmlFor="login-password" className="font-semibold">
-                  {t("auth.password")}
+                  {t("auth-password")}
                 </Label>
                 <div className="relative">
                   <Input
                     id="login-password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="current-password"
-                    placeholder={t("auth.passwordPlaceholder")}
+                    placeholder={t("auth-password-placeholder")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pr-11"
@@ -155,8 +155,8 @@ export function AuthCard({ className }: { className?: string }) {
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label={
                       showPassword
-                        ? t("auth.hidePassword")
-                        : t("auth.showPassword")
+                        ? t("auth-hide-password")
+                        : t("auth-show-password")
                     }
                   >
                     {showPassword ? (
@@ -174,17 +174,17 @@ export function AuthCard({ className }: { className?: string }) {
               disabled={busy}
               className="w-full font-bold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
             >
-              {busy ? t("auth.loggingIn") : t("auth.loginButton")}
+              {busy ? t("auth-logging-in") : t("auth-login-button")}
             </Button>
 
             <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span className="font-semibold">{t("auth.cantAccess")}</span>
+              <span className="font-semibold">{t("auth-cant-access")}</span>
               <a
                 href="mailto:support@studi.app"
                 className="inline-flex items-center gap-1 font-bold hover:text-foreground"
               >
                 <HelpCircle className="h-3.5 w-3.5" />
-                {t("auth.needHelp")}
+                {t("auth-need-help")}
               </a>
             </div>
           </TabsContent>
@@ -192,23 +192,23 @@ export function AuthCard({ className }: { className?: string }) {
           <TabsContent value="register" className="mt-5 space-y-4">
             <div>
               <h3 className="text-lg font-extrabold text-foreground">
-                {t("auth.registerTitle")}
+                {t("auth-register-title")}
               </h3>
               <p className="text-sm text-muted-foreground mt-1">
-                {t("auth.registerDesc")}
+                {t("auth-register-desc")}
               </p>
             </div>
 
             <div className="space-y-3">
               <div className="space-y-2">
                 <Label htmlFor="register-email" className="font-semibold">
-                  {t("auth.email")}
+                  {t("auth-email")}
                 </Label>
                 <Input
                   id="register-email"
                   type="email"
                   autoComplete="email"
-                  placeholder={t("auth.emailPlaceholder")}
+                  placeholder={t("auth-email-placeholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -216,14 +216,14 @@ export function AuthCard({ className }: { className?: string }) {
 
               <div className="space-y-2">
                 <Label htmlFor="register-password" className="font-semibold">
-                  {t("auth.password")}
+                  {t("auth-password")}
                 </Label>
                 <div className="relative">
                   <Input
                     id="register-password"
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
-                    placeholder={t("auth.minPasswordPlaceholder")}
+                    placeholder={t("auth-min-password-placeholder")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pr-11"
@@ -234,8 +234,8 @@ export function AuthCard({ className }: { className?: string }) {
                     className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
                     aria-label={
                       showPassword
-                        ? t("auth.hidePassword")
-                        : t("auth.showPassword")
+                        ? t("auth-hide-password")
+                        : t("auth-show-password")
                     }
                   >
                     {showPassword ? (
@@ -251,19 +251,19 @@ export function AuthCard({ className }: { className?: string }) {
                     minPasswordOk ? "text-success" : "text-muted-foreground"
                   )}
                 >
-                  {t("auth.minChars")}
+                  {t("auth-min-chars")}
                 </p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="register-confirm" className="font-semibold">
-                  {t("auth.confirmPassword")}
+                  {t("auth-confirm-password")}
                 </Label>
                 <Input
                   id="register-confirm"
                   type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
-                  placeholder={t("auth.minPasswordPlaceholder")}
+                  placeholder={t("auth-min-password-placeholder")}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
@@ -275,8 +275,8 @@ export function AuthCard({ className }: { className?: string }) {
                     )}
                   >
                     {passwordsMatch
-                      ? t("auth.passwordsMatch")
-                      : t("auth.toast.passwordsDontMatch")}
+                      ? t("auth-passwords-match")
+                      : t("auth-toast-passwords-dont-match")}
                   </p>
                 )}
               </div>
@@ -287,23 +287,23 @@ export function AuthCard({ className }: { className?: string }) {
               disabled={busy}
               className="w-full font-bold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
             >
-              {busy ? t("auth.registering") : t("auth.registerButton")}
+              {busy ? t("auth-registering") : t("auth-register-button")}
             </Button>
 
             <p className="text-xs text-muted-foreground leading-relaxed">
-              {t("auth.agreeTerms")}{" "}
+              {t("auth-agree-terms")}{" "}
               <a
                 className="font-bold hover:text-foreground underline"
                 href="/terms"
               >
-                {t("common.terms")}
+                {t("common-terms")}
               </a>{" "}
-              {t("auth.andPrivacy")}{" "}
+              {t("auth-and-privacy")}{" "}
               <a
                 className="font-bold hover:text-foreground underline"
                 href="/privacy"
               >
-                {t("common.privacy")}
+                {t("common-privacy")}
               </a>
               .
             </p>

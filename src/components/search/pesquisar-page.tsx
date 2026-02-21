@@ -46,17 +46,17 @@ export function PesquisarPage() {
   };
 
   const typeFilters = [
-    { value: undefined, label: t("pages.search.type-all") },
-    { value: "track", label: t("pages.search.type-tracks") },
-    { value: "content", label: t("pages.search.type-content") },
-    { value: "assessment", label: t("pages.search.type-assessments") },
+    { value: undefined, label: t("pages-search-type-all") },
+    { value: "track", label: t("pages-search-type-tracks") },
+    { value: "content", label: t("pages-search-type-content") },
+    { value: "assessment", label: t("pages-search-type-assessments") },
   ];
 
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("pages.search.title")}</h1>
+        <h1 className="text-3xl font-bold mb-2">{t("pages-search-title")}</h1>
         <p className="text-muted-foreground">
           Encontre cursos, trilhas, conteúdos e recursos
         </p>
@@ -69,7 +69,7 @@ export function PesquisarPage() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               type="text"
-              placeholder={t("pages.search.placeholder")}
+              placeholder={t("pages-search-placeholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-12 text-lg"
@@ -99,7 +99,7 @@ export function PesquisarPage() {
             <CardContent className="p-8 text-center">
               <Search className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
               <p className="text-muted-foreground">
-                {t("pages.search.min-chars")}
+                {t("pages-search-min-chars")}
               </p>
             </CardContent>
           </Card>
@@ -107,8 +107,8 @@ export function PesquisarPage() {
           <LoadingState />
         ) : !results || results.length === 0 ? (
           <EmptyState
-            title={t("pages.search.no-results")}
-            description={t("pages.search.try-different")}
+            title={t("pages-search-no-results")}
+            description={t("pages-search-try-different")}
             icon={Search}
           />
         ) : (

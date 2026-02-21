@@ -33,7 +33,7 @@ export function MetricasPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.metrics.study-time")}
+              {t("pages-metrics-study-time")}
             </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -44,7 +44,7 @@ export function MetricasPage() {
               className="mt-2" 
             />
             <p className="text-xs text-muted-foreground mt-2">
-              {metrics.studyTime.monthlyGoal - metrics.studyTime.thisMonth}h {t("pages.metrics.to-goal")}
+              {metrics.studyTime.monthlyGoal - metrics.studyTime.thisMonth}h {t("pages-metrics-to-goal")}
             </p>
           </CardContent>
         </Card>
@@ -52,14 +52,14 @@ export function MetricasPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.metrics.current-streak")}
+              {t("pages-metrics-current-streak")}
             </CardTitle>
             <Flame className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{metrics.streak.current} {t("pages.metrics.days")}</div>
+            <div className="text-2xl font-bold">{metrics.streak.current} {t("pages-metrics-days")}</div>
             <p className="text-xs text-muted-foreground mt-2">
-              {t("pages.metrics.record")}: {metrics.streak.longest} {t("pages.metrics.days")}
+              {t("pages-metrics-record")}: {metrics.streak.longest} {t("pages-metrics-days")}
             </p>
           </CardContent>
         </Card>
@@ -67,7 +67,7 @@ export function MetricasPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.metrics.total-xp")}
+              {t("pages-metrics-total-xp")}
             </CardTitle>
             <Trophy className="h-4 w-4 text-yellow-500" />
           </CardHeader>
@@ -78,7 +78,7 @@ export function MetricasPage() {
               className="mt-2" 
             />
             <p className="text-xs text-muted-foreground mt-2">
-              {t("pages.metrics.level")} {metrics.xp.level} • {metrics.xp.xpToNextLevel} XP {t("pages.metrics.to-next-level")}
+              {t("pages-metrics-level")} {metrics.xp.level} • {metrics.xp.xpToNextLevel} XP {t("pages-metrics-to-next-level")}
             </p>
           </CardContent>
         </Card>
@@ -86,14 +86,14 @@ export function MetricasPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.metrics.completions")}
+              {t("pages-metrics-completions")}
             </CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.completions.total}</div>
             <p className="text-xs text-muted-foreground mt-2">
-              {metrics.completions.courses} {t("pages.metrics.courses")} • {metrics.completions.modules} {t("pages.metrics.modules")}
+              {metrics.completions.courses} {t("pages-metrics-courses")} • {metrics.completions.modules} {t("pages-metrics-modules")}
             </p>
           </CardContent>
         </Card>
@@ -102,16 +102,16 @@ export function MetricasPage() {
       {/* Tabs */}
       <Tabs defaultValue="activity" className="w-full">
         <TabsList>
-          <TabsTrigger value="activity">{t("pages.metrics.activity")}</TabsTrigger>
-          <TabsTrigger value="progress">{t("pages.metrics.progress")}</TabsTrigger>
-          <TabsTrigger value="achievements">{t("pages.metrics.achievements")}</TabsTrigger>
+          <TabsTrigger value="activity">{t("pages-metrics-activity")}</TabsTrigger>
+          <TabsTrigger value="progress">{t("pages-metrics-progress")}</TabsTrigger>
+          <TabsTrigger value="achievements">{t("pages-metrics-achievements")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="activity" className="space-y-4 mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.metrics.weekly-activity")}</CardTitle>
-              <CardDescription>{t("pages.metrics.weekly-activity-description")}</CardDescription>
+              <CardTitle>{t("pages-metrics-weekly-activity")}</CardTitle>
+              <CardDescription>{t("pages-metrics-weekly-activity-description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -137,20 +137,20 @@ export function MetricasPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.metrics.monthly-stats")}</CardTitle>
+              <CardTitle>{t("pages-metrics-monthly-stats")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages.metrics.active-days")}</span>
+                    <span className="text-sm text-muted-foreground">{t("pages-metrics-active-days")}</span>
                     <span className="font-bold">{metrics.monthlyStats.activeDays}/30</span>
                   </div>
                   <Progress value={(metrics.monthlyStats.activeDays / 30) * 100} />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages.metrics.daily-goal")}</span>
+                    <span className="text-sm text-muted-foreground">{t("pages-metrics-daily-goal")}</span>
                     <span className="font-bold">{metrics.monthlyStats.dailyGoalRate}%</span>
                   </div>
                   <Progress value={metrics.monthlyStats.dailyGoalRate} />
@@ -163,7 +163,7 @@ export function MetricasPage() {
         <TabsContent value="progress" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.metrics.progress-by-category")}</CardTitle>
+              <CardTitle>{t("pages-metrics-progress-by-category")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -184,9 +184,9 @@ export function MetricasPage() {
         <TabsContent value="achievements" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>{t("pages.metrics.achievements")}</CardTitle>
+              <CardTitle>{t("pages-metrics-achievements")}</CardTitle>
               <CardDescription>
-                {metrics.achievements.filter(a => a.unlocked).length} {t("pages.metrics.of")} {metrics.achievements.length} {t("pages.metrics.unlocked")}
+                {metrics.achievements.filter(a => a.unlocked).length} {t("pages-metrics-of")} {metrics.achievements.length} {t("pages-metrics-unlocked")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -207,7 +207,7 @@ export function MetricasPage() {
                         <p className="text-sm text-muted-foreground">{achievement.description}</p>
                         {achievement.unlocked && (
                           <Badge variant="default" className="mt-1">
-                            {t("pages.metrics.unlocked")}
+                            {t("pages-metrics-unlocked")}
                           </Badge>
                         )}
                       </div>

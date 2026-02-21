@@ -139,7 +139,7 @@ export const AVAILABLE_TRAILS: AvailableTrail[] = [
 // ============================================================================
 
 const today = new Date();
-const formatDate = (d: Date) => d.toISOString().split("T")[0];
+const formatDate = (d: Date) => d.toISOString().split("t")[0];
 
 // Generate last 14 days of study log
 const generateStudyLog = (): StudyLogEntry[] => {

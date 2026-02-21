@@ -28,26 +28,26 @@ export function HeroSection() {
   };
 
   const profiles = [
-    { id: "concurso" as Profile, label: t("hero.profileConcurso") },
-    { id: "certificacao" as Profile, label: t("hero.profileCertificacao") },
-    { id: "faculdade" as Profile, label: t("hero.profileFaculdade") },
+    { id: "concurso" as Profile, label: t("hero-profile-concurso") },
+    { id: "certificacao" as Profile, label: t("hero-profile-certificacao") },
+    { id: "faculdade" as Profile, label: t("hero-profile-faculdade") },
   ];
 
   const benefits = {
     concurso: [
-      t("hero.concurso.benefit1"),
-      t("hero.concurso.benefit2"),
-      t("hero.concurso.benefit3"),
+      t("hero-concurso-benefit1"),
+      t("hero-concurso-benefit2"),
+      t("hero-concurso-benefit3"),
     ],
     certificacao: [
-      t("hero.certificacao.benefit1"),
-      t("hero.certificacao.benefit2"),
-      t("hero.certificacao.benefit3"),
+      t("hero-certificacao-benefit1"),
+      t("hero-certificacao-benefit2"),
+      t("hero-certificacao-benefit3"),
     ],
     faculdade: [
-      t("hero.faculdade.benefit1"),
-      t("hero.faculdade.benefit2"),
-      t("hero.faculdade.benefit3"),
+      t("hero-faculdade-benefit1"),
+      t("hero-faculdade-benefit2"),
+      t("hero-faculdade-benefit3"),
     ],
   };
 
@@ -57,22 +57,22 @@ export function HeroSection() {
         {/* Left Column */}
         <div className="space-y-8">
           <Badge variant="secondary" className="w-fit">
-            {t("hero.kicker")}
+            {t("hero-kicker")}
           </Badge>
 
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              {t("hero.headline")}
-              <span className="text-primary">{t("hero.headlineHighlight")}</span>
+              {t("hero-headline")}
+              <span className="text-primary">{t("hero-headline-highlight")}</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl">
-              {t("hero.subheadline")}
+              {t("hero-subheadline")}
             </p>
           </div>
 
           {/* Profile Selector */}
           <div className="space-y-3">
-            <p className="text-sm font-medium">{t("hero.studyingFor")}</p>
+            <p className="text-sm font-medium">{t("hero-studying-for")}</p>
             <div className="flex flex-wrap gap-2">
               {profiles.map((profile) => (
                 <Button
@@ -100,10 +100,10 @@ export function HeroSection() {
           {/* CTAs */}
           <div className="flex flex-wrap gap-3">
             <Button size="lg" asChild>
-              <a href="#planos">{t("hero.ctaPrimary")}</a>
+              <a href="#planos">{t("hero-cta-primary")}</a>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href="#como-funciona">{t("hero.ctaSecondary")}</a>
+              <a href="#como-funciona">{t("hero-cta-secondary")}</a>
             </Button>
           </div>
         </div>

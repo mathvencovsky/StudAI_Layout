@@ -18,7 +18,7 @@ declare global {
 function isOverflowDebugEnabled(): boolean {
   try {
     const qs = new URLSearchParams(window.location.search);
-    if (qs.get("overflowDebug") === "1") return true;
+    if (qs.get("overflow-debug") === "1") return true;
     return window.localStorage.getItem("overflowDebug") === "1";
   } catch {
     return false;

@@ -39,8 +39,8 @@ export function ExplorarTrilhasPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("pages.tracks.title")}</h1>
-        <p className="text-muted-foreground">{t("pages.tracks.description")}</p>
+        <h1 className="text-3xl font-bold mb-2">{t("pages-tracks-title")}</h1>
+        <p className="text-muted-foreground">{t("pages-tracks-description")}</p>
       </div>
 
       {/* Upgrade Card */}
@@ -48,8 +48,8 @@ export function ExplorarTrilhasPage() {
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
-          <TabsTrigger value="my-track">{t("pages.tracks.my-track")}</TabsTrigger>
-          <TabsTrigger value="explore">{t("pages.tracks.explore")}</TabsTrigger>
+          <TabsTrigger value="my-track">{t("pages-tracks-my-track")}</TabsTrigger>
+          <TabsTrigger value="explore">{t("pages-tracks-explore")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="my-track" className="space-y-6 mt-6">
@@ -57,11 +57,11 @@ export function ExplorarTrilhasPage() {
           {trackError && <ErrorState error={trackError} onRetry={refetchTrack} />}
           {!trackLoading && !trackError && !activeTrack && (
             <EmptyState
-              title={t("pages.tracks.no-active")}
-              description={t("pages.tracks.no-active-description")}
+              title={t("pages-tracks-no-active")}
+              description={t("pages-tracks-no-active-description")}
               icon={BookOpen}
               action={{
-                label: t("pages.tracks.browse-catalog"),
+                label: t("pages-tracks-browse-catalog"),
                 onClick: () => setActiveTab("explore"),
               }}
             />
@@ -76,7 +76,7 @@ export function ExplorarTrilhasPage() {
                       <CardTitle className="text-2xl">{activeTrack.title}</CardTitle>
                       <CardDescription>{activeTrack.description}</CardDescription>
                     </div>
-                    <Badge variant="default">{t("pages.tracks.active")}</Badge>
+                    <Badge variant="default">{t("pages-tracks-active")}</Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -129,14 +129,14 @@ export function ExplorarTrilhasPage() {
                               <div className="space-y-1">
                                 <Progress value={module.progress} />
                                 <p className="text-xs text-muted-foreground">
-                                  {module.progress}% {t("pages.tracks.complete")}
+                                  {module.progress}% {t("pages-tracks-complete")}
                                 </p>
                               </div>
                             )}
                             <Link to={`/estudar/${module.id}`}>
                               <Button className="w-full">
                                 {module.status === "completed"
-                                  ? t("pages.tracks.review")
+                                  ? t("pages-tracks-review")
                                   : module.status === "in-progress"
                                   ? "Continuar"
                                   : "Iniciar"}

@@ -41,9 +41,9 @@ export function MeuObjetivoPage() {
         isActive: true,
       });
       
-      toast.success(t("pages.goal.changed"));
+      toast.success(t("pages-goal-changed"));
     } catch (error) {
-      toast.error(t("pages.goal.change-error"));
+      toast.error(t("pages-goal-change-error"));
     } finally {
       setChangingActive(false);
     }
@@ -61,12 +61,12 @@ export function MeuObjetivoPage() {
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case "on_track": return t("pages.goal.on-track");
-      case "attention": return t("pages.goal.attention");
-      case "at_risk": return t("pages.goal.at-risk");
-      case "completed": return t("pages.goal.completed");
-      case "paused": return t("pages.goal.paused");
-      case "cancelled": return t("pages.goal.cancelled");
+      case "on_track": return t("pages-goal-on-track");
+      case "attention": return t("pages-goal-attention");
+      case "at_risk": return t("pages-goal-at-risk");
+      case "completed": return t("pages-goal-completed");
+      case "paused": return t("pages-goal-paused");
+      case "cancelled": return t("pages-goal-cancelled");
       default: return status;
     }
   };
@@ -78,13 +78,13 @@ export function MeuObjetivoPage() {
     <div className="container mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">{t("pages.goal.title")}</h1>
-          <p className="text-muted-foreground">{t("pages.goal.description")}</p>
+          <h1 className="text-3xl font-bold">{t("pages-goal-title")}</h1>
+          <p className="text-muted-foreground">{t("pages-goal-description")}</p>
         </div>
         <Link to="/track-create">
           <Button>
             <Target className="mr-2 h-4 w-4" />
-            {t("pages.goal.new-goal")}
+            {t("pages-goal-new-goal")}
           </Button>
         </Link>
       </div>
@@ -105,7 +105,7 @@ export function MeuObjetivoPage() {
           <CardContent className="space-y-6">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">{t("pages.goal.progress")}</span>
+                <span className="text-sm font-medium">{t("pages-goal-progress")}</span>
                 <span className="text-sm text-muted-foreground">
                   {activeGoal.progressPercentage}%
                 </span>
@@ -117,7 +117,7 @@ export function MeuObjetivoPage() {
               <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
                 <Clock className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-xs text-muted-foreground">{t("pages.goal.hours-remaining")}</p>
+                  <p className="text-xs text-muted-foreground">{t("pages-goal-hours-remaining")}</p>
                   <p className="text-lg font-semibold">{activeGoal.hoursRemaining}h</p>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export function MeuObjetivoPage() {
               <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
                 <TrendingUp className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-xs text-muted-foreground">{t("pages.goal.min-per-day")}</p>
+                  <p className="text-xs text-muted-foreground">{t("pages-goal-min-per-day")}</p>
                   <p className="text-lg font-semibold">{activeGoal.minutesPerDay} min</p>
                 </div>
               </div>
@@ -133,7 +133,7 @@ export function MeuObjetivoPage() {
               <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
                 <Target className="h-5 w-5 text-primary" />
                 <div>
-                  <p className="text-xs text-muted-foreground">{t("pages.goal.target-date")}</p>
+                  <p className="text-xs text-muted-foreground">{t("pages-goal-target-date")}</p>
                   <p className="text-lg font-semibold">
                     {activeGoal.targetDate ? new Date(activeGoal.targetDate).toLocaleDateString("pt-BR") : "N/A"}
                   </p>
@@ -145,13 +145,13 @@ export function MeuObjetivoPage() {
               <Link to="/estudar" className="flex-1">
                 <Button className="w-full" size="lg">
                   <Brain className="mr-2 h-5 w-5" />
-                  {t("pages.goal.study-ai")}
+                  {t("pages-goal-study-ai")}
                 </Button>
               </Link>
               <Link to="/trilha" className="flex-1">
                 <Button variant="outline" className="w-full" size="lg">
                   <BookOpen className="mr-2 h-5 w-5" />
-                  {t("pages.goal.view-track")}
+                  {t("pages-goal-view-track")}
                 </Button>
               </Link>
             </div>
@@ -161,15 +161,15 @@ export function MeuObjetivoPage() {
 
       {!activeGoal && (
         <EmptyState
-          title={t("pages.goal.no-active")}
-          description={t("pages.goal.no-active-description")}
+          title={t("pages-goal-no-active")}
+          description={t("pages-goal-no-active-description")}
           icon={Target}
         />
       )}
 
       {otherGoals.length > 0 && (
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">{t("pages.goal.other-goals")}</h2>
+          <h2 className="text-xl font-semibold">{t("pages-goal-other-goals")}</h2>
           <div className="grid gap-4">
             {otherGoals.map((goal) => (
               <Card key={goal.id}>
@@ -187,9 +187,9 @@ export function MeuObjetivoPage() {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <div className="flex gap-4 text-sm text-muted-foreground">
-                      <span>{goal.progressPercentage}% {t("pages.goal.completed")}</span>
+                      <span>{goal.progressPercentage}% {t("pages-goal-completed")}</span>
                       <span>•</span>
-                      <span>{goal.hoursRemaining}h {t("pages.goal.remaining")}</span>
+                      <span>{goal.hoursRemaining}h {t("pages-goal-remaining")}</span>
                     </div>
                     <Button
                       variant="outline"
@@ -197,7 +197,7 @@ export function MeuObjetivoPage() {
                       onClick={() => handleSetActive(goal.id)}
                       disabled={changingActive}
                     >
-                      {t("pages.goal.make-active")}
+                      {t("pages-goal-make-active")}
                     </Button>
                   </div>
                 </CardContent>

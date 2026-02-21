@@ -6,22 +6,22 @@ export function HowItWorksSection() {
   const { t } = useTranslation();
 
   const steps = [
-    { num: "1", title: t("howItWorks.step1.title"), desc: t("howItWorks.step1.desc") },
-    { num: "2", title: t("howItWorks.step2.title"), desc: t("howItWorks.step2.desc") },
-    { num: "3", title: t("howItWorks.step3.title"), desc: t("howItWorks.step3.desc") },
+    { num: "1", title: t("how-it-works-step1-title"), desc: t("how-it-works-step1-desc") },
+    { num: "2", title: t("how-it-works-step2-title"), desc: t("how-it-works-step2-desc") },
+    { num: "3", title: t("how-it-works-step3-title"), desc: t("how-it-works-step3-desc") },
   ];
 
   return (
     <section id="como-funciona" className="bg-muted/30 py-16 md:py-24">
       <div className="container">
         <div className="text-center space-y-3 mb-12">
-          <Badge variant="secondary">{t("howItWorks.kicker")}</Badge>
+          <Badge variant="secondary">{t("how-it-works-kicker")}</Badge>
           <h2 className="text-3xl md:text-4xl font-bold">
-            {t("howItWorks.headline")}
-            <span className="text-primary">{t("howItWorks.headlineHighlight")}</span>
+            {t("how-it-works-headline")}
+            <span className="text-primary">{t("how-it-works-headline-highlight")}</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            {t("howItWorks.subheadline")}
+            {t("how-it-works-subheadline")}
           </p>
         </div>
 

@@ -47,7 +47,7 @@ export function AdminPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">{t("pages.admin.title")}</h1>
+          <h1 className="text-3xl font-bold mb-2">{t("pages-admin-title")}</h1>
           <p className="text-muted-foreground">
             Painel de controle e gerenciamento da plataforma
           </p>
@@ -136,9 +136,9 @@ export function AdminPage() {
       {/* Tabs */}
       <Tabs defaultValue="users" className="w-full">
         <TabsList>
-          <TabsTrigger value="users">{t("pages.admin.users")}</TabsTrigger>
-          <TabsTrigger value="features">{t("pages.admin.features")}</TabsTrigger>
-          <TabsTrigger value="catalog">{t("pages.admin.catalog")}</TabsTrigger>
+          <TabsTrigger value="users">{t("pages-admin-users")}</TabsTrigger>
+          <TabsTrigger value="features">{t("pages-admin-features")}</TabsTrigger>
+          <TabsTrigger value="catalog">{t("pages-admin-catalog")}</TabsTrigger>
           <TabsTrigger value="system">Sistema</TabsTrigger>
         </TabsList>
 

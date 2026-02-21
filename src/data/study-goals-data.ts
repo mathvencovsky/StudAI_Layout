@@ -70,7 +70,7 @@ export const GOAL_CATEGORY_CONFIG: Record<GoalCategory, { label: string; icon: s
 // ============================================================================
 
 const today = new Date();
-const formatDate = (d: Date) => d.toISOString().split("T")[0];
+const formatDate = (d: Date) => d.toISOString().split("t")[0];
 
 // Target dates for different goals
 const cfaDate = new Date(today);

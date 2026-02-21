@@ -24,7 +24,7 @@ export function AvaliacoesPage() {
 
   if (isLoading) return <LoadingState />;
   if (error) return <ErrorState error={error} onRetry={refetch} />;
-  if (!data) return <EmptyState title={t("pages.assessments.empty")} />;
+  if (!data) return <EmptyState title={t("pages-assessments-empty")} />;
 
   const stats = {
     total: data.available.length + data.inProgress.length + data.completed.length,
@@ -42,21 +42,21 @@ export function AvaliacoesPage() {
         return (
           <Badge variant="default" className="bg-green-500">
             <CheckCircle2 className="h-3 w-3 mr-1" />
-            {t("pages.assessments.completed")}
+            {t("pages-assessments-completed")}
           </Badge>
         );
       case "available":
         return (
           <Badge variant="secondary">
             <Clock className="h-3 w-3 mr-1" />
-            {t("pages.assessments.available")}
+            {t("pages-assessments-available")}
           </Badge>
         );
       case "in-progress":
         return (
           <Badge variant="outline">
             <AlertCircle className="h-3 w-3 mr-1" />
-            {t("pages.assessments.in-progress")}
+            {t("pages-assessments-in-progress")}
           </Badge>
         );
       default:
@@ -76,9 +76,9 @@ export function AvaliacoesPage() {
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t("pages.assessments.title")}</h1>
+        <h1 className="text-3xl font-bold mb-2">{t("pages-assessments-title")}</h1>
         <p className="text-muted-foreground">
-          {t("pages.assessments.description")}
+          {t("pages-assessments-description")}
         </p>
       </div>
 
@@ -87,14 +87,14 @@ export function AvaliacoesPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.assessments.total")}
+              {t("pages-assessments-total")}
             </CardTitle>
             <FileCheck className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total}</div>
             <p className="text-xs text-muted-foreground">
-              {stats.completed} {t("pages.assessments.completed")}
+              {stats.completed} {t("pages-assessments-completed")}
             </p>
           </CardContent>
         </Card>
@@ -102,7 +102,7 @@ export function AvaliacoesPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.assessments.average")}
+              {t("pages-assessments-average")}
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -115,14 +115,14 @@ export function AvaliacoesPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.assessments.pending")}
+              {t("pages-assessments-pending")}
             </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.pending}</div>
             <p className="text-xs text-muted-foreground">
-              {t("pages.assessments.waiting")}
+              {t("pages-assessments-waiting")}
             </p>
           </CardContent>
         </Card>
@@ -130,7 +130,7 @@ export function AvaliacoesPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages.assessments.completion-rate")}
+              {t("pages-assessments-completion-rate")}
             </CardTitle>
             <Trophy className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -139,7 +139,7 @@ export function AvaliacoesPage() {
               {stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0}%
             </div>
             <p className="text-xs text-muted-foreground">
-              {t("pages.assessments.completion-rate")}
+              {t("pages-assessments-completion-rate")}
             </p>
           </CardContent>
         </Card>
@@ -148,14 +148,14 @@ export function AvaliacoesPage() {
       {/* Tabs */}
       <Tabs defaultValue="all" className="w-full">
         <TabsList>
-          <TabsTrigger value="all">{t("pages.assessments.all")}</TabsTrigger>
-          <TabsTrigger value="completed">{t("pages.assessments.completed")}</TabsTrigger>
-          <TabsTrigger value="available">{t("pages.assessments.available")}</TabsTrigger>
+          <TabsTrigger value="all">{t("pages-assessments-all")}</TabsTrigger>
+          <TabsTrigger value="completed">{t("pages-assessments-completed")}</TabsTrigger>
+          <TabsTrigger value="available">{t("pages-assessments-available")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="all" className="space-y-4 mt-6">
           {allAssessments.length === 0 ? (
-            <EmptyState title={t("pages.assessments.empty")} />
+            <EmptyState title={t("pages-assessments-empty")} />
           ) : (
             allAssessments.map((assessment) => (
               <Card key={assessment.id}>
@@ -174,7 +174,7 @@ export function AvaliacoesPage() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-muted-foreground">
-                            {t("pages.assessments.score")}
+                            {t("pages-assessments-score")}
                           </span>
                           <span className={`text-2xl font-bold ${getScoreColor(assessment.score)}`}>
                             {assessment.score}%
@@ -183,7 +183,7 @@ export function AvaliacoesPage() {
                         <Progress value={assessment.score} />
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-muted-foreground">
-                            {assessment.totalQuestions} {t("pages.assessments.questions")}
+                            {assessment.totalQuestions} {t("pages-assessments-questions")}
                           </span>
                           {assessment.completedAt && (
                             <span className="text-muted-foreground">
@@ -198,10 +198,10 @@ export function AvaliacoesPage() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-muted-foreground">
-                            {t("pages.assessments.progress")}
+                            {t("pages-assessments-progress")}
                           </span>
                           <span className="text-sm font-medium">
-                            {assessment.totalQuestions} {t("pages.assessments.questions")}
+                            {assessment.totalQuestions} {t("pages-assessments-questions")}
                           </span>
                         </div>
                       </div>
@@ -209,14 +209,14 @@ export function AvaliacoesPage() {
 
                     {assessment.status === "available" && (
                       <div className="text-sm text-muted-foreground">
-                        {assessment.totalQuestions} {t("pages.assessments.questions")} • {t("pages.assessments.not-started")}
+                        {assessment.totalQuestions} {t("pages-assessments-questions")} • {t("pages-assessments-not-started")}
                       </div>
                     )}
 
                     <div className="flex gap-2">
                       {assessment.status === "available" && (
                         <Link to={`/quiz/${assessment.id}`}>
-                          <Button>{t("pages.assessments.start")}</Button>
+                          <Button>{t("pages-assessments-start")}</Button>
                         </Link>
                       )}
                       {assessment.status === "in-progress" && (
@@ -226,7 +226,7 @@ export function AvaliacoesPage() {
                       )}
                       {assessment.status === "completed" && (
                         <Link to={`/quiz/${assessment.id}`}>
-                          <Button variant="outline">{t("pages.assessments.view-results")}</Button>
+                          <Button variant="outline">{t("pages-assessments-view-results")}</Button>
                         </Link>
                       )}
                     </div>
@@ -239,7 +239,7 @@ export function AvaliacoesPage() {
 
         <TabsContent value="completed" className="mt-6 space-y-4">
           {data.completed.length === 0 ? (
-            <EmptyState title={t("pages.assessments.no-completed")} />
+            <EmptyState title={t("pages-assessments-no-completed")} />
           ) : (
             data.completed.map((assessment) => (
               <Card key={assessment.id}>
@@ -258,7 +258,7 @@ export function AvaliacoesPage() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-muted-foreground">
-                            {t("pages.assessments.score")}
+                            {t("pages-assessments-score")}
                           </span>
                           <span className={`text-2xl font-bold ${getScoreColor(assessment.score)}`}>
                             {assessment.score}%
@@ -268,7 +268,7 @@ export function AvaliacoesPage() {
                       </div>
                     )}
                     <Link to={`/quiz/${assessment.id}`}>
-                      <Button variant="outline">{t("pages.assessments.view-results")}</Button>
+                      <Button variant="outline">{t("pages-assessments-view-results")}</Button>
                     </Link>
                   </div>
                 </CardContent>
@@ -279,7 +279,7 @@ export function AvaliacoesPage() {
 
         <TabsContent value="available" className="mt-6 space-y-4">
           {data.available.length === 0 ? (
-            <EmptyState title={t("pages.assessments.no-available")} />
+            <EmptyState title={t("pages-assessments-no-available")} />
           ) : (
             data.available.map((assessment) => (
               <Card key={assessment.id}>
@@ -295,10 +295,10 @@ export function AvaliacoesPage() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="text-sm text-muted-foreground">
-                      {assessment.totalQuestions} {t("pages.assessments.questions")}
+                      {assessment.totalQuestions} {t("pages-assessments-questions")}
                     </div>
                     <Link to={`/quiz/${assessment.id}`}>
-                      <Button>{t("pages.assessments.start")}</Button>
+                      <Button>{t("pages-assessments-start")}</Button>
                     </Link>
                   </div>
                 </CardContent>

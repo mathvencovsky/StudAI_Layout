@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { GraduationCap, Menu, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 export function LandingHeader() {
   const { t, locale, setLocale } = useI18n();
@@ -10,11 +10,11 @@ export function LandingHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
-    { label: t("header.product"), href: "#produto" },
-    { label: t("header.howItWorks"), href: "#como-funciona" },
-    { label: t("header.testimonials"), href: "#depoimentos" },
-    { label: t("header.plans"), href: "#planos" },
-    { label: t("header.faq"), href: "#faq" },
+    { label: t("header-product"), href: "#produto" },
+    { label: t("header-how-it-works"), href: "#como-funciona" },
+    { label: t("header-testimonials"), href: "#depoimentos" },
+    { label: t("header-plans"), href: "#planos" },
+    { label: t("header-faq"), href: "#faq" },
   ];
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export function LandingHeader() {
               onClick={scrollToAuth}
               className="font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              {t("common.login")}
+              {t("common-login")}
             </Button>
 
             <Button
@@ -104,7 +104,7 @@ export function LandingHeader() {
               onClick={scrollToAuth}
               className="font-semibold bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-lg shadow-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
             >
-              {t("common.startFree")}
+              {t("common-start-free")}
             </Button>
           </div>
 
@@ -149,14 +149,14 @@ export function LandingHeader() {
                     onClick={scrollToAuth}
                     className="font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   >
-                    {t("common.login")}
+                    {t("common-login")}
                   </Button>
                   <Button
                     size="lg"
                     onClick={scrollToAuth}
                     className="font-semibold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                   >
-                    {t("common.startFree")}
+                    {t("common-start-free")}
                   </Button>
                 </div>
               </div>

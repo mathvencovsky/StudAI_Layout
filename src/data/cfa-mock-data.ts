@@ -152,7 +152,7 @@ export const DEFAULT_USER_PROGRESS: UserProgress = {
 };
 
 export const getTodayMission = (): DailyMission => {
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("t")[0];
   return {
     id: `mission-${today}`,
     title: "Missão do Dia",

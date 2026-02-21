@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { CheckCircle2, Shield, Lock, Mail, Zap } from "lucide-react";
 import { SectionWrapper, KickerBadge } from "./ui";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 const SUPPORT_EMAIL = "support@studi.app";
 
@@ -13,34 +13,34 @@ export function LogoStrip() {
   const [activeAudience, setActiveAudience] = useState<AudienceKey | null>(null);
 
   const audience: { key: AudienceKey; label: string }[] = [
-    { key: "concurso", label: t("logostrip.concurso") },
-    { key: "certificacao", label: t("logostrip.certificacao") },
-    { key: "faculdade", label: t("logostrip.faculdade") },
-    { key: "residencia", label: t("logostrip.residencia") },
-    { key: "transicao", label: t("logostrip.transicao") },
-    { key: "grupo", label: t("logostrip.grupo") },
+    { key: "concurso", label: t("logostrip-concurso") },
+    { key: "certificacao", label: t("logostrip-certificacao") },
+    { key: "faculdade", label: t("logostrip-faculdade") },
+    { key: "residencia", label: t("logostrip-residencia") },
+    { key: "transicao", label: t("logostrip-transicao") },
+    { key: "grupo", label: t("logostrip-grupo") },
   ];
 
   const audienceMicrocopy: Record<AudienceKey, string> = {
-    concurso: t("logostrip.micro.concurso"),
-    certificacao: t("logostrip.micro.certificacao"),
-    faculdade: t("logostrip.micro.faculdade"),
-    residencia: t("logostrip.micro.residencia"),
-    transicao: t("logostrip.micro.transicao"),
-    grupo: t("logostrip.micro.grupo"),
+    concurso: t("logostrip-micro-concurso"),
+    certificacao: t("logostrip-micro-certificacao"),
+    faculdade: t("logostrip-micro-faculdade"),
+    residencia: t("logostrip-micro-residencia"),
+    transicao: t("logostrip-micro-transicao"),
+    grupo: t("logostrip-micro-grupo"),
   };
 
-  const credibilityBullets = [t("logostrip.bullet1"), t("logostrip.bullet2"), t("logostrip.bullet3")];
+  const credibilityBullets = [t("logostrip-bullet1"), t("logostrip-bullet2"), t("logostrip-bullet3")];
 
   return (
     <SectionWrapper variant="split" compact>
       <div className="text-center mb-5">
         <KickerBadge variant="primary" className="mb-2">
           <Zap className="h-3.5 w-3.5" />
-          {t("logostrip.kicker")}
+          {t("logostrip-kicker")}
         </KickerBadge>
-        <h2 className="display-h3 text-foreground">{t("logostrip.headline")}</h2>
-        <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">{t("logostrip.subheadline")}</p>
+        <h2 className="display-h3 text-foreground">{t("logostrip-headline")}</h2>
+        <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">{t("logostrip-subheadline")}</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 mb-2">
@@ -87,21 +87,21 @@ export function LogoStrip() {
             className="inline-flex items-center gap-1.5 min-h-[40px] px-2 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-semibold"
           >
             <Shield className="h-3.5 w-3.5" />
-            {t("common.privacy")}
+            {t("common-privacy")}
           </Link>
           <Link
             to="/seguranca"
             className="inline-flex items-center gap-1.5 min-h-[40px] px-2 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-semibold"
           >
             <Lock className="h-3.5 w-3.5" />
-            {t("common.security")}
+            {t("common-security")}
           </Link>
           <a
             href={`mailto:${SUPPORT_EMAIL}`}
             className="inline-flex items-center gap-1.5 min-h-[40px] px-2 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-semibold"
           >
             <Mail className="h-3.5 w-3.5" />
-            {t("common.support")}
+            {t("common-support")}
           </a>
         </div>
       </div>

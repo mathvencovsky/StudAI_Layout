@@ -179,7 +179,7 @@ function addDays(date: Date, days: number): Date {
 }
 
 function formatDateISO(date: Date): string {
-  return date.toISOString().split("T")[0];
+  return date.toISOString().split("t")[0];
 }
 
 function clamp(value: number, min: number, max: number): number {

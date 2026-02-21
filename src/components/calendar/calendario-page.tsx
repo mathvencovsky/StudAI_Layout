@@ -31,12 +31,12 @@ export function CalendarioPage() {
 
   const getEventTypeLabel = (type: string | null | undefined) => {
     const labels: Record<string, string> = {
-      session: t("pages.calendar.type-session"),
-      deadline: t("pages.calendar.type-deadline"),
-      exam: t("pages.calendar.type-exam"),
-      reminder: t("pages.calendar.type-reminder"),
+      session: t("pages-calendar-type-session"),
+      deadline: t("pages-calendar-type-deadline"),
+      exam: t("pages-calendar-type-exam"),
+      reminder: t("pages-calendar-type-reminder"),
     };
-    return labels[type || ""] || type || t("pages.calendar.type-event");
+    return labels[type || ""] || type || t("pages-calendar-type-event");
   };
 
   if (isLoading) return <LoadingState />;
@@ -45,15 +45,15 @@ export function CalendarioPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">{t("pages.calendar.title")}</h1>
-        <p className="text-muted-foreground">{t("pages.calendar.description")}</p>
+        <h1 className="text-3xl font-bold">{t("pages-calendar-title")}</h1>
+        <p className="text-muted-foreground">{t("pages-calendar-description")}</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <AlertCircle className="h-5 w-5 text-primary" />
-            {t("pages.calendar.upcoming")}
+            {t("pages-calendar-upcoming")}
           </CardTitle>
           <CardDescription>
             {upcomingEvents.length} {t("pages.calendar.events", { count: upcomingEvents.length })}
@@ -62,8 +62,8 @@ export function CalendarioPage() {
         <CardContent>
           {upcomingEvents.length === 0 ? (
             <EmptyState
-              title={t("pages.calendar.no-upcoming")}
-              description={t("pages.calendar.no-upcoming-description")}
+              title={t("pages-calendar-no-upcoming")}
+              description={t("pages-calendar-no-upcoming-description")}
               icon={Calendar}
             />
           ) : (
@@ -96,7 +96,7 @@ export function CalendarioPage() {
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           <span>
-                            {t("pages.calendar.until")} {new Date(event.endDate).toLocaleDateString("pt-BR")}
+                            {t("pages-calendar-until")} {new Date(event.endDate).toLocaleDateString("pt-BR")}
                           </span>
                         </div>
                       )}

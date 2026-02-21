@@ -3,7 +3,7 @@ import { useSearch } from "@tanstack/react-router";
 import { UserPlus, Settings2, TrendingUp, Rocket } from "lucide-react";
 import { type ProfileKey, isValidProfile, getStoredProfile } from "./LandingHero";
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 export function HowItWorks() {
   const { t } = useI18n();
@@ -19,58 +19,58 @@ export function HowItWorks() {
     {
       icon: UserPlus,
       number: "01",
-      title: t("howItWorks.step1.title"),
-      description: t("howItWorks.step1.desc"),
+      title: t("how-it-works-step1-title"),
+      description: t("how-it-works-step1-desc"),
     },
     {
       icon: Settings2,
       number: "02",
-      title: t("howItWorks.step2.title"),
-      description: t("howItWorks.step2.desc"),
+      title: t("how-it-works-step2-title"),
+      description: t("how-it-works-step2-desc"),
     },
     {
       icon: TrendingUp,
       number: "03",
-      title: t("howItWorks.step3.title"),
-      description: t("howItWorks.step3.desc"),
+      title: t("how-it-works-step3-title"),
+      description: t("how-it-works-step3-desc"),
     },
   ];
 
   const profileExamples: Record<ProfileKey, { examples: string[]; promises: string[] }> = {
     concurso: {
       examples: [
-        t("howItWorks.concurso.example1"),
-        t("howItWorks.concurso.example2"),
-        t("howItWorks.concurso.example3"),
+        t("how-it-works-concurso-example1"),
+        t("how-it-works-concurso-example2"),
+        t("how-it-works-concurso-example3"),
       ],
       promises: [
-        t("howItWorks.concurso.promise1"),
-        t("howItWorks.concurso.promise2"),
-        t("howItWorks.concurso.promise3"),
+        t("how-it-works-concurso-promise1"),
+        t("how-it-works-concurso-promise2"),
+        t("how-it-works-concurso-promise3"),
       ],
     },
     certificacao: {
       examples: [
-        t("howItWorks.certificacao.example1"),
-        t("howItWorks.certificacao.example2"),
-        t("howItWorks.certificacao.example3"),
+        t("how-it-works-certificacao-example1"),
+        t("how-it-works-certificacao-example2"),
+        t("how-it-works-certificacao-example3"),
       ],
       promises: [
-        t("howItWorks.certificacao.promise1"),
-        t("howItWorks.certificacao.promise2"),
-        t("howItWorks.certificacao.promise3"),
+        t("how-it-works-certificacao-promise1"),
+        t("how-it-works-certificacao-promise2"),
+        t("how-it-works-certificacao-promise3"),
       ],
     },
     faculdade: {
       examples: [
-        t("howItWorks.faculdade.example1"),
-        t("howItWorks.faculdade.example2"),
-        t("howItWorks.faculdade.example3"),
+        t("how-it-works-faculdade-example1"),
+        t("how-it-works-faculdade-example2"),
+        t("how-it-works-faculdade-example3"),
       ],
       promises: [
-        t("howItWorks.faculdade.promise1"),
-        t("howItWorks.faculdade.promise2"),
-        t("howItWorks.faculdade.promise3"),
+        t("how-it-works-faculdade-promise1"),
+        t("how-it-works-faculdade-promise2"),
+        t("how-it-works-faculdade-promise3"),
       ],
     },
   };
@@ -89,13 +89,13 @@ export function HowItWorks() {
       <div className="text-center mb-8">
         <KickerBadge variant="warm" className="mb-3">
           <Rocket className="h-3.5 w-3.5" />
-          {t("howItWorks.kicker")}
+          {t("how-it-works-kicker")}
         </KickerBadge>
         <h2 className="display-h2 text-foreground">
-          {t("howItWorks.headline")}
-          <HeadlineHighlight>{t("howItWorks.headlineHighlight")}</HeadlineHighlight>
+          {t("how-it-works-headline")}
+          <HeadlineHighlight>{t("how-it-works-headline-highlight")}</HeadlineHighlight>
         </h2>
-        <p className="mt-2 text-muted-foreground max-w-xl mx-auto text-sm">{t("howItWorks.subheadline")}</p>
+        <p className="mt-2 text-muted-foreground max-w-xl mx-auto text-sm">{t("how-it-works-subheadline")}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">

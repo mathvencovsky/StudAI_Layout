@@ -10,7 +10,7 @@ const client = generateClient<Schema>();
 export const recordLoginDay = async (): Promise<void> => {
   await getCurrentUserId();
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("t")[0];
 
   const existing = await client.models.UserLoginDay.list({
     filter: { date: { eq: today } },

@@ -107,7 +107,7 @@ export function QuizSessionPageIntegrated({ quizId }: QuizSessionPageIntegratedP
 
       // Marcar tarefa diária
       await createTask.mutateAsync({
-        date: new Date().toISOString().split("T")[0],
+        date: new Date().toISOString().split("t")[0],
         taskType: "quiz",
         isCompleted: true,
         durationMinutes: 0,

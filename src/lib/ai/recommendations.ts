@@ -477,7 +477,7 @@ async function getTodayTasks(
   userId: string
 ): Promise<Schema["DailyTask"]["type"][]> {
   try {
-    const today = new Date().toISOString().split("T")[0];
+    const today = new Date().toISOString().split("t")[0];
     const result = await client.models.DailyTask.list({
       filter: {
         owner: { eq: userId },
