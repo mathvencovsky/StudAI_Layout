@@ -1,13 +1,27 @@
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/api/query-keys";
-import { getAdminUsersStub, AdminUser } from "@/api/stubs/admin-stub";
+import { useQuery, queryOptions } from "@tanstack/react-query";
 
-export function useAdminUsers(filters?: { search?: string; page?: number }) {
-  return useQuery({
-    queryKey: [...queryKeys.admin.users, filters],
-    queryFn: () => getAdminUsersStub(filters),
-    staleTime: 30000, // 30 segundos
-  });
+export interface AdminUser {
+  id: string;
+  email: string;
+  name: string;
+  registeredAt: string;
+  lastLogin: string;
+  status: "active" | "inactive";
+  role: "user" | "admin";
 }
 
-export type { AdminUser };
+/**
+ * Hook to list admin users.
+ * Note: Cognito listUsers requires admin credentials not available client-side.
+ * Returns empty result until a server-side Lambda is implemented.
+ */
+export function useAdminUsers(_filters?: { search?: string; page?: number }) {
+  return useQuery(
+    queryOptions({
+      queryKey: ["admin", "users"],
+      queryFn: async (): Promise<{ users: AdminUser[]; total: number }> => {
+        return { users: [], total: 0 };
+      },
+    }),
+  );
+}

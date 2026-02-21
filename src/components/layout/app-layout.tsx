@@ -246,7 +246,6 @@ export function AppLayout({ children }: AppLayoutProps) {
                 align="end"
                 sideOffset={5}
                 collisionPadding={10}
-                strategy="fixed"
                 className="w-48 bg-popover border shadow-md p-0 z-[9999]"
               >
                 {/* User Info Header */}
@@ -267,7 +266,7 @@ export function AppLayout({ children }: AppLayoutProps) {
 
                 {/* Menu Items */}
                 <div className="p-1">
-                  <Link to="/perfil">
+                  <Link to="/profile">
                     <DropdownMenuItem className="flex items-center gap-2 px-2 py-1.5 cursor-pointer text-sm text-muted-foreground">
                       <User className="h-4 w-4" />
                       <span>{t("profile")}</span>

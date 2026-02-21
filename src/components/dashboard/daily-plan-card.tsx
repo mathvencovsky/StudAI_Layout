@@ -84,7 +84,7 @@ export const DailyPlanCard = () => {
               Nenhuma tarefa para hoje
             </p>
             <Button size="sm" variant="outline" asChild>
-              <Link to="/estudar">
+              <Link to="/study">
                 <Play className="h-4 w-4 mr-2" />
                 Iniciar sessão
               </Link>

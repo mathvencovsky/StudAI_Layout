@@ -125,12 +125,12 @@ export function MyCoursesPage() {
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <BookOpen className="h-4 w-4" />
-                      <span>{t("pages.my-courses.modules-count", { count: modules.length })}</span>
+                      <span>{t("pages-my-courses-modules-count", { count: modules.length })}</span>
                     </div>
                     {course.estimatedHours && (
                       <div className="flex items-center gap-2 text-sm text-gray-600">
                         <Clock className="h-4 w-4" />
-                        <span>{t("pages.my-courses.estimated-hours", { hours: course.estimatedHours })}</span>
+                        <span>{t("pages-my-courses-estimated-hours", { hours: course.estimatedHours })}</span>
                       </div>
                     )}
                   </div>
@@ -156,7 +156,7 @@ export function MyCoursesPage() {
                         </div>
                         <div className="flex items-center gap-1">
                           <TrendingUp className="h-3 w-3 text-green-500" />
-                          {t("pages.my-courses.streak-days", { days: enrollment.streak })}
+                          {t("pages-my-courses-streak-days", { days: enrollment.streak })}
                         </div>
                       </div>
                     </div>

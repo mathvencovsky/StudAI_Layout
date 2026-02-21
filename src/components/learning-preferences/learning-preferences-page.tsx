@@ -19,7 +19,7 @@ export const LearningPreferencesPage = () => {
       savePreference(
         {
           id: existingPreference?.id,
-          data,
+          data: { ...data, days: data.days ?? [], formats: data.formats ?? [] },
         },
         {
           onSuccess: () => {

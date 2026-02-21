@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 export function CourseDetailPage() {
-  const { courseId } = useParams({ from: "/curso/$courseId" });
+  const { courseId } = useParams({ from: "/course/$courseId" });
   const { data: course, isLoading } = useCourse({ id: courseId });
   const { data: userCourses } = useListUserCourses();
   const createEnrollment = useCreateUserCourse();
@@ -57,8 +57,8 @@ export function CourseDetailPage() {
       <div className="container mx-auto p-6">
         <Card className="p-12 text-center">
           <p className="text-gray-600">Curso não encontrado</p>
-          <Link to="/meus-cursos">
-            <Button className="mt-4">Voltar para Meus Cursos</Button>
+          <Link to="/my-courses">
+            <Button className="mt-4">Back to My Courses</Button>
           </Link>
         </Card>
       </div>
@@ -70,10 +70,10 @@ export function CourseDetailPage() {
   return (
     <div className="container mx-auto p-6 max-w-5xl">
       {/* Back Button */}
-      <Link to="/meus-cursos">
+      <Link to="/my-courses">
         <Button variant="ghost" className="mb-4">
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Voltar
+          Back
         </Button>
       </Link>
 

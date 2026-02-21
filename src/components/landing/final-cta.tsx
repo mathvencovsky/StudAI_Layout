@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const SUPPORT_EMAIL = "support@studi.app";
 
 export function FinalCTA() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   const scrollToAuth = () => {
     const el = document.getElementById("auth-card");

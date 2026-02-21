@@ -10,6 +10,18 @@ import { getCurrentUserId } from "./auth";
 const client = generateClient<Schema>();
 
 /**
+ * List all content progress records for the current user
+ */
+export const listAllUserContentProgress = async (): Promise<UserContentProgress[]> => {
+  const result = await client.models.UserContentProgress.list();
+  if (!result.data) {
+    console.error("Failed to list user content progress:", result.errors);
+    return [];
+  }
+  return result.data;
+};
+
+/**
  * Toggle content completion status for the current user
  * Creates or updates entry in userContentProgress collection
  */

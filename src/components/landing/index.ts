@@ -1,7 +1,7 @@
 // Main components
 export { LandingPage } from "./landing-page";
 export { LandingHeader } from "./landing-header";
-export { LandingHero } from "./LandingHero";
+export { LandingHero } from "./landing-hero";
 export { LogoStrip } from "./logo-strip-section";
 export { ProductSection } from "./product-section";
 export { AuthCard } from "./auth-card";
@@ -15,5 +15,5 @@ export { LandingFooter } from "./landing-footer";
 export { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 
 // Legacy exports for backward compatibility
-export { LandingHero as HeroSection } from "./LandingHero";
+export { LandingHero as HeroSection } from "./landing-hero";
 export { LogoStrip as LogoStripSection } from "./logo-strip-section";

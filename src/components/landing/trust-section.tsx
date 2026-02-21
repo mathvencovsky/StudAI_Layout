@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const SUPPORT_EMAIL = "support@studi.app";
 
 export function TrustSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   const bullets = [t("trust-bullet1"), t("trust-bullet2"), t("trust-bullet3")];
 

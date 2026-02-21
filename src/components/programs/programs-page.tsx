@@ -65,7 +65,7 @@ export function ProgramsPage() {
             <CardHeader>
               <CardTitle>{t("pages-programs-active-program")}</CardTitle>
               <CardDescription>
-                {t("pages.programs.tracks-in-plan", { count: tracks.length })}
+                {t("pages-programs-tracks-in-plan", { count: tracks.length })}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -118,7 +118,7 @@ export function ProgramsPage() {
                       className="flex items-center justify-between p-3 border rounded-lg"
                     >
                       <div>
-                        <p className="font-medium">{t("pages.programs.track-number", { number: index + 1 })}</p>
+                        <p className="font-medium">{t("pages-programs-track-number", { number: index + 1 })}</p>
                         <p className="text-sm text-muted-foreground">
                           {t("pages-programs-added-on")} {new Date(track.addedAt).toLocaleDateString()}
                         </p>

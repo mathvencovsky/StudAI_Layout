@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
 import { 
@@ -8,7 +7,6 @@ import {
   Users, 
   BookOpen, 
   BarChart3,
-  Settings,
   Database,
   AlertTriangle
 } from "lucide-react";
@@ -206,7 +204,7 @@ export function AdminPage() {
                         </p>
                       </div>
                       <Switch
-                        checked={feature.enabled}
+                        checked={feature.enabled ?? false}
                         onCheckedChange={(checked) => handleToggleFeature(feature.id, checked)}
                         disabled={updateFeature.isPending}
                       />

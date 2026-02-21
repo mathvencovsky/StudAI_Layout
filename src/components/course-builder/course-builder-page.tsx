@@ -42,7 +42,7 @@ export function CourseBuilderPage() {
   const handleSaveAndView = () => {
     if (generatedCourse && generateMutation.data?.savedCourse) {
       navigate({
-        to: "/curso/$courseId",
+        to: "/course/$courseId",
         params: { courseId: generateMutation.data.savedCourse.id },
       });
     }

@@ -1,24 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Trophy, Medal, Flame, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import { useRanking } from "@/hooks/ranking/use-ranking";
+import { Trophy, Medal, Flame } from "lucide-react";
+import { useWeeklyRanking } from "@/hooks/ranking/use-weekly-ranking";
+import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
 
-const getTrendIcon = (trend: string) => {
-  switch (trend) {
-    case "up":
-      return <TrendingUp className="w-4 h-4 text-green-500" />;
-    case "down":
-      return <TrendingDown className="w-4 h-4 text-red-500" />;
-    default:
-      return <Minus className="w-4 h-4 text-muted-foreground" />;
-  }
-};
-
-const getPositionBadge = (position: number) => {
+const getPositionBadge = (position: number | null | undefined) => {
   switch (position) {
     case 1:
       return (
@@ -49,9 +39,10 @@ const getPositionBadge = (position: number) => {
 
 export default function Ranking() {
   const { t } = useTranslation();
-  const { data: ranking, isLoading, error, refetch } = useRanking();
+  const { data: ranking, isLoading, error, refetch } = useWeeklyRanking();
+  const { data: profile } = useMyProfile();
 
-  const currentUser = ranking?.find((u) => u.isCurrentUser);
+  const currentUser = ranking?.find((entry) => entry.userId === profile?.owner);
 
   return (
     <div className="p-4 sm:p-6 pb-24 md:pb-6 space-y-6">
@@ -69,7 +60,6 @@ export default function Ranking() {
 
       {!isLoading && !error && ranking && (
         <>
-          {/* Current User Position */}
           {currentUser && (
             <Card className="bg-primary/5 border-primary/20">
               <CardContent className="p-4">
@@ -83,7 +73,7 @@ export default function Ranking() {
                         {t("pages.ranking.your-position", "Sua Posição")}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {currentUser.xp.toLocaleString()} XP
+                        {(currentUser.xpWeek ?? 0).toLocaleString()} XP
                       </p>
                     </div>
                   </div>
@@ -96,7 +86,6 @@ export default function Ranking() {
             </Card>
           )}
 
-          {/* Ranking List */}
           <Card>
             <CardHeader className="pb-2">
               <CardTitle className="text-lg flex items-center gap-2">
@@ -106,49 +95,47 @@ export default function Ranking() {
             </CardHeader>
             <CardContent className="p-0">
               <div className="divide-y">
-                {ranking.map((user) => (
-                  <div
-                    key={user.id}
-                    className={`flex items-center gap-3 p-4 ${
-                      user.isCurrentUser ? "bg-primary/5" : ""
-                    }`}
-                  >
-                    {getPositionBadge(user.position)}
-                    <Avatar className="w-10 h-10">
-                      <AvatarFallback
-                        className={user.isCurrentUser ? "bg-primary text-primary-foreground" : ""}
-                      >
-                        {user.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p
-                          className={`font-medium truncate ${
-                            user.isCurrentUser ? "text-primary" : ""
-                          }`}
+                {ranking.map((entry) => {
+                  const isCurrentUser = entry.userId === profile?.owner;
+                  const initials = (entry.displayName ?? "?")
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("");
+                  return (
+                    <div
+                      key={entry.id}
+                      className={`flex items-center gap-3 p-4 ${isCurrentUser ? "bg-primary/5" : ""}`}
+                    >
+                      {getPositionBadge(entry.position)}
+                      <Avatar className="w-10 h-10">
+                        <AvatarFallback
+                          className={isCurrentUser ? "bg-primary text-primary-foreground" : ""}
                         >
-                          {user.name}
-                        </p>
-                        {user.isCurrentUser && (
-                          <Badge variant="secondary" className="text-xs">
-                            {t("pages.ranking.you", "Você")}
-                          </Badge>
-                        )}
+                          {initials}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className={`font-medium truncate ${isCurrentUser ? "text-primary" : ""}`}>
+                            {entry.displayName}
+                          </p>
+                          {isCurrentUser && (
+                            <Badge variant="secondary" className="text-xs">
+                              {t("pages.ranking.you", "Você")}
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <span>{(entry.xpWeek ?? 0).toLocaleString()} XP</span>
+                          <span>•</span>
+                          <Flame className="w-3 h-3 text-orange-500" />
+                          <span>{entry.streak} {t("pages.ranking.days", "dias")}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{user.xp.toLocaleString()} XP</span>
-                        <span>•</span>
-                        <Flame className="w-3 h-3 text-orange-500" />
-                        <span>{user.streak} {t("pages.ranking.days", "dias")}</span>
-                      </div>
+
                     </div>
-                    {getTrendIcon(user.trend)}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>

@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
 
 // ============================================================================
-// SECTION WRAPPER - Container principal para seções
+// SECTION WRAPPER - Main container for sections
 // ============================================================================
 
 type SectionVariant = "plain" | "tint" | "gradient" | "split" | "dark";
@@ -54,7 +54,7 @@ export function SectionWrapper({
 }
 
 // ============================================================================
-// HEADLINE HIGHLIGHT - Destaque de texto com efeito marker
+// HEADLINE HIGHLIGHT - Text highlight with marker effect
 // ============================================================================
 
 interface HeadlineHighlightProps {
@@ -103,7 +103,7 @@ export function HeadlineHighlight({
 }
 
 // ============================================================================
-// KICKER BADGE - Badge de categoria/seção
+// KICKER BADGE - Category/section badge
 // ============================================================================
 
 interface KickerBadgeProps {
@@ -139,7 +139,7 @@ export function KickerBadge({
 }
 
 // ============================================================================
-// SECTION DIVIDER - Divisores de seção
+// SECTION DIVIDER - Section dividers
 // ============================================================================
 
 interface SectionDividerProps {
@@ -199,7 +199,7 @@ export function SectionDivider({
 }
 
 // ============================================================================
-// FLOATING CARD - Card com efeito flutuante
+// FLOATING CARD - Card with floating effect
 // ============================================================================
 
 interface FloatingCardProps {
@@ -230,7 +230,7 @@ export function FloatingCard({
 }
 
 // ============================================================================
-// GRADIENT TEXT - Texto com gradiente animado
+// GRADIENT TEXT - Text with animated gradient
 // ============================================================================
 
 interface GradientTextProps {
@@ -258,7 +258,7 @@ export function GradientText({
 }
 
 // ============================================================================
-// SHIMMER BUTTON - Botão com efeito shimmer
+// SHIMMER BUTTON - Button with shimmer effect
 // ============================================================================
 
 interface ShimmerButtonProps {

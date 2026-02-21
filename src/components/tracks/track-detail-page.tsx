@@ -88,7 +88,7 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-3">
-            <Link to="/estudar" className="flex-1">
+            <Link to="/study" className="flex-1">
               <Button className="w-full" size="lg">
                 <Brain className="mr-2 h-5 w-5" />
                 Estudar com IA
@@ -107,7 +107,7 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
               </Button>
             )}
             {isInPlan && (
-              <Link to="/trilha" className="flex-1">
+              <Link to="/my-track" className="flex-1">
                 <Button variant="outline" size="lg" className="w-full">
                   <BookOpen className="mr-2 h-5 w-5" />
                   Ver Meu Plano

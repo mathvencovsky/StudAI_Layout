@@ -204,7 +204,7 @@ export const ActiveTrackStatusCard = () => {
         {/* Actions */}
         <div className="flex gap-2">
           <Button size="sm" className="flex-1" asChild>
-            <Link to="/estudar">
+            <Link to="/study">
               <Play className="h-4 w-4 mr-2" />
               Iniciar sessão
             </Link>

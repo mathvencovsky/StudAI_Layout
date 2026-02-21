@@ -74,7 +74,7 @@ export function MyPlanPage() {
     }
 
     const subject = encodeURIComponent(t("pricing-waitlist-subject"));
-    const body = encodeURIComponent(t("pricing.waitlistBody", { profile: "Pro" }));
+    const body = encodeURIComponent(t("pricing-waitlist-body", { profile: "Pro" }));
     window.location.href = `mailto:support@studi.app?subject=${subject}&body=${body}`;
   };
 

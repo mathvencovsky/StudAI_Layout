@@ -63,10 +63,10 @@ export function ActivityPage() {
     const diffDays = Math.floor(diffMs / 86400000);
 
     if (diffMins < 1) return t("pages-activity-just-now");
-    if (diffMins < 60) return t("pages.activity.minutes-ago", { count: diffMins });
-    if (diffHours < 24) return t("pages.activity.hours-ago", { count: diffHours });
+    if (diffMins < 60) return t("pages-activity-minutes-ago", { count: diffMins });
+    if (diffHours < 24) return t("pages-activity-hours-ago", { count: diffHours });
     if (diffDays === 1) return t("pages-activity-yesterday");
-    return t("pages.activity.days-ago", { count: diffDays });
+    return t("pages-activity-days-ago", { count: diffDays });
   };
 
   const getActivityTypeLabel = (type: string) => {

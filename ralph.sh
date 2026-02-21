@@ -57,7 +57,7 @@ CRITICAL: NEVER pick more than one task to work on. Only work on one task at a t
 1. Read the progress file at: $PROGRESS_FILE
 2. Read the spec file at: $SPEC_FILE
 3. Work on ONE task at a time from the spec file
-4. After making the changes for the task, run npm run build and make sure everything is working. If it's not, fix it.
+4. After making the changes for the task, run 'npm run build' and make sure everything is working. If it's not, fix it.
 4. When a task is done and build is passing, mark the task as complete in the spec file by adding [x]
 5. After marking it as complete, append the progress of what was done to the progress file
 
@@ -67,6 +67,9 @@ CRITICAL: NEVER pick more than one task to work on. Only work on one task at a t
 - When a task is complete, mark it in the spec file and update the progress file
 - When ALL tasks are complete, output <promise>COMPLETE</promise>
 - Do not output <promise>COMPLETE</promise> until everything is done
+
+## IMPORTANT GUIDELINES
+- NEVER use git to undo changes without a backup on a stash
 "
 
 for i in $(seq 1 "$MAX_ITERATIONS"); do

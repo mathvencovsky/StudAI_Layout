@@ -56,7 +56,7 @@ export function CalendarPage() {
             {t("pages-calendar-upcoming")}
           </CardTitle>
           <CardDescription>
-            {upcomingEvents.length} {t("pages.calendar.events", { count: upcomingEvents.length })}
+            {upcomingEvents.length} {t("pages-calendar-events", { count: upcomingEvents.length })}
           </CardDescription>
         </CardHeader>
         <CardContent>

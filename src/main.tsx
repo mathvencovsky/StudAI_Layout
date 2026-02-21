@@ -8,12 +8,8 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import "./index.css";
 import "./i18n/i18n";
 import { initZodI18n } from "@/i18n/zod-i18n";
-import { initializeMockAuthAdapter } from "@/lib/auth-adapter-mock";
-import { initializeMockLearningPreferenceAdapter } from "@/lib/learning-preference-adapter-mock";
 
 initZodI18n();
-initializeMockAuthAdapter();
-initializeMockLearningPreferenceAdapter();
 import { routeTree } from "./routeTree.gen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context-providers/auth/auth-provider";

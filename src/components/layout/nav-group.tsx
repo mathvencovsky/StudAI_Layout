@@ -34,7 +34,7 @@ export function NavGroup({ group, collapsed = false, onNavigate }: NavGroupProps
     <div className="space-y-0.5">
       {!collapsed && (
         <p className="px-3 py-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
-          {t(group.label.toLowerCase())}
+          {(t as (key: string) => string)(group.label.toLowerCase())}
         </p>
       )}
       {visibleItems.map((item) => (
@@ -51,7 +51,7 @@ export function NavGroup({ group, collapsed = false, onNavigate }: NavGroupProps
           }`}
         >
           <item.icon size={18} />
-          {!collapsed && <span className="text-sm">{t(item.label)}</span>}
+          {!collapsed && <span className="text-sm">{(t as (key: string) => string)(item.label)}</span>}
         </Link>
       ))}
     </div>

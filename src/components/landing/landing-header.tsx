@@ -3,9 +3,11 @@ import { GraduationCap, Menu, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useTranslation } from "react-i18next";
+import { useLocale } from "@/hooks/use-locale";
 
 export function LandingHeader() {
-  const { t, locale, setLocale } = useI18n();
+  const { t } = useTranslation();
+  const [locale, setLocale] = useLocale();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -46,7 +48,7 @@ export function LandingHeader() {
   };
 
   const toggleLocale = () => {
-    setLocale(locale === "pt-BR" ? "en-US" : "pt-BR");
+    setLocale(locale === "pt-BR" ? "en" : "pt-BR");
   };
 
   return (

@@ -115,7 +115,7 @@ export function SearchPage() {
         ) : (
           <div className="space-y-4">
             <p className="text-sm text-muted-foreground">
-              {t("pages.search.results", { count: results.length })}
+              {t("pages-search-results", { count: results.length })}
             </p>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

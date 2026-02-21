@@ -29,7 +29,7 @@ export function UpgradeCard({ variant = "default", className = "" }: UpgradeCard
                 {t("upgrade.subtitle-compact", "Recursos ilimitados")}
               </p>
             </div>
-            <Link to="/meu-plano">
+            <Link to="/my-plan">
               <Button size="sm" className="shrink-0">
                 <Sparkles className="w-3 h-3 mr-1" />
                 {t("upgrade.cta", "Upgrade")}
@@ -78,7 +78,7 @@ export function UpgradeCard({ variant = "default", className = "" }: UpgradeCard
           </div>
         </div>
 
-        <Link to="/meu-plano">
+        <Link to="/my-plan">
           <Button className="w-full group">
             <Sparkles className="w-4 h-4 mr-2" />
             {t("upgrade.cta-full", "Ver Planos e Preços")}

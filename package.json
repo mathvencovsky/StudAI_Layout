@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc --noEmit --project tsconfig.app.json",
     "build": "tsc --project tsconfig.app.json && vite build",
     "watch": "tsc --watch --project tsconfig.app.json",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",

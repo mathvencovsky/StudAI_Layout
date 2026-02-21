@@ -195,8 +195,8 @@ const schema = a.schema({
     .model({
       interests: a.string().required().array().required(),
       minutesPerDay: a.integer(),
-      days: a.string().required().array(),
-      formats: a.string().required().array(),
+      days: a.string().required().array().required(),
+      formats: a.string().required().array().required(),
       contentLength: a.enum(["bite_sized", "short", "medium", "deep_dive"]),
       owner: a
         .string()
@@ -232,7 +232,7 @@ const schema = a.schema({
       durationMinutes: a.integer(),
       score: a.integer(),
       xpEarned: a.integer().default(0),
-      tasksCompleted: a.string().array(),
+      tasksCompleted: a.string().required().array(),
       notes: a.string(),
       owner: a
         .string()
@@ -373,7 +373,7 @@ const schema = a.schema({
         "course",
       ]),
       provider: a.string(),
-      tags: a.string().array(),
+      tags: a.string().required().array(),
       verified: a.boolean().default(false),
       category: a.string(),
       level: a.enum(["beginner", "intermediate", "advanced"]),
@@ -393,10 +393,10 @@ const schema = a.schema({
   CreatorCatalog: a
     .model({
       name: a.string().required(),
-      areas: a.string().array(),
-      languages: a.string().array(),
+      areas: a.string().required().array(),
+      languages: a.string().required().array(),
       platforms: a.json(),
-      tags: a.string().array(),
+      tags: a.string().required().array(),
       description: a.string(),
       verified: a.boolean().default(false),
       resources: a.hasMany("ResourceCatalog", "creatorId"),
@@ -419,6 +419,68 @@ const schema = a.schema({
       allow.authenticated().to(["read"]),
       allow.group("Admin").to(["create", "update", "delete"]),
     ]),
+
+  Assessment: a
+    .model({
+      title: a.string().required(),
+      description: a.string(),
+      questionCount: a.integer().required(),
+      estimatedTimeMinutes: a.integer(),
+      status: a.enum(["available", "in_progress", "completed"]),
+      score: a.integer(),
+      completedAt: a.timestamp(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  FeatureToggle: a
+    .model({
+      name: a.string().required(),
+      description: a.string(),
+      enabled: a.boolean().default(false),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
+    ]),
+
+  SavedItem: a
+    .model({
+      itemId: a.string().required(),
+      itemType: a.enum(["track", "module", "content", "assessment"]),
+      title: a.string().required(),
+      thumbnail: a.url(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  Program: a
+    .model({
+      name: a.string().required(),
+      category: a.string().required(),
+      totalHours: a.integer().required(),
+      modules: a.integer().required(),
+      status: a.enum(["not_started", "in_progress", "completed"]),
+    })
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
+    ]),
+
+  UserProgramProgress: a
+    .model({
+      programId: a.id().required(),
+      completedHours: a.integer().default(0),
+      progress: a.integer().default(0),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
 
   AiUsage: a
     .model({
@@ -478,7 +540,7 @@ const schema = a.schema({
       courseId: a.id().required(),
       course: a.belongsTo("Course", "courseId"),
       title: a.string().required(),
-      goals: a.string().array(),
+      goals: a.string().required().array(),
       lessons: a.json(),
       tasks: a.json(),
       xpTotal: a.integer().default(0),

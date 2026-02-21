@@ -45,6 +45,10 @@ const Foo = () => {
 };
 ```
 
+## Always translate untranslated text messages to users
+
+If while reading a file, you see a message that is not translated and it's displayed to users, ALWAYS translate it, even if it's not something you have touched. Be proactive in translating user facing messages.
+
 ## When adding new translations, always translate them in all languages
 
 When adding new translations, always translate them in all languages. Translation files are stored in `.ts` files.

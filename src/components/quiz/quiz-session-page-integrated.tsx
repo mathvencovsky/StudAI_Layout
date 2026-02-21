@@ -13,7 +13,6 @@ import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useCreateDailyTask } from "@/hooks/daily-task/use-create-daily-task";
 import { LoadingState } from "@/components/ui/loading-state";
 import { EmptyState } from "@/components/ui/empty-state";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 interface QuizSessionPageIntegratedProps {
@@ -27,7 +26,6 @@ interface Question {
 }
 
 export function QuizSessionPageIntegrated({ quizId }: QuizSessionPageIntegratedProps) {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: quiz, isLoading } = useGetQuiz({ id: quizId });
   const { data: profile } = useMyProfile();

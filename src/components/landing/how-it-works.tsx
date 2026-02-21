@@ -1,17 +1,17 @@
 import { useMemo } from "react";
 import { useSearch } from "@tanstack/react-router";
 import { UserPlus, Settings2, TrendingUp, Rocket } from "lucide-react";
-import { type ProfileKey, isValidProfile, getStoredProfile } from "./LandingHero";
+import { type ProfileKey, isValidProfile, getStoredProfile } from "./landing-hero";
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { useTranslation } from "react-i18next";
 
 export function HowItWorks() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const searchParams = useSearch({ from: "/" }) as { perfil?: ProfileKey; redirect?: string };
 
   const currentProfile = useMemo((): ProfileKey => {
     const urlProfile = searchParams?.perfil;
-    if (isValidProfile(urlProfile)) return urlProfile;
+    if (isValidProfile(urlProfile ?? null)) return urlProfile!;
     return getStoredProfile();
   }, [searchParams]);
 

@@ -12,7 +12,7 @@ export function NewSessionCard() {
   const navigate = useNavigate();
 
   const handleCreateTrack = () => {
-    navigate({ to: "/criar-trilha" });
+    navigate({ to: "/create-track" });
   };
 
   return (

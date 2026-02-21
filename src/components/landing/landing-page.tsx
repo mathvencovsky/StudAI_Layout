@@ -22,7 +22,7 @@ export function LandingPage() {
   // Redirect authenticated users to dashboard
   useEffect(() => {
     if (isAuthenticated) {
-      navigate({ to: "/home" });
+      navigate({ to: "/" });
     }
   }, [isAuthenticated, navigate]);
 

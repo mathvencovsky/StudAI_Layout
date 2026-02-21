@@ -1,142 +1,106 @@
-import React from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslation } from "react-i18next";
 
-const schema = z.object({
-  email: z.email("Enter a valid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  remember: z.boolean().optional(),
+const loginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(6),
 });
 
-export type LoginFormValues = z.infer<typeof schema>;
+export type LoginFormValues = z.infer<typeof loginSchema>;
 
 export interface LoginFormProps {
   onSubmit: (values: LoginFormValues) => void;
-  onGoogle: (remember: boolean) => void;
-  onForgotPassword: () => void;
-  onSignUp: () => void;
   isSubmitting: boolean;
   errorMessage: string | null;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({
-  onSubmit,
-  onGoogle,
-  onForgotPassword,
-  onSignUp,
-  isSubmitting,
-  errorMessage,
-}) => {
+/**
+ * Login form component without Card wrapper.
+ * Parent is responsible for providing the card container.
+ */
+export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormProps) => {
+  const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: { remember: false },
-  });
-
-  const remember = useWatch({ name: "remember", control }) ?? false;
+  } = useForm<LoginFormValues>({ resolver: zodResolver(loginSchema) });
 
   return (
-    <Card className="max-w-md mx-auto">
-      <CardHeader>
-        <CardTitle>Welcome back</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form
-          className="space-y-4"
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
-        >
-          <div className="space-y-1">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              autoComplete="email"
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className="text-sm text-red-600">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label htmlFor="password">Password</Label>
+    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div>
+        <h3 className="text-lg font-extrabold text-foreground">{t("auth-login-title")}</h3>
+        <p className="text-sm text-muted-foreground mt-1">{t("auth-login-description")}</p>
+      </div>
+
+      <div className="space-y-3">
+        <div className="space-y-2">
+          <Label htmlFor="email" className="font-semibold">{t("auth-email-label")}</Label>
+          <Input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder={t("auth-email-placeholder")}
+            {...register("email")}
+          />
+          {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="password" className="font-semibold">{t("auth-password-label")}</Label>
+          <div className="relative">
             <Input
               id="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
+              placeholder={t("auth-password-placeholder")}
+              className="pr-11"
               {...register("password")}
             />
-            {errors.password && (
-              <p className="text-sm text-red-600">{errors.password.message}</p>
-            )}
-          </div>
-          <div className="flex items-center justify-between">
-            <label className="flex items-center gap-2 text-sm">
-              <Controller
-                name="remember"
-                control={control}
-                defaultValue={false}
-                render={({ field }) => (
-                  <Checkbox
-                    checked={!!field.value}
-                    onCheckedChange={(checked) =>
-                      field.onChange(checked === true)
-                    }
-                  />
-                )}
-              />
-              Remember Me
-            </label>
             <button
               type="button"
-              className="text-sm underline"
-              onClick={onForgotPassword}
+              onClick={() => setShowPassword((s) => !s)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label={showPassword ? t("auth-hide-password") : t("auth-show-password")}
             >
-              Forgot Password?
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
+          {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+        </div>
+      </div>
 
-          {errorMessage ? (
-            <p className="text-sm text-red-600" role="alert">
-              {errorMessage}
-            </p>
-          ) : null}
+      {errorMessage && (
+        <p className="text-sm text-destructive" role="alert">{errorMessage}</p>
+      )}
 
-          <Button type="submit" disabled={isSubmitting} className="w-full">
-            {isSubmitting ? "Signing in…" : "Sign in"}
-          </Button>
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full font-bold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
+      >
+        {isSubmitting ? t("auth-logging-in") : t("auth-login-button")}
+      </Button>
 
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-full"
-            onClick={onSignUp}
-          >
-            Sign Up
-          </Button>
-          <div className="pt-2">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={isSubmitting}
-              onClick={() => onGoogle(remember)}
-            >
-              Continue with Google
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <span className="font-semibold">{t("auth-cant-access")}</span>
+        <a
+          href="mailto:support@studi.app"
+          className="inline-flex items-center gap-1 font-bold hover:text-foreground"
+        >
+          <HelpCircle className="h-3.5 w-3.5" />
+          {t("auth-need-help")}
+        </a>
+      </div>
+    </form>
   );
 };

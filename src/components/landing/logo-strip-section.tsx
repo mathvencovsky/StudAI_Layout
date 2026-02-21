@@ -9,7 +9,7 @@ const SUPPORT_EMAIL = "support@studi.app";
 type AudienceKey = "concurso" | "certificacao" | "faculdade" | "residencia" | "transicao" | "grupo";
 
 export function LogoStrip() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [activeAudience, setActiveAudience] = useState<AudienceKey | null>(null);
 
   const audience: { key: AudienceKey; label: string }[] = [
@@ -83,14 +83,14 @@ export function LogoStrip() {
 
         <div className="flex flex-wrap justify-center items-center gap-3 text-xs text-muted-foreground">
           <Link
-            to="/privacidade"
+            to="/privacy"
             className="inline-flex items-center gap-1.5 min-h-[40px] px-2 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-semibold"
           >
             <Shield className="h-3.5 w-3.5" />
             {t("common-privacy")}
           </Link>
           <Link
-            to="/seguranca"
+            to="/security"
             className="inline-flex items-center gap-1.5 min-h-[40px] px-2 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-semibold"
           >
             <Lock className="h-3.5 w-3.5" />

@@ -58,21 +58,21 @@ export const profiles: Record<
 > = {
   concurso: {
     label: "Concurso",
-    benefits: ["Rotina diária pronta para executar", "Revisão automática no tempo certo", "Progresso semanal visível"],
-    microcopy: "Funciona para concursos federais, estaduais e municipais",
-    contextLine: "Foco em constância e revisão.",
+    benefits: ["Daily routine ready to execute", "Automatic review at the right time", "Visible weekly progress"],
+    microcopy: "Works for federal, state and municipal exams",
+    contextLine: "Focus on consistency and review.",
   },
   certificacao: {
-    label: "Certificação",
-    benefits: ["Trilha por tópicos e prioridades", "Revisões para fixação", "Cobertura do conteúdo por semana"],
-    microcopy: "CFA, CPA-10/20, CEA, CFP e outras certificações",
-    contextLine: "Cobertura e prática por tópico.",
+    label: "Certification",
+    benefits: ["Track by topics and priorities", "Reviews for retention", "Content coverage per week"],
+    microcopy: "CFA, CPA-10/20, CEA, CFP and other certifications",
+    contextLine: "Coverage and practice by topic.",
   },
   faculdade: {
-    label: "Faculdade",
-    benefits: ["Organização por disciplina", "Revisões semanais sem esquecer", "Visão clara do que fazer hoje"],
-    microcopy: "Para graduação, pós ou cursos livres",
-    contextLine: "Disciplina, revisões e entregas em dia.",
+    label: "University",
+    benefits: ["Organization by subject", "Weekly reviews without forgetting", "Clear view of what to do today"],
+    microcopy: "For undergraduate, graduate or free courses",
+    contextLine: "Discipline, reviews and deliveries on time.",
   },
 };
 
@@ -94,7 +94,7 @@ export function setStoredProfile(profile: ProfileKey): void {
 
 // Mini Product Preview
 function MiniProductPreview() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   const todayTasks = [
     { label: t("preview-task1"), done: true },

@@ -7,7 +7,7 @@
 
 import {
   COURSE_BUILDER_PROMPT,
-} from "../../../amplify/data/chat/system-prompt";
+} from "./system-prompt";
 import {
   getResourcesForTopic,
   getTeoMeWhyResources,

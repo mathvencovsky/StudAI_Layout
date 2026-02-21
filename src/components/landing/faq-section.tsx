@@ -26,7 +26,7 @@ function readProfileFromStorage(): ProfileKey | null {
 }
 
 export function FAQSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const searchParams = useSearch({ from: "/" }) as { perfil?: ProfileKey; redirect?: string };
 
   const profile: ProfileKey = useMemo(() => {
@@ -54,7 +54,7 @@ export function FAQSection() {
         <>
           {t("faq-a5")}{" "}
           <Link
-            to="/privacidade"
+            to="/privacy"
             className="text-primary font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
           >
             {t("common-learn-more")}
@@ -67,9 +67,7 @@ export function FAQSection() {
       question: t("faq-q6"),
       answer: (
         <>
-          {t("faq-q6") === "Como excluir minha conta?"
-            ? "Solicite exclusão pelo e-mail "
-            : "Request deletion via email "}
+          {t("faq-a6")}{" "}
           <a
             href={`mailto:${SUPPORT_EMAIL}`}
             className="text-primary font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
@@ -85,9 +83,7 @@ export function FAQSection() {
       question: t("faq-q8"),
       answer: (
         <>
-          {t("faq-q8") === "O que muda no Pro?"
-            ? "O Pro está em desenvolvimento e deve incluir trilhas ilimitadas e relatórios detalhados. "
-            : "Pro is in development and will include unlimited trails and detailed reports. "}
+          {t("faq-a8")}{" "}
           <a
             href="#planos"
             className="text-primary font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"

@@ -35,11 +35,11 @@ export const navigationGroups: NavigationGroup[] = [
     label: "PRINCIPAL",
     items: [
       { to: "/", icon: Home, label: "home", requiresAuth: true },
-      { to: "/explorar", icon: Compass, label: "tracks", requiresAuth: true },
-      { to: "/pesquisar", icon: Search, label: "search", requiresAuth: true },
-      { to: "/estudar", icon: BookOpen, label: "study", requiresAuth: true },
+      { to: "/explore", icon: Compass, label: "tracks", requiresAuth: true },
+      { to: "/search", icon: Search, label: "search", requiresAuth: true },
+      { to: "/study", icon: BookOpen, label: "study", requiresAuth: true },
       {
-        to: "/avaliacoes",
+        to: "/assessments",
         icon: ClipboardCheck,
         label: "assessments",
         requiresAuth: true,
@@ -49,21 +49,21 @@ export const navigationGroups: NavigationGroup[] = [
   {
     label: "PROGRESSO",
     items: [
-      { to: "/sessoes", icon: Clock, label: "sessions", requiresAuth: true },
+      { to: "/sessions", icon: Clock, label: "sessions", requiresAuth: true },
       {
-        to: "/calendario",
+        to: "/calendar",
         icon: Calendar,
         label: "calendar",
         requiresAuth: true,
       },
       {
-        to: "/meu-objetivo",
+        to: "/my-goal",
         icon: Target,
         label: "goal",
         requiresAuth: true,
       },
       {
-        to: "/revisoes",
+        to: "/reviews",
         icon: RefreshCw,
         label: "reviews",
         requiresAuth: true,

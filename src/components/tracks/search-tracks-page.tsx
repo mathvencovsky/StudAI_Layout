@@ -86,11 +86,11 @@ export function SearchTracksPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">
-              {t("pages.search-tracks.results", { count: searchResults.length })}
+              {t("pages-search-tracks-results", { count: searchResults.length })}
             </h2>
             {searchResults.length > 0 && (
               <p className="text-sm text-muted-foreground">
-                {t("pages.search-tracks.found", { count: searchResults.length })}
+                {t("pages-search-tracks-found", { count: searchResults.length })}
               </p>
             )}
           </div>

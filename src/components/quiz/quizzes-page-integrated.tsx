@@ -9,10 +9,8 @@ import { useListQuizAttempts } from "@/hooks/quiz/use-list-quiz-attempts";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { EmptyState } from "@/components/ui/empty-state";
-import { useTranslation } from "react-i18next";
 
 export function QuizzesPageIntegrated() {
-  const { t } = useTranslation();
   const { data: quizzes, isLoading, error, refetch } = useListQuizzes();
   const { data: attempts } = useListQuizAttempts();
 

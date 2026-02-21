@@ -13,7 +13,7 @@ function isProfile(v: string | null | undefined): v is ProfileKey {
 }
 
 export function PricingSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const search = useSearch({ from: "/" });
   
   const profile = useMemo(() => {

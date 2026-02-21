@@ -32,7 +32,7 @@ export const HomePage = () => {
     useMyLearningPreference();
   const { mutate: savePreference, isPending: isSaving } =
     useSaveLearningPreference();
-  const { data: dashboardData, isLoading: isDashboardLoading } = useDashboardData();
+  const { isLoading: isDashboardLoading } = useDashboardData();
 
   useEffect(() => {
     recordLogin();
@@ -41,7 +41,7 @@ export const HomePage = () => {
   const handleSavePreference = useCallback(
     (data: LearningPreferencesFormValues) => {
       savePreference(
-        { data },
+        { data: { ...data, days: data.days ?? [], formats: data.formats ?? [] } },
         {
           onSuccess: () => {
             toast.success(t("learning-preferences-save-success"));
@@ -74,7 +74,7 @@ export const HomePage = () => {
         <UserGreeting displayName={user?.displayName} />
 
         {/* Stats overview - now using dashboard data */}
-        <StatsCards metrics={dashboardData?.metrics} />
+        <StatsCards />
 
         {/* AI Recommendation */}
         <NextActionCard />

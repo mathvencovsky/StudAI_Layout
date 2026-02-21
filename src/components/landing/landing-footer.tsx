@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { GraduationCap, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useLocale } from "@/hooks/use-locale";
 
 const SUPPORT_EMAIL = "support@studi.app";
 
@@ -9,7 +10,8 @@ function isHomePath() {
 }
 
 export function LandingFooter() {
-  const { t, locale, setLocale } = useI18n();
+  const { t } = useTranslation();
+  const [locale, setLocale] = useLocale();
 
   const goToHash = (hash: string) => {
     if (!isHomePath()) {
@@ -21,7 +23,7 @@ export function LandingFooter() {
   };
 
   const toggleLocale = () => {
-    setLocale(locale === "pt-BR" ? "en-US" : "pt-BR");
+    setLocale(locale === "pt-BR" ? "en" : "pt-BR");
   };
 
   type FooterLink = { label: string; href: string; kind: "hash" | "route" | "external" };
@@ -39,13 +41,13 @@ export function LandingFooter() {
     ],
     suporte: [
       { label: t("footer-talk-to-support"), href: `mailto:${SUPPORT_EMAIL}`, kind: "external" },
-      { label: t("common-security"), href: "/seguranca", kind: "route" },
-      { label: t("common-privacy"), href: "/privacidade", kind: "route" },
+      { label: t("common-security"), href: "/security", kind: "route" },
+      { label: t("common-privacy"), href: "/privacy", kind: "route" },
     ],
     legal: [
-      { label: t("common-privacy"), href: "/privacidade", kind: "route" },
-      { label: t("common-terms"), href: "/termos", kind: "route" },
-      { label: t("common-security"), href: "/seguranca", kind: "route" },
+      { label: t("common-privacy"), href: "/privacy", kind: "route" },
+      { label: t("common-terms"), href: "/terms", kind: "route" },
+      { label: t("common-security"), href: "/security", kind: "route" },
     ],
   };
 
@@ -62,9 +64,9 @@ export function LandingFooter() {
 
     if (link.kind === "route")
       return (
-        <Link to={link.href} className={baseClass}>
+        <a href={link.href} className={baseClass}>
           {link.label}
-        </Link>
+        </a>
       );
 
     return (
@@ -160,19 +162,19 @@ export function LandingFooter() {
               {SUPPORT_EMAIL}
             </a>
             <Link
-              to="/privacidade"
+              to="/privacy"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
               {t("common-privacy")}
             </Link>
             <Link
-              to="/termos"
+              to="/terms"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
               {t("common-terms")}
             </Link>
             <Link
-              to="/seguranca"
+              to="/security"
               className="text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium min-h-[36px] flex items-center px-1"
             >
               {t("common-security")}

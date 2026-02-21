@@ -140,13 +140,13 @@ export function ProfilePage() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="font-medium">
-                        {t("pages.profile.progress-to-level", "Progresso para Nível")} {level + 1}
+                        {t("pages-profile-progress-to-level")} {level + 1}
                       </span>
                       <span className="text-muted-foreground">{levelProgress.toFixed(0)}%</span>
                     </div>
                     <Progress value={levelProgress} className="h-2" />
                     <p className="text-xs text-muted-foreground">
-                      {t("pages.profile.xp-to-next-level", { xp: xpForNext })}
+                      {t("pages-profile-xp-to-next-level", { xp: xpForNext })}
                     </p>
                   </div>
                 </>

@@ -24,7 +24,7 @@ export function HeroSection() {
 
   const handleProfileChange = (profile: Profile) => {
     setSelectedProfile(profile);
-    navigate({ search: { perfil: profile } });
+    void navigate({ to: "/", search: { perfil: profile } });
   };
 
   const profiles = [
