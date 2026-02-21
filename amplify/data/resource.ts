@@ -528,6 +528,7 @@ const schema = a.schema({
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+      courseModules: a.hasMany("CourseModule", "courseId"),
       userCourses: a.hasMany("UserCourse", "courseId"),
     })
     .authorization((allow) => [
