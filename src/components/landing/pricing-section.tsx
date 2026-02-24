@@ -15,7 +15,7 @@ function isProfile(v: string | null | undefined): v is ProfileKey {
 export function PricingSection() {
   const { t } = useTranslation();
   const search = useSearch({ from: "/" });
-  
+
   const profile = useMemo(() => {
     const p = (search as any)?.perfil;
     return isProfile(p) ? p : "concurso";
@@ -42,7 +42,9 @@ export function PricingSection() {
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(() => {
-      const emailInput = el.querySelector('input[type="email"]') as HTMLInputElement;
+      const emailInput = el.querySelector(
+        'input[type="email"]',
+      ) as HTMLInputElement;
       emailInput?.focus();
     }, 150);
   };
@@ -50,9 +52,9 @@ export function PricingSection() {
   const waitlistMailTo = () => {
     const subject = encodeURIComponent(t("pricing-waitlist-subject"));
     const body = encodeURIComponent(
-      t("pricing-waitlist-body").replace("{profile}", profile)
+      t("pricing-waitlist-body").replace("{profile}", profile),
     );
-    return `mailto:support@studi.app?subject=${subject}&body=${body}`;
+    return `mailto:support@studai.app?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -61,7 +63,9 @@ export function PricingSection() {
         <KickerBadge className="mb-3">{t("pricing-kicker")}</KickerBadge>
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
           {t("pricing-headline")}
-          <HeadlineHighlight>{t("pricing-headline-highlight")}</HeadlineHighlight>
+          <HeadlineHighlight>
+            {t("pricing-headline-highlight")}
+          </HeadlineHighlight>
         </h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-2xl mx-auto">
           {t("pricing-subheadline")}
@@ -96,7 +100,10 @@ export function PricingSection() {
 
             <ul className="mt-4 space-y-2">
               {freeFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-foreground">
+                <li
+                  key={f}
+                  className="flex items-start gap-2 text-sm text-foreground"
+                >
                   <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
                   <span className="font-medium">{f}</span>
                 </li>
@@ -152,7 +159,10 @@ export function PricingSection() {
 
             <ul className="mt-4 space-y-2">
               {proFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-foreground">
+                <li
+                  key={f}
+                  className="flex items-start gap-2 text-sm text-foreground"
+                >
                   <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
                   <span className="font-medium">{f}</span>
                 </li>
@@ -180,9 +190,9 @@ export function PricingSection() {
               </p>
               <a
                 className="mt-2 inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline"
-                href="mailto:support@studi.app"
+                href="mailto:support@studai.app"
               >
-                support@studi.app
+                support@studai.app
               </a>
             </div>
           </CardContent>

@@ -3,7 +3,7 @@ import { GraduationCap, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/hooks/use-locale";
 
-const SUPPORT_EMAIL = "support@studi.app";
+const SUPPORT_EMAIL = "support@studai.app";
 
 function isHomePath() {
   return typeof window !== "undefined" && window.location.pathname === "/";
@@ -26,7 +26,11 @@ export function LandingFooter() {
     setLocale(locale === "pt-BR" ? "en" : "pt-BR");
   };
 
-  type FooterLink = { label: string; href: string; kind: "hash" | "route" | "external" };
+  type FooterLink = {
+    label: string;
+    href: string;
+    kind: "hash" | "route" | "external";
+  };
 
   const footerLinks: Record<string, FooterLink[]> = {
     produto: [
@@ -40,7 +44,11 @@ export function LandingFooter() {
       { label: t("common-contact"), href: "/contato", kind: "route" },
     ],
     suporte: [
-      { label: t("footer-talk-to-support"), href: `mailto:${SUPPORT_EMAIL}`, kind: "external" },
+      {
+        label: t("footer-talk-to-support"),
+        href: `mailto:${SUPPORT_EMAIL}`,
+        kind: "external",
+      },
       { label: t("common-security"), href: "/security", kind: "route" },
       { label: t("common-privacy"), href: "/privacy", kind: "route" },
     ],
@@ -105,7 +113,11 @@ export function LandingFooter() {
             <button
               onClick={toggleLocale}
               className="mt-3 flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-muted-foreground hover:text-foreground rounded-lg border-2 border-border hover:border-primary/40 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-              aria-label={locale === "pt-BR" ? "Switch to English" : "Mudar para Português"}
+              aria-label={
+                locale === "pt-BR"
+                  ? "Switch to English"
+                  : "Mudar para Português"
+              }
             >
               <Globe className="h-3.5 w-3.5" />
               {locale === "pt-BR" ? "English" : "Português"}
@@ -113,7 +125,9 @@ export function LandingFooter() {
           </div>
 
           <nav aria-label={t("common-product")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-product")}</h4>
+            <h4 className="font-bold text-foreground mb-2 text-sm">
+              {t("common-product")}
+            </h4>
             <ul className="space-y-1">
               {footerLinks.produto.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -122,7 +136,9 @@ export function LandingFooter() {
           </nav>
 
           <nav aria-label={t("common-company")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-company")}</h4>
+            <h4 className="font-bold text-foreground mb-2 text-sm">
+              {t("common-company")}
+            </h4>
             <ul className="space-y-1">
               {footerLinks.empresa.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -131,7 +147,9 @@ export function LandingFooter() {
           </nav>
 
           <nav aria-label={t("common-support")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-support")}</h4>
+            <h4 className="font-bold text-foreground mb-2 text-sm">
+              {t("common-support")}
+            </h4>
             <ul className="space-y-1">
               {footerLinks.suporte.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>
@@ -140,7 +158,9 @@ export function LandingFooter() {
           </nav>
 
           <nav aria-label={t("common-legal")}>
-            <h4 className="font-bold text-foreground mb-2 text-sm">{t("common-legal")}</h4>
+            <h4 className="font-bold text-foreground mb-2 text-sm">
+              {t("common-legal")}
+            </h4>
             <ul className="space-y-1">
               {footerLinks.legal.map((link) => (
                 <li key={link.label}>{renderLink(link)}</li>

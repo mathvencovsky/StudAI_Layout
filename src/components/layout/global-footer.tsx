@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { 
-  BookOpen, 
-  HelpCircle, 
-  Mail, 
-  Shield, 
+import {
+  BookOpen,
+  HelpCircle,
+  Mail,
+  Shield,
   FileText,
   Github,
   Twitter,
   Linkedin,
-  Globe
+  Globe,
 } from "lucide-react";
 import { useLocale } from "@/hooks/use-locale";
 import {
@@ -41,15 +41,15 @@ export function GlobalFooter() {
             <p className="text-sm text-muted-foreground mb-4">
               {t("footer-description")}
             </p>
-            
+
             {/* Support Email */}
             <div className="mb-4">
-              <a 
-                href="mailto:support@studi.app"
+              <a
+                href="mailto:support@studai.app"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
               >
                 <Mail className="h-4 w-4" />
-                support@studi.app
+                support@studai.app
               </a>
             </div>
 
@@ -75,27 +75,27 @@ export function GlobalFooter() {
 
             {/* Social Networks */}
             <div className="flex gap-4">
-              <a 
-                href="https://github.com" 
-                target="_blank" 
+              <a
+                href="https://github.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
               </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
+              <a
+                href="https://twitter.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
               </a>
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
                 aria-label="LinkedIn"
@@ -107,11 +107,13 @@ export function GlobalFooter() {
 
           {/* Resources */}
           <div>
-            <h3 className="font-semibold text-sm mb-4">{t("footer-resources")}</h3>
+            <h3 className="font-semibold text-sm mb-4">
+              {t("footer-resources")}
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
-                  to="/resources" 
+                <Link
+                  to="/resources"
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <BookOpen className="h-4 w-4" />
@@ -119,8 +121,8 @@ export function GlobalFooter() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/how-it-works" 
+                <Link
+                  to="/how-it-works"
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <HelpCircle className="h-4 w-4" />
@@ -128,8 +130,8 @@ export function GlobalFooter() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/plans" 
+                <Link
+                  to="/plans"
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <FileText className="h-4 w-4" />
@@ -141,19 +143,21 @@ export function GlobalFooter() {
 
           {/* Support */}
           <div>
-            <h3 className="font-semibold text-sm mb-4">{t("footer-support")}</h3>
+            <h3 className="font-semibold text-sm mb-4">
+              {t("footer-support")}
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
-                  to="/faq" 
+                <Link
+                  to="/faq"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t("footer-faq")}
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/contact" 
+                <Link
+                  to="/contact"
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Mail className="h-4 w-4" />
@@ -161,8 +165,8 @@ export function GlobalFooter() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/support" 
+                <Link
+                  to="/support"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t("footer-central-help")}
@@ -176,8 +180,8 @@ export function GlobalFooter() {
             <h3 className="font-semibold text-sm mb-4">{t("footer-legal")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
-                  to="/privacy" 
+                <Link
+                  to="/privacy"
                   className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
                 >
                   <Shield className="h-4 w-4" />
@@ -185,16 +189,16 @@ export function GlobalFooter() {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/terms" 
+                <Link
+                  to="/terms"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t("footer-terms")}
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/security" 
+                <Link
+                  to="/security"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t("footer-security")}

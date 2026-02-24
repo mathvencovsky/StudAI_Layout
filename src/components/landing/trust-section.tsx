@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 
-const SUPPORT_EMAIL = "support@studi.app";
+const SUPPORT_EMAIL = "support@studai.app";
 
 export function TrustSection() {
   const { t } = useTranslation();
@@ -36,7 +36,10 @@ export function TrustSection() {
 
           <div className="mt-5 space-y-2">
             {bullets.map((b) => (
-              <div key={b} className="flex items-start gap-2 text-sm text-foreground">
+              <div
+                key={b}
+                className="flex items-start gap-2 text-sm text-foreground"
+              >
                 <CheckCircle2 className="h-4 w-4 text-success mt-0.5 shrink-0" />
                 <span className="font-medium">{b}</span>
               </div>

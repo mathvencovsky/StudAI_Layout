@@ -4,13 +4,21 @@ import { CheckCircle2, Shield, Lock, Mail, Zap } from "lucide-react";
 import { SectionWrapper, KickerBadge } from "./ui";
 import { useTranslation } from "react-i18next";
 
-const SUPPORT_EMAIL = "support@studi.app";
+const SUPPORT_EMAIL = "support@studai.app";
 
-type AudienceKey = "concurso" | "certificacao" | "faculdade" | "residencia" | "transicao" | "grupo";
+type AudienceKey =
+  | "concurso"
+  | "certificacao"
+  | "faculdade"
+  | "residencia"
+  | "transicao"
+  | "grupo";
 
 export function LogoStrip() {
   const { t } = useTranslation();
-  const [activeAudience, setActiveAudience] = useState<AudienceKey | null>(null);
+  const [activeAudience, setActiveAudience] = useState<AudienceKey | null>(
+    null,
+  );
 
   const audience: { key: AudienceKey; label: string }[] = [
     { key: "concurso", label: t("logostrip-concurso") },
@@ -30,7 +38,11 @@ export function LogoStrip() {
     grupo: t("logostrip-micro-grupo"),
   };
 
-  const credibilityBullets = [t("logostrip-bullet1"), t("logostrip-bullet2"), t("logostrip-bullet3")];
+  const credibilityBullets = [
+    t("logostrip-bullet1"),
+    t("logostrip-bullet2"),
+    t("logostrip-bullet3"),
+  ];
 
   return (
     <SectionWrapper variant="split" compact>
@@ -39,8 +51,12 @@ export function LogoStrip() {
           <Zap className="h-3.5 w-3.5" />
           {t("logostrip-kicker")}
         </KickerBadge>
-        <h2 className="display-h3 text-foreground">{t("logostrip-headline")}</h2>
-        <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">{t("logostrip-subheadline")}</p>
+        <h2 className="display-h3 text-foreground">
+          {t("logostrip-headline")}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground max-w-lg mx-auto">
+          {t("logostrip-subheadline")}
+        </p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2 mb-2">
@@ -74,7 +90,10 @@ export function LogoStrip() {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-x-5">
           {credibilityBullets.map((bullet) => (
-            <span key={bullet} className="flex items-center gap-2 text-sm text-foreground font-medium">
+            <span
+              key={bullet}
+              className="flex items-center gap-2 text-sm text-foreground font-medium"
+            >
               <CheckCircle2 className="h-4 w-4 text-success shrink-0" />
               {bullet}
             </span>

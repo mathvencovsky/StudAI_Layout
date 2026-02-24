@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SectionWrapper, HeadlineHighlight } from "./ui";
 import { useTranslation } from "react-i18next";
 
-const SUPPORT_EMAIL = "support@studi.app";
+const SUPPORT_EMAIL = "support@studai.app";
 
 export function FinalCTA() {
   const { t } = useTranslation();
@@ -14,7 +14,9 @@ export function FinalCTA() {
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
     setTimeout(() => {
-      const emailInput = el.querySelector('input[type="email"]') as HTMLInputElement;
+      const emailInput = el.querySelector(
+        'input[type="email"]',
+      ) as HTMLInputElement;
       emailInput?.focus();
     }, 150);
   };
@@ -34,7 +36,10 @@ export function FinalCTA() {
 
             <h2 className="display-h2 text-foreground mb-3">
               {t("final-cta-headline")}
-              <HeadlineHighlight>{t("final-cta-headline-highlight")}</HeadlineHighlight>?
+              <HeadlineHighlight>
+                {t("final-cta-headline-highlight")}
+              </HeadlineHighlight>
+              ?
             </h2>
 
             <p className="text-muted-foreground mb-6 max-w-md mx-auto text-sm sm:text-base font-medium">

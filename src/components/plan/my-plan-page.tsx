@@ -1,24 +1,32 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Check, 
-  Sparkles, 
-  Crown, 
-  Zap, 
-  TrendingUp, 
-  Shield, 
-  Users, 
+import {
+  Check,
+  Sparkles,
+  Crown,
+  Zap,
+  TrendingUp,
+  Shield,
+  Users,
   Infinity,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 export function MyPlanPage() {
   const { t } = useTranslation();
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
+  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
+    "monthly",
+  );
 
   const currentPlan = "free"; // Mock - in production this would come from a hook
 
@@ -29,7 +37,10 @@ export function MyPlanPage() {
       tagline: t("pricing.free.tagline", "Para começar sua jornada"),
       price: t("pricing.free.price", "R$ 0"),
       period: t("pricing.free.forever", "para sempre"),
-      description: t("pricing.free.desc", "Perfeito para quem está começando e quer experimentar a plataforma"),
+      description: t(
+        "pricing.free.desc",
+        "Perfeito para quem está começando e quer experimentar a plataforma",
+      ),
       features: [
         t("pricing.free.feature1", "Acesso a conteúdos básicos"),
         t("pricing.free.feature2", "1 trilha ativa por vez"),
@@ -47,10 +58,19 @@ export function MyPlanPage() {
       name: t("pricing.pro.name", "Pro"),
       tagline: t("pricing.pro.tagline", "Para estudantes dedicados"),
       price: billingCycle === "monthly" ? "R$ 49,90" : "R$ 39,90",
-      period: billingCycle === "monthly" ? t("pricing-period-monthly") : t("pricing-period-yearly"),
-      description: t("pricing.pro.desc", "Recursos avançados para acelerar seu aprendizado"),
+      period:
+        billingCycle === "monthly"
+          ? t("pricing-period-monthly")
+          : t("pricing-period-yearly"),
+      description: t(
+        "pricing.pro.desc",
+        "Recursos avançados para acelerar seu aprendizado",
+      ),
       features: [
-        t("pricing.pro.feature1", "IA ilimitada para criar trilhas personalizadas"),
+        t(
+          "pricing.pro.feature1",
+          "IA ilimitada para criar trilhas personalizadas",
+        ),
         t("pricing.pro.feature2", "Trilhas ilimitadas simultâneas"),
         t("pricing.pro.feature3", "Acesso a todos os conteúdos premium"),
         t("pricing.pro.feature4", "Relatórios avançados e analytics"),
@@ -74,8 +94,10 @@ export function MyPlanPage() {
     }
 
     const subject = encodeURIComponent(t("pricing-waitlist-subject"));
-    const body = encodeURIComponent(t("pricing-waitlist-body", { profile: "Pro" }));
-    window.location.href = `mailto:support@studi.app?subject=${subject}&body=${body}`;
+    const body = encodeURIComponent(
+      t("pricing-waitlist-body", { profile: "Pro" }),
+    );
+    window.location.href = `mailto:support@studai.app?subject=${subject}&body=${body}`;
   };
 
   const benefits = [
@@ -116,17 +138,28 @@ export function MyPlanPage() {
           </span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          {t("pricing.subheadline", "Comece grátis e faça upgrade quando precisar de mais recursos")}
+          {t(
+            "pricing.subheadline",
+            "Comece grátis e faça upgrade quando precisar de mais recursos",
+          )}
         </p>
       </div>
 
       {/* Billing Toggle */}
       <div className="flex items-center justify-center gap-3">
-        <span className={billingCycle === "monthly" ? "font-semibold" : "text-muted-foreground"}>
+        <span
+          className={
+            billingCycle === "monthly"
+              ? "font-semibold"
+              : "text-muted-foreground"
+          }
+        >
           {t("pricing-billing-monthly")}
         </span>
         <button
-          onClick={() => setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")}
+          onClick={() =>
+            setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
+          }
           className={`relative w-14 h-7 rounded-full transition-colors ${
             billingCycle === "yearly" ? "bg-primary" : "bg-muted"
           }`}
@@ -137,7 +170,13 @@ export function MyPlanPage() {
             }`}
           />
         </button>
-        <span className={billingCycle === "yearly" ? "font-semibold" : "text-muted-foreground"}>
+        <span
+          className={
+            billingCycle === "yearly"
+              ? "font-semibold"
+              : "text-muted-foreground"
+          }
+        >
           {t("pricing-billing-yearly")}
         </span>
         {billingCycle === "yearly" && (
@@ -188,7 +227,9 @@ export function MyPlanPage() {
                 <div className="mt-4">
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground text-sm">{plan.period}</span>
+                    <span className="text-muted-foreground text-sm">
+                      {plan.period}
+                    </span>
                   </div>
                   {plan.savings && (
                     <p className="text-sm text-green-600 dark:text-green-400 font-medium mt-1">
@@ -199,7 +240,9 @@ export function MyPlanPage() {
               </CardHeader>
 
               <CardContent className="space-y-6">
-                <p className="text-sm text-muted-foreground">{plan.description}</p>
+                <p className="text-sm text-muted-foreground">
+                  {plan.description}
+                </p>
 
                 <ul className="space-y-3">
                   {plan.features.map((feature, index) => (
@@ -229,7 +272,10 @@ export function MyPlanPage() {
 
                 {plan.id === "pro" && (
                   <p className="text-xs text-center text-muted-foreground">
-                    {t("pricing.pro.noSpam", "Sem spam. Apenas avisaremos quando estiver disponível.")}
+                    {t(
+                      "pricing.pro.noSpam",
+                      "Sem spam. Apenas avisaremos quando estiver disponível.",
+                    )}
                   </p>
                 )}
               </CardContent>
@@ -241,7 +287,9 @@ export function MyPlanPage() {
       {/* Benefits Section */}
       <div className="mt-12 space-y-6">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2">{t("pricing-why-upgrade")}</h2>
+          <h2 className="text-2xl font-bold mb-2">
+            {t("pricing-why-upgrade")}
+          </h2>
           <p className="text-muted-foreground">
             {t("pricing-why-upgrade-description")}
           </p>
@@ -257,7 +305,9 @@ export function MyPlanPage() {
                     <Icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="font-semibold">{benefit.title}</h3>
-                  <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {benefit.description}
+                  </p>
                 </CardContent>
               </Card>
             );
@@ -293,8 +343,11 @@ export function MyPlanPage() {
             <h3 className="font-semibold mb-1">{t("pricing-faq4-question")}</h3>
             <p className="text-sm text-muted-foreground">
               {t("pricing-faq4-answer")}{" "}
-              <a href="mailto:support@studi.app" className="text-primary hover:underline">
-                support@studi.app
+              <a
+                href="mailto:support@studai.app"
+                className="text-primary hover:underline"
+              >
+                support@studai.app
               </a>
             </p>
           </div>
@@ -304,7 +357,10 @@ export function MyPlanPage() {
       {/* Trust Notice */}
       <div className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
         <Shield className="w-5 h-5 inline-block mr-2" />
-        {t("pricing.trustNotice", "Seus dados estão seguros. Não compartilhamos suas informações.")}
+        {t(
+          "pricing.trustNotice",
+          "Seus dados estão seguros. Não compartilhamos suas informações.",
+        )}
       </div>
     </div>
   );

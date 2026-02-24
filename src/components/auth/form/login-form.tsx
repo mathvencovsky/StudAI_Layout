@@ -25,7 +25,11 @@ export interface LoginFormProps {
  * Login form component without Card wrapper.
  * Parent is responsible for providing the card container.
  */
-export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormProps) => {
+export const LoginForm = ({
+  onSubmit,
+  isSubmitting,
+  errorMessage,
+}: LoginFormProps) => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -38,13 +42,19 @@ export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
-        <h3 className="text-lg font-extrabold text-foreground">{t("auth-login-title")}</h3>
-        <p className="text-sm text-muted-foreground mt-1">{t("auth-login-description")}</p>
+        <h3 className="text-lg font-extrabold text-foreground">
+          {t("auth-login-title")}
+        </h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          {t("auth-login-description")}
+        </p>
       </div>
 
       <div className="space-y-3">
         <div className="space-y-2">
-          <Label htmlFor="email" className="font-semibold">{t("auth-email-label")}</Label>
+          <Label htmlFor="email" className="font-semibold">
+            {t("auth-email-label")}
+          </Label>
           <Input
             id="email"
             type="email"
@@ -52,11 +62,15 @@ export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
             placeholder={t("auth-email-placeholder")}
             {...register("email")}
           />
-          {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+          {errors.email && (
+            <p className="text-sm text-destructive">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="password" className="font-semibold">{t("auth-password-label")}</Label>
+          <Label htmlFor="password" className="font-semibold">
+            {t("auth-password-label")}
+          </Label>
           <div className="relative">
             <Input
               id="password"
@@ -70,17 +84,29 @@ export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
               type="button"
               onClick={() => setShowPassword((s) => !s)}
               className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
-              aria-label={showPassword ? t("auth-hide-password") : t("auth-show-password")}
+              aria-label={
+                showPassword ? t("auth-hide-password") : t("auth-show-password")
+              }
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
             </button>
           </div>
-          {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+          {errors.password && (
+            <p className="text-sm text-destructive">
+              {errors.password.message}
+            </p>
+          )}
         </div>
       </div>
 
       {errorMessage && (
-        <p className="text-sm text-destructive" role="alert">{errorMessage}</p>
+        <p className="text-sm text-destructive" role="alert">
+          {errorMessage}
+        </p>
       )}
 
       <Button
@@ -94,7 +120,7 @@ export const LoginForm = ({ onSubmit, isSubmitting, errorMessage }: LoginFormPro
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span className="font-semibold">{t("auth-cant-access")}</span>
         <a
-          href="mailto:support@studi.app"
+          href="mailto:support@studai.app"
           className="inline-flex items-center gap-1 font-bold hover:text-foreground"
         >
           <HelpCircle className="h-3.5 w-3.5" />

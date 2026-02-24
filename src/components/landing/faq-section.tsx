@@ -11,7 +11,7 @@ import {
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { useTranslation } from "react-i18next";
 
-const SUPPORT_EMAIL = "support@studi.app";
+const SUPPORT_EMAIL = "support@studai.app";
 
 type ProfileKey = "concurso" | "certificacao" | "faculdade";
 
@@ -27,7 +27,10 @@ function readProfileFromStorage(): ProfileKey | null {
 
 export function FAQSection() {
   const { t } = useTranslation();
-  const searchParams = useSearch({ from: "/" }) as { perfil?: ProfileKey; redirect?: string };
+  const searchParams = useSearch({ from: "/" }) as {
+    perfil?: ProfileKey;
+    redirect?: string;
+  };
 
   const profile: ProfileKey = useMemo(() => {
     const p = searchParams?.perfil;
@@ -39,7 +42,10 @@ export function FAQSection() {
 
   const profileFAQs: Record<ProfileKey, FAQItem> = {
     concurso: { question: t("faq-concurso-q"), answer: t("faq-concurso-a") },
-    certificacao: { question: t("faq-certificacao-q"), answer: t("faq-certificacao-a") },
+    certificacao: {
+      question: t("faq-certificacao-q"),
+      answer: t("faq-certificacao-a"),
+    },
     faculdade: { question: t("faq-faculdade-q"), answer: t("faq-faculdade-a") },
   };
 
@@ -110,9 +116,13 @@ export function FAQSection() {
           </KickerBadge>
           <h2 className="display-h2 text-foreground">
             {t("faq-headline")}
-            <HeadlineHighlight variant="primary">{t("faq-headline-highlight")}</HeadlineHighlight>
+            <HeadlineHighlight variant="primary">
+              {t("faq-headline-highlight")}
+            </HeadlineHighlight>
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm">{t("faq-subheadline")}</p>
+          <p className="mt-2 text-muted-foreground text-sm">
+            {t("faq-subheadline")}
+          </p>
         </div>
 
         <Accordion type="single" collapsible className="w-full space-y-2">

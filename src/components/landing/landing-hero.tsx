@@ -27,19 +27,31 @@ export function getProfileData(t: (key: any) => string) {
   return {
     concurso: {
       label: t("hero-profile-concurso"),
-      benefits: [t("hero-concurso-benefit1"), t("hero-concurso-benefit2"), t("hero-concurso-benefit3")],
+      benefits: [
+        t("hero-concurso-benefit1"),
+        t("hero-concurso-benefit2"),
+        t("hero-concurso-benefit3"),
+      ],
       microcopy: t("hero-concurso-microcopy"),
       contextLine: t("hero-concurso-context-line"),
     },
     certificacao: {
       label: t("hero-profile-certificacao"),
-      benefits: [t("hero-certificacao-benefit1"), t("hero-certificacao-benefit2"), t("hero-certificacao-benefit3")],
+      benefits: [
+        t("hero-certificacao-benefit1"),
+        t("hero-certificacao-benefit2"),
+        t("hero-certificacao-benefit3"),
+      ],
       microcopy: t("hero-certificacao-microcopy"),
       contextLine: t("hero-certificacao-context-line"),
     },
     faculdade: {
       label: t("hero-profile-faculdade"),
-      benefits: [t("hero-faculdade-benefit1"), t("hero-faculdade-benefit2"), t("hero-faculdade-benefit3")],
+      benefits: [
+        t("hero-faculdade-benefit1"),
+        t("hero-faculdade-benefit2"),
+        t("hero-faculdade-benefit3"),
+      ],
       microcopy: t("hero-faculdade-microcopy"),
       contextLine: t("hero-faculdade-context-line"),
     },
@@ -58,26 +70,40 @@ export const profiles: Record<
 > = {
   concurso: {
     label: "Concurso",
-    benefits: ["Daily routine ready to execute", "Automatic review at the right time", "Visible weekly progress"],
+    benefits: [
+      "Daily routine ready to execute",
+      "Automatic review at the right time",
+      "Visible weekly progress",
+    ],
     microcopy: "Works for federal, state and municipal exams",
     contextLine: "Focus on consistency and review.",
   },
   certificacao: {
     label: "Certification",
-    benefits: ["Track by topics and priorities", "Reviews for retention", "Content coverage per week"],
+    benefits: [
+      "Track by topics and priorities",
+      "Reviews for retention",
+      "Content coverage per week",
+    ],
     microcopy: "CFA, CPA-10/20, CEA, CFP and other certifications",
     contextLine: "Coverage and practice by topic.",
   },
   faculdade: {
     label: "University",
-    benefits: ["Organization by subject", "Weekly reviews without forgetting", "Clear view of what to do today"],
+    benefits: [
+      "Organization by subject",
+      "Weekly reviews without forgetting",
+      "Clear view of what to do today",
+    ],
     microcopy: "For undergraduate, graduate or free courses",
     contextLine: "Discipline, reviews and deliveries on time.",
   },
 };
 
 export function isValidProfile(value: string | null): value is ProfileKey {
-  return value === "concurso" || value === "certificacao" || value === "faculdade";
+  return (
+    value === "concurso" || value === "certificacao" || value === "faculdade"
+  );
 }
 
 export function getStoredProfile(): ProfileKey {
@@ -110,7 +136,9 @@ function MiniProductPreview() {
 
   return (
     <div className="relative w-full min-w-0">
-      <p className="text-xs text-muted-foreground text-center mb-2 font-medium">{t("common-illustrative-example")}</p>
+      <p className="text-xs text-muted-foreground text-center mb-2 font-medium">
+        {t("common-illustrative-example")}
+      </p>
       <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-hide -mx-4 px-4 pb-4 pr-8 [scroll-padding-left:1rem] [scroll-padding-right:1rem] md:mx-0 md:px-0 md:pr-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0">
         {/* Card 1: Today */}
         <Card className="w-[88vw] max-w-[340px] shrink-0 snap-start bg-card border-2 border-border hover:border-primary/40 transition-all duration-300 shadow-lg md:w-auto md:max-w-none md:shrink md:snap-none">
@@ -119,24 +147,35 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-primary/10">
                 <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-today")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">
+                {t("preview-today")}
+              </span>
               <span className="ml-auto text-[9px] sm:text-[10px] font-semibold bg-accent-warm/15 text-accent-warm px-1.5 sm:px-2 py-0.5 rounded-full truncate max-w-[72px]">
                 {t("preview-tasks")}
               </span>
             </div>
             <ul className="space-y-1.5 sm:space-y-2">
               {todayTasks.map((task, i) => (
-                <li key={i} className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
+                <li
+                  key={i}
+                  className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs"
+                >
                   <div
                     className={`h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      task.done ? "bg-success border-success" : "border-muted-foreground/30"
+                      task.done
+                        ? "bg-success border-success"
+                        : "border-muted-foreground/30"
                     }`}
                   >
-                    {task.done && <CheckCircle2 className="h-2 w-2 text-success-foreground" />}
+                    {task.done && (
+                      <CheckCircle2 className="h-2 w-2 text-success-foreground" />
+                    )}
                   </div>
                   <span
                     className={`truncate ${
-                      task.done ? "text-muted-foreground line-through" : "text-foreground font-medium"
+                      task.done
+                        ? "text-muted-foreground line-through"
+                        : "text-foreground font-medium"
                     }`}
                   >
                     {task.label}
@@ -157,11 +196,16 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-accent-warm/10">
                 <RotateCcw className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-accent-warm" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-reviews")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">
+                {t("preview-reviews")}
+              </span>
             </div>
             <ul className="space-y-1.5 sm:space-y-2">
               {reviewQueue.map((item, i) => (
-                <li key={i} className="flex items-center justify-between text-[11px] sm:text-xs">
+                <li
+                  key={i}
+                  className="flex items-center justify-between text-[11px] sm:text-xs"
+                >
                   <span className="text-foreground font-medium truncate max-w-[100px] sm:max-w-[120px]">
                     {item.subject}
                   </span>
@@ -190,22 +234,30 @@ function MiniProductPreview() {
               <div className="p-1.5 rounded-lg bg-success/10">
                 <TrendingUp className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-success" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview-week")}</span>
+              <span className="text-xs sm:text-sm font-bold text-foreground">
+                {t("preview-week")}
+              </span>
             </div>
             <div className="space-y-2 sm:space-y-2.5">
               <div>
                 <div className="flex justify-between text-[11px] sm:text-xs mb-1">
-                  <span className="text-muted-foreground">{t("preview-progress")}</span>
+                  <span className="text-muted-foreground">
+                    {t("preview-progress")}
+                  </span>
                   <span className="text-foreground font-bold">68%</span>
                 </div>
                 <Progress value={68} className="h-1.5 sm:h-2" />
               </div>
               <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview-hours")}</span>
+                <span className="text-muted-foreground">
+                  {t("preview-hours")}
+                </span>
                 <span className="text-foreground font-bold">8h 30min</span>
               </div>
               <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview-goal")}</span>
+                <span className="text-muted-foreground">
+                  {t("preview-goal")}
+                </span>
                 <span className="text-foreground font-bold">12h</span>
               </div>
             </div>
@@ -219,7 +271,10 @@ function MiniProductPreview() {
 export function LandingHero() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const searchParams = useSearch({ from: "/" }) as { perfil?: ProfileKey; redirect?: string };
+  const searchParams = useSearch({ from: "/" }) as {
+    perfil?: ProfileKey;
+    redirect?: string;
+  };
   const [profile, setProfile] = useState<ProfileKey>(() => {
     const urlProfile = searchParams?.perfil;
     if (isValidProfile(urlProfile ?? null)) return urlProfile!;
@@ -250,7 +305,9 @@ export function LandingHero() {
     el.scrollIntoView({ behavior: "smooth", block: "start" });
     window.requestAnimationFrame(() => {
       setTimeout(() => {
-        const emailInput = el.querySelector('input[type="email"]') as HTMLInputElement;
+        const emailInput = el.querySelector(
+          'input[type="email"]',
+        ) as HTMLInputElement;
         emailInput?.focus();
       }, 150);
     });
@@ -266,15 +323,22 @@ export function LandingHero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="min-w-0 text-center lg:text-left">
             <div className="flex justify-center lg:justify-start mb-4">
-              <KickerBadge variant="warm" className="max-w-[calc(100vw-2rem)] sm:max-w-none">
+              <KickerBadge
+                variant="warm"
+                className="max-w-[calc(100vw-2rem)] sm:max-w-none"
+              >
                 <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                <span className="min-w-0 whitespace-normal text-center">{t("hero-kicker")}</span>
+                <span className="min-w-0 whitespace-normal text-center">
+                  {t("hero-kicker")}
+                </span>
               </KickerBadge>
             </div>
 
             <h1 className="display-h1 text-foreground">
               {t("hero-headline")}
-              <HeadlineHighlight>{t("hero-headline-highlight")}</HeadlineHighlight>
+              <HeadlineHighlight>
+                {t("hero-headline-highlight")}
+              </HeadlineHighlight>
             </h1>
 
             <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -282,7 +346,9 @@ export function LandingHero() {
             </p>
 
             <div className="mt-6">
-              <p className="text-sm text-foreground font-semibold mb-2">{t("hero-studying-for")}</p>
+              <p className="text-sm text-foreground font-semibold mb-2">
+                {t("hero-studying-for")}
+              </p>
               <ToggleGroup
                 type="single"
                 value={profile}
@@ -298,8 +364,12 @@ export function LandingHero() {
                   >
                     {key === "certificacao" ? (
                       <>
-                        <span className="sm:hidden">{t("hero-profile-certificacao-short")}</span>
-                        <span className="hidden sm:inline">{profileData[key].label}</span>
+                        <span className="sm:hidden">
+                          {t("hero-profile-certificacao-short")}
+                        </span>
+                        <span className="hidden sm:inline">
+                          {profileData[key].label}
+                        </span>
                       </>
                     ) : (
                       profileData[key].label
@@ -311,7 +381,10 @@ export function LandingHero() {
 
             <ul className="mt-5 space-y-2 w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-lg text-left">
               {currentProfile.benefits.map((benefit, index) => (
-                <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
+                <li
+                  key={index}
+                  className="flex items-start gap-2.5 text-sm text-foreground"
+                >
                   <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
                   <span className="font-medium">{benefit}</span>
                 </li>
@@ -343,25 +416,29 @@ export function LandingHero() {
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 mt-5 text-sm text-muted-foreground w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-none">
               <a
-                href="mailto:support@studi.app"
+                href="mailto:support@studai.app"
                 className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
               >
                 <Mail className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">support@studi.app</span>
+                <span className="text-xs sm:text-sm">support@studai.app</span>
               </a>
               <Link
                 to="/security"
                 className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
               >
                 <Shield className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common-security")}</span>
+                <span className="text-xs sm:text-sm">
+                  {t("common-security")}
+                </span>
               </Link>
               <Link
                 to="/privacy"
                 className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
               >
                 <FileText className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common-privacy")}</span>
+                <span className="text-xs sm:text-sm">
+                  {t("common-privacy")}
+                </span>
               </Link>
             </div>
 
@@ -371,7 +448,11 @@ export function LandingHero() {
           </div>
 
           <div className="min-w-0 flex flex-col gap-6">
-            <div id="auth-card" tabIndex={-1} className="outline-none flex justify-center lg:justify-end">
+            <div
+              id="auth-card"
+              tabIndex={-1}
+              className="outline-none flex justify-center lg:justify-end"
+            >
               <AuthCard />
             </div>
             <div className="hidden lg:block">
