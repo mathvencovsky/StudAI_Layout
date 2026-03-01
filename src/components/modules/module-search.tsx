@@ -47,10 +47,20 @@ export const ModuleSearch: React.FC<ModuleSearchProps> = ({
           <p className="text-sm text-muted-foreground mt-0.5">{t("manage-modules")}</p>
         </div>
         {onCreateModule && (
-          <Button onClick={onCreateModule} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            {t("create-module")}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => navigate({ to: "/module-create-with-content" })}
+              className="flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              {t("create-module-with-content")}
+            </Button>
+            <Button onClick={onCreateModule} className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              {t("create-module")}
+            </Button>
+          </div>
         )}
       </div>
 

@@ -68,7 +68,7 @@ export async function fetchFromMattwApi(
 ): Promise<ExtractedMetadata | null> {
   try {
     const apiKey = "foo1";
-    const quotaUser = "OahQi27TmlgO0nFFARoJ7z16muvV1SGXjJdeQFJZ";
+    const quotaUser = "5a8QtDaGG5qEWbJoLUWEmkbIrlNLUvkhALF18mKJ";
 
     const params = new URLSearchParams({
       key: apiKey,

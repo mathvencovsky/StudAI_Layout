@@ -111,29 +111,35 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         onClick: navigateTo("/module"),
         icon: IconBooks,
       },
-      ...(isAdminUser
-        ? [
-            {
-              title: t("chat"),
-              to: "/chat",
-              onClick: navigateTo("/chat"),
-              icon: IconMessage,
-            },
-          ]
-        : []),
-      {
-        title: t("assessments"),
-        to: "/assessments",
-        onClick: navigateTo("/assessments"),
-        icon: IconClipboardCheck,
-      },
-      {
-        title: t("favourites"),
-        to: "/favourites",
-        onClick: navigateTo("/favourites"),
-        icon: IconHeart,
-      },
+      // {
+      //   title: t("assessments"),
+      //   to: "/assessments",
+      //   onClick: navigateTo("/assessments"),
+      //   icon: IconClipboardCheck,
+      // },
     ],
+    navAdmin: isAdminUser
+      ? [
+          {
+            title: t("chat"),
+            to: "/chat",
+            onClick: navigateTo("/chat"),
+            icon: IconMessage,
+          },
+          {
+            title: t("manage-content"),
+            to: "/content",
+            onClick: navigateTo("/content"),
+            icon: IconSettings,
+          },
+          {
+            title: t("admin"),
+            to: "/admin",
+            onClick: navigateTo("/admin"),
+            icon: IconShield,
+          },
+        ]
+      : [],
     // navProgress: [
     //   {
     //     title: t("sessions"),
@@ -182,27 +188,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navConfig: [
       {
-        title: t("saved"),
-        to: "/saved",
-        onClick: navigateTo("/saved"),
-        icon: IconBookmark,
+        title: t("favourites"),
+        to: "/favourites",
+        onClick: navigateTo("/favourites"),
+        icon: IconHeart,
       },
-      ...(isAdminUser
-        ? [
-            {
-              title: t("manage-content"),
-              to: "/content",
-              onClick: navigateTo("/content"),
-              icon: IconSettings,
-            },
-            {
-              title: t("admin"),
-              to: "/admin",
-              onClick: navigateTo("/admin"),
-              icon: IconShield,
-            },
-          ]
-        : []),
       {
         title: t("settings"),
         to: "/settings",
@@ -241,6 +231,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavMain items={data.navProgress} label={t("nav-progress")} /> */}
         <NavMain items={data.navData} label={t("nav-data")} />
         <NavMain items={data.navConfig} label={t("nav-config")} />
+        {isAdminUser && (
+          <NavMain items={data.navAdmin} label={t("nav-admin")} />
+        )}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

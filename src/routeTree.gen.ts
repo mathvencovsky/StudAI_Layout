@@ -36,6 +36,7 @@ import { Route as MyTrackRouteImport } from './routes/my-track'
 import { Route as MyPlanRouteImport } from './routes/my-plan'
 import { Route as MyGoalRouteImport } from './routes/my-goal'
 import { Route as MyCoursesRouteImport } from './routes/my-courses'
+import { Route as ModuleCreateWithContentRouteImport } from './routes/module-create-with-content'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
 import { Route as MetricsRouteImport } from './routes/metrics'
@@ -206,6 +207,11 @@ const MyGoalRoute = MyGoalRouteImport.update({
 const MyCoursesRoute = MyCoursesRouteImport.update({
   id: '/my-courses',
   path: '/my-courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModuleCreateWithContentRoute = ModuleCreateWithContentRouteImport.update({
+  id: '/module-create-with-content',
+  path: '/module-create-with-content',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModuleCreateRoute = ModuleCreateRouteImport.update({
@@ -410,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/metrics': typeof MetricsRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
   '/my-courses': typeof MyCoursesRoute
   '/my-goal': typeof MyGoalRoute
   '/my-plan': typeof MyPlanRoute
@@ -472,6 +479,7 @@ export interface FileRoutesByTo {
   '/learning-preferences': typeof LearningPreferencesRoute
   '/metrics': typeof MetricsRoute
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
   '/my-courses': typeof MyCoursesRoute
   '/my-goal': typeof MyGoalRoute
   '/my-plan': typeof MyPlanRoute
@@ -534,6 +542,7 @@ export interface FileRoutesById {
   '/metrics': typeof MetricsRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
   '/my-courses': typeof MyCoursesRoute
   '/my-goal': typeof MyGoalRoute
   '/my-plan': typeof MyPlanRoute
@@ -601,6 +610,7 @@ export interface FileRouteTypes {
     | '/metrics'
     | '/module'
     | '/module-create'
+    | '/module-create-with-content'
     | '/my-courses'
     | '/my-goal'
     | '/my-plan'
@@ -663,6 +673,7 @@ export interface FileRouteTypes {
     | '/learning-preferences'
     | '/metrics'
     | '/module-create'
+    | '/module-create-with-content'
     | '/my-courses'
     | '/my-goal'
     | '/my-plan'
@@ -724,6 +735,7 @@ export interface FileRouteTypes {
     | '/metrics'
     | '/module'
     | '/module-create'
+    | '/module-create-with-content'
     | '/my-courses'
     | '/my-goal'
     | '/my-plan'
@@ -790,6 +802,7 @@ export interface RootRouteChildren {
   MetricsRoute: typeof MetricsRoute
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
+  ModuleCreateWithContentRoute: typeof ModuleCreateWithContentRoute
   MyCoursesRoute: typeof MyCoursesRoute
   MyGoalRoute: typeof MyGoalRoute
   MyPlanRoute: typeof MyPlanRoute
@@ -1011,6 +1024,13 @@ declare module '@tanstack/react-router' {
       path: '/my-courses'
       fullPath: '/my-courses'
       preLoaderRoute: typeof MyCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/module-create-with-content': {
+      id: '/module-create-with-content'
+      path: '/module-create-with-content'
+      fullPath: '/module-create-with-content'
+      preLoaderRoute: typeof ModuleCreateWithContentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/module-create': {
@@ -1390,6 +1410,7 @@ const rootRouteChildren: RootRouteChildren = {
   MetricsRoute: MetricsRoute,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,
+  ModuleCreateWithContentRoute: ModuleCreateWithContentRoute,
   MyCoursesRoute: MyCoursesRoute,
   MyGoalRoute: MyGoalRoute,
   MyPlanRoute: MyPlanRoute,

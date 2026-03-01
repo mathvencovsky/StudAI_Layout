@@ -5,12 +5,22 @@
   },
   "workspaces": {
     ".": {
-      "entry": ["src/main.tsx", "eslint.config.js"],
-      "project": ["src/**/*.{ts,tsx}"]
+      "entry": [
+        "src/main.tsx",
+        "eslint.config.js"
+      ],
+      "project": [
+        "src/**/*.{ts,tsx}"
+      ]
     },
     "amplify": {
-      "entry": ["backend.ts"],
-      "project": ["**/*.ts"]
+      "entry": [
+        "backend.ts",
+        "data/chat/handler.ts"
+      ],
+      "project": [
+        "**/*.ts"
+      ]
     }
   }
 }

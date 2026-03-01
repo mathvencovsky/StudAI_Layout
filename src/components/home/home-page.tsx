@@ -65,48 +65,31 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-6xl mx-auto">
-      <div className="space-y-6">
-        {/* Hero - Minimal greeting */}
+    <div className="px-4 sm:px-6 lg:px-8 py-4 pb-24 md:pb-6 max-w-6xl mx-auto">
+      <div className="space-y-4">
         <UserGreeting displayName={user?.displayName} />
-
-        {/* Stats overview - single row */}
         <StatsCards />
+        <UpgradeCard variant="compact" />
 
-        {/* Continue Module + Upgrade Card */}
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-4 lg:grid-cols-2">
           <section className="border rounded-lg bg-card overflow-hidden">
-            <div className="p-4 border-b">
-              <h3 className="font-medium text-foreground">
-                {t("continue-learning")}
-              </h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                {t("continue-learning-description") ??
-                  "Pick up where you left off."}
-              </p>
+            <div className="p-3 border-b">
+              <h3 className="font-medium text-sm text-foreground">{t("continue-learning")}</h3>
             </div>
-            <div className="p-4">
+            <div className="p-3">
               <LastStartedModuleSection />
             </div>
           </section>
 
-          <UpgradeCard />
+          <section className="border rounded-lg bg-card overflow-hidden">
+            <div className="p-3 border-b">
+              <h3 className="font-medium text-sm text-foreground">{t("continue-track")}</h3>
+            </div>
+            <div className="p-3">
+              <LastStartedTrackSection />
+            </div>
+          </section>
         </div>
-
-        {/* Continue Track - full row */}
-        <section className="border rounded-lg bg-card overflow-hidden">
-          <div className="p-4 border-b">
-            <h3 className="font-medium text-foreground">
-              {t("continue-track")}
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {t("continue-track-description") ?? "Your active learning path."}
-            </p>
-          </div>
-          <div className="p-4">
-            <LastStartedTrackSection />
-          </div>
-        </section>
       </div>
     </div>
   );

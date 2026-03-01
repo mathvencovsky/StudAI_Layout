@@ -19,7 +19,7 @@ const schema = a.schema({
       type: a.enum(["youtube_video", "article", "quiz", "assignment", "lab"]),
       durationInSeconds: a.integer().required(),
       link: a.url().required(),
-      category: a.string().required(),
+      category: a.string(),
       level: a.enum(["beginner", "intermediate", "advanced"]),
       thumbnailUrl: a.url(),
       author: a.string(),
@@ -364,14 +364,7 @@ const schema = a.schema({
       title: a.string().required(),
       url: a.url().required(),
       language: a.enum(["pt", "en"]),
-      type: a.enum([
-        "video",
-        "article",
-        "docs",
-        "repo",
-        "playlist",
-        "course",
-      ]),
+      type: a.enum(["video", "article", "docs", "repo", "playlist", "course"]),
       provider: a.string(),
       tags: a.string().required().array(),
       verified: a.boolean().default(false),
@@ -413,7 +406,12 @@ const schema = a.schema({
       promptText: a.string().required(),
       description: a.string(),
       isActive: a.boolean().default(false),
-      promptType: a.enum(["system", "course_builder", "coach", "recommendations"]),
+      promptType: a.enum([
+        "system",
+        "course_builder",
+        "coach",
+        "recommendations",
+      ]),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
