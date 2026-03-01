@@ -165,12 +165,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         onClick: navigateTo("/reports"),
         icon: IconFileText,
       },
-      {
-        title: t("metrics"),
-        to: "/metrics",
-        onClick: navigateTo("/metrics"),
-        icon: IconChartBar,
-      },
+      // {
+      //   title: t("metrics"),
+      //   to: "/metrics",
+      //   onClick: navigateTo("/metrics"),
+      //   icon: IconChartBar,
+      // },
       {
         title: t("activity"),
         to: "/activity",

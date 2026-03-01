@@ -222,14 +222,8 @@ const schema = a.schema({
 
   UserProfile: a
     .model({
-      displayName: a.string(),
       locale: a.string().default("pt-BR"),
-      dailyGoalMinutes: a.integer().default(30),
-      notificationsEnabled: a.boolean().default(true),
-      dailyReminderEnabled: a.boolean().default(false),
       theme: a.string().default("system"),
-      xp: a.integer().default(0),
-      level: a.integer().default(1),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),

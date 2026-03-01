@@ -6,7 +6,6 @@ import {
   Clock, 
   Target, 
   Flame,
-  Trophy
 } from "lucide-react";
 import { useMetrics } from "@/hooks/metrics/use-metrics";
 import { LoadingState } from "@/components/ui/loading-state";
@@ -23,14 +22,12 @@ export function MetricsPage() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-6xl mx-auto space-y-6">
-      {/* Header */}
       <div>
         <h1 className="text-lg font-medium text-foreground">Métricas</h1>
         <p className="text-sm text-muted-foreground mt-0.5">Estatísticas de desempenho</p>
       </div>
 
-      {/* Main Stats */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
@@ -40,12 +37,8 @@ export function MetricsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.studyTime.total}h</div>
-            <Progress 
-              value={(metrics.studyTime.thisMonth / metrics.studyTime.monthlyGoal) * 100} 
-              className="mt-2" 
-            />
             <p className="text-xs text-muted-foreground mt-2">
-              {metrics.studyTime.monthlyGoal - metrics.studyTime.thisMonth}h {t("pages-metrics-to-goal")}
+              {metrics.studyTime.thisMonth}h {t("pages-metrics-this-month")}
             </p>
           </CardContent>
         </Card>
@@ -68,25 +61,6 @@ export function MetricsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              {t("pages-metrics-total-xp")}
-            </CardTitle>
-            <Trophy className="h-4 w-4 text-yellow-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.xp.total} XP</div>
-            <Progress 
-              value={((metrics.xp.total % metrics.xp.xpPerLevel) / metrics.xp.xpPerLevel) * 100} 
-              className="mt-2" 
-            />
-            <p className="text-xs text-muted-foreground mt-2">
-              {t("pages-metrics-level")} {metrics.xp.level} • {metrics.xp.xpToNextLevel} XP {t("pages-metrics-to-next-level")}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
               {t("pages-metrics-completions")}
             </CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
@@ -100,7 +74,6 @@ export function MetricsPage() {
         </Card>
       </div>
 
-      {/* Tabs */}
       <Tabs defaultValue="activity" className="w-full">
         <TabsList>
           <TabsTrigger value="activity">{t("pages-metrics-activity")}</TabsTrigger>
@@ -120,14 +93,7 @@ export function MetricsPage() {
                   <div key={idx} className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="font-medium">{day.day}</span>
-                      <div className="flex items-center gap-4">
-                        <span className="text-muted-foreground">
-                          {day.minutes} min
-                        </span>
-                        <span className="text-muted-foreground">
-                          {day.xp} XP
-                        </span>
-                      </div>
+                      <span className="text-muted-foreground">{day.minutes} min</span>
                     </div>
                     <Progress value={day.minutes > 0 ? (day.minutes / 60) * 100 : 0} />
                   </div>
@@ -141,21 +107,12 @@ export function MetricsPage() {
               <CardTitle>{t("pages-metrics-monthly-stats")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages-metrics-active-days")}</span>
-                    <span className="font-bold">{metrics.monthlyStats.activeDays}/30</span>
-                  </div>
-                  <Progress value={(metrics.monthlyStats.activeDays / 30) * 100} />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">{t("pages-metrics-active-days")}</span>
+                  <span className="font-bold">{metrics.monthlyStats.activeDays}/30</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages-metrics-daily-goal")}</span>
-                    <span className="font-bold">{metrics.monthlyStats.dailyGoalRate}%</span>
-                  </div>
-                  <Progress value={metrics.monthlyStats.dailyGoalRate} />
-                </div>
+                <Progress value={(metrics.monthlyStats.activeDays / 30) * 100} />
               </div>
             </CardContent>
           </Card>

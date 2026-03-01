@@ -1,11 +1,9 @@
 import { useMemo } from "react";
 import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useListQuizAttempts } from "@/hooks/quiz/use-list-quiz-attempts";
-import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useListLoginDays } from "@/hooks/user/use-login-days";
 import { calculateStreak } from "@/utils/calculate-streak";
 
-const XP_PER_LEVEL = 500;
 const DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 const DAY_MS = 86400000;
 
@@ -13,17 +11,10 @@ interface MetricsData {
   studyTime: {
     total: number;
     thisMonth: number;
-    monthlyGoal: number;
   };
   streak: {
     current: number;
     longest: number;
-  };
-  xp: {
-    total: number;
-    level: number;
-    xpPerLevel: number;
-    xpToNextLevel: number;
   };
   completions: {
     total: number;
@@ -33,11 +24,9 @@ interface MetricsData {
   weeklyActivity: {
     day: string;
     minutes: number;
-    xp: number;
   }[];
   monthlyStats: {
     activeDays: number;
-    dailyGoalRate: number;
   };
   progressByCategory: {
     name: string;
@@ -57,7 +46,6 @@ interface MetricsData {
 export function useMetrics() {
   const { data: sessions = [], isLoading: sessionsLoading, error: sessionsError, refetch } = useListStudySessions();
   const { data: quizAttempts = [], isLoading: quizLoading } = useListQuizAttempts();
-  const { data: profile, isLoading: profileLoading } = useMyProfile();
   const { data: loginDays = [], isLoading: loginDaysLoading } = useListLoginDays();
 
   const data = useMemo((): MetricsData => {
@@ -69,14 +57,6 @@ export function useMetrics() {
       .filter((s) => s.startedAt >= monthStart)
       .reduce((sum, s) => sum + (s.durationMinutes ?? 0), 0);
 
-    const dailyGoalMinutes = profile?.dailyGoalMinutes ?? 30;
-    const monthlyGoalHours = Math.round((dailyGoalMinutes * 30) / 60);
-
-    const xpTotal = profile?.xp ?? 0;
-    const level = profile?.level ?? 1;
-    const xpInCurrentLevel = xpTotal % XP_PER_LEVEL;
-    const xpToNextLevel = XP_PER_LEVEL - xpInCurrentLevel;
-
     const streak = calculateStreak(loginDays);
 
     const weeklyActivity = Array.from({ length: 7 }, (_, i) => {
@@ -87,7 +67,6 @@ export function useMetrics() {
       return {
         day: DAY_LABELS[date.getDay()],
         minutes: daySessions.reduce((sum, s) => sum + (s.durationMinutes ?? 0), 0),
-        xp: daySessions.reduce((sum, s) => sum + (s.xpEarned ?? 0), 0),
       };
     });
 
@@ -99,8 +78,6 @@ export function useMetrics() {
       }),
     );
     const activeDays = activeDaySet.size;
-    const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-    const dailyGoalRate = daysInMonth > 0 ? Math.round((activeDays / daysInMonth) * 100) : 0;
 
     const totalHours = Math.round(totalMinutes / 60);
     const totalSessions = sessions.length;
@@ -149,17 +126,10 @@ export function useMetrics() {
       studyTime: {
         total: totalHours,
         thisMonth: Math.round(thisMonthMinutes / 60),
-        monthlyGoal: monthlyGoalHours,
       },
       streak: {
         current: streak.current,
         longest: streak.longest,
-      },
-      xp: {
-        total: xpTotal,
-        level,
-        xpPerLevel: XP_PER_LEVEL,
-        xpToNextLevel,
       },
       completions: {
         total: quizAttempts.length,
@@ -169,14 +139,13 @@ export function useMetrics() {
       weeklyActivity,
       monthlyStats: {
         activeDays,
-        dailyGoalRate,
       },
       progressByCategory: [],
       achievements,
     };
-  }, [sessions, quizAttempts, profile, loginDays]);
+  }, [sessions, quizAttempts, loginDays]);
 
-  const isLoading = sessionsLoading || quizLoading || profileLoading || loginDaysLoading;
+  const isLoading = sessionsLoading || quizLoading || loginDaysLoading;
   const error = sessionsError;
 
   return { data, isLoading, error, refetch };

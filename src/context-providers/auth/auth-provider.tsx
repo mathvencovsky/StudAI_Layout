@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser, signOut as amplifySignOut } from "aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 import {
   AuthContext,
@@ -63,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       isAuthenticated: !!user,
       loading,
+      signOut: () => amplifySignOut(),
     }),
     [user, loading],
   );

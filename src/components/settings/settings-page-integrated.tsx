@@ -1,9 +1,13 @@
-import { useState } from "react";
-import { useTheme } from "next-themes";
-import { Switch } from "@/components/ui/switch";
+import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ChevronRight, LogOut } from "lucide-react";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useAuth } from "@/hooks/use-auth";
@@ -13,18 +17,9 @@ import { useTranslation } from "react-i18next";
 
 export default function SettingsPageIntegrated() {
   const { t, i18n } = useTranslation();
-  const { theme, setTheme } = useTheme();
-  const { user } = useAuth();
+  const { mode, setMode, colorTheme, setColorTheme } = useTheme();
+  const { user, signOut } = useAuth();
   const { data: profile, isLoading, error, refetch } = useMyProfile();
-
-  const [localNotifications, setLocalNotifications] = useState(profile?.notificationsEnabled ?? false);
-  const [localReminder, setLocalReminder] = useState(profile?.dailyReminderEnabled ?? false);
-
-  const isDarkMode = theme === "dark";
-
-  const handleDarkModeToggle = (checked: boolean) => {
-    setTheme(checked ? "dark" : "light");
-  };
 
   const handleLanguageChange = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -57,47 +52,6 @@ export default function SettingsPageIntegrated() {
         </p>
       </div>
 
-      {/* Notifications */}
-      <section className="border rounded-lg bg-card overflow-hidden">
-        <div className="p-4 border-b">
-          <h2 className="font-medium text-foreground">
-            {t("pages-settings-notifications")}
-          </h2>
-        </div>
-        <div className="divide-y">
-          <div className="flex items-center justify-between p-4">
-            <div>
-              <Label htmlFor="notifications" className="text-sm">
-                {t("pages-settings-push")}
-              </Label>
-              <p className="text-xs text-muted-foreground">
-                {t("pages-settings-push-description")}
-              </p>
-            </div>
-            <Switch
-              id="notifications"
-              checked={localNotifications}
-              onCheckedChange={setLocalNotifications}
-            />
-          </div>
-          <div className="flex items-center justify-between p-4">
-            <div>
-              <Label htmlFor="reminder" className="text-sm">
-                {t("pages-settings-daily-reminder")}
-              </Label>
-              <p className="text-xs text-muted-foreground">
-                {t("pages-settings-daily-reminder-description")}
-              </p>
-            </div>
-            <Switch
-              id="reminder"
-              checked={localReminder}
-              onCheckedChange={setLocalReminder}
-            />
-          </div>
-        </div>
-      </section>
-
       {/* Appearance */}
       <section className="border rounded-lg bg-card overflow-hidden">
         <div className="p-4 border-b">
@@ -105,21 +59,31 @@ export default function SettingsPageIntegrated() {
             {t("pages-settings-appearance")}
           </h2>
         </div>
-        <div className="p-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <Label htmlFor="darkMode" className="text-sm">
-                {t("pages-settings-dark-mode")}
-              </Label>
-              <p className="text-xs text-muted-foreground">
-                {t("pages-settings-dark-mode-description")}
-              </p>
-            </div>
-            <Switch
-              id="darkMode"
-              checked={isDarkMode}
-              onCheckedChange={handleDarkModeToggle}
-            />
+        <div className="p-4 space-y-4">
+          <div className="space-y-2">
+            <Label className="text-sm">{t("pages-settings-dark-mode")}</Label>
+            <Select value={mode} onValueChange={setMode}>
+              <SelectTrigger className="h-9">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="light">{t("pages-settings-theme-light")}</SelectItem>
+                <SelectItem value="dark">{t("pages-settings-theme-dark")}</SelectItem>
+                <SelectItem value="system">{t("pages-settings-theme-system")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-sm">{t("pages-settings-color-theme")}</Label>
+            <Select value={colorTheme} onValueChange={setColorTheme}>
+              <SelectTrigger className="h-9">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="default">{t("pages-settings-color-default")}</SelectItem>
+                <SelectItem value="studai">{t("pages-settings-color-studai")}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </section>
@@ -131,35 +95,10 @@ export default function SettingsPageIntegrated() {
             {t("pages-settings-study")}
           </h2>
         </div>
-        <div className="p-4 space-y-4">
+        <div className="p-4">
           <div className="space-y-2">
-            <Label className="text-sm">
-              {t("pages-settings-daily-goal")}
-            </Label>
-            <Select
-              value={profile?.dailyGoalMinutes?.toString() ?? "60"}
-              onValueChange={(value) => console.log("Update goal:", value)}
-            >
-              <SelectTrigger className="h-9">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="30">30 min</SelectItem>
-                <SelectItem value="45">45 min</SelectItem>
-                <SelectItem value="60">60 min</SelectItem>
-                <SelectItem value="90">90 min</SelectItem>
-                <SelectItem value="120">120 min</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label className="text-sm">
-              {t("pages-settings-language")}
-            </Label>
-            <Select
-              value={i18n.language}
-              onValueChange={handleLanguageChange}
-            >
+            <Label className="text-sm">{t("pages-settings-language")}</Label>
+            <Select value={i18n.language} onValueChange={handleLanguageChange}>
               <SelectTrigger className="h-9">
                 <SelectValue />
               </SelectTrigger>
@@ -224,12 +163,14 @@ export default function SettingsPageIntegrated() {
       </section>
 
       {/* Logout */}
-      <Button variant="outline" className="w-full text-muted-foreground h-9 text-sm">
+      <Button
+        variant="outline"
+        className="w-full text-muted-foreground h-9 text-sm"
+        onClick={signOut}
+      >
         <LogOut className="w-4 h-4 mr-2" />
         {t("pages-settings-logout")}
       </Button>
-
-      <p className="text-center text-xs text-muted-foreground">v1.0.0</p>
     </div>
   );
 }

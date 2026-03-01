@@ -54,13 +54,8 @@ export async function generateRecommendations(
       return getDefaultRecommendations(limit);
     }
 
-    // 3. Get relevant resources
-    const levelStr = typeof profile?.level === "number" 
-      ? (profile.level <= 3 ? "beginner" : profile.level <= 7 ? "intermediate" : "advanced")
-      : "beginner";
-    
     const resources = await retryWithBackoff(() =>
-      getRelevantResources(topics, levelStr, "pt")
+      getRelevantResources(topics, "beginner", "pt")
     );
 
     // If no resources found, return default recommendations
@@ -314,11 +309,7 @@ function scoreResources(
     }
 
     // Match level
-    const userLevel = profile?.level || 1;
-    if (resource.level === "beginner" && userLevel <= 3) score += 5;
-    if (resource.level === "intermediate" && userLevel > 3 && userLevel <= 7)
-      score += 5;
-    if (resource.level === "advanced" && userLevel > 7) score += 5;
+    if (resource.level === "beginner") score += 5;
 
     // Boost if related to active goals
     goals.forEach((goal) => {

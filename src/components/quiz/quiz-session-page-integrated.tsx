@@ -8,8 +8,6 @@ import { Label } from "@/components/ui/label";
 import { ChevronLeft, ChevronRight, CheckCircle2, XCircle } from "lucide-react";
 import { useGetQuiz } from "@/hooks/quiz/use-get-quiz";
 import { useCreateQuizAttempt } from "@/hooks/quiz/use-create-quiz-attempt";
-import { useUpdateProfile } from "@/hooks/user-profile/use-update-profile";
-import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useCreateDailyTask } from "@/hooks/daily-task/use-create-daily-task";
 import { LoadingState } from "@/components/ui/loading-state";
 import { EmptyState } from "@/components/ui/empty-state";
@@ -28,9 +26,7 @@ interface Question {
 export function QuizSessionPageIntegrated({ quizId }: QuizSessionPageIntegratedProps) {
   const navigate = useNavigate();
   const { data: quiz, isLoading } = useGetQuiz({ id: quizId });
-  const { data: profile } = useMyProfile();
   const createAttempt = useCreateQuizAttempt();
-  const updateProfile = useUpdateProfile();
   const createTask = useCreateDailyTask();
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -89,19 +85,6 @@ export function QuizSessionPageIntegrated({ quizId }: QuizSessionPageIntegratedP
         completedAt: Date.now(),
         passed,
       });
-
-      // Atualizar XP se passou
-      if (passed && profile) {
-        const xpGained = 50;
-        const newXp = (profile.xp || 0) + xpGained;
-        const newLevel = Math.floor(newXp / 1000) + 1;
-
-        await updateProfile.mutateAsync({
-          id: profile.id,
-          xp: newXp,
-          level: newLevel,
-        });
-      }
 
       // Marcar tarefa diária
       await createTask.mutateAsync({

@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, Target, Flame, Trophy } from "lucide-react";
+import { Clock, Target, Flame } from "lucide-react";
 import { useMetrics } from "@/hooks/metrics/use-metrics";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
@@ -23,7 +23,7 @@ export function MetricsPage() {
         <p className="text-sm text-muted-foreground mt-0.5">{t("pages-metrics-subtitle")}</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">{t("pages-metrics-study-time")}</CardTitle>
@@ -31,12 +31,8 @@ export function MetricsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{metrics.studyTime.total}h</div>
-            <Progress 
-              value={(metrics.studyTime.thisMonth / metrics.studyTime.monthlyGoal) * 100} 
-              className="mt-2" 
-            />
             <p className="text-xs text-muted-foreground mt-2">
-              {metrics.studyTime.monthlyGoal - metrics.studyTime.thisMonth}h {t("pages-metrics-to-goal")}
+              {metrics.studyTime.thisMonth}h {t("pages-metrics-this-month")}
             </p>
           </CardContent>
         </Card>
@@ -50,23 +46,6 @@ export function MetricsPage() {
             <div className="text-2xl font-bold">{metrics.streak.current} {t("pages-metrics-days")}</div>
             <p className="text-xs text-muted-foreground mt-2">
               {t("pages-metrics-record")}: {metrics.streak.longest} {t("pages-metrics-days")}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t("pages-metrics-total-xp")}</CardTitle>
-            <Trophy className="h-4 w-4 text-yellow-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.xp.total} XP</div>
-            <Progress 
-              value={((metrics.xp.total % metrics.xp.xpPerLevel) / metrics.xp.xpPerLevel) * 100} 
-              className="mt-2" 
-            />
-            <p className="text-xs text-muted-foreground mt-2">
-              {t("pages-metrics-level")} {metrics.xp.level} • {metrics.xp.xpToNextLevel} XP {t("pages-metrics-to-next-level")}
             </p>
           </CardContent>
         </Card>
@@ -104,10 +83,7 @@ export function MetricsPage() {
                   <div key={idx} className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="font-medium">{day.day}</span>
-                      <div className="flex items-center gap-4">
-                        <span className="text-muted-foreground">{day.minutes} min</span>
-                        <span className="text-muted-foreground">{day.xp} XP</span>
-                      </div>
+                      <span className="text-muted-foreground">{day.minutes} min</span>
                     </div>
                     <Progress value={day.minutes > 0 ? (day.minutes / 60) * 100 : 0} />
                   </div>
@@ -121,21 +97,12 @@ export function MetricsPage() {
               <CardTitle>{t("pages-metrics-monthly-stats")}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages-metrics-active-days")}</span>
-                    <span className="font-bold">{metrics.monthlyStats.activeDays}/30</span>
-                  </div>
-                  <Progress value={(metrics.monthlyStats.activeDays / 30) * 100} />
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">{t("pages-metrics-active-days")}</span>
+                  <span className="font-bold">{metrics.monthlyStats.activeDays}/30</span>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{t("pages-metrics-daily-goal")}</span>
-                    <span className="font-bold">{metrics.monthlyStats.dailyGoalRate}%</span>
-                  </div>
-                  <Progress value={metrics.monthlyStats.dailyGoalRate} />
-                </div>
+                <Progress value={(metrics.monthlyStats.activeDays / 30) * 100} />
               </div>
             </CardContent>
           </Card>
