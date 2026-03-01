@@ -254,7 +254,7 @@ const schema = a.schema({
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.owner().to(["create", "read", "update", "delete"])]),
 
   Quiz: a
     .model({

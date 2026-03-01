@@ -15,7 +15,7 @@ export function GoalsPageIntegrated() {
   const history = goals?.filter((g) => g.status === "completed") ?? [];
 
   const formatDate = (timestamp: number | null | undefined) => {
-    if (!timestamp) return t("pages.goals.no-deadline", "Sem prazo");
+    if (!timestamp) return t("pages-goal-no-deadline");
     return new Date(timestamp).toLocaleDateString("pt-BR", {
       day: "2-digit",
       month: "2-digit",
@@ -28,15 +28,15 @@ export function GoalsPageIntegrated() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-medium text-foreground">
-            {t("pages.goals.title", "Metas")}
+            {t("pages-goal-title")}
           </h1>
           <p className="text-sm text-muted-foreground mt-0.5">
-            {t("pages.goals.description", "Objetivos de estudo.")}
+            {t("pages-goal-description")}
           </p>
         </div>
         <Button size="sm" variant="outline" className="h-8 text-xs">
           <Plus size={14} className="mr-1" />
-          {t("pages.goals.new", "Nova")}
+          {t("pages-goal-new")}
         </Button>
       </div>
 
@@ -44,14 +44,11 @@ export function GoalsPageIntegrated() {
       {error && <ErrorState error={error} onRetry={refetch} />}
       {!isLoading && !error && !activeGoal && (
         <EmptyState
-          title={t("pages.goals.no-active", "Nenhuma meta ativa")}
-          description={t(
-            "pages.goals.no-active-description",
-            "Crie uma meta para começar a acompanhar seu progresso"
-          )}
+          title={t("pages-goal-no-active")}
+          description={t("pages-goal-no-active-description")}
           icon={Target}
           action={{
-            label: t("pages.goals.create", "Criar meta"),
+            label: t("pages-goal-create"),
             onClick: () => console.log("Create goal"),
           }}
         />
@@ -67,7 +64,7 @@ export function GoalsPageIntegrated() {
                     {activeGoal.title}
                   </h3>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {t("pages.goals.deadline", "Prazo")}:{" "}
+                    {t("pages-goal-deadline")}:{" "}
                     {formatDate(activeGoal.targetDate)}
                   </p>
                 </div>
@@ -82,7 +79,7 @@ export function GoalsPageIntegrated() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-muted/30 rounded-md">
                   <p className="text-xs text-muted-foreground">
-                    {t("pages.goals.daily-goal", "Meta diária")}
+                    {t("pages-goal-daily-goal")}
                   </p>
                   <p className="text-lg font-semibold text-foreground">
                     {activeGoal.minutesPerDay ?? 0} min
@@ -90,7 +87,7 @@ export function GoalsPageIntegrated() {
                 </div>
                 <div className="p-3 bg-muted/30 rounded-md">
                   <p className="text-xs text-muted-foreground">
-                    {t("pages.goals.hours-remaining", "Horas restantes")}
+                    {t("pages-goal-hours-remaining")}
                   </p>
                   <p className="text-lg font-semibold text-foreground">
                     {activeGoal.hoursRemaining ?? 0}h
@@ -106,7 +103,7 @@ export function GoalsPageIntegrated() {
         <section className="border rounded-lg bg-card overflow-hidden">
           <div className="p-4 border-b">
             <h2 className="font-medium text-foreground">
-              {t("pages.goals.history", "Histórico")}
+              {t("pages-goal-history")}
             </h2>
           </div>
           <div className="divide-y">
@@ -123,7 +120,7 @@ export function GoalsPageIntegrated() {
                     </p>
                   </div>
                   <span className="text-xs text-muted-foreground capitalize">
-                    {t(`pages.goals.status.${goal.status}`, goal.status ?? "")}
+                    {t(`pages-goal-status-${goal.status}`)}
                   </span>
                 </div>
               </div>

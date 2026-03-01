@@ -1,8 +1,14 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { listStudySessions } from "@/api/study-session";
 import { listAllUserContentProgressWithContent } from "@/api/user-content-progress";
+import { listLoginDays } from "@/api/user-login-day";
+import { listUserModuleProgress } from "@/api/module-progress";
+import { listUserTrackProgress } from "@/api/track-progress";
 import { type UserContentProgressWithContent } from "@/model/user-content-progress";
+import { type UserModuleProgress } from "@/model/user-module-progress";
+import { type UserTrackProgress } from "@/model/user-track-progress";
 import { QUERY_KEYS } from "@/api/query-keys";
+import { calculateStreak } from "@/utils/calculate-streak";
 import { type Schema } from "../../../amplify/data/resource";
 
 export type ReportPeriod = "week" | "month" | "year";
@@ -11,7 +17,9 @@ export interface ReportData {
   period: ReportPeriod;
   contentHours: number;
   contentActiveDays: number;
-  contentEvolution: number;
+  contentCompleted: number;
+  modulesCompleted: number;
+  tracksCompleted: number;
   contentBreakdown: {
     videos: number;
     articles: number;
@@ -21,8 +29,9 @@ export interface ReportData {
   contentChartData: { date: string; minutes: number }[];
   activeTimeHours: number;
   activeTimeSessions: number;
-  activeTimeEvolution: number;
   activeTimeChartData: { date: string; minutes: number }[];
+  currentStreak: number;
+  longestStreak: number;
 }
 
 const periodSeconds: Record<ReportPeriod, number> = {
@@ -47,12 +56,14 @@ function buildChartMap(period: ReportPeriod, nowSeconds: number): Record<string,
 function buildReportData(
   sessions: Schema["StudySession"]["type"][],
   contentProgress: UserContentProgressWithContent[],
+  moduleProgress: UserModuleProgress[],
+  trackProgress: UserTrackProgress[],
+  loginDays: string[],
   period: ReportPeriod,
 ): ReportData {
   const now = Math.floor(Date.now() / 1000);
   const duration = periodSeconds[period];
   const currentStart = now - duration;
-  const previousStart = currentStart - duration;
 
   // --- Content metrics ---
   const currentContent = contentProgress.filter(
@@ -62,19 +73,8 @@ function buildReportData(
       p.completionDate >= currentStart &&
       p.completionDate <= now,
   );
-  const previousContent = contentProgress.filter(
-    (p) =>
-      p.isCompleted &&
-      p.completionDate != null &&
-      p.completionDate >= previousStart &&
-      p.completionDate < currentStart,
-  );
 
   const contentMinutes = currentContent.reduce(
-    (sum, p) => sum + Math.floor((p.content?.durationInSeconds ?? 0) / 60),
-    0,
-  );
-  const previousContentMinutes = previousContent.reduce(
     (sum, p) => sum + Math.floor((p.content?.durationInSeconds ?? 0) / 60),
     0,
   );
@@ -84,11 +84,6 @@ function buildReportData(
       .filter((p) => p.completionDate != null)
       .map((p) => dateFromSeconds(p.completionDate!)),
   ).size;
-
-  const contentEvolution =
-    previousContentMinutes > 0
-      ? Math.round(((contentMinutes - previousContentMinutes) / previousContentMinutes) * 1000) / 10
-      : 0;
 
   const contentChartMap = buildChartMap(period, now);
   for (const p of currentContent) {
@@ -109,27 +104,24 @@ function buildReportData(
     else contentBreakdown.other += minutes;
   }
 
+  // --- Module & track completed in period ---
+  const modulesCompleted = moduleProgress.filter(
+    (m) => m.completionDate != null && m.completionDate >= currentStart && m.completionDate <= now,
+  ).length;
+
+  const tracksCompleted = trackProgress.filter(
+    (t) => t.completionDate != null && t.completionDate >= currentStart && t.completionDate <= now,
+  ).length;
+
   // --- Active time metrics ---
   const currentSessions = sessions.filter(
     (s) => s.startedAt >= currentStart && s.startedAt <= now,
-  );
-  const previousSessions = sessions.filter(
-    (s) => s.startedAt >= previousStart && s.startedAt < currentStart,
   );
 
   const activeMinutes = currentSessions.reduce(
     (sum, s) => sum + (s.durationMinutes ?? 0),
     0,
   );
-  const previousActiveMinutes = previousSessions.reduce(
-    (sum, s) => sum + (s.durationMinutes ?? 0),
-    0,
-  );
-
-  const activeTimeEvolution =
-    previousActiveMinutes > 0
-      ? Math.round(((activeMinutes - previousActiveMinutes) / previousActiveMinutes) * 1000) / 10
-      : 0;
 
   const activeTimeChartMap = buildChartMap(period, now);
   for (const s of currentSessions) {
@@ -139,17 +131,22 @@ function buildReportData(
     }
   }
 
+  const streak = calculateStreak(loginDays);
+
   return {
     period,
     contentHours: Math.round((contentMinutes / 60) * 10) / 10,
     contentActiveDays,
-    contentEvolution,
+    contentCompleted: currentContent.length,
+    modulesCompleted,
+    tracksCompleted,
     contentBreakdown,
     contentChartData: Object.entries(contentChartMap).map(([date, minutes]) => ({ date, minutes })),
     activeTimeHours: Math.round((activeMinutes / 60) * 10) / 10,
     activeTimeSessions: currentSessions.length,
-    activeTimeEvolution,
     activeTimeChartData: Object.entries(activeTimeChartMap).map(([date, minutes]) => ({ date, minutes })),
+    currentStreak: streak.current,
+    longestStreak: streak.longest,
   };
 }
 
@@ -157,11 +154,14 @@ export const reportDataQueryOptions = (period: ReportPeriod) =>
   queryOptions({
     queryKey: [QUERY_KEYS.REPORTS, period],
     queryFn: async () => {
-      const [sessions, contentProgress] = await Promise.all([
+      const [sessions, contentProgress, moduleProgress, trackProgress, loginDays] = await Promise.all([
         listStudySessions(),
         listAllUserContentProgressWithContent(),
+        listUserModuleProgress(),
+        listUserTrackProgress(),
+        listLoginDays(),
       ]);
-      return buildReportData(sessions, contentProgress, period);
+      return buildReportData(sessions, contentProgress, moduleProgress, trackProgress, loginDays, period);
     },
     staleTime: 1000 * 60 * 5,
   });

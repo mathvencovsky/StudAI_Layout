@@ -6,9 +6,11 @@ import { LoadingState } from "@/components/ui/loading-state";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { toI18nKey } from "@/lib/i18n-key";
 
 export interface RecommendedTracksEmptyStateProps {
   interests: Category[] | undefined;
+  showBrowseButton?: boolean;
 }
 
 /**
@@ -17,6 +19,7 @@ export interface RecommendedTracksEmptyStateProps {
  */
 export const RecommendedTracksEmptyState = ({
   interests,
+  showBrowseButton = true,
 }: RecommendedTracksEmptyStateProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -60,13 +63,13 @@ export const RecommendedTracksEmptyState = ({
                 </p>
                 {track.categories && track.categories.length > 0 && (
                   <div className="flex flex-wrap gap-1">
-                    {track.categories.map((category: string | null) => (
+                    {track.categories.map((category) => (
                       <Badge
                         key={category}
                         variant="secondary"
                         className="text-xs"
                       >
-                        {category}
+                        {t(toI18nKey("track-category", category))}
                       </Badge>
                     ))}
                   </div>
@@ -76,13 +79,15 @@ export const RecommendedTracksEmptyState = ({
           ))}
         </div>
       )}
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => navigate({ to: "/track" })}
-      >
-        {t("browse-tracks")}
-      </Button>
+      {showBrowseButton && (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate({ to: "/track" })}
+        >
+          {t("browse-tracks")}
+        </Button>
+      )}
     </section>
   );
 };

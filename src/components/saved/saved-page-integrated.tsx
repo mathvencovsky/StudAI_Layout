@@ -35,12 +35,12 @@ export default function SavedPageIntegrated() {
       (now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    if (diffDays === 0) return t("pages.saved.today", "Hoje");
-    if (diffDays === 1) return t("pages.saved.yesterday", "Ontem");
-    if (diffDays < 7) return `${diffDays} ${t("pages.saved.days-ago", "dias atrás")}`;
+    if (diffDays === 0) return t("pages-saved-today");
+    if (diffDays === 1) return t("pages-saved-yesterday");
+    if (diffDays < 7) return `${diffDays} ${t("pages-saved-days-ago")}`;
     if (diffDays < 30) {
       const weeks = Math.floor(diffDays / 7);
-      return `${weeks} ${weeks === 1 ? t("pages.saved.week-ago", "semana atrás") : t("pages.saved.weeks-ago", "semanas atrás")}`;
+      return `${weeks} ${weeks === 1 ? t("pages-saved-week-ago") : t("pages-saved-weeks-ago")}`;
     }
     return date.toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -59,10 +59,10 @@ export default function SavedPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.saved.title", "Salvos")}
+          {t("pages-saved-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.saved.description", "Conteúdos favoritos.")}
+          {t("pages-saved-description")}
         </p>
       </div>
 
@@ -73,18 +73,18 @@ export default function SavedPageIntegrated() {
         <Tabs defaultValue="all" className="w-full">
           <TabsList>
             <TabsTrigger value="all">
-              {t("pages.saved.all", "Todos")} ({savedItems?.length || 0})
+              {t("pages-saved-all")} ({savedItems?.length || 0})
             </TabsTrigger>
             <TabsTrigger value="track">
-              {t("pages.saved.tracks", "Trilhas")} (
+              {t("pages-saved-tracks")} (
               {filterByType("track").length})
             </TabsTrigger>
             <TabsTrigger value="module">
-              {t("pages.saved.modules", "Módulos")} (
+              {t("pages-saved-modules")} (
               {filterByType("module").length})
             </TabsTrigger>
             <TabsTrigger value="content">
-              {t("pages.saved.content", "Conteúdo")} (
+              {t("pages-saved-content")} (
               {filterByType("content").length})
             </TabsTrigger>
           </TabsList>
@@ -95,11 +95,8 @@ export default function SavedPageIntegrated() {
               <TabsContent key={tab} value={tab} className="mt-4">
                 {items.length === 0 ? (
                   <EmptyState
-                    title={t("pages.saved.no-items", "Nenhum item salvo")}
-                    description={t(
-                      "pages.saved.no-items-description",
-                      "Salve conteúdos para acessá-los rapidamente"
-                    )}
+                    title={t("pages-saved-no-items")}
+                    description={t("pages-saved-no-items-description")}
                     icon={Bookmark}
                   />
                 ) : (
@@ -117,10 +114,7 @@ export default function SavedPageIntegrated() {
                               {item.title}
                             </p>
                             <p className="text-xs text-muted-foreground mt-0.5">
-                              {t(
-                                `pages.saved.type.${item.itemType}`,
-                                item.itemType ?? ""
-                              )}{" "}
+                              {t(`pages-saved-type-${item.itemType}`)}{" "}
                               · {formatDate(item.createdAt ?? "")}
                             </p>
                           </div>

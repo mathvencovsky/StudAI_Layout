@@ -119,10 +119,10 @@ export default function ContentsPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-24 md:pb-8 max-w-7xl mx-auto space-y-6">
       <div>
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-card-foreground">
-          {t("pages.contents.title", "Conteúdos")}
+          {t("pages-contents-title")}
         </h1>
         <p className="text-sm sm:text-base text-muted-foreground mt-1">
-          {t("pages.contents.description", "Explore todos os materiais de estudo disponíveis")}
+          {t("pages-contents-description")}
         </p>
       </div>
 
@@ -141,8 +141,8 @@ export default function ContentsPageIntegrated() {
           {error && <ErrorState error={error} onRetry={refetch} />}
           {!isLoading && !error && (!contents || contents.length === 0) && (
             <EmptyState
-              title={t("pages.contents.no-content", "Nenhum conteúdo encontrado")}
-              description={t("pages.contents.no-content-description", "Tente outro filtro")}
+              title={t("pages-contents-no-content")}
+              description={t("pages-contents-no-content-description")}
               icon={BookOpen}
             />
           )}

@@ -4,6 +4,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Clock, BookCheck, CalendarDays, AlertCircle } from "lucide-react";
 
+const formatStudyTime = (totalSeconds: number): string => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
+};
+
 /**
  * Container component that displays user statistics in a grid of cards
  */
@@ -39,7 +45,7 @@ export const StatsCards = () => {
         <div className="p-4">
           <Clock className="h-4 w-4 text-muted-foreground mx-auto mb-1" />
           <span className="text-sm font-medium text-foreground">
-            {data?.totalHoursStudied ?? 0}
+            {formatStudyTime(data?.totalSecondsStudied ?? 0)}
           </span>
           <p className="text-[10px] text-muted-foreground">
             {t("total-hours-studied")}

@@ -9,6 +9,8 @@ import { useSearch } from "@/hooks/search/use-search";
 import { LoadingState } from "@/components/ui/loading-state";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useTranslation } from "react-i18next";
+import { RecommendedTracksEmptyState } from "@/components/home/recommended-tracks-empty-state";
+import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
 
 export function SearchPage() {
   const { t } = useTranslation();
@@ -19,6 +21,7 @@ export function SearchPage() {
   const { data: results, isLoading } = useSearch(searchQuery, {
     type: typeFilter,
   });
+  const { data: learningPreference } = useMyLearningPreference();
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -96,14 +99,7 @@ export function SearchPage() {
       {/* Results */}
       <div>
         {searchQuery.length < 3 ? (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <Search className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground">
-                {t("pages-search-min-chars")}
-              </p>
-            </CardContent>
-          </Card>
+          <RecommendedTracksEmptyState interests={learningPreference?.interests} showBrowseButton={false} />
         ) : isLoading ? (
           <LoadingState />
         ) : !results || results.length === 0 ? (

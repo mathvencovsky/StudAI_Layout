@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { useMyAiWaitlist } from "@/hooks/ai-waitlist/use-my-ai-waitlist";
+import { useCreateAiWaitlist } from "@/hooks/ai-waitlist/use-create-ai-waitlist";
 
 export function MyPlanPage() {
   const { t } = useTranslation();
@@ -29,6 +31,10 @@ export function MyPlanPage() {
   );
 
   const currentPlan = "free"; // Mock - in production this would come from a hook
+
+  const { data: waitlistEntry } = useMyAiWaitlist();
+  const { mutate: joinWaitlist, isPending: isJoining } = useCreateAiWaitlist();
+  const isOnWaitlist = !!waitlistEntry;
 
   const plans = [
     {
@@ -87,11 +93,7 @@ export function MyPlanPage() {
       return;
     }
 
-    const subject = encodeURIComponent(t("pricing-waitlist-subject"));
-    const body = encodeURIComponent(
-      t("pricing-waitlist-body", { profile: "Pro" }),
-    );
-    window.location.href = `mailto:support@studai.app?subject=${subject}&body=${body}`;
+    joinWaitlist();
   };
 
   const benefits = [
@@ -244,15 +246,22 @@ export function MyPlanPage() {
                   ))}
                 </ul>
 
+                {plan.id === "pro" && isOnWaitlist ? (
+                  <p className="text-sm text-success text-center">
+                    {t("ai-chat-waitlist-already-joined")}
+                  </p>
+                ) : (
                 <Button
                   className="w-full group"
                   variant={plan.ctaVariant}
                   size="lg"
                   onClick={() => handleUpgrade(plan.id)}
-                  disabled={isCurrent}
+                  disabled={isCurrent || isJoining}
                 >
                   {isCurrent ? (
                     plan.cta
+                  ) : isJoining ? (
+                    t("ai-chat-waitlist-joining")
                   ) : (
                     <>
                       {plan.cta}
@@ -260,6 +269,7 @@ export function MyPlanPage() {
                     </>
                   )}
                 </Button>
+                )}
 
                 {plan.id === "pro" && (
                   <p className="text-xs text-center text-muted-foreground">

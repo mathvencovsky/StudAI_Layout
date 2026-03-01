@@ -6,6 +6,7 @@ import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { EmptyState } from "@/components/ui/empty-state";
 import { useTranslation } from "react-i18next";
+import { type TFunction } from "i18next";
 
 const getPriorityColor = (priority: string) => {
   switch (priority) {
@@ -20,18 +21,18 @@ const getPriorityColor = (priority: string) => {
   }
 };
 
-const formatDueDate = (timestampSeconds: number, t: (key: string, fallback: string) => string) => {
+const formatDueDate = (timestampSeconds: number, t: TFunction) => {
   const dueDay = new Date(timestampSeconds * 1000);
   dueDay.setHours(0, 0, 0, 0);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const diffDays = Math.floor((dueDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
-  if (diffDays === 0) return t("pages.reviews.today", "Hoje");
-  if (diffDays === 1) return t("pages.reviews.tomorrow", "Amanhã");
-  if (diffDays > 1) return `${diffDays} ${t("pages.reviews.days", "dias")}`;
-  if (diffDays === -1) return t("pages.reviews.yesterday", "Ontem");
-  return `${Math.abs(diffDays)} ${t("pages.reviews.days-ago", "dias atrás")}`;
+  if (diffDays === 0) return t("pages-reviews-today");
+  if (diffDays === 1) return t("pages-reviews-tomorrow");
+  if (diffDays > 1) return `${diffDays} ${t("pages-reviews-days")}`;
+  if (diffDays === -1) return t("pages-reviews-yesterday");
+  return `${Math.abs(diffDays)} ${t("pages-reviews-days-ago")}`;
 };
 
 export function ReviewsPageIntegrated() {
@@ -53,10 +54,10 @@ export function ReviewsPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.reviews.title", "Revisões")}
+          {t("pages-reviews-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.reviews.description", "Repetição espaçada para retenção.")}
+          {t("pages-reviews-description")}
         </p>
       </div>
 
@@ -65,13 +66,13 @@ export function ReviewsPageIntegrated() {
         <div className="text-center">
           <p className="text-base font-semibold text-foreground">{pendingReviews.length}</p>
           <p className="text-[10px] text-muted-foreground">
-            {t("pages.reviews.pending", "Pendentes")}
+            {t("pages-reviews-pending")}
           </p>
         </div>
         <div className="text-center">
           <p className="text-base font-semibold text-foreground">{completedToday.length}</p>
           <p className="text-[10px] text-muted-foreground">
-            {t("pages.reviews.today-completed", "Hoje")}
+            {t("pages-reviews-today-completed")}
           </p>
         </div>
         <div className="text-center">
@@ -81,7 +82,7 @@ export function ReviewsPageIntegrated() {
               : 0}%
           </p>
           <p className="text-[10px] text-muted-foreground">
-            {t("pages.reviews.retention", "Retenção")}
+            {t("pages-reviews-retention")}
           </p>
         </div>
         <div className="text-center">
@@ -89,7 +90,7 @@ export function ReviewsPageIntegrated() {
             ~{pendingReviews.length * 3}min
           </p>
           <p className="text-[10px] text-muted-foreground">
-            {t("pages.reviews.estimated", "Estimado")}
+            {t("pages-reviews-estimated")}
           </p>
         </div>
       </div>
@@ -101,21 +102,18 @@ export function ReviewsPageIntegrated() {
         <>
           {pendingReviews.length === 0 ? (
             <EmptyState
-              title={t("pages.reviews.no-pending", "Nenhuma revisão pendente")}
-              description={t(
-                "pages.reviews.no-pending-description",
-                "Você está em dia com suas revisões!"
-              )}
+              title={t("pages-reviews-no-pending")}
+              description={t("pages-reviews-no-pending-description")}
               icon={BookOpen}
             />
           ) : (
             <section className="border rounded-lg bg-card overflow-hidden">
               <div className="p-4 border-b flex items-center justify-between">
                 <h2 className="font-medium text-foreground">
-                  {t("pages.reviews.pending-title", "Pendentes")}
+                  {t("pages-reviews-pending-title")}
                 </h2>
                 <Button size="sm" className="h-7 text-xs">
-                  {t("pages.reviews.start-review", "Iniciar revisão")}
+                  {t("pages-reviews-start-review")}
                 </Button>
               </div>
               <div className="divide-y">
@@ -132,10 +130,7 @@ export function ReviewsPageIntegrated() {
                         <span
                           className={`text-[10px] capitalize ${getPriorityColor(review.priority ?? "")}`}
                         >
-                          {t(
-                            `pages.reviews.priority.${review.priority}`,
-                            review.priority ?? ""
-                          )}
+                          {t(`pages-reviews-priority-${review.priority}`)}
                         </span>
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
@@ -159,7 +154,7 @@ export function ReviewsPageIntegrated() {
               <div className="p-4 border-b">
                 <h2 className="font-medium text-foreground flex items-center gap-2">
                   <Check size={16} className="text-primary" />
-                  {t("pages.reviews.completed-today", "Concluídas hoje")}
+                  {t("pages-reviews-completed-today")}
                 </h2>
               </div>
               <div className="divide-y">

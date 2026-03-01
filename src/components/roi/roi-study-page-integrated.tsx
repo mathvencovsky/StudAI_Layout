@@ -28,20 +28,20 @@ export default function ROIStudy() {
   if (!metrics) return null;
 
   const roiMetrics = [
-    { label: t("pages.roi.time-invested", "Tempo investido"), value: metrics.timeInvested, sublabel: t("pages.roi.since-start", "desde o início") },
-    { label: t("pages.roi.efficiency", "Eficiência"), value: `${metrics.efficiency}%`, sublabel: t("pages.roi.above-average", "acima da média") },
-    { label: t("pages.roi.estimated-roi", "ROI estimado"), value: metrics.estimatedROI, sublabel: t("pages.roi.salary-potential", "potencial salarial") },
-    { label: t("pages.roi.velocity", "Velocidade"), value: metrics.velocity, sublabel: t("pages.roi.vs-planned", "vs. planejado") },
+    { label: t("pages-roi-time-invested"), value: metrics.timeInvested, sublabel: t("pages-roi-since-start") },
+    { label: t("pages-roi-efficiency"), value: `${metrics.efficiency}%`, sublabel: t("pages-roi-above-average") },
+    { label: t("pages-roi-estimated-roi"), value: metrics.estimatedROI, sublabel: t("pages-roi-salary-potential") },
+    { label: t("pages-roi-velocity"), value: metrics.velocity, sublabel: t("pages-roi-vs-planned") },
   ];
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.roi.title", "Métricas")}
+          {t("pages-roi-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.roi.description", "Retorno sobre tempo investido.")}
+          {t("pages-roi-description")}
         </p>
       </div>
 
@@ -61,7 +61,7 @@ export default function ROIStudy() {
         <section className="border rounded-lg bg-card overflow-hidden">
           <div className="p-4 border-b">
             <h2 className="font-medium text-foreground">
-              {t("pages.roi.module-efficiency", "Eficiência por módulo")}
+              {t("pages-roi-module-efficiency")}
             </h2>
           </div>
           <div className="divide-y">
@@ -75,14 +75,14 @@ export default function ROIStudy() {
                 </div>
                 <Progress value={item.efficiency} className="h-1 mb-2" />
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <span>{item.hoursSpent}h {t("pages.roi.spent", "gastas")}</span>
+                  <span>{item.hoursSpent}h {t("pages-roi-spent")}</span>
                   <span>·</span>
-                  <span>{item.expected}h {t("pages.roi.expected", "esperadas")}</span>
+                  <span>{item.expected}h {t("pages-roi-expected")}</span>
                   <span>·</span>
                   <span className={item.hoursSpent <= item.expected ? "text-foreground" : ""}>
                     {item.hoursSpent <= item.expected
-                      ? `${item.expected - item.hoursSpent}h ${t("pages.roi.saved", "economizadas")}`
-                      : `${item.hoursSpent - item.expected}h ${t("pages.roi.extra", "extras")}`}
+                      ? `${item.expected - item.hoursSpent}h ${t("pages-roi-saved")}`
+                      : `${item.hoursSpent - item.expected}h ${t("pages-roi-extra")}`}
                   </span>
                 </div>
               </div>
@@ -94,10 +94,10 @@ export default function ROIStudy() {
       {/* Insight */}
       <section className="border rounded-lg bg-card p-4">
         <p className="text-xs text-muted-foreground mb-1">
-          {t("pages.roi.observation", "Observação")}
+          {t("pages-roi-observation")}
         </p>
         <p className="text-sm text-foreground">
-          {t("pages.roi.insight", "Eficiência 23% acima da média de usuários com objetivos similares.")}
+          {t("pages-roi-insight")}
         </p>
       </section>
     </div>

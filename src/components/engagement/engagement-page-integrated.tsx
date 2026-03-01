@@ -37,10 +37,10 @@ export default function EngagementPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.engagement.title", "Atividade")}
+          {t("pages-engagement-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.engagement.description", "Métricas de engajamento.")}
+          {t("pages-engagement-description")}
         </p>
       </div>
 
@@ -76,7 +76,7 @@ export default function EngagementPageIntegrated() {
         {/* Retention */}
         <section className="border rounded-lg bg-card p-4 space-y-4">
           <h3 className="font-medium text-foreground text-sm">
-            {t("pages.engagement.retention", "Retenção")}
+            {t("pages-engagement-retention")}
           </h3>
           <div className="space-y-3">
             <div>
@@ -109,7 +109,7 @@ export default function EngagementPageIntegrated() {
         {/* Sessions */}
         <section className="border rounded-lg bg-card p-4 space-y-3">
           <h3 className="font-medium text-foreground text-sm">
-            {t("pages.engagement.sessions", "Sessões")}
+            {t("pages-engagement-sessions")}
           </h3>
           <div className="grid grid-cols-3 gap-3">
             <div className="p-3 bg-muted/30 rounded-md text-center">
@@ -137,7 +137,7 @@ export default function EngagementPageIntegrated() {
       {/* Feature Adoption */}
       <section className="border rounded-lg bg-card p-4 space-y-3">
         <h3 className="font-medium text-foreground text-sm">
-          {t("pages.engagement.adoption", "Adoção")}
+          {t("pages-engagement-adoption")}
         </h3>
         <div className="space-y-3">
           <div>
@@ -168,7 +168,7 @@ export default function EngagementPageIntegrated() {
       {weeklyTrend && (
         <section className="border rounded-lg bg-card p-4">
           <h3 className="font-medium text-foreground text-sm mb-3">
-            {t("pages.engagement.weekly-trend", "Tendência semanal")}
+            {t("pages-engagement-weekly-trend")}
           </h3>
           <div className="flex items-end gap-2 h-24">
             {weeklyTrend.map((day, i) => (

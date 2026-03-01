@@ -4,8 +4,15 @@ import { useAuth } from "@/hooks/use-auth";
 import { AiChatProvider } from "@/contexts/ai-chat-context";
 import { AiIconProvider } from "@/contexts/ai-icon-context";
 import type { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import {
+  createRootRouteWithContext,
+  Outlet,
+  useNavigate,
+  useRouterState,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
+import { type FileRouteTypes } from "@/routeTree.gen";
 
 export type CrumbLoaderData = {
   crumb: string;
@@ -16,14 +23,39 @@ export interface RouterContext {
   auth?: AuthContextValue;
 }
 
+const PUBLIC_PATHS: ReadonlyArray<FileRouteTypes["fullPaths"]> = [
+  "/",
+  "/sign-up",
+  "/reset-password",
+  "/verify-email",
+  "/learning-preferences",
+  "/plans",
+  "/terms",
+  "/privacy",
+  "/faq",
+  "/support",
+  "/contact",
+  "/how-it-works",
+  "/security",
+];
+
 const RootLayout = () => {
   const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const { location } = useRouterState();
 
   const isAuthenticated = !!user;
+  const isPublicPath = (PUBLIC_PATHS as ReadonlyArray<string>).includes(location.pathname);
 
-  if (loading) {
-    return null;
-  }
+  useEffect(() => {
+    if (!loading && !isAuthenticated && !isPublicPath) {
+      navigate({ to: "/" });
+    }
+  }, [loading, isAuthenticated, isPublicPath, navigate]);
+
+  if (loading) return null;
+
+  if (!isAuthenticated && !isPublicPath) return null;
 
   if (!isAuthenticated) {
     return (

@@ -20,9 +20,9 @@ export function SessionsPageIntegrated() {
     yesterday.setDate(yesterday.getDate() - 1);
 
     if (date.toDateString() === today.toDateString()) {
-      return t("pages.sessions.today", "Hoje");
+      return t("pages-sessions-today");
     } else if (date.toDateString() === yesterday.toDateString()) {
-      return t("pages.sessions.yesterday", "Ontem");
+      return t("pages-sessions-yesterday");
     } else {
       return date.toLocaleDateString("pt-BR", {
         day: "2-digit",
@@ -51,10 +51,10 @@ export function SessionsPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.sessions.title", "Sessões")}
+          {t("pages-sessions-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.sessions.description", "Histórico de estudo.")}
+          {t("pages-sessions-description")}
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export function SessionsPageIntegrated() {
                 {completedSessions.length}
               </p>
               <p className="text-[10px] text-muted-foreground">
-                {t("pages.sessions.total", "sessões")}
+                {t("pages-sessions-total")}
               </p>
             </div>
             <div className="text-center">
@@ -78,7 +78,7 @@ export function SessionsPageIntegrated() {
                 {formatDuration(totalMinutes)}
               </p>
               <p className="text-[10px] text-muted-foreground">
-                {t("pages.sessions.accumulated", "acumulado")}
+                {t("pages-sessions-accumulated")}
               </p>
             </div>
             <div className="text-center">
@@ -86,7 +86,7 @@ export function SessionsPageIntegrated() {
                 {averageDuration}min
               </p>
               <p className="text-[10px] text-muted-foreground">
-                {t("pages.sessions.average", "por sessão")}
+                {t("pages-sessions-average")}
               </p>
             </div>
             <div className="text-center">
@@ -94,7 +94,7 @@ export function SessionsPageIntegrated() {
                 {sessionsThisWeek}
               </p>
               <p className="text-[10px] text-muted-foreground">
-                {t("pages.sessions.week", "semana")}
+                {t("pages-sessions-week")}
               </p>
             </div>
           </div>
@@ -102,18 +102,15 @@ export function SessionsPageIntegrated() {
           {/* Recent Sessions */}
           {completedSessions.length === 0 ? (
             <EmptyState
-              title={t("pages.sessions.no-sessions", "Nenhuma sessão registrada")}
-              description={t(
-                "pages.sessions.no-sessions-description",
-                "Suas sessões de estudo aparecerão aqui"
-              )}
+              title={t("pages-sessions-no-sessions")}
+              description={t("pages-sessions-no-sessions-description")}
               icon={Clock}
             />
           ) : (
             <section className="border rounded-lg bg-card overflow-hidden">
               <div className="p-4 border-b">
                 <h2 className="font-medium text-foreground">
-                  {t("pages.sessions.recent", "Sessões recentes")}
+                  {t("pages-sessions-recent")}
                 </h2>
               </div>
               <div className="divide-y">
@@ -124,7 +121,7 @@ export function SessionsPageIntegrated() {
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground">
-                        {session.notes ?? t(`pages.sessions.type.${session.type}`, session.type ?? "")}
+                        {session.notes ?? t(`pages-sessions-type-${session.type}`)}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {formatDate(session.startedAt)} ·{" "}
@@ -133,7 +130,7 @@ export function SessionsPageIntegrated() {
                       </p>
                     </div>
                     <span className="text-xs text-muted-foreground capitalize">
-                      {t(`pages.sessions.type.${session.type}`, session.type ?? "")}
+                      {t(`pages-sessions-type-${session.type}`)}
                     </span>
                   </div>
                 ))}

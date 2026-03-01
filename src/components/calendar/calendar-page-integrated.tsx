@@ -32,10 +32,10 @@ export function CalendarPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.calendar.title", "Calendário")}
+          {t("pages-calendar-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.calendar.description", "Sessões e prazos.")}
+          {t("pages-calendar-description")}
         </p>
       </div>
 
@@ -47,18 +47,15 @@ export function CalendarPageIntegrated() {
           <div className="p-4 border-b">
             <h2 className="font-medium text-foreground flex items-center gap-2">
               <CalendarIcon className="w-4 h-4" />
-              {t("pages.calendar.upcoming", "Próximos eventos")}
+              {t("pages-calendar-upcoming")}
             </h2>
           </div>
 
           {(!events || events.length === 0) ? (
             <div className="p-4">
               <EmptyState
-                title={t("pages.calendar.no-events", "Nenhum evento agendado")}
-                description={t(
-                  "pages.calendar.no-events-description",
-                  "Seus próximos eventos aparecerão aqui"
-                )}
+                title={t("pages-calendar-no-upcoming")}
+                description={t("pages-calendar-no-upcoming-description")}
                 icon={CalendarIcon}
               />
             </div>
@@ -88,7 +85,7 @@ export function CalendarPageIntegrated() {
                       </p>
                     </div>
                     <span className="text-xs text-muted-foreground capitalize">
-                      {t(`pages.calendar.type.${event.eventType}`, event.eventType ?? "")}
+                      {t(`pages-calendar-type-${event.eventType}`)}
                     </span>
                   </div>
                 );

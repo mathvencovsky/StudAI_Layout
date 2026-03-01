@@ -72,12 +72,12 @@ export default function ProfilePageIntegrated() {
     <div className="p-4 sm:p-6 pb-24 md:pb-6 space-y-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl sm:text-3xl font-bold">
-          {t("pages.profile.title", "Perfil")}
+          {t("pages-profile-title")}
         </h1>
         {!isEditing && (
           <Button variant="outline" size="sm" className="gap-1" onClick={handleEdit}>
             <Edit size={14} />
-            {t("edit", "Editar")}
+            {t("edit")}
           </Button>
         )}
       </div>
@@ -113,18 +113,18 @@ export default function ProfilePageIntegrated() {
                   <div className="flex gap-2">
                     <Button size="sm" onClick={handleSave}>
                       <Check size={14} className="mr-1" />
-                      {t("save", "Salvar")}
+                      {t("save")}
                     </Button>
                     <Button size="sm" variant="outline" onClick={handleCancel}>
                       <X size={14} className="mr-1" />
-                      {t("cancel", "Cancelar")}
+                      {t("cancel")}
                     </Button>
                   </div>
                 </div>
               ) : (
                 <>
                   <div>
-                    <h2 className="text-2xl font-bold">{displayName || t("pages.profile.unnamed", "Usuário")}</h2>
+                    <h2 className="text-2xl font-bold">{displayName || t("pages-profile-unnamed")}</h2>
                     {email && (
                       <div className="flex items-center gap-2 text-muted-foreground mt-1">
                         <Mail className="w-4 h-4" />
@@ -136,7 +136,7 @@ export default function ProfilePageIntegrated() {
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge className="bg-primary/10 text-primary border-primary/20">
                       <Trophy className="w-3 h-3 mr-1" />
-                      {t("pages.profile.level", "Nível")} {level}
+                      {t("pages-profile-level")} {level}
                     </Badge>
                   </div>
 
@@ -169,7 +169,7 @@ export default function ProfilePageIntegrated() {
               <div className="min-w-0">
                 <p className="text-2xl font-bold">{xp.toLocaleString()}</p>
                 <p className="text-xs text-muted-foreground">
-                  {t("pages.profile.total-xp", "XP Total")}
+                  {t("pages-profile-total-xp")}
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ export default function ProfilePageIntegrated() {
               <div className="min-w-0">
                 <p className="text-2xl font-bold">{streak}</p>
                 <p className="text-xs text-muted-foreground">
-                  {t("pages.profile.current-streak", "Dias de Streak")}
+                  {t("pages-profile-current-streak")}
                 </p>
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function ProfilePageIntegrated() {
               <div className="min-w-0">
                 <p className="text-2xl font-bold">{dailyGoalMinutes}</p>
                 <p className="text-xs text-muted-foreground">
-                  {t("pages.profile.daily-goal", "Meta Diária")} (min)
+                  {t("pages-profile-daily-goal")} (min)
                 </p>
               </div>
             </div>
@@ -215,12 +215,12 @@ export default function ProfilePageIntegrated() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-primary" />
-                {t("pages.profile.achievements", "Conquistas")}
+                {t("pages-profile-achievements")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                {t("pages.profile.no-achievements", "Nenhuma conquista ainda.")}
+                {t("pages-profile-no-achievements")}
               </p>
             </CardContent>
           </Card>

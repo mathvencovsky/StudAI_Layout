@@ -26,10 +26,10 @@ export default function ProgramsPageIntegrated() {
     <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
       <div>
         <h1 className="text-lg font-medium text-foreground">
-          {t("pages.programs.title", "Programas")}
+          {t("pages-programs-title")}
         </h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          {t("pages.programs.description", "Trilhas ativas.")}
+          {t("pages-programs-description")}
         </p>
       </div>
 
@@ -40,11 +40,8 @@ export default function ProgramsPageIntegrated() {
         <>
           {!programs || programs.length === 0 ? (
             <EmptyState
-              title={t("pages.programs.no-programs", "Nenhum programa ativo")}
-              description={t(
-                "pages.programs.no-programs-description",
-                "Comece um programa para acompanhar seu progresso"
-              )}
+              title={t("pages-programs-no-active")}
+              description={t("pages-programs-no-programs-description")}
               icon={BookOpen}
             />
           ) : (
@@ -65,7 +62,7 @@ export default function ProgramsPageIntegrated() {
                           </span>
                           {program.status === "in_progress" && (
                             <span className="text-xs text-primary">
-                              {t("pages.programs.in-progress", "Em andamento")}
+                              {t("pages-programs-in-progress")}
                             </span>
                           )}
                         </div>
@@ -76,7 +73,7 @@ export default function ProgramsPageIntegrated() {
                           <span className="flex items-center gap-1">
                             <BookOpen size={12} />
                             {program.modules}{" "}
-                            {t("pages.programs.modules", "módulos")}
+                            {t("pages-programs-modules")}
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock size={12} />

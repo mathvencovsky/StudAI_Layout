@@ -40,7 +40,7 @@ export const getUserStats = async (): Promise<UserStats> => {
   const totalDaysLoggedIn = await getLoginDaysCount();
 
   return {
-    totalHoursStudied: Math.round((totalSeconds / 3600) * 10) / 10,
+    totalSecondsStudied: totalSeconds,
     totalModulesCompleted: completedModules,
     totalDaysLoggedIn,
   };

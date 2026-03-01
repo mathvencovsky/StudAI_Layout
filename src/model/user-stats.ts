@@ -1,5 +1,5 @@
 export interface UserStats {
-  totalHoursStudied: number;
+  totalSecondsStudied: number;
   totalModulesCompleted: number;
   totalDaysLoggedIn: number;
 }

@@ -23,9 +23,12 @@ export function useSessionTracker() {
   const sessionRef = useRef<TrackedSession | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastHeartbeatRef = useRef<number>(0);
-  const cleanupRef = useRef<(() => void) | null>(null);
+  const lockResolveRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
+
     const sync = () => {
       if (!sessionRef.current) return;
       const now = Math.floor(Date.now() / 1000);
@@ -51,7 +54,7 @@ export function useSessionTracker() {
       }
     };
 
-    const startTracking = async () => {
+    const startTracking = async (): Promise<() => void> => {
       const now = Math.floor(Date.now() / 1000);
       let stored: TrackedSession | null = null;
       try {
@@ -98,15 +101,16 @@ export function useSessionTracker() {
         document.removeEventListener("visibilitychange", handleVisibilityChange);
         if (intervalRef.current) clearInterval(intervalRef.current);
         sync();
-        cleanupRef.current?.();
       };
     };
 
-    let unmount: (() => void) | undefined;
-
     if (!navigator.locks) {
-      startTracking().then((cleanup) => {
-        unmount = cleanup;
+      startTracking().then((fn) => {
+        if (cancelled) {
+          fn();
+        } else {
+          cleanup = fn;
+        }
       });
     } else {
       navigator.locks.request(
@@ -114,16 +118,23 @@ export function useSessionTracker() {
         { ifAvailable: true },
         async (lock) => {
           if (!lock) return;
-          unmount = await startTracking();
+          const fn = await startTracking();
+          if (cancelled) {
+            fn();
+            return;
+          }
+          cleanup = fn;
           return new Promise<void>((resolve) => {
-            cleanupRef.current = resolve;
+            lockResolveRef.current = resolve;
           });
         },
       );
     }
 
     return () => {
-      unmount?.();
+      cancelled = true;
+      cleanup?.();
+      lockResolveRef.current?.();
     };
   }, []);
 }

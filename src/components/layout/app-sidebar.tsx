@@ -14,6 +14,7 @@ import {
   IconSearch,
   IconSettings,
   IconShield,
+  IconSparkles,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/layout/nav-main";
@@ -192,6 +193,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       },
     ],
     navSecondary: [
+      {
+        title: t("upgrade-title"),
+        onClick: navigateTo("/my-plan"),
+        icon: IconSparkles,
+      },
       {
         title: t("send-feedback"),
         onClick: () => setIsFeedbackOpen(true),
