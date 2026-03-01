@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Trophy, Flame, Clock, Edit, Check, X, Camera, Mail } from "lucide-react";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useAuth } from "@/hooks/use-auth";
+import { useListLoginDays } from "@/hooks/user/use-login-days";
+import { calculateStreak } from "@/utils/calculate-streak";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
@@ -18,6 +20,8 @@ export default function ProfilePageIntegrated() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { data: profile, isLoading, error, refetch } = useMyProfile();
+  const { data: loginDays = [] } = useListLoginDays();
+  const { current: streak } = useMemo(() => calculateStreak(loginDays), [loginDays]);
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState("");
 
@@ -47,7 +51,6 @@ export default function ProfilePageIntegrated() {
     .slice(0, 2) || "?";
   const xp = profile?.xp ?? 0;
   const level = profile?.level ?? 1;
-  const streak = profile?.streak ?? 0;
   const dailyGoalMinutes = profile?.dailyGoalMinutes ?? 30;
   const levelProgress = (xp % 1000) / 10;
   const xpForNext = 1000 - (xp % 1000);

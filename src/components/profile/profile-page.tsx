@@ -47,7 +47,7 @@ export function ProfilePage() {
     .slice(0, 2) || "?";
   const xp = profile?.xp ?? 0;
   const level = profile?.level ?? 1;
-  const streak = profile?.streak ?? 0;
+  const streak = 0;
   const dailyGoalMinutes = profile?.dailyGoalMinutes ?? 30;
   const levelProgress = (xp % 1000) / 10;
   const xpForNext = 1000 - (xp % 1000);

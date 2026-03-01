@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useListQuizAttempts } from "@/hooks/quiz/use-list-quiz-attempts";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
+import { useListLoginDays } from "@/hooks/user/use-login-days";
+import { calculateStreak } from "@/utils/calculate-streak";
 
 const XP_PER_LEVEL = 500;
 const DAY_LABELS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -56,6 +58,7 @@ export function useMetrics() {
   const { data: sessions = [], isLoading: sessionsLoading, error: sessionsError, refetch } = useListStudySessions();
   const { data: quizAttempts = [], isLoading: quizLoading } = useListQuizAttempts();
   const { data: profile, isLoading: profileLoading } = useMyProfile();
+  const { data: loginDays = [], isLoading: loginDaysLoading } = useListLoginDays();
 
   const data = useMemo((): MetricsData => {
     const now = Date.now();
@@ -74,7 +77,7 @@ export function useMetrics() {
     const xpInCurrentLevel = xpTotal % XP_PER_LEVEL;
     const xpToNextLevel = XP_PER_LEVEL - xpInCurrentLevel;
 
-    const streak = profile?.streak ?? 0;
+    const streak = calculateStreak(loginDays);
 
     const weeklyActivity = Array.from({ length: 7 }, (_, i) => {
       const date = new Date(now - (6 - i) * DAY_MS);
@@ -114,7 +117,7 @@ export function useMetrics() {
         name: "Sequência de 7 dias",
         description: "Estude por 7 dias consecutivos",
         icon: "🔥",
-        unlocked: streak >= 7,
+        unlocked: streak.current >= 7,
       },
       {
         name: "100 Horas",
@@ -132,7 +135,7 @@ export function useMetrics() {
         name: "Sequência de 30 dias",
         description: "Estude por 30 dias consecutivos",
         icon: "💪",
-        unlocked: streak >= 30,
+        unlocked: streak.current >= 30,
       },
       {
         name: "500 Horas",
@@ -149,8 +152,8 @@ export function useMetrics() {
         monthlyGoal: monthlyGoalHours,
       },
       streak: {
-        current: streak,
-        longest: streak,
+        current: streak.current,
+        longest: streak.longest,
       },
       xp: {
         total: xpTotal,
@@ -171,9 +174,9 @@ export function useMetrics() {
       progressByCategory: [],
       achievements,
     };
-  }, [sessions, quizAttempts, profile]);
+  }, [sessions, quizAttempts, profile, loginDays]);
 
-  const isLoading = sessionsLoading || quizLoading || profileLoading;
+  const isLoading = sessionsLoading || quizLoading || profileLoading || loginDaysLoading;
   const error = sessionsError;
 
   return { data, isLoading, error, refetch };

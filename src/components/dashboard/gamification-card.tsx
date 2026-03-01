@@ -1,5 +1,8 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
+import { useListLoginDays } from "@/hooks/user/use-login-days";
+import { calculateStreak } from "@/utils/calculate-streak";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Trophy, Zap, Flame } from "lucide-react";
@@ -28,6 +31,8 @@ const getLevelProgress = (xp: number, level: number): number => {
 export const GamificationCard = () => {
   const { t } = useTranslation();
   const { data: profile, isLoading } = useMyProfile();
+  const { data: loginDays = [] } = useListLoginDays();
+  const { current: streak } = useMemo(() => calculateStreak(loginDays), [loginDays]);
 
   if (isLoading) {
     return (
@@ -45,7 +50,6 @@ export const GamificationCard = () => {
 
   const xp = profile?.xp ?? 0;
   const level = profile?.level ?? 1;
-  const streak = profile?.streak ?? 0;
   const progress = getLevelProgress(xp, level);
   const xpForNextLevel = getXpForLevel(level);
   const xpNeeded = xpForNextLevel - xp;

@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { GlobalFooter } from "@/components/layout/global-footer";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useSessionTracker } from "@/hooks/session-tracker/use-session-tracker";
+import { useRecordLoginDay } from "@/hooks/user/use-record-login-day";
+import { useEffect } from "react";
 
 export interface AppLayoutProps {
   children: React.ReactNode;
@@ -13,6 +15,8 @@ export interface AppLayoutProps {
  */
 export function AppLayout({ children }: AppLayoutProps) {
   useSessionTracker();
+  const { mutate: recordLogin } = useRecordLoginDay();
+  useEffect(() => { recordLogin(); }, []);
   return (
     <SidebarProvider>
       <AppSidebar />

@@ -231,7 +231,6 @@ const schema = a.schema({
       theme: a.string().default("system"),
       xp: a.integer().default(0),
       level: a.integer().default(1),
-      streak: a.integer().default(0),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
@@ -351,17 +350,6 @@ const schema = a.schema({
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
     .authorization((allow) => [allow.owner()]),
-
-  RankingEntry: a
-    .model({
-      userId: a.string().required(),
-      displayName: a.string().required(),
-      xpWeek: a.integer().default(0),
-      streak: a.integer().default(0),
-      position: a.integer(),
-      weekStart: a.string().required(),
-    })
-    .authorization((allow) => [allow.authenticated().to(["read"])]),
 
   DailyTask: a
     .model({

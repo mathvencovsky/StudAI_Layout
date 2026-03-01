@@ -5,6 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { Clock, TrendingUp, Target, Calendar, Flame } from "lucide-react";
 import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
+import { useListLoginDays } from "@/hooks/user/use-login-days";
+import { calculateStreak } from "@/utils/calculate-streak";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
@@ -13,7 +15,8 @@ import type { StudySession } from "@/model/study-session";
 export function ReportsPage() {
   const { t } = useTranslation();
   const { data: sessions, isLoading: sessionsLoading, error: sessionsError, refetch: refetchSessions } = useListStudySessions();
-  const { data: profile, isLoading: profileLoading, error: profileError, refetch: refetchProfile } = useMyProfile();
+  const { isLoading: profileLoading, error: profileError, refetch: refetchProfile } = useMyProfile();
+  const { data: loginDays = [] } = useListLoginDays();
   const [period, setPeriod] = useState<"7d" | "30d">("7d");
 
   if (sessionsLoading || profileLoading) return <LoadingState />;
@@ -114,7 +117,7 @@ export function ReportsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{profile?.streak || 0}</div>
+                <div className="text-2xl font-bold">{calculateStreak(loginDays).current}</div>
                 <p className="text-xs text-muted-foreground">{t("pages-reports-consecutive-days")}</p>
               </CardContent>
             </Card>

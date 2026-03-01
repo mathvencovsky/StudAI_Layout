@@ -2,6 +2,8 @@ import { useMemo } from "react";
 import { useMyProfile } from "@/hooks/user-profile/use-my-profile";
 import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useListDailyTasks } from "@/hooks/daily-task/use-list-daily-tasks";
+import { useListLoginDays } from "@/hooks/user/use-login-days";
+import { calculateStreak } from "@/utils/calculate-streak";
 
 interface DashboardMetrics {
   currentStreak: number;
@@ -40,8 +42,9 @@ export function useDashboardData() {
   const { data: profile, isLoading: isLoadingProfile } = useMyProfile();
   const { data: sessions, isLoading: isLoadingSessions } = useListStudySessions();
   const { data: tasks, isLoading: isLoadingTasks } = useListDailyTasks();
+  const { data: loginDays = [], isLoading: isLoadingLoginDays } = useListLoginDays();
 
-  const isLoading = isLoadingProfile || isLoadingSessions || isLoadingTasks;
+  const isLoading = isLoadingProfile || isLoadingSessions || isLoadingTasks || isLoadingLoginDays;
 
   const data = useMemo((): DashboardData | undefined => {
     if (isLoading) return undefined;
@@ -77,7 +80,7 @@ export function useDashboardData() {
 
     return {
       metrics: {
-        currentStreak: profile?.streak ?? 0,
+        currentStreak: calculateStreak(loginDays).current,
         weeklyMinutes,
         xp: profile?.xp ?? 0,
         level: profile?.level ?? 1,
@@ -85,7 +88,7 @@ export function useDashboardData() {
       recentSessions,
       upcomingTasks,
     };
-  }, [isLoading, profile, sessions, tasks]);
+  }, [isLoading, profile, sessions, tasks, loginDays]);
 
   return { data, isLoading };
 }

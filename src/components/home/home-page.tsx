@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
-import { useRecordLoginDay } from "@/hooks/user/use-record-login-day";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
@@ -25,7 +24,6 @@ import { RecommendedTracksEmptyState } from "@/components/home/recommended-track
 export const HomePage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { mutate: recordLogin } = useRecordLoginDay();
   const { data: existingPreference, isLoading: isLoadingPreference } =
     useMyLearningPreference();
   const { mutate: savePreference, isPending: isSaving } =
@@ -33,10 +31,6 @@ export const HomePage = () => {
   const { isLoading: isDashboardLoading } = useDashboardData();
   const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
   const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
-
-  useEffect(() => {
-    recordLogin();
-  }, [recordLogin]);
 
   const handleSavePreference = useCallback(
     (data: LearningPreferencesFormValues) => {

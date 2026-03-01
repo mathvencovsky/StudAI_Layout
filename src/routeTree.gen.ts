@@ -25,7 +25,6 @@ import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
-import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as QuizzesRouteImport } from './routes/quizzes'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -151,11 +150,6 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RankingRoute = RankingRouteImport.update({
-  id: '/ranking',
-  path: '/ranking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizzesRoute = QuizzesRouteImport.update({
@@ -420,7 +414,6 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
-  '/ranking': typeof RankingRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -482,7 +475,6 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
-  '/ranking': typeof RankingRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -544,7 +536,6 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
-  '/ranking': typeof RankingRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -611,7 +602,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
-    | '/ranking'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -673,7 +663,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
-    | '/ranking'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -734,7 +723,6 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
-    | '/ranking'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -800,7 +788,6 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ProgramsRoute: typeof ProgramsRoute
   QuizzesRoute: typeof QuizzesRoute
-  RankingRoute: typeof RankingRoute
   ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResourcesRoute: typeof ResourcesRoute
@@ -934,13 +921,6 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ranking': {
-      id: '/ranking'
-      path: '/ranking'
-      fullPath: '/ranking'
-      preLoaderRoute: typeof RankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quizzes': {
@@ -1400,7 +1380,6 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ProgramsRoute: ProgramsRoute,
   QuizzesRoute: QuizzesRoute,
-  RankingRoute: RankingRoute,
   ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResourcesRoute: ResourcesRoute,

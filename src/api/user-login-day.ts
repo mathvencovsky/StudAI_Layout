@@ -10,7 +10,7 @@ const client = generateClient<Schema>();
 export const recordLoginDay = async (): Promise<void> => {
   await getCurrentUserId();
 
-  const today = new Date().toISOString().split("t")[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const existing = await client.models.UserLoginDay.list({
     filter: { date: { eq: today } },
@@ -29,4 +29,15 @@ export const getLoginDaysCount = async (): Promise<number> => {
 
   const result = await client.models.UserLoginDay.list();
   return result.data?.length ?? 0;
+};
+
+/**
+ * Lists all login day dates for the current user.
+ * @returns Array of ISO date strings (YYYY-MM-DD)
+ */
+export const listLoginDays = async (): Promise<string[]> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserLoginDay.list();
+  return (result.data ?? []).map((d) => d.date);
 };
