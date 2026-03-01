@@ -1,6 +1,18 @@
-import { Amplify } from "aws-amplify";
+import { Amplify, ResourcesConfig } from "aws-amplify";
+import { parseAmplifyConfig } from "aws-amplify/utils";
 import outputs from "../amplify_outputs.json";
-Amplify.configure(outputs);
+
+const config = parseAmplifyConfig(outputs);
+
+Amplify.configure({
+  ...config,
+  Auth: {
+    Cognito: {
+      ...config.Auth?.Cognito,
+      signUpVerificationMethod: "link",
+    },
+  } as ResourcesConfig["Auth"],
+});
 
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
