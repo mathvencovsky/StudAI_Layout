@@ -11,6 +11,16 @@ export const auth = defineAuth({
       google: {
         clientId: secret("GOOGLE_CLIENT_ID"),
         clientSecret: secret("GOOGLE_CLIENT_SECRET"),
+        scopes: ["email", "profile", "openid"],
+        attributeMapping: {
+          email: "email",
+          emailVerified: "email_verified",
+          familyName: "family_name",
+          givenName: "given_name",
+          fullname: "name",
+          profilePicture: "picture",
+          locale: "locale",
+        },
       },
       callbackUrls: [
         "http://localhost:5173/",

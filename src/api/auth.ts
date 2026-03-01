@@ -30,6 +30,7 @@ export const getCurrentUserId = async (): Promise<string> => {
  * Sign in with Google using Amplify
  */
 export const signInWithGoogleApi = async (): Promise<void> => {
+  console.log("google singin");
   await signInWithRedirect({ provider: "Google" });
 };
 

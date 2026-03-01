@@ -14,6 +14,7 @@ import {
 } from "@/components/auth/form/registration-form";
 import { useSignInWithEmail } from "@/hooks/use-sign-in-email";
 import { useSignUpWithEmail } from "@/hooks/use-sign-up-email";
+import { useSignInWithGoogle } from "@/hooks/use-sign-in-google";
 
 /**
  * Auth card container component for the landing page.
@@ -27,6 +28,7 @@ export function AuthCard({ className }: { className?: string }) {
 
   const signInMutation = useSignInWithEmail();
   const signUpMutation = useSignUpWithEmail();
+  const googleMutation = useSignInWithGoogle();
 
   const handleLogin = async (values: LoginFormValues) => {
     setError(null);
@@ -82,6 +84,7 @@ export function AuthCard({ className }: { className?: string }) {
               onSubmit={handleLogin}
               isSubmitting={signInMutation.isPending}
               errorMessage={tab === "login" ? error : null}
+              onGoogleSignIn={() => googleMutation.mutate()}
             />
           </TabsContent>
 
@@ -90,6 +93,7 @@ export function AuthCard({ className }: { className?: string }) {
               onSubmit={handleRegister}
               isSubmitting={signUpMutation.isPending}
               errorMessage={tab === "register" ? error : null}
+              onGoogleSignIn={() => googleMutation.mutate()}
             />
           </TabsContent>
         </Tabs>

@@ -1,5 +1,6 @@
 import { type LoginFormValues, LoginForm } from "@/components/auth/form/login-form";
 import { useSignInWithEmail } from "@/hooks/use-sign-in-email";
+import { useSignInWithGoogle } from "@/hooks/use-sign-in-google";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
@@ -13,6 +14,7 @@ export interface LoginPageProps {
 export const LoginPage = ({ redirect }: LoginPageProps) => {
   const [error, setError] = useState<string | null>(null);
   const emailMutation = useSignInWithEmail();
+  const googleMutation = useSignInWithGoogle();
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginFormValues) => {
@@ -31,6 +33,7 @@ export const LoginPage = ({ redirect }: LoginPageProps) => {
       onSubmit={handleSubmit}
       isSubmitting={emailMutation.isPending}
       errorMessage={error}
+      onGoogleSignIn={() => googleMutation.mutate()}
     />
   );
 };

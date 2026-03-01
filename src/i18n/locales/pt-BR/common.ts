@@ -54,6 +54,7 @@ export default {
   "auth-min-password-chars": "Mínimo 6 caracteres",
   "auth-min-password-placeholder": "Minimo 6 caracteres",
   "auth-need-help": "Precisa de ajuda?",
+  "auth-or": "ou",
   "auth-password": "Senha",
   "auth-password-label": "Senha",
   "auth-password-placeholder": "Digite sua senha",
@@ -66,6 +67,7 @@ export default {
   "auth-register-title": "Criar Conta",
   "auth-registering": "Criando conta...",
   "auth-show-password": "Mostrar senha",
+  "auth-sign-in-with-google": "Continuar com Google",
   "auth-tab-login": "Login",
   "auth-tab-register": "Criar Conta",
   "auth-toast-account-created":
