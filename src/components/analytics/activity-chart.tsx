@@ -42,10 +42,8 @@ export function ActivityChart({ data, period }: ActivityChartProps) {
         return (
           <div key={index} className="flex flex-col items-center gap-1 flex-1 min-w-0">
             <div
-              className="w-full h-6 rounded"
-              style={{
-                backgroundColor: `hsl(var(--primary) / ${Math.max(intensity * 0.8, 0.1)})`,
-              }}
+              className="w-full h-6 rounded bg-primary"
+              style={{ opacity: Math.max(intensity * 0.8, 0.1) }}
             />
             {period !== "year" && (
               <p className="text-[9px] text-muted-foreground truncate w-full text-center">
