@@ -198,6 +198,8 @@ export default {
   "create-new-module-description":
     "Crie um novo módulo de aprendizado adicionando conteúdo e organizando-o para seus alunos.",
   "create-track": "Criar Trilha",
+  "create-track-categories-helper": "Selecione as categorias que melhor descrevem esta trilha (opcional).",
+  "create-track-categories-title": "Categorias",
   "create-track-description":
     "Crie uma trilha de aprendizado organizando módulos em um caminho estruturado.",
   "create-track-with-ai": "Criar Nova Trilha",
@@ -244,6 +246,7 @@ export default {
   "failed-load-last-module":
     "Falha ao carregar seu último módulo iniciado. Por favor, tente novamente mais tarde. Se o problema persistir, envie-nos um feedback.",
   "failed-load-last-track": "Falha ao carregar sua trilha atual.",
+  "failed-load-tracks": "Falha ao carregar trilhas. Tente novamente.",
   "failed-save-feedback":
     "Falha ao salvar feedback. Por favor, tente novamente.",
   "failed-start-track": "Falha ao iniciar trilha. Tente novamente.",
@@ -426,7 +429,7 @@ export default {
   "learning-preferences-interest-devops": "DevOps",
   "learning-preferences-interest-embedded-systems": "Sistemas Embarcados",
   "learning-preferences-interest-game-development": "Desenvolvimento de Jogos",
-  "learning-preferences-interest-machine-learning": "Machine Learning",
+  "learning-preferences-interest-machine-learning": "Aprendizado de Máquina",
   "learning-preferences-interest-mobile-development": "Desenvolvimento Mobile",
   "learning-preferences-interest-ui-ux-design": "Design UI/UX",
   "learning-preferences-interest-web-development": "Desenvolvimento Web",
@@ -434,6 +437,9 @@ export default {
     "Selecione pelo menos uma área de interesse.",
   "learning-preferences-interests-helper":
     "Escolha 1-3 para começar. Você pode mudar depois.",
+  "learning-preferences-interests-load-error":
+    "Falha ao carregar interesses. Por favor, tente novamente.",
+  "learning-preferences-interests-loading": "Carregando interesses...",
   "learning-preferences-interests-selected": "{{count}} selecionado(s)",
   "learning-preferences-interests-title":
     "Em que você está interessado em aprender?",
@@ -544,6 +550,9 @@ export default {
   "no-title": "(sem título)",
   "no-tracks": "Nenhuma trilha disponível",
   "no-tracks-match-search": "Nenhuma trilha corresponde à sua pesquisa",
+  "no-tracks-for-interests": "Nenhuma trilha corresponde aos seus interesses",
+  "no-tracks-for-interests-description":
+    "Não encontramos trilhas que correspondam aos seus interesses selecionados. Explore todas as trilhas para encontrar algo que você goste.",
   "no-tracks-to-continue":
     "Você não tem trilhas em andamento. Comece uma nova trilha para continuar sua jornada de aprendizado.",
   "not-started": "Não iniciado",
@@ -580,6 +589,11 @@ export default {
   "pages-activity-week-activities": "Atividades da Semana",
   "pages-activity-yesterday": "Ontem",
   "pages-admin-catalog": "Catálogo",
+  "pages-admin-categories": "Categorias",
+  "pages-admin-categories-add": "Adicionar Categoria",
+  "pages-admin-categories-delete-confirm": "Tem certeza que deseja excluir esta categoria?",
+  "pages-admin-categories-empty": "Nenhuma categoria ainda. Adicione uma abaixo.",
+  "pages-admin-categories-name-placeholder": "Nome da categoria",
   "pages-admin-features": "Funcionalidades",
   "pages-admin-title": "Admin",
   "pages-admin-users": "Usuários",
@@ -1077,6 +1091,10 @@ export default {
   "questionnaire-track-error": "Erro ao criar trilha. Tente novamente.",
   "rate-stars": "Avaliar",
   rating: "Avaliação",
+  "recommended-tracks-description": "Com base nos seus interesses de aprendizado",
+  "recommended-tracks-empty": "Nenhuma trilha encontrada para seus interesses ainda",
+  "recommended-tracks-title": "Trilhas Recomendadas",
+  remove: "Remover",
   "remove-from-favourites": "Remover dos favoritos",
   "remove-selected": "Remover Selecionados",
   reports: "Relatórios",
@@ -1158,6 +1176,19 @@ export default {
   "title-required": "Título é obrigatório",
   "total-duration": "Duração total:",
   "total-hours-studied": "Horas Estudadas",
+  "track-categories-label": "Categorias",
+  "track-category-blockchain": "Blockchain",
+  "track-category-cloud-computing": "Computação em Nuvem",
+  "track-category-cybersecurity": "Cibersegurança",
+  "track-category-data-science": "Ciência de Dados",
+  "track-category-databases": "Bancos de Dados",
+  "track-category-devops": "DevOps",
+  "track-category-embedded-systems": "Sistemas Embarcados",
+  "track-category-game-development": "Desenvolvimento de Jogos",
+  "track-category-machine-learning": "Aprendizado de Máquina",
+  "track-category-mobile-development": "Desenvolvimento Mobile",
+  "track-category-ui-ux-design": "Design UI/UX",
+  "track-category-web-development": "Desenvolvimento Web",
   "track-not-found": "Trilha não encontrada",
   "track-structure": "Estrutura da Trilha",
   "track-structure-help":

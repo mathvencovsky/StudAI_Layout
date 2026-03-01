@@ -58,7 +58,7 @@ export function useCatalogResources(filters?: {
         id: content.id,
         type: "content" as const,
         title: content.title,
-        category: content.category,
+        category: content.category ?? "",
         status: "published" as const,
         createdAt: content.createdAt ?? new Date().toISOString(),
       })),

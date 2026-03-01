@@ -193,6 +193,8 @@ export default {
   "create-new-module-description":
     "Create a new learning module by adding content and organizing it for your students.",
   "create-track": "Create Track",
+  "create-track-categories-helper": "Select the categories that best describe this track (optional).",
+  "create-track-categories-title": "Categories",
   "create-track-description":
     "Create a learning track by organizing modules into a structured path.",
   "create-track-with-ai": "Create New Track",
@@ -239,6 +241,7 @@ export default {
   "failed-load-last-module":
     "Failed to load your last started module. Please try again later. If the problem persists, please send us feedback.",
   "failed-load-last-track": "Failed to load your current track.",
+  "failed-load-tracks": "Failed to load tracks. Please try again.",
   "failed-save-feedback": "Failed to save feedback. Please try again.",
   "failed-start-track": "Failed to start track. Please try again.",
   "failed-to-load-stats":
@@ -425,6 +428,9 @@ export default {
     "Select at least one area of interest.",
   "learning-preferences-interests-helper":
     "Pick 1–3 to start. You can change later.",
+  "learning-preferences-interests-load-error":
+    "Failed to load interests. Please try again.",
+  "learning-preferences-interests-loading": "Loading interests...",
   "learning-preferences-interests-selected": "{{count}} selected",
   "learning-preferences-interests-title":
     "What are you interested in learning?",
@@ -534,6 +540,9 @@ export default {
   "no-title": "(no title)",
   "no-tracks": "No tracks available",
   "no-tracks-match-search": "No tracks match your search",
+  "no-tracks-for-interests": "No tracks match your interests",
+  "no-tracks-for-interests-description":
+    "We couldn't find any tracks matching your selected interests. Browse all tracks to find something you like.",
   "no-tracks-to-continue":
     "You don't have any tracks in progress. Start a new track to continue your learning journey.",
   "not-started": "Not started",
@@ -569,6 +578,11 @@ export default {
   "pages-activity-week-activities": "Week's Activities",
   "pages-activity-yesterday": "Yesterday",
   "pages-admin-catalog": "Catalog",
+  "pages-admin-categories": "Categories",
+  "pages-admin-categories-add": "Add Category",
+  "pages-admin-categories-delete-confirm": "Are you sure you want to delete this category?",
+  "pages-admin-categories-empty": "No categories yet. Add one below.",
+  "pages-admin-categories-name-placeholder": "Category name",
   "pages-admin-features": "Features",
   "pages-admin-title": "Admin",
   "pages-admin-users": "Users",
@@ -1061,6 +1075,10 @@ export default {
   "questionnaire-track-error": "Error creating track. Try again.",
   "rate-stars": "Rate",
   rating: "Rating",
+  "recommended-tracks-description": "Based on your learning interests",
+  "recommended-tracks-empty": "No tracks found for your interests yet",
+  "recommended-tracks-title": "Recommended Tracks",
+  remove: "Remove",
   "remove-from-favourites": "Remove from favourites",
   "remove-selected": "Remove Selected",
   reports: "Reports",
@@ -1142,6 +1160,19 @@ export default {
   "title-required": "Title is required",
   "total-duration": "Total duration:",
   "total-hours-studied": "Hours Studied",
+  "track-categories-label": "Categories",
+  "track-category-blockchain": "Blockchain",
+  "track-category-cloud-computing": "Cloud Computing",
+  "track-category-cybersecurity": "Cybersecurity",
+  "track-category-data-science": "Data Science",
+  "track-category-databases": "Databases",
+  "track-category-devops": "DevOps",
+  "track-category-embedded-systems": "Embedded Systems",
+  "track-category-game-development": "Game Development",
+  "track-category-machine-learning": "Machine Learning",
+  "track-category-mobile-development": "Mobile Development",
+  "track-category-ui-ux-design": "UI/UX Design",
+  "track-category-web-development": "Web Development",
   "track-not-found": "Track not found",
   "track-structure": "Track Structure",
   "track-structure-help":

@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { TrackForm } from "@/components/track/track-form";
 import { useTrack } from "@/hooks/track/use-track";
 import { useTranslation } from "react-i18next";
+import { type TrackCategory } from "@/model/track";
 
 export const Route = createFileRoute("/track/$trackId/edit")({
   component: TrackEditPage,
@@ -30,6 +31,7 @@ function TrackEditPage() {
           description: track.description,
           rootModuleId: track.rootModuleId,
           parentByModuleId: track.parentByModuleId as Record<string, string>,
+          categories: (track.categories?.filter(Boolean) ?? []) as TrackCategory[],
         }}
       />
     </div>

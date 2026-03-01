@@ -19,10 +19,13 @@ const parseJsonField = (value: unknown): Record<string, string> => {
 };
 
 /**
- * Get all tracks
+ * Get all tracks with their categories
  */
-export const getTracks = async (): Promise<Track[]> => {
-  const result = await client.models.Track.list();
+export const getTracks = async (): Promise<TrackFull[]> => {
+  const result = await client.models.Track.list({ selectionSet: trackSelectionSet }).catch((error) => {
+    console.error("error-loading-tracks", error);
+    throw error;
+  });
   if (!result.data) return [];
   return result.data.map((track) => ({
     ...track,

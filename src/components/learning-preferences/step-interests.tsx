@@ -8,7 +8,7 @@ import {
   FormDescription,
   FormMessage,
 } from "@/components/ui/form";
-import { INTEREST_OPTIONS } from "./constants";
+import { INTEREST_OPTIONS, INTEREST_TRANSLATION_KEYS } from "./constants";
 import { type LearningPreferencesFormValues } from "./schema";
 
 export interface StepInterestsProps {
@@ -46,7 +46,7 @@ export const StepInterests = ({ control }: StepInterestsProps) => {
                   value={interest}
                   className="px-3 py-2 text-sm"
                 >
-                  {t(`learning-preferences-interest-${interest}`)}
+                  {t(INTEREST_TRANSLATION_KEYS[interest])}
                 </ToggleGroupItem>
               ))}
             </ToggleGroup>

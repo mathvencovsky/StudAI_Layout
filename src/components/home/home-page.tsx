@@ -14,6 +14,9 @@ import { type LearningPreferencesFormValues } from "@/components/learning-prefer
 import { useDashboardData } from "@/hooks/dashboard/use-dashboard-data";
 import { LoadingState } from "@/components/ui/loading-state";
 import { UpgradeCard } from "@/components/upgrade/upgrade-card";
+import { useLastStartedTrackWithDetails } from "@/hooks/track/use-last-started-track-with-details";
+import { useLastStartedModuleWithContents } from "@/hooks/modules/use-last-started-module-with-contents";
+import { RecommendedTracksEmptyState } from "@/components/home/recommended-tracks-empty-state";
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
@@ -28,6 +31,8 @@ export const HomePage = () => {
   const { mutate: savePreference, isPending: isSaving } =
     useSaveLearningPreference();
   const { isLoading: isDashboardLoading } = useDashboardData();
+  const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
+  const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
 
   useEffect(() => {
     recordLogin();
@@ -71,25 +76,31 @@ export const HomePage = () => {
         <StatsCards />
         <UpgradeCard variant="compact" />
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          <section className="border rounded-lg bg-card overflow-hidden">
-            <div className="p-3 border-b">
-              <h3 className="font-medium text-sm text-foreground">{t("continue-learning")}</h3>
-            </div>
-            <div className="p-3">
-              <LastStartedModuleSection />
-            </div>
-          </section>
+        {isLoadingTrack || isLoadingModule ? (
+          <LoadingState />
+        ) : lastTrack || lastModule ? (
+          <div className="grid gap-4 lg:grid-cols-2">
+            <section className="border rounded-lg bg-card overflow-hidden">
+              <div className="p-3 border-b">
+                <h3 className="font-medium text-sm text-foreground">{t("continue-learning")}</h3>
+              </div>
+              <div className="p-3">
+                <LastStartedModuleSection />
+              </div>
+            </section>
 
-          <section className="border rounded-lg bg-card overflow-hidden">
-            <div className="p-3 border-b">
-              <h3 className="font-medium text-sm text-foreground">{t("continue-track")}</h3>
-            </div>
-            <div className="p-3">
-              <LastStartedTrackSection />
-            </div>
-          </section>
-        </div>
+            <section className="border rounded-lg bg-card overflow-hidden">
+              <div className="p-3 border-b">
+                <h3 className="font-medium text-sm text-foreground">{t("continue-track")}</h3>
+              </div>
+              <div className="p-3">
+                <LastStartedTrackSection />
+              </div>
+            </section>
+          </div>
+        ) : (
+          <RecommendedTracksEmptyState interests={existingPreference?.interests} />
+        )}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { createContent } from "@/api/content";
 import { extractYouTubeMetadata } from "@/api/youtube";
 import { getYouTubeVideoId } from "@/api/metadata/youtube";
 import { useCreateModule } from "@/hooks/modules/use-create-module";
-import { CONTENT_LEVELS, CONTENT_TYPES, type ContentLevel, type ContentType } from "@/model/content";
+import { CONTENT_TYPES, type ContentLevel, type ContentType } from "@/model/content";
 
 export interface ModuleCreateWithContentProps {
   onSuccess: () => void;
