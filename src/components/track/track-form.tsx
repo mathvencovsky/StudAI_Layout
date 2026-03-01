@@ -10,15 +10,18 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCreateTrack } from "@/hooks/track/use-create-track";
 import { useUpdateTrack } from "@/hooks/track/use-update-track";
 import { TrackFlowEditor } from "@/components/track/track-flow-editor";
-import { type TrackCategory } from "@/model/track";
-import { INTEREST_OPTIONS, INTEREST_TRANSLATION_KEYS } from "@/components/learning-preferences/constants";
+import { type Category } from "@/model/category";
+import {
+  INTEREST_OPTIONS,
+  INTEREST_TRANSLATION_KEYS,
+} from "@/components/learning-preferences/constants";
 
 type ParentMap = Record<string, string>;
 
 type FormValues = {
   title: string;
   description: string;
-  categories: TrackCategory[];
+  categories: Category[];
 };
 
 export interface TrackFormProps {
@@ -29,7 +32,7 @@ export interface TrackFormProps {
     description: string;
     rootModuleId: string;
     parentByModuleId: ParentMap;
-    categories?: TrackCategory[];
+    categories?: Category[];
   };
 }
 
@@ -43,10 +46,10 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
   const updateTrackMutation = useUpdateTrack();
 
   const [rootModuleId, setRootModuleId] = useState(
-    initialData?.rootModuleId ?? ""
+    initialData?.rootModuleId ?? "",
   );
   const [parentByModuleId, setParentByModuleId] = useState<ParentMap>(
-    initialData?.parentByModuleId ?? {}
+    initialData?.parentByModuleId ?? {},
   );
   const [hasCycle, setHasCycle] = useState(false);
 
@@ -70,13 +73,13 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
     (
       newRootModuleId: string,
       newParentByModuleId: ParentMap,
-      newHasCycle: boolean
+      newHasCycle: boolean,
     ) => {
       setRootModuleId(newRootModuleId);
       setParentByModuleId(newParentByModuleId);
       setHasCycle(newHasCycle);
     },
-    []
+    [],
   );
 
   const isPending =
@@ -100,7 +103,7 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           onSuccess: (track) => {
             navigate({ to: "/track/$trackId", params: { trackId: track.id } });
           },
-        }
+        },
       );
     } else if (mode === "edit" && trackId) {
       updateTrackMutation.mutate(
@@ -117,7 +120,7 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           onSuccess: () => {
             navigate({ to: "/track/$trackId", params: { trackId } });
           },
-        }
+        },
       );
     }
   };
@@ -139,7 +142,9 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           <Label htmlFor="description">{t("description")}</Label>
           <Textarea
             id="description"
-            {...register("description", { required: t("description-required") })}
+            {...register("description", {
+              required: t("description-required"),
+            })}
           />
           {errors.description && (
             <p className="text-sm text-red-600">{errors.description.message}</p>
@@ -150,12 +155,18 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           <ToggleGroup
             type="multiple"
             value={selectedCategories}
-            onValueChange={(value) => setValue("categories", value as TrackCategory[])}
+            onValueChange={(value) =>
+              setValue("categories", value as Category[])
+            }
             className="flex flex-wrap gap-2 justify-start"
             spacing={4}
           >
             {INTEREST_OPTIONS.map((category) => (
-              <ToggleGroupItem key={category} value={category} variant="outline">
+              <ToggleGroupItem
+                key={category}
+                value={category}
+                variant="outline"
+              >
                 {t(INTEREST_TRANSLATION_KEYS[category])}
               </ToggleGroupItem>
             ))}

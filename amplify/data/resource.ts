@@ -12,7 +12,7 @@ export const chatHandler = defineConversationHandlerFunction({
 });
 
 const schema = a.schema({
-  TrackCategory: a.enum([
+  Category: a.enum([
     "web_development",
     "mobile_development",
     "data_science",
@@ -26,7 +26,6 @@ const schema = a.schema({
     "blockchain",
     "embedded_systems",
   ]),
-
 
   Content: a
     .model({
@@ -164,7 +163,7 @@ const schema = a.schema({
       rootModuleId: a.id().required(),
       parentByModuleId: a.json().required(),
       positionByModuleId: a.json(),
-      categories: a.ref("TrackCategory").array(),
+      categories: a.ref("Category").required().array(),
     })
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
@@ -210,7 +209,7 @@ const schema = a.schema({
 
   LearningPreference: a
     .model({
-      interests: a.ref("TrackCategory").required().array().required(),
+      interests: a.ref("Category").required().array().required(),
       minutesPerDay: a.integer(),
       days: a.string().required().array().required(),
       formats: a.string().required().array().required(),

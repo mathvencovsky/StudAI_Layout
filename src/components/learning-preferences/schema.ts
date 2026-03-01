@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { type TrackCategory } from "@/model/track";
+import { type Category } from "@/model/category";
 
-const trackCategoryValues = [
+const CategoryValues = [
   "web_development",
   "mobile_development",
   "data_science",
@@ -14,10 +14,10 @@ const trackCategoryValues = [
   "game_development",
   "blockchain",
   "embedded_systems",
-] as const satisfies TrackCategory[];
+] as const satisfies Category[];
 
 export const learningPreferencesSchema = z.object({
-  interests: z.array(z.enum(trackCategoryValues)).min(1),
+  interests: z.array(z.enum(CategoryValues)).min(1),
   minutesPerDay: z.number().min(5).max(120).optional(),
   days: z.array(z.string()).optional(),
   formats: z.array(z.string()).optional(),

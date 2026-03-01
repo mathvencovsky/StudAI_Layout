@@ -1,14 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
 import { useTracksByCategories } from "@/hooks/track/use-tracks-by-categories";
-import { type TrackCategory } from "@/model/track";
+import { type Category } from "@/model/category";
 import { LoadingState } from "@/components/ui/loading-state";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 export interface RecommendedTracksEmptyStateProps {
-  interests: TrackCategory[] | undefined;
+  interests: Category[] | undefined;
 }
 
 /**
@@ -45,16 +45,27 @@ export const RecommendedTracksEmptyState = ({
               key={track.id}
               className="cursor-pointer hover:bg-muted/50 transition-colors"
               onClick={() =>
-                navigate({ to: "/track/$trackId", params: { trackId: track.id } })
+                navigate({
+                  to: "/track/$trackId",
+                  params: { trackId: track.id },
+                })
               }
             >
               <CardContent className="p-4 space-y-2">
-                <h4 className="text-sm font-medium text-foreground">{track.title}</h4>
-                <p className="text-xs text-muted-foreground">{track.description}</p>
+                <h4 className="text-sm font-medium text-foreground">
+                  {track.title}
+                </h4>
+                <p className="text-xs text-muted-foreground">
+                  {track.description}
+                </p>
                 {track.categories && track.categories.length > 0 && (
                   <div className="flex flex-wrap gap-1">
-                    {track.categories.map((category) => (
-                      <Badge key={category} variant="secondary" className="text-xs">
+                    {track.categories.map((category: string | null) => (
+                      <Badge
+                        key={category}
+                        variant="secondary"
+                        className="text-xs"
+                      >
                         {category}
                       </Badge>
                     ))}

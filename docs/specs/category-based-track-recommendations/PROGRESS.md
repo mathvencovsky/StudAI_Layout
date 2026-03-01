@@ -4,13 +4,13 @@
 
 ### Changes made:
 
-- `amplify/data/resource.ts`: Added `TrackCategory` enum with 12 values (web_development, mobile_development, data_science, machine_learning, cloud_computing, devops, cybersecurity, databases, ui_ux_design, game_development, blockchain, embedded_systems). Updated `Track.categories` to `a.ref("TrackCategory").array()`. Updated `LearningPreference.interests` to `a.ref("TrackCategory").required().array().required()`.
+- `amplify/data/resource.ts`: Added `Category` enum with 12 values (web_development, mobile_development, data_science, machine_learning, cloud_computing, devops, cybersecurity, databases, ui_ux_design, game_development, blockchain, embedded_systems). Updated `Track.categories` to `a.ref("Category").array()`. Updated `LearningPreference.interests` to `a.ref("Category").required().array().required()`.
 
-- `src/model/track.ts`: Added `TrackCategory` type export (`Schema["TrackCategory"]["type"]`). Added `"categories"` to `trackSelectionSet`.
+- `src/model/track.ts`: Added `Category` type export (`Schema["Category"]["type"]`). Added `"categories"` to `trackSelectionSet`.
 
-- `src/components/learning-preferences/constants.ts`: Replaced hardcoded hyphen-based `INTEREST_OPTIONS` with `TrackCategory[]` using underscore values. Added `INTEREST_TRANSLATION_KEYS` const object mapping each `TrackCategory` to its i18n key (type-safe, avoids `.replace()` returning `string`).
+- `src/components/learning-preferences/constants.ts`: Replaced hardcoded hyphen-based `INTEREST_OPTIONS` with `Category[]` using underscore values. Added `INTEREST_TRANSLATION_KEYS` const object mapping each `Category` to its i18n key (type-safe, avoids `.replace()` returning `string`).
 
-- `src/components/learning-preferences/schema.ts`: Updated `interests` field from `z.array(z.string())` to `z.array(z.enum(trackCategoryValues))` so `LearningPreferencesFormValues.interests` is typed as `TrackCategory[]`.
+- `src/components/learning-preferences/schema.ts`: Updated `interests` field from `z.array(z.string())` to `z.array(z.enum(CategoryValues))` so `LearningPreferencesFormValues.interests` is typed as `Category[]`.
 
 - `src/components/learning-preferences/step-interests.tsx`: Updated translation key lookup to use `INTEREST_TRANSLATION_KEYS[interest]` instead of template literal with `.replace()`.
 
@@ -34,7 +34,7 @@ Build passes with no TypeScript errors.
 
 ### Changes made:
 
-- `src/components/home/recommended-tracks-empty-state.tsx`: Created new `RecommendedTracksEmptyState` component that accepts `interests: TrackCategory[] | undefined` and uses `useTracksByCategories` to fetch filtered tracks. Shows a loading state while fetching, an empty message when no tracks match, or a list of track buttons navigating to `/track/$trackId`. Includes a "Browse Tracks" button linking to `/track`.
+- `src/components/home/recommended-tracks-empty-state.tsx`: Created new `RecommendedTracksEmptyState` component that accepts `interests: Category[] | undefined` and uses `useTracksByCategories` to fetch filtered tracks. Shows a loading state while fetching, an empty message when no tracks match, or a list of track buttons navigating to `/track/$trackId`. Includes a "Browse Tracks" button linking to `/track`.
 
 - `src/i18n/locales/en/common.ts`: Added `recommended-tracks-description`, `recommended-tracks-empty`, and `recommended-tracks-title` keys in alphabetical order (after `rating`, before `remove`).
 
@@ -54,9 +54,9 @@ Build passes with no TypeScript errors.
 
 ### Changes made:
 
-- `src/components/track/track-form.tsx`: Added `categories: TrackCategory[]` to `FormValues`. Added `categories` to `TrackFormProps.initialData` (optional). Destructured `control` and `setValue` from `useForm`. Added `useWatch` for `categories` field. Added a `ToggleGroup` multi-select field using `INTEREST_OPTIONS` and `INTEREST_TRANSLATION_KEYS` (reusing existing i18n keys). Passed `categories` in both create and update mutation calls.
+- `src/components/track/track-form.tsx`: Added `categories: Category[]` to `FormValues`. Added `categories` to `TrackFormProps.initialData` (optional). Destructured `control` and `setValue` from `useForm`. Added `useWatch` for `categories` field. Added a `ToggleGroup` multi-select field using `INTEREST_OPTIONS` and `INTEREST_TRANSLATION_KEYS` (reusing existing i18n keys). Passed `categories` in both create and update mutation calls.
 
-- `src/routes/track/$trackId/edit.tsx`: Added `TrackCategory` import. Passed `categories` in `initialData` (filtering nulls from `track.categories`).
+- `src/routes/track/$trackId/edit.tsx`: Added `Category` import. Passed `categories` in `initialData` (filtering nulls from `track.categories`).
 
 - `src/i18n/locales/en/common.ts`: Added `track-categories-label: "Categories"` in alphabetical order.
 
