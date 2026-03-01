@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithRedirect,
   confirmSignUp,
+  autoSignIn,
   getCurrentUser,
 } from "aws-amplify/auth";
 
@@ -66,11 +67,19 @@ export const signUpWithEmailApi = async (
     username: email,
     password,
     options: {
+      autoSignIn: true,
       userAttributes: {
         "custom:display_name": name,
       },
     },
   });
+};
+
+/**
+ * Auto sign-in after email link verification
+ */
+export const autoSignInApi = async (): Promise<void> => {
+  await autoSignIn();
 };
 
 /**

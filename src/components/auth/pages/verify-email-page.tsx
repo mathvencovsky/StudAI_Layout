@@ -1,10 +1,10 @@
-import {
-  type VerifyEmailFormValues,
-  VerifyEmailForm,
-} from "@/components/auth/form/verify-email-form";
-import { useVerifyEmail } from "@/hooks/use-verify-email";
+import { VerifyEmailForm } from "@/components/auth/form/verify-email-form";
+import { autoSignInApi } from "@/api/auth";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+const POLL_INTERVAL_MS = 3000;
 
 export interface VerifyEmailPageProps {
   email: string;
@@ -12,29 +12,32 @@ export interface VerifyEmailPageProps {
 
 export const VerifyEmailPage = ({ email }: VerifyEmailPageProps) => {
   const [error, setError] = useState<string | null>(null);
-  const mutation = useVerifyEmail();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const handleSubmit = async (values: VerifyEmailFormValues) => {
-    setError(null);
-    try {
-      await mutation.mutateAsync({
-        email,
-        code: values.code,
-      });
-      navigate({ to: "/" });
-    } catch (e) {
-      console.error(e);
-      setError("Verification failed. Please check your code and try again.");
-    }
-  };
+  useEffect(() => {
+    let stopped = false;
 
-  return (
-    <VerifyEmailForm
-      email={email}
-      onSubmit={handleSubmit}
-      isSubmitting={mutation.isPending}
-      errorMessage={error}
-    />
-  );
+    const tryAutoSignIn = async () => {
+      try {
+        await autoSignInApi();
+        navigate({ to: "/" });
+      } catch (e) {
+        const message = e instanceof Error ? e.message : "";
+        if (message.toLowerCase().includes("expired")) {
+          setError(t("verify-email-sign-in-error"));
+          stopped = true;
+        }
+      }
+    };
+
+    tryAutoSignIn();
+    const interval = setInterval(() => {
+      if (!stopped) tryAutoSignIn();
+    }, POLL_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, [navigate, t]);
+
+  return <VerifyEmailForm email={email} errorMessage={error} />;
 };

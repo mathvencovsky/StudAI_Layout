@@ -1190,11 +1190,15 @@ export default {
   user: "Usuário",
   "validation-description-min": "A descrição deve ter pelo menos 10 caracteres",
   "verification-code": "Código de Verificação",
-  "verify-email": "Verificar Email",
+  "verify-email-confirmed-button": "Já verifiquei meu email",
   "verify-email-description":
-    "Digite o código de 6 dígitos enviado para seu endereço de email",
+    "Enviamos um link de verificação para seu endereço de email. Clique no link para verificar sua conta.",
   "verify-email-description-with-email":
-    "Digite o código de 6 dígitos enviado para {{email}}",
+    "Enviamos um link de verificação para {{email}}. Clique no link para verificar sua conta.",
+  "verify-email-link-sent":
+    "Enviamos um link de verificação para {{email}}. Clique no link para verificar sua conta.",
+  "verify-email-sign-in-error":
+    "Não foi possível entrar automaticamente. Por favor, entre manualmente.",
   "verify-email-title": "Verifique Seu Email",
   verifying: "Verificando...",
   "view-track": "Ver Trilha",

@@ -23,12 +23,12 @@ export const auth = defineAuth({
         },
       },
       callbackUrls: [
-        "http://localhost:5173/",
+        "https://localhost:5173/",
         "https://staging.d3c8vwdhq21nu3.amplifyapp.com/",
         "https://main.d3c8vwdhq21nu3.amplifyapp.com/",
       ],
       logoutUrls: [
-        "http://localhost:5173/",
+        "https://localhost:5173/",
         "https://staging.d3c8vwdhq21nu3.amplifyapp.com/",
         "https://main.d3c8vwdhq21nu3.amplifyapp.com/",
       ],

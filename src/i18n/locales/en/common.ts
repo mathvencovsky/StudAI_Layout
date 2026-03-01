@@ -1175,11 +1175,15 @@ export default {
   "validation-description-min":
     "Description must be at least 10 characters long",
   "verification-code": "Verification Code",
-  "verify-email": "Verify Email",
+  "verify-email-confirmed-button": "I've verified my email",
   "verify-email-description":
-    "Enter the 6-digit code sent to your email address",
+    "We sent a verification link to your email address. Click the link to verify your account.",
   "verify-email-description-with-email":
-    "Enter the 6-digit code sent to {{email}}",
+    "We sent a verification link to {{email}}. Click the link to verify your account.",
+  "verify-email-link-sent":
+    "We sent a verification link to {{email}}. Click the link to verify your account.",
+  "verify-email-sign-in-error":
+    "Could not sign in automatically. Please sign in manually.",
   "verify-email-title": "Verify Your Email",
   verifying: "Verifying...",
   "view-track": "View Track",

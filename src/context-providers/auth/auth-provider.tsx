@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email: attributes.email ?? currentUser.signInDetails?.loginId,
           displayName:
             attributes["custom:display_name"] ?? attributes.email ?? attributes.name,
+          photoURL: attributes.picture,
         });
       } catch (error) {
         console.log("No user authenticated");
