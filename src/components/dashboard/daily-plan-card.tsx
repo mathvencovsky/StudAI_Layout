@@ -86,7 +86,7 @@ export const DailyPlanCard = () => {
               {t("daily-plan-no-tasks")}
             </p>
             <Button size="sm" variant="outline" asChild>
-              <Link to="/study">
+              <Link to="/module">
                 <Play className="h-4 w-4 mr-2" />
                 {t("daily-plan-start-session")}
               </Link>

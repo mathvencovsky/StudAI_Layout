@@ -88,7 +88,7 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-3">
-            <Link to="/study" className="flex-1">
+            <Link to="/module" className="flex-1">
               <Button className="w-full" size="lg">
                 <Brain className="mr-2 h-5 w-5" />
                 Estudar com IA

@@ -2,7 +2,6 @@ import {
   Home,
   Compass,
   Search,
-  BookOpen,
   ClipboardCheck,
   Clock,
   Calendar,
@@ -37,7 +36,6 @@ export const navigationGroups: NavigationGroup[] = [
       { to: "/", icon: Home, label: "home", requiresAuth: true },
       { to: "/explore", icon: Compass, label: "tracks", requiresAuth: true },
       { to: "/search", icon: Search, label: "search", requiresAuth: true },
-      { to: "/study", icon: BookOpen, label: "study", requiresAuth: true },
       {
         to: "/assessments",
         icon: ClipboardCheck,

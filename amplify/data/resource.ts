@@ -247,6 +247,7 @@ const schema = a.schema({
       startedAt: a.timestamp().required(),
       endedAt: a.timestamp(),
       durationMinutes: a.integer(),
+      lastActiveAt: a.timestamp(),
       score: a.integer(),
       xpEarned: a.integer().default(0),
       tasksCompleted: a.string().required().array(),

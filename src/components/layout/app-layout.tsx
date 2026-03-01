@@ -2,6 +2,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SiteHeader } from "@/components/layout/site-header";
 import { GlobalFooter } from "@/components/layout/global-footer";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { useSessionTracker } from "@/hooks/session-tracker/use-session-tracker";
 
 export interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ export interface AppLayoutProps {
  * Root authenticated layout that provides the sidebar and header structure.
  */
 export function AppLayout({ children }: AppLayoutProps) {
+  useSessionTracker();
   return (
     <SidebarProvider>
       <AppSidebar />

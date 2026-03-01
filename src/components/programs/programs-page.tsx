@@ -98,7 +98,7 @@ export function ProgramsPage() {
                 <Link to="/my-track" className="flex-1">
                   <Button className="w-full">{t("pages-programs-view-plan-details")}</Button>
                 </Link>
-                <Link to="/study" className="flex-1">
+                <Link to="/module" className="flex-1">
                   <Button variant="outline" className="w-full">{t("pages-programs-study-with-ai")}</Button>
                 </Link>
               </div>

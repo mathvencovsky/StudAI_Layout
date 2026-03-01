@@ -4,6 +4,8 @@ import {
   type UserContentProgress,
   type UserContentProgressCreateInput,
   type UserContentProgressUpdateInput,
+  type UserContentProgressWithContent,
+  progressWithContentSelectionSet,
 } from "@/model/user-content-progress";
 import { getCurrentUserId } from "./auth";
 
@@ -46,7 +48,7 @@ export const toggleContentCompletion = async (input: {
     const updateInput: UserContentProgressUpdateInput = {
       id: existing.id,
       isCompleted: input.isCompleted,
-      completionDate: input.isCompleted ? Date.now() : undefined,
+      completionDate: input.isCompleted ? Math.floor(Date.now() / 1000) : undefined,
     };
 
     const result = await client.models.UserContentProgress.update(updateInput);
@@ -62,7 +64,7 @@ export const toggleContentCompletion = async (input: {
       moduleId: input.moduleId,
       contentId: input.contentId,
       isCompleted: input.isCompleted,
-      completionDate: input.isCompleted ? Date.now() : undefined,
+      completionDate: input.isCompleted ? Math.floor(Date.now() / 1000) : undefined,
     };
 
     const result = await client.models.UserContentProgress.create(createInput);
@@ -94,5 +96,19 @@ export const getUserContentProgress = async (
     return [];
   }
 
+  return result.data;
+};
+
+/**
+ * Lists all user content progress with related content data
+ */
+export const listAllUserContentProgressWithContent = async (): Promise<UserContentProgressWithContent[]> => {
+  const result = await client.models.UserContentProgress.list({
+    selectionSet: progressWithContentSelectionSet,
+  });
+  if (!result.data) {
+    console.error("Failed to list user content progress with content:", result.errors);
+    return [];
+  }
   return result.data;
 };

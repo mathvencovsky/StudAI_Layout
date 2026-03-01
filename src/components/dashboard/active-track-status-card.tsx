@@ -202,7 +202,7 @@ export const ActiveTrackStatusCard = () => {
         {/* Actions */}
         <div className="flex gap-2">
           <Button size="sm" className="flex-1" asChild>
-            <Link to="/study">
+            <Link to="/module">
               <Play className="h-4 w-4 mr-2" />
               {t("active-track-start-session")}
             </Link>

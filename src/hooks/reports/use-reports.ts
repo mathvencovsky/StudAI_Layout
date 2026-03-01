@@ -1,107 +1,155 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { listStudySessions } from "@/api/study-session";
+import { listAllUserContentProgressWithContent } from "@/api/user-content-progress";
+import { type UserContentProgressWithContent } from "@/model/user-content-progress";
 import { QUERY_KEYS } from "@/api/query-keys";
+import { type Schema } from "../../../amplify/data/resource";
 
-export type ReportPeriod = "week" | "month" | "quarter" | "year";
+export type ReportPeriod = "week" | "month" | "year";
 
 export interface ReportData {
   period: ReportPeriod;
-  totalHours: number;
-  consistency: number;
-  evolution: number;
-  breakdown: {
-    sessions: number;
-    assessments: number;
-    reviews: number;
+  contentHours: number;
+  contentActiveDays: number;
+  contentEvolution: number;
+  contentBreakdown: {
+    videos: number;
+    articles: number;
+    quizzes: number;
+    other: number;
   };
-  chartData: {
-    date: string;
-    minutes: number;
-  }[];
+  contentChartData: { date: string; minutes: number }[];
+  activeTimeHours: number;
+  activeTimeSessions: number;
+  activeTimeEvolution: number;
+  activeTimeChartData: { date: string; minutes: number }[];
 }
 
-const periodDays: Record<ReportPeriod, number> = {
-  week: 7,
-  month: 30,
-  quarter: 90,
-  year: 365,
+const periodSeconds: Record<ReportPeriod, number> = {
+  week: 7 * 86400,
+  month: 30 * 86400,
+  year: 365 * 86400,
 };
 
-function getPeriodStart(period: ReportPeriod, referenceMs: number): number {
-  return referenceMs - periodDays[period] * 86400000;
+const dateFromSeconds = (s: number) =>
+  new Date(s * 1000).toISOString().split("T")[0];
+
+function buildChartMap(period: ReportPeriod, nowSeconds: number): Record<string, number> {
+  const days = periodSeconds[period] / 86400;
+  const map: Record<string, number> = {};
+  for (let i = days - 1; i >= 0; i--) {
+    const date = dateFromSeconds(nowSeconds - i * 86400);
+    map[date] = 0;
+  }
+  return map;
 }
 
 function buildReportData(
-  sessions: Awaited<ReturnType<typeof listStudySessions>>,
+  sessions: Schema["StudySession"]["type"][],
+  contentProgress: UserContentProgressWithContent[],
   period: ReportPeriod,
 ): ReportData {
-  const now = Date.now();
-  const currentStart = getPeriodStart(period, now);
-  const previousStart = getPeriodStart(period, currentStart);
+  const now = Math.floor(Date.now() / 1000);
+  const duration = periodSeconds[period];
+  const currentStart = now - duration;
+  const previousStart = currentStart - duration;
 
-  const currentSessions = sessions.filter(
-    (s) => s.startedAt >= currentStart / 1000 && s.startedAt <= now / 1000,
+  // --- Content metrics ---
+  const currentContent = contentProgress.filter(
+    (p) =>
+      p.isCompleted &&
+      p.completionDate != null &&
+      p.completionDate >= currentStart &&
+      p.completionDate <= now,
   );
-  const previousSessions = sessions.filter(
-    (s) =>
-      s.startedAt >= previousStart / 1000 &&
-      s.startedAt < currentStart / 1000,
+  const previousContent = contentProgress.filter(
+    (p) =>
+      p.isCompleted &&
+      p.completionDate != null &&
+      p.completionDate >= previousStart &&
+      p.completionDate < currentStart,
   );
 
-  const totalMinutes = currentSessions.reduce(
-    (sum, s) => sum + (s.durationMinutes ?? 0),
+  const contentMinutes = currentContent.reduce(
+    (sum, p) => sum + Math.floor((p.content?.durationInSeconds ?? 0) / 60),
     0,
   );
-  const previousMinutes = previousSessions.reduce(
-    (sum, s) => sum + (s.durationMinutes ?? 0),
+  const previousContentMinutes = previousContent.reduce(
+    (sum, p) => sum + Math.floor((p.content?.durationInSeconds ?? 0) / 60),
     0,
   );
 
-  const activeDays = new Set(
-    currentSessions.map((s) =>
-      new Date(s.startedAt * 1000).toISOString().split("T")[0],
-    ),
+  const contentActiveDays = new Set(
+    currentContent
+      .filter((p) => p.completionDate != null)
+      .map((p) => dateFromSeconds(p.completionDate!)),
   ).size;
 
-  const evolution =
-    previousMinutes > 0
-      ? Math.round(((totalMinutes - previousMinutes) / previousMinutes) * 1000) / 10
+  const contentEvolution =
+    previousContentMinutes > 0
+      ? Math.round(((contentMinutes - previousContentMinutes) / previousContentMinutes) * 1000) / 10
       : 0;
 
-  const sessionMinutes = currentSessions
-    .filter((s) => s.type !== "review")
-    .reduce((sum, s) => sum + (s.durationMinutes ?? 0), 0);
-  const reviewMinutes = currentSessions
-    .filter((s) => s.type === "review")
-    .reduce((sum, s) => sum + (s.durationMinutes ?? 0), 0);
-
-  const days = periodDays[period];
-  const chartMap: Record<string, number> = {};
-  for (let i = days - 1; i >= 0; i--) {
-    const date = new Date(now - i * 86400000).toISOString().split("T")[0];
-    chartMap[date] = 0;
+  const contentChartMap = buildChartMap(period, now);
+  for (const p of currentContent) {
+    if (p.completionDate == null) continue;
+    const date = dateFromSeconds(p.completionDate);
+    if (date in contentChartMap) {
+      contentChartMap[date] += Math.floor((p.content?.durationInSeconds ?? 0) / 60);
+    }
   }
+
+  const contentBreakdown = { videos: 0, articles: 0, quizzes: 0, other: 0 };
+  for (const p of currentContent) {
+    const minutes = Math.floor((p.content?.durationInSeconds ?? 0) / 60);
+    const type = p.content?.type;
+    if (type === "youtube_video") contentBreakdown.videos += minutes;
+    else if (type === "article") contentBreakdown.articles += minutes;
+    else if (type === "quiz") contentBreakdown.quizzes += minutes;
+    else contentBreakdown.other += minutes;
+  }
+
+  // --- Active time metrics ---
+  const currentSessions = sessions.filter(
+    (s) => s.startedAt >= currentStart && s.startedAt <= now,
+  );
+  const previousSessions = sessions.filter(
+    (s) => s.startedAt >= previousStart && s.startedAt < currentStart,
+  );
+
+  const activeMinutes = currentSessions.reduce(
+    (sum, s) => sum + (s.durationMinutes ?? 0),
+    0,
+  );
+  const previousActiveMinutes = previousSessions.reduce(
+    (sum, s) => sum + (s.durationMinutes ?? 0),
+    0,
+  );
+
+  const activeTimeEvolution =
+    previousActiveMinutes > 0
+      ? Math.round(((activeMinutes - previousActiveMinutes) / previousActiveMinutes) * 1000) / 10
+      : 0;
+
+  const activeTimeChartMap = buildChartMap(period, now);
   for (const s of currentSessions) {
-    const date = new Date(s.startedAt * 1000).toISOString().split("T")[0];
-    if (date in chartMap) {
-      chartMap[date] += s.durationMinutes ?? 0;
+    const date = dateFromSeconds(s.startedAt);
+    if (date in activeTimeChartMap) {
+      activeTimeChartMap[date] += s.durationMinutes ?? 0;
     }
   }
 
   return {
     period,
-    totalHours: Math.round((totalMinutes / 60) * 10) / 10,
-    consistency: activeDays,
-    evolution,
-    breakdown: {
-      sessions: sessionMinutes,
-      assessments: 0,
-      reviews: reviewMinutes,
-    },
-    chartData: Object.entries(chartMap).map(([date, minutes]) => ({
-      date,
-      minutes,
-    })),
+    contentHours: Math.round((contentMinutes / 60) * 10) / 10,
+    contentActiveDays,
+    contentEvolution,
+    contentBreakdown,
+    contentChartData: Object.entries(contentChartMap).map(([date, minutes]) => ({ date, minutes })),
+    activeTimeHours: Math.round((activeMinutes / 60) * 10) / 10,
+    activeTimeSessions: currentSessions.length,
+    activeTimeEvolution,
+    activeTimeChartData: Object.entries(activeTimeChartMap).map(([date, minutes]) => ({ date, minutes })),
   };
 }
 
@@ -109,8 +157,11 @@ export const reportDataQueryOptions = (period: ReportPeriod) =>
   queryOptions({
     queryKey: [QUERY_KEYS.REPORTS, period],
     queryFn: async () => {
-      const sessions = await listStudySessions();
-      return buildReportData(sessions, period);
+      const [sessions, contentProgress] = await Promise.all([
+        listStudySessions(),
+        listAllUserContentProgressWithContent(),
+      ]);
+      return buildReportData(sessions, contentProgress, period);
     },
     staleTime: 1000 * 60 * 5,
   });

@@ -22,13 +22,15 @@ const fetchActivityFeed = async (): Promise<Activity[]> => {
     ]);
 
   const activities: Activity[] = [
-    ...sessions.map((s) => ({
-      id: s.id,
-      type: "study_session",
-      title: `Study session: ${s.type ?? "general"}`,
-      timestamp: new Date(s.startedAt).toISOString(),
-      xp: s.xpEarned ?? 0,
-    })),
+    ...sessions
+      .filter((s) => s.endedAt != null && (s.durationMinutes ?? 0) > 0)
+      .map((s) => ({
+        id: s.id,
+        type: "study_session",
+        title: `Study session: ${s.type ?? "general"}`,
+        timestamp: new Date(s.startedAt).toISOString(),
+        xp: s.xpEarned ?? 0,
+      })),
     ...quizAttempts.map((a) => ({
       id: a.id,
       type: "quiz_completed",

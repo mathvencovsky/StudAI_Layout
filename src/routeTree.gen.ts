@@ -14,7 +14,6 @@ import { Route as TrackCreateRouteImport } from './routes/track-create'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SupportRouteImport } from './routes/support'
-import { Route as StudyRouteImport } from './routes/study'
 import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionsRouteImport } from './routes/sessions'
@@ -97,11 +96,6 @@ const TermsRoute = TermsRouteImport.update({
 const SupportRoute = SupportRouteImport.update({
   id: '/support',
   path: '/support',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StudyRoute = StudyRouteImport.update({
-  id: '/study',
-  path: '/study',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignUpRoute = SignUpRouteImport.update({
@@ -438,7 +432,6 @@ export interface FileRoutesByFullPath {
   '/sessions': typeof SessionsRoute
   '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
-  '/study': typeof StudyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/track': typeof TrackRouteWithChildren
@@ -501,7 +494,6 @@ export interface FileRoutesByTo {
   '/sessions': typeof SessionsRoute
   '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
-  '/study': typeof StudyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/track-create': typeof TrackCreateRoute
@@ -564,7 +556,6 @@ export interface FileRoutesById {
   '/sessions': typeof SessionsRoute
   '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
-  '/study': typeof StudyRoute
   '/support': typeof SupportRoute
   '/terms': typeof TermsRoute
   '/track': typeof TrackRouteWithChildren
@@ -632,7 +623,6 @@ export interface FileRouteTypes {
     | '/sessions'
     | '/settings'
     | '/sign-up'
-    | '/study'
     | '/support'
     | '/terms'
     | '/track'
@@ -695,7 +685,6 @@ export interface FileRouteTypes {
     | '/sessions'
     | '/settings'
     | '/sign-up'
-    | '/study'
     | '/support'
     | '/terms'
     | '/track-create'
@@ -757,7 +746,6 @@ export interface FileRouteTypes {
     | '/sessions'
     | '/settings'
     | '/sign-up'
-    | '/study'
     | '/support'
     | '/terms'
     | '/track'
@@ -824,7 +812,6 @@ export interface RootRouteChildren {
   SessionsRoute: typeof SessionsRoute
   SettingsRoute: typeof SettingsRoute
   SignUpRoute: typeof SignUpRoute
-  StudyRoute: typeof StudyRoute
   SupportRoute: typeof SupportRoute
   TermsRoute: typeof TermsRoute
   TrackRoute: typeof TrackRouteWithChildren
@@ -870,13 +857,6 @@ declare module '@tanstack/react-router' {
       path: '/support'
       fullPath: '/support'
       preLoaderRoute: typeof SupportRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/study': {
-      id: '/study'
-      path: '/study'
-      fullPath: '/study'
-      preLoaderRoute: typeof StudyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sign-up': {
@@ -1432,7 +1412,6 @@ const rootRouteChildren: RootRouteChildren = {
   SessionsRoute: SessionsRoute,
   SettingsRoute: SettingsRoute,
   SignUpRoute: SignUpRoute,
-  StudyRoute: StudyRoute,
   SupportRoute: SupportRoute,
   TermsRoute: TermsRoute,
   TrackRoute: TrackRouteWithChildren,

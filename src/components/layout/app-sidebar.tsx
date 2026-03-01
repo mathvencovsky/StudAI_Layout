@@ -2,7 +2,6 @@ import React from "react";
 import {
   IconActivity,
   IconAdjustments,
-  IconBook,
   IconBooks,
   IconChartBar,
   IconFileText,
@@ -90,12 +89,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         to: "/search",
         onClick: navigateTo("/search"),
         icon: IconSearch,
-      },
-      {
-        title: t("study"),
-        to: "/study",
-        onClick: navigateTo("/study"),
-        icon: IconBook,
       },
       {
         title: t("tracks"),

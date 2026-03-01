@@ -1,4 +1,3 @@
-import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useListGoals } from "@/hooks/goal/use-list-goals";
 import { useTodayTasks } from "@/hooks/daily-task/use-today-tasks";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -7,15 +6,16 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { type TFunction } from "i18next";
+import { type Goal } from "@/model/goal";
+import { type DailyTask } from "@/model/daily-task";
 
 /**
- * Simple AI recommendation logic based on user data
+ * Gets recommendation for next action based on user's current state
  */
 const getRecommendation = (
-  sessions: any[] | undefined,
-  goals: any[] | undefined,
-  tasks: any[] | undefined,
-  t: TFunction
+  goals: Goal[] | undefined,
+  tasks: DailyTask[] | undefined,
+  t: TFunction,
 ) => {
   const incompleteTasks = tasks?.filter((task) => !task.isCompleted) ?? [];
   if (incompleteTasks.length > 0) {
@@ -23,7 +23,7 @@ const getRecommendation = (
       title: t("next-action-complete-task-title"),
       description: t("next-action-complete-task-description", { count: incompleteTasks.length }),
       action: t("next-action-complete-task-action"),
-      link: "/study",
+      link: "/module",
     };
   }
 
@@ -33,22 +33,7 @@ const getRecommendation = (
       title: t("next-action-continue-goal-title"),
       description: activeGoal.title ?? "",
       action: t("next-action-continue-goal-action"),
-      link: "/study",
-    };
-  }
-
-  const recentSessions = sessions?.filter((session) => {
-    const sessionDate = session.startedAt ? new Date(session.startedAt).getTime() : 0;
-    const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
-    return sessionDate > oneDayAgo;
-  });
-
-  if (!recentSessions || recentSessions.length === 0) {
-    return {
-      title: t("next-action-no-study-title"),
-      description: t("next-action-no-study-description"),
-      action: t("next-action-no-study-action"),
-      link: "/study",
+      link: "/module",
     };
   }
 
@@ -56,7 +41,7 @@ const getRecommendation = (
     title: t("next-action-explore-title"),
     description: t("next-action-explore-description"),
     action: t("next-action-explore-action"),
-    link: "/content",
+    link: "/module",
   };
 };
 
@@ -65,11 +50,10 @@ const getRecommendation = (
  */
 export const NextActionCard = () => {
   const { t } = useTranslation();
-  const { data: sessions, isLoading: sessionsLoading } = useListStudySessions();
   const { data: goals, isLoading: goalsLoading } = useListGoals();
   const { data: tasks, isLoading: tasksLoading } = useTodayTasks();
 
-  const isLoading = sessionsLoading || goalsLoading || tasksLoading;
+  const isLoading = goalsLoading || tasksLoading;
 
   if (isLoading) {
     return (
@@ -81,7 +65,7 @@ export const NextActionCard = () => {
     );
   }
 
-  const recommendation = getRecommendation(sessions, goals, tasks, t);
+  const recommendation = getRecommendation(goals, tasks, t);
 
   return (
     <section className="border rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 overflow-hidden">
