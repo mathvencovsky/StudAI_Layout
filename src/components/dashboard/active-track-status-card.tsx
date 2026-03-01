@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, Target, TrendingUp, Play } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 /**
  * Calculate days remaining until target date
@@ -70,6 +71,7 @@ const getStatusBadge = (
  * Displays active track/goal status with progress and metrics
  */
 export const ActiveTrackStatusCard = () => {
+  const { t } = useTranslation();
   const { data: plan, isLoading: planLoading } = useMyPlan();
   const { data: goals, isLoading: goalsLoading } = useListGoals();
 
@@ -96,15 +98,15 @@ export const ActiveTrackStatusCard = () => {
       <section className="border rounded-lg bg-card overflow-hidden">
         <div className="p-4 border-b">
           <h3 className="font-medium text-foreground">
-            Status da trilha
+            {t("active-track-title")}
           </h3>
         </div>
         <div className="p-4 text-center">
           <p className="text-sm text-muted-foreground mb-3">
-            Nenhuma trilha ativa
+            {t("active-track-no-active")}
           </p>
           <Button size="sm" variant="outline">
-            Explorar trilhas
+            {t("active-track-explore")}
           </Button>
         </div>
       </section>
@@ -128,7 +130,7 @@ export const ActiveTrackStatusCard = () => {
       <div className="p-4 border-b">
         <div className="flex items-center justify-between">
           <h3 className="font-medium text-foreground">
-            {activeGoal?.title ?? "Trilha ativa"}
+            {activeGoal?.title ?? t("active-track-title")}
           </h3>
           {getStatusBadge(progressPercentage, daysRemaining)}
         </div>
@@ -142,7 +144,7 @@ export const ActiveTrackStatusCard = () => {
         {/* Progress */}
         <div>
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium">Progresso</span>
+            <span className="text-sm font-medium">{t("active-track-progress")}</span>
             <span className="text-sm font-bold">{progressPercentage}%</span>
           </div>
           <Progress value={progressPercentage} className="h-2" />
@@ -154,7 +156,7 @@ export const ActiveTrackStatusCard = () => {
             <div className="flex items-center gap-2 mb-1">
               <Calendar className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                Dias restantes
+                {t("active-track-days-remaining")}
               </span>
             </div>
             <p className="text-lg font-bold">{daysRemaining}</p>
@@ -164,7 +166,7 @@ export const ActiveTrackStatusCard = () => {
             <div className="flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                Horas restantes
+                {t("active-track-hours-remaining")}
               </span>
             </div>
             <p className="text-lg font-bold">{hoursRemaining}h</p>
@@ -174,7 +176,7 @@ export const ActiveTrackStatusCard = () => {
             <div className="flex items-center gap-2 mb-1">
               <Target className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                Necessário/dia
+                {t("active-track-required-per-day")}
               </span>
             </div>
             <p className="text-lg font-bold">{minutesPerDay} min</p>
@@ -184,7 +186,7 @@ export const ActiveTrackStatusCard = () => {
             <div className="flex items-center gap-2 mb-1">
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">
-                Horas concluídas
+                {t("active-track-completed-hours")}
               </span>
             </div>
             <p className="text-lg font-bold">{plan?.completedHours ?? 0}h</p>
@@ -193,12 +195,8 @@ export const ActiveTrackStatusCard = () => {
 
         {/* Dates */}
         <div className="text-xs text-muted-foreground space-y-1">
-          <p>
-            Início: {startDate}
-          </p>
-          <p>
-            Meta: {targetDate}
-          </p>
+          <p>{t("active-track-start-date", { date: startDate })}</p>
+          <p>{t("active-track-target-date", { date: targetDate })}</p>
         </div>
 
         {/* Actions */}
@@ -206,11 +204,11 @@ export const ActiveTrackStatusCard = () => {
           <Button size="sm" className="flex-1" asChild>
             <Link to="/study">
               <Play className="h-4 w-4 mr-2" />
-              Iniciar sessão
+              {t("active-track-start-session")}
             </Link>
           </Button>
           <Button size="sm" variant="outline">
-            Ver detalhes
+            {t("active-track-view-details")}
           </Button>
         </div>
       </div>

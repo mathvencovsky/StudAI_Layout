@@ -55,10 +55,10 @@ export const GamificationCard = () => {
       <div className="p-4 border-b">
         <h3 className="font-medium text-foreground flex items-center gap-2">
           <Trophy className="h-4 w-4 text-yellow-500" />
-          Progresso
+          {t("gamification-title")}
         </h3>
         <p className="text-xs text-muted-foreground mt-0.5">
-          Seu desempenho acumulado
+          {t("gamification-subtitle")}
         </p>
       </div>
       <div className="p-4 space-y-4">
@@ -77,7 +77,7 @@ export const GamificationCard = () => {
           </div>
           <Progress value={progress} className="h-2" />
           <p className="text-xs text-muted-foreground mt-1">
-            {xpNeeded} XP para o próximo nível
+            {t("gamification-xp-to-next-level", { xp: xpNeeded })}
           </p>
         </div>
 
@@ -86,9 +86,9 @@ export const GamificationCard = () => {
           <div className="flex items-center gap-2">
             <Flame className="h-5 w-5 text-orange-500" />
             <div>
-              <p className="text-sm font-medium">Sequência</p>
+              <p className="text-sm font-medium">{t("gamification-streak-title")}</p>
               <p className="text-xs text-muted-foreground">
-                Dias consecutivos
+                {t("gamification-streak-subtitle")}
               </p>
             </div>
           </div>

@@ -5,11 +5,6 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
-import { GamificationCard } from "@/components/dashboard/gamification-card";
-import { DailyPlanCard } from "@/components/dashboard/daily-plan-card";
-import { ActiveTrackStatusCard } from "@/components/dashboard/active-track-status-card";
-import { NextActionCard } from "@/components/dashboard/next-action-card";
-import { NewSessionCard } from "@/components/dashboard/new-session-card";
 import { LastStartedModuleSection } from "@/components/dashboard/last-started-module-section";
 import { LastStartedTrackSection } from "@/components/home/last-started-track-section";
 import { LearningPreferencesForm } from "@/components/learning-preferences/learning-preferences-form";
@@ -41,7 +36,9 @@ export const HomePage = () => {
   const handleSavePreference = useCallback(
     (data: LearningPreferencesFormValues) => {
       savePreference(
-        { data: { ...data, days: data.days ?? [], formats: data.formats ?? [] } },
+        {
+          data: { ...data, days: data.days ?? [], formats: data.formats ?? [] },
+        },
         {
           onSuccess: () => {
             toast.success(t("learning-preferences-save-success"));
@@ -73,65 +70,43 @@ export const HomePage = () => {
         {/* Hero - Minimal greeting */}
         <UserGreeting displayName={user?.displayName} />
 
-        {/* Stats overview - now using dashboard data */}
+        {/* Stats overview - single row */}
         <StatsCards />
 
-        {/* AI Recommendation */}
-        <NextActionCard />
-
-        {/* Main content grid */}
+        {/* Continue Module + Upgrade Card */}
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Left column */}
-          <div className="space-y-6">
-            {/* New Session - Create Track with AI */}
-            <NewSessionCard />
+          <section className="border rounded-lg bg-card overflow-hidden">
+            <div className="p-4 border-b">
+              <h3 className="font-medium text-foreground">
+                {t("continue-learning")}
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {t("continue-learning-description") ??
+                  "Pick up where you left off."}
+              </p>
+            </div>
+            <div className="p-4">
+              <LastStartedModuleSection />
+            </div>
+          </section>
 
-            {/* Daily Plan */}
-            <DailyPlanCard />
-
-            {/* Continue Module */}
-            <section className="border rounded-lg bg-card overflow-hidden">
-              <div className="p-4 border-b">
-                <h3 className="font-medium text-foreground">
-                  {t("continue-learning")}
-                </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {t("continue-learning-description") ?? "Pick up where you left off."}
-                </p>
-              </div>
-              <div className="p-4">
-                <LastStartedModuleSection />
-              </div>
-            </section>
-          </div>
-
-          {/* Right column */}
-          <div className="space-y-6">
-            {/* Upgrade Card */}
-            <UpgradeCard />
-
-            {/* Gamification */}
-            <GamificationCard />
-
-            {/* Active Track Status */}
-            <ActiveTrackStatusCard />
-
-            {/* Continue Track */}
-            <section className="border rounded-lg bg-card overflow-hidden">
-              <div className="p-4 border-b">
-                <h3 className="font-medium text-foreground">
-                  {t("continue-track")}
-                </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {t("continue-track-description") ?? "Your active learning path."}
-                </p>
-              </div>
-              <div className="p-4">
-                <LastStartedTrackSection />
-              </div>
-            </section>
-          </div>
+          <UpgradeCard />
         </div>
+
+        {/* Continue Track - full row */}
+        <section className="border rounded-lg bg-card overflow-hidden">
+          <div className="p-4 border-b">
+            <h3 className="font-medium text-foreground">
+              {t("continue-track")}
+            </h3>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {t("continue-track-description") ?? "Your active learning path."}
+            </p>
+          </div>
+          <div className="p-4">
+            <LastStartedTrackSection />
+          </div>
+        </section>
       </div>
     </div>
   );

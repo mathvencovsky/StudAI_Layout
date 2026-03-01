@@ -5,6 +5,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { type TFunction } from "i18next";
 
 /**
  * Simple AI recommendation logic based on user data
@@ -12,51 +14,48 @@ import { Link } from "@tanstack/react-router";
 const getRecommendation = (
   sessions: any[] | undefined,
   goals: any[] | undefined,
-  tasks: any[] | undefined
+  tasks: any[] | undefined,
+  t: TFunction
 ) => {
-  // Check if there are incomplete tasks today
-  const incompleteTasks = tasks?.filter((t) => !t.isCompleted) ?? [];
+  const incompleteTasks = tasks?.filter((task) => !task.isCompleted) ?? [];
   if (incompleteTasks.length > 0) {
     return {
-      title: "Complete sua próxima tarefa",
-      description: `Você tem ${incompleteTasks.length} tarefa(s) pendente(s) hoje`,
-      action: "Iniciar tarefa",
-      link: "/estudar",
+      title: t("next-action-complete-task-title"),
+      description: t("next-action-complete-task-description", { count: incompleteTasks.length }),
+      action: t("next-action-complete-task-action"),
+      link: "/study",
     };
   }
 
-  // Check if user has an active goal
-  const activeGoal = goals?.find((g) => g.isActive);
+  const activeGoal = goals?.find((goal) => goal.isActive);
   if (activeGoal && (activeGoal.progressPercentage ?? 0) < 100) {
     return {
-      title: "Continue seu objetivo",
-      description: activeGoal.title ?? "Mantenha o ritmo!",
-      action: "Estudar com IA",
-      link: "/estudar",
+      title: t("next-action-continue-goal-title"),
+      description: activeGoal.title ?? "",
+      action: t("next-action-continue-goal-action"),
+      link: "/study",
     };
   }
 
-  // Check if user hasn't studied recently
-  const recentSessions = sessions?.filter((s) => {
-    const sessionDate = s.startedAt ? new Date(s.startedAt).getTime() : 0;
+  const recentSessions = sessions?.filter((session) => {
+    const sessionDate = session.startedAt ? new Date(session.startedAt).getTime() : 0;
     const oneDayAgo = Date.now() - 24 * 60 * 60 * 1000;
     return sessionDate > oneDayAgo;
   });
 
   if (!recentSessions || recentSessions.length === 0) {
     return {
-      title: "Hora de estudar!",
-      description: "Você não estudou nas últimas 24 horas",
-      action: "Iniciar sessão",
-      link: "/estudar",
+      title: t("next-action-no-study-title"),
+      description: t("next-action-no-study-description"),
+      action: t("next-action-no-study-action"),
+      link: "/study",
     };
   }
 
-  // Default recommendation
   return {
-    title: "Explore novos conteúdos",
-    description: "Descubra novas trilhas e módulos",
-    action: "Explorar",
+    title: t("next-action-explore-title"),
+    description: t("next-action-explore-description"),
+    action: t("next-action-explore-action"),
     link: "/content",
   };
 };
@@ -65,6 +64,7 @@ const getRecommendation = (
  * Displays AI-powered next action recommendation
  */
 export const NextActionCard = () => {
+  const { t } = useTranslation();
   const { data: sessions, isLoading: sessionsLoading } = useListStudySessions();
   const { data: goals, isLoading: goalsLoading } = useListGoals();
   const { data: tasks, isLoading: tasksLoading } = useTodayTasks();
@@ -81,7 +81,7 @@ export const NextActionCard = () => {
     );
   }
 
-  const recommendation = getRecommendation(sessions, goals, tasks);
+  const recommendation = getRecommendation(sessions, goals, tasks, t);
 
   return (
     <section className="border rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 overflow-hidden">
@@ -92,7 +92,7 @@ export const NextActionCard = () => {
           </div>
           <div className="flex-1">
             <h3 className="font-medium text-foreground mb-1">
-              Próxima melhor ação
+              {t("next-action-title")}
             </h3>
             <p className="text-sm font-semibold text-foreground mb-1">
               {recommendation.title}

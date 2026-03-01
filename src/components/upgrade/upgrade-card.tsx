@@ -42,7 +42,7 @@ export function UpgradeCard({ variant = "default", className = "" }: UpgradeCard
   }
 
   return (
-    <Card className={`bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20 overflow-hidden ${className}`}>
+    <Card className={`bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20 overflow-hidden flex flex-col h-full ${className}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -54,7 +54,7 @@ export function UpgradeCard({ variant = "default", className = "" }: UpgradeCard
           </Badge>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex flex-col flex-1">
         <p className="text-sm text-muted-foreground">
           {t("upgrade.description", "Desbloqueie todo o potencial do StudAI com recursos premium")}
         </p>
@@ -78,7 +78,7 @@ export function UpgradeCard({ variant = "default", className = "" }: UpgradeCard
           </div>
         </div>
 
-        <Link to="/my-plan">
+        <Link to="/my-plan" className="mt-auto">
           <Button className="w-full group">
             <Sparkles className="w-4 h-4 mr-2" />
             {t("upgrade.cta-full", "Ver Planos e Preços")}

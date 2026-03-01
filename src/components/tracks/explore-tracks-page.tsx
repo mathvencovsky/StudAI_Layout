@@ -53,9 +53,7 @@ export function ExploreTracksPage() {
           <TabsTrigger value="my-track">
             {t("pages-tracks-my-track")}
           </TabsTrigger>
-          <TabsTrigger value="explore">
-            {t("pages-tracks-explore")}
-          </TabsTrigger>
+          <TabsTrigger value="explore">{t("pages-tracks-explore")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="my-track" className="space-y-6 mt-6">
@@ -121,10 +119,7 @@ export function ExploreTracksPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Link
-                      to="/explore/$trackId"
-                      params={{ trackId: track.id }}
-                    >
+                    <Link to="/track/$trackId" params={{ trackId: track.id }}>
                       <Button className="w-full">
                         {t("pages-tracks-view-details")}
                       </Button>

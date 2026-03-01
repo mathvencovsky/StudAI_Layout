@@ -33,53 +33,47 @@ export function MyPlanPage() {
   const plans = [
     {
       id: "free",
-      name: t("pricing.free.name", "Gratuito"),
-      tagline: t("pricing.free.tagline", "Para começar sua jornada"),
-      price: t("pricing.free.price", "R$ 0"),
-      period: t("pricing.free.forever", "para sempre"),
-      description: t(
-        "pricing.free.desc",
-        "Perfeito para quem está começando e quer experimentar a plataforma",
-      ),
+      name: t("pricing-free-name"),
+      tagline: t("pricing-free-tagline"),
+      price: t("pricing-free-price"),
+      period: t("pricing-free-forever"),
+      description: t("pricing-free-desc"),
       features: [
-        t("pricing.free.feature1", "Acesso a conteúdos básicos"),
-        t("pricing.free.feature2", "1 trilha ativa por vez"),
-        t("pricing.free.feature3", "Progresso e estatísticas básicas"),
-        t("pricing.free.feature4", "Comunidade de estudantes"),
-        t("pricing.free.feature5", "Suporte por email"),
+        t("pricing-free-feature1"),
+        t("pricing-free-feature2"),
+        t("pricing-free-feature3"),
+        t("pricing-free-feature4"),
+        t("pricing-free-feature5"),
       ],
-      cta: t("pricing.free.cta", "Plano Atual"),
+      cta: t("pricing-free-cta"),
       ctaVariant: "outline" as const,
       popular: false,
       icon: Users,
     },
     {
       id: "pro",
-      name: t("pricing.pro.name", "Pro"),
-      tagline: t("pricing.pro.tagline", "Para estudantes dedicados"),
-      price: billingCycle === "monthly" ? "R$ 49,90" : "R$ 39,90",
+      name: t("pricing-pro-name"),
+      tagline: t("pricing-pro-tagline"),
+      price:
+        billingCycle === "monthly"
+          ? t("pricing-pro-price-monthly")
+          : t("pricing-pro-price-yearly"),
       period:
         billingCycle === "monthly"
           ? t("pricing-period-monthly")
           : t("pricing-period-yearly"),
-      description: t(
-        "pricing.pro.desc",
-        "Recursos avançados para acelerar seu aprendizado",
-      ),
+      description: t("pricing-pro-desc"),
       features: [
-        t(
-          "pricing.pro.feature1",
-          "IA ilimitada para criar trilhas personalizadas",
-        ),
-        t("pricing.pro.feature2", "Trilhas ilimitadas simultâneas"),
-        t("pricing.pro.feature3", "Acesso a todos os conteúdos premium"),
-        t("pricing.pro.feature4", "Relatórios avançados e analytics"),
-        t("pricing.pro.feature5", "Suporte prioritário"),
+        t("pricing-pro-feature1"),
+        t("pricing-pro-feature2"),
+        t("pricing-pro-feature3"),
+        t("pricing-pro-feature4"),
+        t("pricing-pro-feature5"),
         t("pricing-pro-feature6"),
         t("pricing-pro-feature7"),
         t("pricing-pro-feature8"),
       ],
-      cta: t("pricing.pro.cta", "Entrar na Lista de Espera"),
+      cta: t("pricing-pro-cta"),
       ctaVariant: "default" as const,
       popular: true,
       icon: Crown,
@@ -103,23 +97,23 @@ export function MyPlanPage() {
   const benefits = [
     {
       icon: Zap,
-      title: "IA Avançada",
-      description: "Crie trilhas personalizadas com inteligência artificial",
+      title: t("pricing-benefit-ai-title"),
+      description: t("pricing-benefit-ai-description"),
     },
     {
       icon: TrendingUp,
-      title: "Analytics Detalhado",
-      description: "Acompanhe seu progresso com métricas avançadas",
+      title: t("pricing-benefit-analytics-title"),
+      description: t("pricing-benefit-analytics-description"),
     },
     {
       icon: Shield,
-      title: "Suporte Premium",
-      description: "Atendimento prioritário e especializado",
+      title: t("pricing-benefit-support-title"),
+      description: t("pricing-benefit-support-description"),
     },
     {
       icon: Infinity,
-      title: "Sem Limites",
-      description: "Acesso ilimitado a todos os recursos da plataforma",
+      title: t("pricing-benefit-unlimited-title"),
+      description: t("pricing-benefit-unlimited-description"),
     },
   ];
 
@@ -129,19 +123,16 @@ export function MyPlanPage() {
       <div className="text-center space-y-3">
         <Badge className="bg-primary/10 text-primary border-primary/20 mb-2">
           <Sparkles className="w-3 h-3 mr-1" />
-          {t("pricing.kicker", "Planos")}
+          {t("pricing-kicker")}
         </Badge>
         <h1 className="text-3xl sm:text-4xl font-bold">
-          {t("pricing.headline", "Escolha o plano ideal")}
+          {t("pricing-headline")}
           <span className="block text-primary mt-1">
-            {t("pricing.headlineHighlight", "para sua jornada")}
+            {t("pricing-headline-highlight")}
           </span>
         </h1>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          {t(
-            "pricing.subheadline",
-            "Comece grátis e faça upgrade quando precisar de mais recursos",
-          )}
+          {t("pricing-subheadline")}
         </p>
       </div>
 
@@ -181,7 +172,7 @@ export function MyPlanPage() {
         </span>
         {billingCycle === "yearly" && (
           <Badge variant="secondary" className="ml-2">
-            -20%
+            {t("pricing-yearly-discount")}
           </Badge>
         )}
       </div>
@@ -205,7 +196,7 @@ export function MyPlanPage() {
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground px-3 py-1">
                     <Sparkles className="w-3 h-3 mr-1" />
-                    {t("pricing.recommended", "Recomendado")}
+                    {t("pricing-recommended")}
                   </Badge>
                 </div>
               )}
@@ -272,10 +263,7 @@ export function MyPlanPage() {
 
                 {plan.id === "pro" && (
                   <p className="text-xs text-center text-muted-foreground">
-                    {t(
-                      "pricing.pro.noSpam",
-                      "Sem spam. Apenas avisaremos quando estiver disponível.",
-                    )}
+                    {t("pricing-pro-no-spam")}
                   </p>
                 )}
               </CardContent>
@@ -357,10 +345,7 @@ export function MyPlanPage() {
       {/* Trust Notice */}
       <div className="text-center text-sm text-muted-foreground max-w-2xl mx-auto">
         <Shield className="w-5 h-5 inline-block mr-2" />
-        {t(
-          "pricing.trustNotice",
-          "Seus dados estão seguros. Não compartilhamos suas informações.",
-        )}
+        {t("pricing-trust-notice")}
       </div>
     </div>
   );

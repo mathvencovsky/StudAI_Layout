@@ -5,23 +5,18 @@ import {
   IconBook,
   IconBookmark,
   IconBooks,
-  IconCalendar,
   IconChartBar,
   IconClipboardCheck,
-  IconClock,
-  IconCompass,
   IconFileText,
   IconHeart,
   IconHome,
   IconInnerShadowTop,
   IconMessage,
   IconMessageCircle,
-  IconRefresh,
   IconRoute,
   IconSearch,
   IconSettings,
   IconShield,
-  IconTarget,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/layout/nav-main";
@@ -91,13 +86,40 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navMain: [
       { title: t("home"), to: "/", onClick: navigateTo("/"), icon: IconHome },
-      { title: t("explore"), to: "/explore", onClick: navigateTo("/explore"), icon: IconCompass },
-      { title: t("search"), to: "/search", onClick: navigateTo("/search"), icon: IconSearch },
-      { title: t("study"), to: "/study", onClick: navigateTo("/study"), icon: IconBook },
-      { title: t("tracks"), to: "/track", onClick: navigateTo("/track"), icon: IconRoute },
-      { title: t("modules"), to: "/module", onClick: navigateTo("/module"), icon: IconBooks },
+      // { title: t("explore"), to: "/explore", onClick: navigateTo("/explore"), icon: IconCompass },
+      {
+        title: t("search"),
+        to: "/search",
+        onClick: navigateTo("/search"),
+        icon: IconSearch,
+      },
+      {
+        title: t("study"),
+        to: "/study",
+        onClick: navigateTo("/study"),
+        icon: IconBook,
+      },
+      {
+        title: t("tracks"),
+        to: "/track",
+        onClick: navigateTo("/track"),
+        icon: IconRoute,
+      },
+      {
+        title: t("modules"),
+        to: "/module",
+        onClick: navigateTo("/module"),
+        icon: IconBooks,
+      },
       ...(isAdminUser
-        ? [{ title: t("chat"), to: "/chat", onClick: navigateTo("/chat"), icon: IconMessage }]
+        ? [
+            {
+              title: t("chat"),
+              to: "/chat",
+              onClick: navigateTo("/chat"),
+              icon: IconMessage,
+            },
+          ]
         : []),
       {
         title: t("assessments"),
@@ -105,21 +127,66 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         onClick: navigateTo("/assessments"),
         icon: IconClipboardCheck,
       },
-      { title: t("favourites"), to: "/favourites", onClick: navigateTo("/favourites"), icon: IconHeart },
+      {
+        title: t("favourites"),
+        to: "/favourites",
+        onClick: navigateTo("/favourites"),
+        icon: IconHeart,
+      },
     ],
-    navProgress: [
-      { title: t("sessions"), to: "/sessions", onClick: navigateTo("/sessions"), icon: IconClock },
-      { title: t("calendar"), to: "/calendar", onClick: navigateTo("/calendar"), icon: IconCalendar },
-      { title: t("goal"), to: "/my-goal", onClick: navigateTo("/my-goal"), icon: IconTarget },
-      { title: t("reviews"), to: "/reviews", onClick: navigateTo("/reviews"), icon: IconRefresh },
-    ],
+    // navProgress: [
+    //   {
+    //     title: t("sessions"),
+    //     to: "/sessions",
+    //     onClick: navigateTo("/sessions"),
+    //     icon: IconClock,
+    //   },
+    //   {
+    //     title: t("calendar"),
+    //     to: "/calendar",
+    //     onClick: navigateTo("/calendar"),
+    //     icon: IconCalendar,
+    //   },
+    //   {
+    //     title: t("goal"),
+    //     to: "/my-goal",
+    //     onClick: navigateTo("/my-goal"),
+    //     icon: IconTarget,
+    //   },
+    //   {
+    //     title: t("reviews"),
+    //     to: "/reviews",
+    //     onClick: navigateTo("/reviews"),
+    //     icon: IconRefresh,
+    //   },
+    // ],
     navData: [
-      { title: t("reports"), to: "/reports", onClick: navigateTo("/reports"), icon: IconFileText },
-      { title: t("metrics"), to: "/metrics", onClick: navigateTo("/metrics"), icon: IconChartBar },
-      { title: t("activity"), to: "/activity", onClick: navigateTo("/activity"), icon: IconActivity },
+      {
+        title: t("reports"),
+        to: "/reports",
+        onClick: navigateTo("/reports"),
+        icon: IconFileText,
+      },
+      {
+        title: t("metrics"),
+        to: "/metrics",
+        onClick: navigateTo("/metrics"),
+        icon: IconChartBar,
+      },
+      {
+        title: t("activity"),
+        to: "/activity",
+        onClick: navigateTo("/activity"),
+        icon: IconActivity,
+      },
     ],
     navConfig: [
-      { title: t("saved"), to: "/saved", onClick: navigateTo("/saved"), icon: IconBookmark },
+      {
+        title: t("saved"),
+        to: "/saved",
+        onClick: navigateTo("/saved"),
+        icon: IconBookmark,
+      },
       ...(isAdminUser
         ? [
             {
@@ -136,7 +203,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             },
           ]
         : []),
-      { title: t("settings"), to: "/settings", onClick: navigateTo("/settings"), icon: IconSettings },
+      {
+        title: t("settings"),
+        to: "/settings",
+        onClick: navigateTo("/settings"),
+        icon: IconSettings,
+      },
     ],
     navSecondary: [
       {
@@ -166,7 +238,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} label={t("nav-main")} />
-        <NavMain items={data.navProgress} label={t("nav-progress")} />
+        {/* <NavMain items={data.navProgress} label={t("nav-progress")} /> */}
         <NavMain items={data.navData} label={t("nav-data")} />
         <NavMain items={data.navConfig} label={t("nav-config")} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />

@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { BookOpen, Code, Brain, FileText, Play } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 
 const TASK_ICONS = {
   reading: BookOpen,
@@ -19,6 +20,7 @@ const TASK_ICONS = {
  * Displays today's daily plan with tasks
  */
 export const DailyPlanCard = () => {
+  const { t } = useTranslation();
   const { data: tasks, isLoading } = useTodayTasks();
   const { mutate: updateTask } = useUpdateDailyTask();
 
@@ -29,12 +31,12 @@ export const DailyPlanCard = () => {
         onSuccess: () => {
           toast.success(
             !currentStatus
-              ? "Tarefa concluída!"
-              : "Tarefa desmarcada"
+              ? t("daily-plan-task-completed")
+              : t("daily-plan-task-unchecked")
           );
         },
         onError: () => {
-          toast.error("Erro ao atualizar tarefa");
+          toast.error(t("daily-plan-task-error"));
         },
       }
     );
@@ -65,10 +67,10 @@ export const DailyPlanCard = () => {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-medium text-foreground">
-              Plano de hoje
+              {t("daily-plan-title")}
             </h3>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {completedCount}/{totalCount} tarefas concluídas
+              {t("daily-plan-tasks-completed", { completed: completedCount, total: totalCount })}
             </p>
           </div>
           <div className="text-right">
@@ -81,12 +83,12 @@ export const DailyPlanCard = () => {
         {!tasks || tasks.length === 0 ? (
           <div className="text-center py-6">
             <p className="text-sm text-muted-foreground mb-3">
-              Nenhuma tarefa para hoje
+              {t("daily-plan-no-tasks")}
             </p>
             <Button size="sm" variant="outline" asChild>
               <Link to="/study">
                 <Play className="h-4 w-4 mr-2" />
-                Iniciar sessão
+                {t("daily-plan-start-session")}
               </Link>
             </Button>
           </div>
@@ -95,10 +97,10 @@ export const DailyPlanCard = () => {
             {tasks.map((task) => {
               const Icon = TASK_ICONS[task.taskType ?? "reading"];
               const taskLabels = {
-                reading: "Leitura guiada",
-                practice: "Prática",
-                quiz: "Mini-quiz",
-                summary: "Micro-resumo",
+                reading: t("daily-plan-task-reading"),
+                practice: t("daily-plan-task-practice"),
+                quiz: t("daily-plan-task-quiz"),
+                summary: t("daily-plan-task-summary"),
               };
               return (
                 <div
