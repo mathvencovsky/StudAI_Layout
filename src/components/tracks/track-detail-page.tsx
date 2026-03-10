@@ -7,6 +7,7 @@ import { useTrack } from "@/hooks/use-track";
 import { useMyPlan } from "@/hooks/user-plan/use-my-plan";
 import { useUpdatePlan } from "@/hooks/user-plan/use-update-plan";
 import { useCreatePlan } from "@/hooks/user-plan/use-create-plan";
+import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 
 interface TrackDetailPageProps {
@@ -14,6 +15,7 @@ interface TrackDetailPageProps {
 }
 
 export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
+  const { t } = useTranslation();
   const { data: track, isLoading: trackLoading } = useTrack(trackId);
   const { data: plan } = useMyPlan();
   const updatePlan = useUpdatePlan();
@@ -46,9 +48,9 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
         });
       }
 
-      toast.success("Trilha adicionada ao seu plano!");
+      toast.success(t("pages.tracks.detail-added-success"));
     } catch (error) {
-      toast.error("Erro ao adicionar trilha");
+      toast.error(t("pages.tracks.detail-added-error"));
     } finally {
       setAdding(false);
     }
@@ -70,7 +72,7 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
       <div className="container mx-auto p-6">
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <p className="text-muted-foreground">Trilha não encontrada</p>
+            <p className="text-muted-foreground">{t("pages.tracks.detail-not-found")}</p>
           </CardContent>
         </Card>
       </div>
@@ -91,7 +93,7 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
             <Link to="/estudar" className="flex-1">
               <Button className="w-full" size="lg">
                 <Brain className="mr-2 h-5 w-5" />
-                Estudar com IA
+                {t("pages.tracks.detail-study-ai")}
               </Button>
             </Link>
             {!isInPlan && (
@@ -103,14 +105,14 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
                 className="flex-1"
               >
                 <Target className="mr-2 h-5 w-5" />
-                Adicionar ao Meu Plano
+                {t("pages.tracks.detail-add-plan")}
               </Button>
             )}
             {isInPlan && (
               <Link to="/trilha" className="flex-1">
                 <Button variant="outline" size="lg" className="w-full">
                   <BookOpen className="mr-2 h-5 w-5" />
-                  Ver Meu Plano
+                  {t("pages.tracks.detail-view-plan")}
                 </Button>
               </Link>
             )}
@@ -120,12 +122,11 @@ export function TrackDetailPage({ trackId }: TrackDetailPageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Sobre esta Trilha</CardTitle>
+          <CardTitle>{t("pages.tracks.detail-about")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            Esta trilha foi criada para ajudá-lo a dominar os conceitos e habilidades necessárias.
-            Adicione ao seu plano e comece a estudar com IA para obter recomendações personalizadas.
+            {t("pages.tracks.detail-about-description")}
           </p>
         </CardContent>
       </Card>

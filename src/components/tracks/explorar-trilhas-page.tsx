@@ -158,7 +158,7 @@ export function ExplorarTrilhasPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Filter className="h-5 w-5" />
-                Buscar trilhas
+                {t("pages.tracks.search-tracks")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -207,7 +207,7 @@ export function ExplorarTrilhasPage() {
                         ))}
                       </div>
                       <Link to="/explorar/$trackId" params={{ trackId: track.id }}>
-                        <Button className="w-full">Ver detalhes</Button>
+                        <Button className="w-full">{t("pages.tracks.view-details")}</Button>
                       </Link>
                     </div>
                   </CardContent>

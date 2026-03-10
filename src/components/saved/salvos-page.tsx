@@ -178,7 +178,7 @@ export function SalvosPage() {
                     </span>
                   </div>
                   <Button variant="outline" size="sm" asChild>
-                    <Link to={`/${item.type}/${item.id}`}>Ver detalhes</Link>
+                    <Link to={`/${item.type}/${item.id}`}>{t("pages.saved.view-details")}</Link>
                   </Button>
                 </div>
               </CardContent>
@@ -210,7 +210,7 @@ export function SalvosPage() {
                 </CardHeader>
                 <CardContent>
                   <Button variant="outline" size="sm" asChild>
-                    <Link to={`/track/${item.id}`}>Ver detalhes</Link>
+                    <Link to={`/track/${item.id}`}>{t("pages.saved.view-details")}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -242,7 +242,7 @@ export function SalvosPage() {
                 </CardHeader>
                 <CardContent>
                   <Button variant="outline" size="sm" asChild>
-                    <Link to={`/module/${item.id}`}>Ver detalhes</Link>
+                    <Link to={`/module/${item.id}`}>{t("pages.saved.view-details")}</Link>
                   </Button>
                 </CardContent>
               </Card>
@@ -274,7 +274,7 @@ export function SalvosPage() {
                 </CardHeader>
                 <CardContent>
                   <Button variant="outline" size="sm" asChild>
-                    <Link to={`/resource/${item.id}`}>Ver detalhes</Link>
+                    <Link to={`/resource/${item.id}`}>{t("pages.saved.view-details")}</Link>
                   </Button>
                 </CardContent>
               </Card>

@@ -355,4 +355,7 @@ export type TranslationKeys = {
   // Waitlist email
   "pricing.waitlistSubject": string;
   "pricing.waitlistBody": string;
+
+  // Navigation
+  "nav.discovery": string;
 };

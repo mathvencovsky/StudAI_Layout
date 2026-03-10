@@ -9,7 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 const SUPPORT_EMAIL = "support@studi.app";
 

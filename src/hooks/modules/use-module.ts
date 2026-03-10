@@ -1,6 +1,10 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { getModule } from "@/api/modules";
+import { getModuleStub } from "@/api/stubs/modules-stub";
 import { type Module } from "@/model/module";
+
+// Use stub implementation for development
+const USE_STUBS = true;
 
 export const getModuleQueryOptions = (moduleId?: string) =>
   queryOptions<Module | null>({
@@ -8,7 +12,7 @@ export const getModuleQueryOptions = (moduleId?: string) =>
     queryFn: async () => {
       if (!moduleId) return null;
       try {
-        return await getModule({ id: moduleId });
+        return USE_STUBS ? await getModuleStub(moduleId) : await getModule({ id: moduleId });
       } catch (error) {
         console.error(error);
         throw error;

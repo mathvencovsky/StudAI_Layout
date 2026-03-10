@@ -14,6 +14,7 @@ import {
   Bookmark,
   Shield,
   Settings,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 
@@ -35,6 +36,7 @@ export const navigationGroups: NavigationGroup[] = [
     label: "PRINCIPAL",
     items: [
       { to: "/", icon: Home, label: "home", requiresAuth: true },
+      { to: "/discovery", icon: Sparkles, label: "discovery", requiresAuth: true },
       { to: "/explorar", icon: Compass, label: "tracks", requiresAuth: true },
       { to: "/pesquisar", icon: Search, label: "search", requiresAuth: true },
       { to: "/estudar", icon: BookOpen, label: "study", requiresAuth: true },

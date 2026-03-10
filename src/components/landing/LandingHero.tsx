@@ -17,7 +17,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { KickerBadge, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 export type ProfileKey = "concurso" | "certificacao" | "faculdade";
 
@@ -92,7 +92,7 @@ export function setStoredProfile(profile: ProfileKey): void {
   }
 }
 
-// Mini Product Preview
+// Ultra-futuristic product preview with glassmorphism
 function MiniProductPreview() {
   const { t } = useI18n();
 
@@ -109,34 +109,34 @@ function MiniProductPreview() {
   ];
 
   return (
-    <div className="relative w-full min-w-0">
-      <p className="text-xs text-muted-foreground text-center mb-2 font-medium">{t("common.illustrativeExample")}</p>
-      <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory overscroll-x-contain scrollbar-hide -mx-4 px-4 pb-4 pr-8 [scroll-padding-left:1rem] [scroll-padding-right:1rem] md:mx-0 md:px-0 md:pr-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:pb-0">
-        {/* Card 1: Today */}
-        <Card className="w-[88vw] max-w-[340px] shrink-0 snap-start bg-card border-2 border-border hover:border-primary/40 transition-all duration-300 shadow-lg md:w-auto md:max-w-none md:shrink md:snap-none">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2 sm:mb-3">
-              <div className="p-1.5 rounded-lg bg-primary/10">
-                <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+    <div className="relative w-full">
+      <p className="text-xs text-muted-foreground/70 text-center mb-6 font-black uppercase tracking-widest">{t("common.illustrativeExample")}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {/* Card 1: Today - Glassmorphic */}
+        <Card className="glass-strong border-gradient hover:scale-105 hover:glow-primary transition-all duration-500 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-2xl bg-gradient-to-br from-primary/30 to-accent/20 glow-primary">
+                <Calendar className="h-5 w-5 text-primary" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.today")}</span>
-              <span className="ml-auto text-[9px] sm:text-[10px] font-semibold bg-accent-warm/15 text-accent-warm px-1.5 sm:px-2 py-0.5 rounded-full truncate max-w-[72px]">
+              <span className="text-sm font-black text-foreground">{t("preview.today")}</span>
+              <span className="ml-auto text-xs font-black bg-gradient-to-r from-accent-warm/30 to-accent/20 text-accent-warm px-3 py-1.5 rounded-full backdrop-blur-sm">
                 {t("preview.tasks")}
               </span>
             </div>
-            <ul className="space-y-1.5 sm:space-y-2">
+            <ul className="space-y-3.5">
               {todayTasks.map((task, i) => (
-                <li key={i} className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
+                <li key={i} className="flex items-center gap-3 text-sm group">
                   <div
-                    className={`h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      task.done ? "bg-success border-success" : "border-muted-foreground/30"
+                    className={`h-6 w-6 rounded-full border-2 flex items-center justify-center shrink-0 transition-all duration-300 ${
+                      task.done ? "bg-gradient-to-br from-success to-success/70 border-success scale-110 glow-accent" : "border-muted-foreground/30 group-hover:border-primary/50"
                     }`}
                   >
-                    {task.done && <CheckCircle2 className="h-2 w-2 text-success-foreground" />}
+                    {task.done && <CheckCircle2 className="h-3.5 w-3.5 text-success-foreground" />}
                   </div>
                   <span
-                    className={`truncate ${
-                      task.done ? "text-muted-foreground line-through" : "text-foreground font-medium"
+                    className={`font-semibold ${
+                      task.done ? "text-muted-foreground/70 line-through" : "text-foreground"
                     }`}
                   >
                     {task.label}
@@ -144,32 +144,32 @@ function MiniProductPreview() {
                 </li>
               ))}
             </ul>
-            <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 font-semibold">
+            <p className="text-xs text-muted-foreground/70 mt-5 font-black">
               {t("preview.completedOf")}
             </p>
           </CardContent>
         </Card>
 
-        {/* Card 2: Reviews */}
-        <Card className="w-[88vw] max-w-[340px] shrink-0 snap-start bg-card border-2 border-border hover:border-accent-warm/40 transition-all duration-300 shadow-lg md:w-auto md:max-w-none md:shrink md:snap-none">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2 sm:mb-3">
-              <div className="p-1.5 rounded-lg bg-accent-warm/10">
-                <RotateCcw className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-accent-warm" />
+        {/* Card 2: Reviews - Glassmorphic */}
+        <Card className="glass-strong border-gradient hover:scale-105 hover:glow-accent transition-all duration-500 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-2xl bg-gradient-to-br from-accent-warm/30 to-accent/20 glow-accent">
+                <RotateCcw className="h-5 w-5 text-accent-warm" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.reviews")}</span>
+              <span className="text-sm font-black text-foreground">{t("preview.reviews")}</span>
             </div>
-            <ul className="space-y-1.5 sm:space-y-2">
+            <ul className="space-y-3.5">
               {reviewQueue.map((item, i) => (
-                <li key={i} className="flex items-center justify-between text-[11px] sm:text-xs">
-                  <span className="text-foreground font-medium truncate max-w-[100px] sm:max-w-[120px]">
+                <li key={i} className="flex items-center justify-between text-sm group">
+                  <span className="text-foreground font-semibold truncate group-hover:text-primary transition-colors">
                     {item.subject}
                   </span>
                   <span
-                    className={`text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold shrink-0 ${
+                    className={`text-xs px-3 py-1.5 rounded-full font-black shrink-0 ml-2 backdrop-blur-sm ${
                       item.dueIn === t("preview.reviewDueToday")
-                        ? "bg-accent-warm/15 text-accent-warm"
-                        : "bg-muted text-muted-foreground"
+                        ? "bg-gradient-to-r from-accent-warm/30 to-accent/20 text-accent-warm"
+                        : "bg-muted/50 text-muted-foreground"
                     }`}
                   >
                     {item.dueIn}
@@ -177,36 +177,38 @@ function MiniProductPreview() {
                 </li>
               ))}
             </ul>
-            <p className="text-[10px] sm:text-xs text-muted-foreground mt-2 sm:mt-3 font-semibold">
+            <p className="text-xs text-muted-foreground/70 mt-5 font-black">
               {t("preview.pending")}
             </p>
           </CardContent>
         </Card>
 
-        {/* Card 3: Week */}
-        <Card className="w-[88vw] max-w-[340px] shrink-0 snap-start bg-card border-2 border-border hover:border-success/40 transition-all duration-300 shadow-lg md:w-auto md:max-w-none md:shrink md:snap-none">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex items-center gap-2 mb-2 sm:mb-3">
-              <div className="p-1.5 rounded-lg bg-success/10">
-                <TrendingUp className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-success" />
+        {/* Card 3: Week - Glassmorphic */}
+        <Card className="glass-strong border-gradient hover:scale-105 hover:glow-primary transition-all duration-500 backdrop-blur-xl">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-2xl bg-gradient-to-br from-success/30 to-accent/20 glow-primary">
+                <TrendingUp className="h-5 w-5 text-success" />
               </div>
-              <span className="text-xs sm:text-sm font-bold text-foreground">{t("preview.week")}</span>
+              <span className="text-sm font-black text-foreground">{t("preview.week")}</span>
             </div>
-            <div className="space-y-2 sm:space-y-2.5">
+            <div className="space-y-5">
               <div>
-                <div className="flex justify-between text-[11px] sm:text-xs mb-1">
-                  <span className="text-muted-foreground">{t("preview.progress")}</span>
-                  <span className="text-foreground font-bold">68%</span>
+                <div className="flex justify-between text-sm mb-3">
+                  <span className="text-muted-foreground/80 font-semibold">{t("preview.progress")}</span>
+                  <span className="text-foreground font-black text-gradient">68%</span>
                 </div>
-                <Progress value={68} className="h-1.5 sm:h-2" />
+                <div className="relative h-3 rounded-full bg-muted/30 overflow-hidden">
+                  <div className="absolute inset-0 gradient-animate opacity-70" style={{ width: '68%' }} />
+                </div>
               </div>
-              <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview.hours")}</span>
-                <span className="text-foreground font-bold">8h 30min</span>
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground/80 font-semibold">{t("preview.hours")}</span>
+                <span className="text-foreground font-black">8h 30min</span>
               </div>
-              <div className="flex justify-between text-[11px] sm:text-xs">
-                <span className="text-muted-foreground">{t("preview.goal")}</span>
-                <span className="text-foreground font-bold">12h</span>
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground/80 font-semibold">{t("preview.goal")}</span>
+                <span className="text-foreground font-black">12h</span>
               </div>
             </div>
           </CardContent>
@@ -257,44 +259,54 @@ export function LandingHero() {
   };
 
   return (
-    <section className="relative pt-16 pb-10 md:pt-24 md:pb-14 overflow-x-hidden noise-bg">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent-warm/8 pointer-events-none" />
-      <div className="hidden md:block absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-accent-warm/15 via-accent/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="hidden md:block absolute bottom-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-
+    <section className="relative pt-24 pb-20 md:pt-40 md:pb-32 overflow-hidden">
+      {/* Ultra-futuristic mesh gradient background */}
+      <div className="absolute inset-0 mesh-gradient" />
+      
+      {/* Animated gradient orbs */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-radial from-accent-warm/30 via-accent/20 to-transparent blur-3xl animate-pulse opacity-60" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-radial from-primary/30 to-transparent blur-3xl float opacity-50" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-radial from-accent/20 to-transparent blur-2xl pulse-glow" />
+      
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-          <div className="min-w-0 text-center lg:text-left">
-            <div className="flex justify-center lg:justify-start mb-4">
-              <KickerBadge variant="warm" className="max-w-[calc(100vw-2rem)] sm:max-w-none">
-                <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                <span className="min-w-0 whitespace-normal text-center">{t("hero.kicker")}</span>
-              </KickerBadge>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          <div className="min-w-0 text-center lg:text-left space-y-10">
+            {/* Futuristic kicker badge with glassmorphism */}
+            <div className="flex justify-center lg:justify-start animate-fade-in">
+              <div className="glass-strong inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border-gradient">
+                <Sparkles className="h-4 w-4 text-accent-warm animate-pulse" />
+                <span className="text-sm font-black text-foreground tracking-wide">{t("hero.kicker")}</span>
+              </div>
             </div>
 
-            <h1 className="display-h1 text-foreground">
-              {t("hero.headline")}
-              <HeadlineHighlight>{t("hero.headlineHighlight")}</HeadlineHighlight>
+            {/* Ultra-bold headline with animated gradient */}
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[1.1] tracking-tighter animate-fade-in-up">
+              <span className="block text-foreground">{t("hero.headline")}</span>
+              <span className="block mt-3 text-gradient-animate">
+                {t("hero.headlineHighlight")}
+              </span>
             </h1>
 
-            <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            {/* Refined subheadline */}
+            <p className="text-xl md:text-2xl text-muted-foreground/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium animate-fade-in-up animation-delay-200">
               {t("hero.subheadline")}
             </p>
 
-            <div className="mt-6">
-              <p className="text-sm text-foreground font-semibold mb-2">{t("hero.studyingFor")}</p>
+            {/* Futuristic profile selector with glassmorphism */}
+            <div className="space-y-4 animate-fade-in-up animation-delay-300">
+              <p className="text-xs font-black text-foreground/70 uppercase tracking-widest">{t("hero.studyingFor")}</p>
               <ToggleGroup
                 type="single"
                 value={profile}
                 onValueChange={handleProfileChange}
-                className="w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-none grid grid-cols-3 gap-2"
+                className="glass w-full max-w-lg mx-auto lg:mx-0 grid grid-cols-3 gap-2 p-2 rounded-3xl"
               >
                 {(Object.keys(profileData) as ProfileKey[]).map((key) => (
                   <ToggleGroupItem
                     key={key}
                     value={key}
                     variant="outline"
-                    className="w-full px-2 sm:px-4 py-2 min-h-[44px] text-xs sm:text-sm whitespace-nowrap font-semibold border-2 rounded-xl data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:border-primary data-[state=on]:shadow-lg hover:border-primary/50 hover:bg-primary/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="px-6 py-4 text-sm font-black rounded-2xl border-0 transition-all duration-300 data-[state=on]:glass-strong data-[state=on]:gradient-animate data-[state=on]:text-white data-[state=on]:scale-105 data-[state=on]:glow-primary hover:scale-105"
                   >
                     {key === "certificacao" ? (
                       <>
@@ -309,70 +321,90 @@ export function LandingHero() {
               </ToggleGroup>
             </div>
 
-            <ul className="mt-5 space-y-2 w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-lg text-left">
+            {/* Premium benefits list */}
+            <ul className="space-y-4 w-full max-w-lg mx-auto lg:mx-0 text-left animate-fade-in-up animation-delay-400">
               {currentProfile.benefits.map((benefit, index) => (
-                <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
-                  <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
-                  <span className="font-medium">{benefit}</span>
+                <li key={index} className="flex items-start gap-4 text-lg text-foreground group">
+                  <div className="mt-1 p-2 rounded-2xl bg-gradient-to-br from-success/20 to-success/10 group-hover:scale-110 transition-transform duration-300">
+                    <CheckCircle2 className="h-6 w-6 text-success" />
+                  </div>
+                  <span className="font-semibold leading-relaxed">{benefit}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="flex flex-col gap-3 mt-6 w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-none lg:flex-row">
+            {/* Ultra-premium CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-5 w-full max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-500">
               <Button
                 size="lg"
                 onClick={() => scrollToId("auth-card")}
-                className="w-full lg:w-auto text-base font-semibold min-h-[48px] bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 shadow-xl shadow-primary/30 hover:shadow-2xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="group flex-1 text-lg font-black h-16 gradient-animate hover:scale-105 glow-primary transition-all duration-300 rounded-2xl relative overflow-hidden"
               >
-                {t("hero.ctaPrimary")}
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <span className="relative z-10 flex items-center justify-center gap-3">
+                  {t("hero.ctaPrimary")}
+                  <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                </span>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 onClick={() => scrollToId("como-funciona")}
-                className="w-full lg:w-auto text-base font-semibold min-h-[48px] border-2 hover:border-primary/50 hover:bg-primary/5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="glass-strong flex-1 text-lg font-black h-16 border-2 border-white/20 hover:scale-105 hover:glass transition-all duration-300 rounded-2xl"
               >
                 {t("hero.ctaSecondary")}
               </Button>
             </div>
 
-            <p className="mt-3 text-sm text-muted-foreground text-center lg:text-left font-medium w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-lg">
+            {/* Microcopy with subtle styling */}
+            <p className="text-sm text-muted-foreground/80 font-medium w-full max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-600">
               {currentProfile.microcopy}
             </p>
 
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 mt-5 text-sm text-muted-foreground w-full max-w-[360px] mx-auto lg:mx-0 lg:max-w-none">
+            {/* Premium trust badges */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-muted-foreground/80 w-full max-w-lg mx-auto lg:mx-0 animate-fade-in-up animation-delay-700">
               <a
                 href="mailto:support@studi.app"
-                className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
+                className="flex items-center gap-2.5 hover:text-foreground transition-all duration-300 font-semibold group"
               >
-                <Mail className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">support@studi.app</span>
+                <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <Mail className="h-4 w-4 text-primary" />
+                </div>
+                <span>support@studi.app</span>
               </a>
               <Link
                 to="/seguranca"
-                className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
+                className="flex items-center gap-2.5 hover:text-foreground transition-all duration-300 font-semibold group"
               >
-                <Shield className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common.security")}</span>
+                <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <Shield className="h-4 w-4 text-primary" />
+                </div>
+                <span>{t("common.security")}</span>
               </Link>
               <Link
                 to="/privacidade"
-                className="flex items-center gap-1.5 min-h-[44px] hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded font-medium px-1"
+                className="flex items-center gap-2.5 hover:text-foreground transition-all duration-300 font-semibold group"
               >
-                <FileText className="h-4 w-4 text-primary/70 shrink-0" />
-                <span className="text-xs sm:text-sm">{t("common.privacy")}</span>
+                <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                  <FileText className="h-4 w-4 text-primary" />
+                </div>
+                <span>{t("common.privacy")}</span>
               </Link>
             </div>
 
-            <div className="mt-8 lg:hidden max-w-full">
+            {/* Mobile preview */}
+            <div className="mt-16 lg:hidden max-w-full animate-fade-in-up animation-delay-800">
               <MiniProductPreview />
             </div>
           </div>
 
-          <div className="min-w-0 flex flex-col gap-6">
+          {/* Right column - Glassmorphic auth card and preview */}
+          <div className="min-w-0 flex flex-col gap-10 animate-fade-in-left">
             <div id="auth-card" tabIndex={-1} className="outline-none flex justify-center lg:justify-end">
-              <AuthCard />
+              <div className="w-full max-w-md transform hover:scale-[1.02] transition-all duration-500 float">
+                <div className="glass-strong rounded-3xl p-1 glow-primary">
+                  <AuthCard />
+                </div>
+              </div>
             </div>
             <div className="hidden lg:block">
               <MiniProductPreview />

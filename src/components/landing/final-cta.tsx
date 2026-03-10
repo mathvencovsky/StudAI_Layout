@@ -2,7 +2,7 @@ import { ArrowRight, Mail, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionWrapper, HeadlineHighlight } from "./ui";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 const SUPPORT_EMAIL = "support@studi.app";
 

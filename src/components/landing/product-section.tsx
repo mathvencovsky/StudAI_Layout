@@ -1,9 +1,9 @@
-import { useTranslation } from "react-i18next";
+import { useCustomI18n } from "@/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function ProductSection() {
-  const { t } = useTranslation();
+  const { t } = useCustomI18n();
 
   const features = [
     { key: "feature1", title: t("product.feature1.title"), desc: t("product.feature1.desc") },

@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Sparkles } from "lucide-react";
 import { useTracks } from "@/hooks/use-tracks";
+import { useTranslation } from "react-i18next";
 import type { Track } from "@/model/track";
 
 export function PesquisarTrilhasPage() {
+  const { t } = useTranslation();
   const { data: tracks } = useTracks();
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Track[]>([]);
@@ -47,18 +49,18 @@ export function PesquisarTrilhasPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Pesquisar Trilhas</h1>
-        <p className="text-muted-foreground">Encontre a trilha perfeita para seus objetivos</p>
+        <h1 className="text-3xl font-bold">{t("pages.tracks.search-title")}</h1>
+        <p className="text-muted-foreground">{t("pages.tracks.search-description")}</p>
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Sparkles className="h-5 w-5" />
-            Busca Inteligente
+            {t("pages.tracks.search-smart")}
           </CardTitle>
           <CardDescription>
-            Digite palavras-chave relacionadas ao que você quer aprender
+            {t("pages.tracks.search-smart-description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -66,7 +68,7 @@ export function PesquisarTrilhasPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Ex: JavaScript, React, Machine Learning..."
+                placeholder={t("pages.tracks.search-placeholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -75,7 +77,7 @@ export function PesquisarTrilhasPage() {
             </div>
             <Button onClick={handleSearch}>
               <Search className="mr-2 h-4 w-4" />
-              Buscar
+              {t("pages.tracks.search-button")}
             </Button>
           </div>
         </CardContent>
@@ -85,11 +87,11 @@ export function PesquisarTrilhasPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">
-              Resultados ({searchResults.length})
+              {t("pages.tracks.search-results", { count: searchResults.length })}
             </h2>
             {searchResults.length > 0 && (
               <p className="text-sm text-muted-foreground">
-                Encontramos {searchResults.length} trilha{searchResults.length !== 1 ? "s" : ""} para você
+                {t("pages.tracks.search-found", { count: searchResults.length })}
               </p>
             )}
           </div>
@@ -98,12 +100,12 @@ export function PesquisarTrilhasPage() {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Search className="h-16 w-16 text-muted-foreground mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Nenhuma trilha encontrada</h3>
+                <h3 className="text-xl font-semibold mb-2">{t("pages.tracks.search-no-results")}</h3>
                 <p className="text-muted-foreground mb-4">
-                  Tente buscar com outras palavras-chave
+                  {t("pages.tracks.search-try-different")}
                 </p>
                 <Link to="/explorar">
-                  <Button variant="outline">Explorar Todas as Trilhas</Button>
+                  <Button variant="outline">{t("pages.tracks.search-explore-all")}</Button>
                 </Link>
               </CardContent>
             </Card>
@@ -120,10 +122,10 @@ export function PesquisarTrilhasPage() {
                   <CardContent className="space-y-4">
                     <div className="flex gap-2">
                       <Link to="/explorar/$trackId" params={{ trackId: track.id }} className="flex-1">
-                        <Button variant="outline" className="w-full">Ver</Button>
+                        <Button variant="outline" className="w-full">{t("pages.tracks.view")}</Button>
                       </Link>
                       <Link to="/explorar/$trackId" params={{ trackId: track.id }} className="flex-1">
-                        <Button className="w-full">Adicionar</Button>
+                        <Button className="w-full">{t("pages.tracks.add")}</Button>
                       </Link>
                     </div>
                   </CardContent>
@@ -138,9 +140,9 @@ export function PesquisarTrilhasPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Sparkles className="h-16 w-16 text-muted-foreground mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Comece sua busca</h3>
+            <h3 className="text-xl font-semibold mb-2">{t("pages.tracks.search-start")}</h3>
             <p className="text-muted-foreground text-center max-w-md">
-              Digite palavras-chave relacionadas ao que você quer aprender e encontraremos as melhores trilhas para você
+              {t("pages.tracks.search-start-description")}
             </p>
           </CardContent>
         </Card>

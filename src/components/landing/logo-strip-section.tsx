@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { CheckCircle2, Shield, Lock, Mail, Zap } from "lucide-react";
 import { SectionWrapper, KickerBadge } from "./ui";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 const SUPPORT_EMAIL = "support@studi.app";
 

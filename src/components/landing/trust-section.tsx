@@ -3,7 +3,7 @@ import { Shield, FileText, Mail, CheckCircle2 } from "lucide-react";
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 const SUPPORT_EMAIL = "support@studi.app";
 

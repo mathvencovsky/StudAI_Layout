@@ -38,11 +38,13 @@ import { Route as MeuPlanoRouteImport } from './routes/meu-plano'
 import { Route as MeuObjetivoRouteImport } from './routes/meu-objetivo'
 import { Route as MetricasRouteImport } from './routes/metricas'
 import { Route as LearningPreferencesRouteImport } from './routes/learning-preferences'
+import { Route as LearningDemoRouteImport } from './routes/learning-demo'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FavouritesRouteImport } from './routes/favourites'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ExplorarRouteImport } from './routes/explorar'
 import { Route as EstudarRouteImport } from './routes/estudar'
+import { Route as DiscoveryRouteImport } from './routes/discovery'
 import { Route as CriarTrilhaRouteImport } from './routes/criar-trilha'
 import { Route as CriarCursoRouteImport } from './routes/criar-curso'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
@@ -54,22 +56,29 @@ import { Route as CalendarioRouteImport } from './routes/calendario'
 import { Route as AvaliacoesRouteImport } from './routes/avaliacoes'
 import { Route as AtividadeRouteImport } from './routes/atividade'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrackIndexRouteImport } from './routes/track/index'
 import { Route as ModuleIndexRouteImport } from './routes/module/index'
 import { Route as FavouritesIndexRouteImport } from './routes/favourites/index'
 import { Route as ContentIndexRouteImport } from './routes/content/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as TrackTrackIdRouteImport } from './routes/track/$trackId'
 import { Route as QuizQuizIdRouteImport } from './routes/quiz/$quizId'
 import { Route as ModuleModuleIdRouteImport } from './routes/module/$moduleId'
 import { Route as ModuleEditModuleIdRouteImport } from './routes/module-edit/$moduleId'
 import { Route as ExplorarTrackIdRouteImport } from './routes/explorar/$trackId'
+import { Route as EstudarModuleIdRouteImport } from './routes/estudar/$moduleId'
 import { Route as CursoCourseIdRouteImport } from './routes/curso/$courseId'
 import { Route as ContentContentIdRouteImport } from './routes/content/$contentId'
+import { Route as AdminTrackEditorRouteImport } from './routes/admin.track-editor'
+import { Route as AdminContentManagerRouteImport } from './routes/admin.content-manager'
+import { Route as AdminContentCreateRouteImport } from './routes/admin.content-create'
 import { Route as TrackTrackIdIndexRouteImport } from './routes/track/$trackId/index'
 import { Route as ModuleModuleIdIndexRouteImport } from './routes/module/$moduleId/index'
 import { Route as ContentContentIdIndexRouteImport } from './routes/content/$contentId/index'
 import { Route as TrackTrackIdEditRouteImport } from './routes/track/$trackId/edit'
+import { Route as EstudarModuleIdLessonIdRouteImport } from './routes/estudar/$moduleId/$lessonId'
 import { Route as ContentContentIdEditRouteImport } from './routes/content/$contentId/edit'
 import { Route as ModuleModuleIdContentContentIdRouteImport } from './routes/module/$moduleId/content/$contentId'
 
@@ -218,6 +227,11 @@ const LearningPreferencesRoute = LearningPreferencesRouteImport.update({
   path: '/learning-preferences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearningDemoRoute = LearningDemoRouteImport.update({
+  id: '/learning-demo',
+  path: '/learning-demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
   id: '/how-it-works',
   path: '/how-it-works',
@@ -241,6 +255,11 @@ const ExplorarRoute = ExplorarRouteImport.update({
 const EstudarRoute = EstudarRouteImport.update({
   id: '/estudar',
   path: '/estudar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscoveryRoute = DiscoveryRouteImport.update({
+  id: '/discovery',
+  path: '/discovery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CriarTrilhaRoute = CriarTrilhaRouteImport.update({
@@ -298,6 +317,11 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -322,6 +346,11 @@ const ContentIndexRoute = ContentIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ContentRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const TrackTrackIdRoute = TrackTrackIdRouteImport.update({
   id: '/$trackId',
@@ -348,6 +377,11 @@ const ExplorarTrackIdRoute = ExplorarTrackIdRouteImport.update({
   path: '/$trackId',
   getParentRoute: () => ExplorarRoute,
 } as any)
+const EstudarModuleIdRoute = EstudarModuleIdRouteImport.update({
+  id: '/$moduleId',
+  path: '/$moduleId',
+  getParentRoute: () => EstudarRoute,
+} as any)
 const CursoCourseIdRoute = CursoCourseIdRouteImport.update({
   id: '/curso/$courseId',
   path: '/curso/$courseId',
@@ -357,6 +391,21 @@ const ContentContentIdRoute = ContentContentIdRouteImport.update({
   id: '/$contentId',
   path: '/$contentId',
   getParentRoute: () => ContentRoute,
+} as any)
+const AdminTrackEditorRoute = AdminTrackEditorRouteImport.update({
+  id: '/track-editor',
+  path: '/track-editor',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContentManagerRoute = AdminContentManagerRouteImport.update({
+  id: '/content-manager',
+  path: '/content-manager',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminContentCreateRoute = AdminContentCreateRouteImport.update({
+  id: '/content-create',
+  path: '/content-create',
+  getParentRoute: () => AdminRoute,
 } as any)
 const TrackTrackIdIndexRoute = TrackTrackIdIndexRouteImport.update({
   id: '/',
@@ -378,6 +427,11 @@ const TrackTrackIdEditRoute = TrackTrackIdEditRouteImport.update({
   path: '/edit',
   getParentRoute: () => TrackTrackIdRoute,
 } as any)
+const EstudarModuleIdLessonIdRoute = EstudarModuleIdLessonIdRouteImport.update({
+  id: '/$lessonId',
+  path: '/$lessonId',
+  getParentRoute: () => EstudarModuleIdRoute,
+} as any)
 const ContentContentIdEditRoute = ContentContentIdEditRouteImport.update({
   id: '/edit',
   path: '/edit',
@@ -392,7 +446,8 @@ const ModuleModuleIdContentContentIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/atividade': typeof AtividadeRoute
   '/avaliacoes': typeof AvaliacoesRoute
   '/calendario': typeof CalendarioRoute
@@ -403,11 +458,13 @@ export interface FileRoutesByFullPath {
   '/content-create': typeof ContentCreateRoute
   '/criar-curso': typeof CriarCursoRoute
   '/criar-trilha': typeof CriarTrilhaRoute
-  '/estudar': typeof EstudarRoute
+  '/discovery': typeof DiscoveryRoute
+  '/estudar': typeof EstudarRouteWithChildren
   '/explorar': typeof ExplorarRouteWithChildren
   '/faq': typeof FaqRoute
   '/favourites': typeof FavouritesRouteWithChildren
   '/how-it-works': typeof HowItWorksRoute
+  '/learning-demo': typeof LearningDemoRoute
   '/learning-preferences': typeof LearningPreferencesRoute
   '/metricas': typeof MetricasRoute
   '/meu-objetivo': typeof MeuObjetivoRoute
@@ -437,18 +494,24 @@ export interface FileRoutesByFullPath {
   '/track-create': typeof TrackCreateRoute
   '/trilha': typeof TrilhaRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/content-create': typeof AdminContentCreateRoute
+  '/admin/content-manager': typeof AdminContentManagerRoute
+  '/admin/track-editor': typeof AdminTrackEditorRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/curso/$courseId': typeof CursoCourseIdRoute
+  '/estudar/$moduleId': typeof EstudarModuleIdRouteWithChildren
   '/explorar/$trackId': typeof ExplorarTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
   '/quiz/$quizId': typeof QuizQuizIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
   '/content/': typeof ContentIndexRoute
   '/favourites/': typeof FavouritesIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/estudar/$moduleId/$lessonId': typeof EstudarModuleIdLessonIdRoute
   '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId/': typeof ContentContentIdIndexRoute
   '/module/$moduleId/': typeof ModuleModuleIdIndexRoute
@@ -457,7 +520,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/about': typeof AboutRoute
   '/atividade': typeof AtividadeRoute
   '/avaliacoes': typeof AvaliacoesRoute
   '/calendario': typeof CalendarioRoute
@@ -467,10 +530,12 @@ export interface FileRoutesByTo {
   '/content-create': typeof ContentCreateRoute
   '/criar-curso': typeof CriarCursoRoute
   '/criar-trilha': typeof CriarTrilhaRoute
-  '/estudar': typeof EstudarRoute
+  '/discovery': typeof DiscoveryRoute
+  '/estudar': typeof EstudarRouteWithChildren
   '/explorar': typeof ExplorarRouteWithChildren
   '/faq': typeof FaqRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/learning-demo': typeof LearningDemoRoute
   '/learning-preferences': typeof LearningPreferencesRoute
   '/metricas': typeof MetricasRoute
   '/meu-objetivo': typeof MeuObjetivoRoute
@@ -498,15 +563,21 @@ export interface FileRoutesByTo {
   '/track-create': typeof TrackCreateRoute
   '/trilha': typeof TrilhaRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/content-create': typeof AdminContentCreateRoute
+  '/admin/content-manager': typeof AdminContentManagerRoute
+  '/admin/track-editor': typeof AdminTrackEditorRoute
   '/curso/$courseId': typeof CursoCourseIdRoute
+  '/estudar/$moduleId': typeof EstudarModuleIdRouteWithChildren
   '/explorar/$trackId': typeof ExplorarTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/quiz/$quizId': typeof QuizQuizIdRoute
+  '/admin': typeof AdminIndexRoute
   '/content': typeof ContentIndexRoute
   '/favourites': typeof FavouritesIndexRoute
   '/module': typeof ModuleIndexRoute
   '/track': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/estudar/$moduleId/$lessonId': typeof EstudarModuleIdLessonIdRoute
   '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId': typeof ContentContentIdIndexRoute
   '/module/$moduleId': typeof ModuleModuleIdIndexRoute
@@ -516,7 +587,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/atividade': typeof AtividadeRoute
   '/avaliacoes': typeof AvaliacoesRoute
   '/calendario': typeof CalendarioRoute
@@ -527,11 +599,13 @@ export interface FileRoutesById {
   '/content-create': typeof ContentCreateRoute
   '/criar-curso': typeof CriarCursoRoute
   '/criar-trilha': typeof CriarTrilhaRoute
-  '/estudar': typeof EstudarRoute
+  '/discovery': typeof DiscoveryRoute
+  '/estudar': typeof EstudarRouteWithChildren
   '/explorar': typeof ExplorarRouteWithChildren
   '/faq': typeof FaqRoute
   '/favourites': typeof FavouritesRouteWithChildren
   '/how-it-works': typeof HowItWorksRoute
+  '/learning-demo': typeof LearningDemoRoute
   '/learning-preferences': typeof LearningPreferencesRoute
   '/metricas': typeof MetricasRoute
   '/meu-objetivo': typeof MeuObjetivoRoute
@@ -561,18 +635,24 @@ export interface FileRoutesById {
   '/track-create': typeof TrackCreateRoute
   '/trilha': typeof TrilhaRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/admin/content-create': typeof AdminContentCreateRoute
+  '/admin/content-manager': typeof AdminContentManagerRoute
+  '/admin/track-editor': typeof AdminTrackEditorRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/curso/$courseId': typeof CursoCourseIdRoute
+  '/estudar/$moduleId': typeof EstudarModuleIdRouteWithChildren
   '/explorar/$trackId': typeof ExplorarTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
   '/quiz/$quizId': typeof QuizQuizIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
+  '/admin/': typeof AdminIndexRoute
   '/content/': typeof ContentIndexRoute
   '/favourites/': typeof FavouritesIndexRoute
   '/module/': typeof ModuleIndexRoute
   '/track/': typeof TrackIndexRoute
   '/content/$contentId/edit': typeof ContentContentIdEditRoute
+  '/estudar/$moduleId/$lessonId': typeof EstudarModuleIdLessonIdRoute
   '/track/$trackId/edit': typeof TrackTrackIdEditRoute
   '/content/$contentId/': typeof ContentContentIdIndexRoute
   '/module/$moduleId/': typeof ModuleModuleIdIndexRoute
@@ -583,6 +663,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/admin'
     | '/atividade'
     | '/avaliacoes'
@@ -594,11 +675,13 @@ export interface FileRouteTypes {
     | '/content-create'
     | '/criar-curso'
     | '/criar-trilha'
+    | '/discovery'
     | '/estudar'
     | '/explorar'
     | '/faq'
     | '/favourites'
     | '/how-it-works'
+    | '/learning-demo'
     | '/learning-preferences'
     | '/metricas'
     | '/meu-objetivo'
@@ -628,18 +711,24 @@ export interface FileRouteTypes {
     | '/track-create'
     | '/trilha'
     | '/verify-email'
+    | '/admin/content-create'
+    | '/admin/content-manager'
+    | '/admin/track-editor'
     | '/content/$contentId'
     | '/curso/$courseId'
+    | '/estudar/$moduleId'
     | '/explorar/$trackId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
     | '/quiz/$quizId'
     | '/track/$trackId'
+    | '/admin/'
     | '/content/'
     | '/favourites/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
+    | '/estudar/$moduleId/$lessonId'
     | '/track/$trackId/edit'
     | '/content/$contentId/'
     | '/module/$moduleId/'
@@ -648,7 +737,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/admin'
+    | '/about'
     | '/atividade'
     | '/avaliacoes'
     | '/calendario'
@@ -658,10 +747,12 @@ export interface FileRouteTypes {
     | '/content-create'
     | '/criar-curso'
     | '/criar-trilha'
+    | '/discovery'
     | '/estudar'
     | '/explorar'
     | '/faq'
     | '/how-it-works'
+    | '/learning-demo'
     | '/learning-preferences'
     | '/metricas'
     | '/meu-objetivo'
@@ -689,15 +780,21 @@ export interface FileRouteTypes {
     | '/track-create'
     | '/trilha'
     | '/verify-email'
+    | '/admin/content-create'
+    | '/admin/content-manager'
+    | '/admin/track-editor'
     | '/curso/$courseId'
+    | '/estudar/$moduleId'
     | '/explorar/$trackId'
     | '/module-edit/$moduleId'
     | '/quiz/$quizId'
+    | '/admin'
     | '/content'
     | '/favourites'
     | '/module'
     | '/track'
     | '/content/$contentId/edit'
+    | '/estudar/$moduleId/$lessonId'
     | '/track/$trackId/edit'
     | '/content/$contentId'
     | '/module/$moduleId'
@@ -706,6 +803,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/admin'
     | '/atividade'
     | '/avaliacoes'
@@ -717,11 +815,13 @@ export interface FileRouteTypes {
     | '/content-create'
     | '/criar-curso'
     | '/criar-trilha'
+    | '/discovery'
     | '/estudar'
     | '/explorar'
     | '/faq'
     | '/favourites'
     | '/how-it-works'
+    | '/learning-demo'
     | '/learning-preferences'
     | '/metricas'
     | '/meu-objetivo'
@@ -751,18 +851,24 @@ export interface FileRouteTypes {
     | '/track-create'
     | '/trilha'
     | '/verify-email'
+    | '/admin/content-create'
+    | '/admin/content-manager'
+    | '/admin/track-editor'
     | '/content/$contentId'
     | '/curso/$courseId'
+    | '/estudar/$moduleId'
     | '/explorar/$trackId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
     | '/quiz/$quizId'
     | '/track/$trackId'
+    | '/admin/'
     | '/content/'
     | '/favourites/'
     | '/module/'
     | '/track/'
     | '/content/$contentId/edit'
+    | '/estudar/$moduleId/$lessonId'
     | '/track/$trackId/edit'
     | '/content/$contentId/'
     | '/module/$moduleId/'
@@ -772,7 +878,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AtividadeRoute: typeof AtividadeRoute
   AvaliacoesRoute: typeof AvaliacoesRoute
   CalendarioRoute: typeof CalendarioRoute
@@ -783,11 +890,13 @@ export interface RootRouteChildren {
   ContentCreateRoute: typeof ContentCreateRoute
   CriarCursoRoute: typeof CriarCursoRoute
   CriarTrilhaRoute: typeof CriarTrilhaRoute
-  EstudarRoute: typeof EstudarRoute
+  DiscoveryRoute: typeof DiscoveryRoute
+  EstudarRoute: typeof EstudarRouteWithChildren
   ExplorarRoute: typeof ExplorarRouteWithChildren
   FaqRoute: typeof FaqRoute
   FavouritesRoute: typeof FavouritesRouteWithChildren
   HowItWorksRoute: typeof HowItWorksRoute
+  LearningDemoRoute: typeof LearningDemoRoute
   LearningPreferencesRoute: typeof LearningPreferencesRoute
   MetricasRoute: typeof MetricasRoute
   MeuObjetivoRoute: typeof MeuObjetivoRoute
@@ -1027,6 +1136,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningPreferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/learning-demo': {
+      id: '/learning-demo'
+      path: '/learning-demo'
+      fullPath: '/learning-demo'
+      preLoaderRoute: typeof LearningDemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/how-it-works': {
       id: '/how-it-works'
       path: '/how-it-works'
@@ -1060,6 +1176,13 @@ declare module '@tanstack/react-router' {
       path: '/estudar'
       fullPath: '/estudar'
       preLoaderRoute: typeof EstudarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discovery': {
+      id: '/discovery'
+      path: '/discovery'
+      fullPath: '/discovery'
+      preLoaderRoute: typeof DiscoveryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/criar-trilha': {
@@ -1139,6 +1262,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -1173,6 +1303,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/content/'
       preLoaderRoute: typeof ContentIndexRouteImport
       parentRoute: typeof ContentRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/track/$trackId': {
       id: '/track/$trackId'
@@ -1209,6 +1346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExplorarTrackIdRouteImport
       parentRoute: typeof ExplorarRoute
     }
+    '/estudar/$moduleId': {
+      id: '/estudar/$moduleId'
+      path: '/$moduleId'
+      fullPath: '/estudar/$moduleId'
+      preLoaderRoute: typeof EstudarModuleIdRouteImport
+      parentRoute: typeof EstudarRoute
+    }
     '/curso/$courseId': {
       id: '/curso/$courseId'
       path: '/curso/$courseId'
@@ -1222,6 +1366,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/content/$contentId'
       preLoaderRoute: typeof ContentContentIdRouteImport
       parentRoute: typeof ContentRoute
+    }
+    '/admin/track-editor': {
+      id: '/admin/track-editor'
+      path: '/track-editor'
+      fullPath: '/admin/track-editor'
+      preLoaderRoute: typeof AdminTrackEditorRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/content-manager': {
+      id: '/admin/content-manager'
+      path: '/content-manager'
+      fullPath: '/admin/content-manager'
+      preLoaderRoute: typeof AdminContentManagerRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/content-create': {
+      id: '/admin/content-create'
+      path: '/content-create'
+      fullPath: '/admin/content-create'
+      preLoaderRoute: typeof AdminContentCreateRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/track/$trackId/': {
       id: '/track/$trackId/'
@@ -1251,6 +1416,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackTrackIdEditRouteImport
       parentRoute: typeof TrackTrackIdRoute
     }
+    '/estudar/$moduleId/$lessonId': {
+      id: '/estudar/$moduleId/$lessonId'
+      path: '/$lessonId'
+      fullPath: '/estudar/$moduleId/$lessonId'
+      preLoaderRoute: typeof EstudarModuleIdLessonIdRouteImport
+      parentRoute: typeof EstudarModuleIdRoute
+    }
     '/content/$contentId/edit': {
       id: '/content/$contentId/edit'
       path: '/edit'
@@ -1267,6 +1439,22 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AdminRouteChildren {
+  AdminContentCreateRoute: typeof AdminContentCreateRoute
+  AdminContentManagerRoute: typeof AdminContentManagerRoute
+  AdminTrackEditorRoute: typeof AdminTrackEditorRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminContentCreateRoute: AdminContentCreateRoute,
+  AdminContentManagerRoute: AdminContentManagerRoute,
+  AdminTrackEditorRoute: AdminTrackEditorRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface ContentContentIdRouteChildren {
   ContentContentIdEditRoute: typeof ContentContentIdEditRoute
@@ -1293,6 +1481,29 @@ const ContentRouteChildren: ContentRouteChildren = {
 
 const ContentRouteWithChildren =
   ContentRoute._addFileChildren(ContentRouteChildren)
+
+interface EstudarModuleIdRouteChildren {
+  EstudarModuleIdLessonIdRoute: typeof EstudarModuleIdLessonIdRoute
+}
+
+const EstudarModuleIdRouteChildren: EstudarModuleIdRouteChildren = {
+  EstudarModuleIdLessonIdRoute: EstudarModuleIdLessonIdRoute,
+}
+
+const EstudarModuleIdRouteWithChildren = EstudarModuleIdRoute._addFileChildren(
+  EstudarModuleIdRouteChildren,
+)
+
+interface EstudarRouteChildren {
+  EstudarModuleIdRoute: typeof EstudarModuleIdRouteWithChildren
+}
+
+const EstudarRouteChildren: EstudarRouteChildren = {
+  EstudarModuleIdRoute: EstudarModuleIdRouteWithChildren,
+}
+
+const EstudarRouteWithChildren =
+  EstudarRoute._addFileChildren(EstudarRouteChildren)
 
 interface ExplorarRouteChildren {
   ExplorarTrackIdRoute: typeof ExplorarTrackIdRoute
@@ -1373,7 +1584,8 @@ const TrackRouteWithChildren = TrackRoute._addFileChildren(TrackRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   AtividadeRoute: AtividadeRoute,
   AvaliacoesRoute: AvaliacoesRoute,
   CalendarioRoute: CalendarioRoute,
@@ -1384,11 +1596,13 @@ const rootRouteChildren: RootRouteChildren = {
   ContentCreateRoute: ContentCreateRoute,
   CriarCursoRoute: CriarCursoRoute,
   CriarTrilhaRoute: CriarTrilhaRoute,
-  EstudarRoute: EstudarRoute,
+  DiscoveryRoute: DiscoveryRoute,
+  EstudarRoute: EstudarRouteWithChildren,
   ExplorarRoute: ExplorarRouteWithChildren,
   FaqRoute: FaqRoute,
   FavouritesRoute: FavouritesRouteWithChildren,
   HowItWorksRoute: HowItWorksRoute,
+  LearningDemoRoute: LearningDemoRoute,
   LearningPreferencesRoute: LearningPreferencesRoute,
   MetricasRoute: MetricasRoute,
   MeuObjetivoRoute: MeuObjetivoRoute,

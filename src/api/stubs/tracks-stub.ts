@@ -27,6 +27,44 @@ export interface Module {
   duration: number;
 }
 
+export async function getTrackStub(trackId: string): Promise<Track | null> {
+  const mockTracks: Record<string, Track> = {
+    "mock-track-frontend-react": {
+      id: "mock-track-frontend-react",
+      title: "Desenvolvedor Frontend com React",
+      description: "Torne-se um desenvolvedor frontend completo com React e TypeScript",
+      category: "Tecnologia",
+      difficulty: "intermediate",
+      duration: "6 meses",
+      progress: 35,
+      moduleCount: 8,
+      completedModules: 3,
+      totalModules: 8,
+      estimatedHours: 150,
+      isActive: true,
+      tags: ["React", "TypeScript", "Frontend", "JavaScript"],
+    },
+    "track-1": {
+      id: "track-1",
+      title: "Analista BACEN",
+      description: "Preparação completa para o concurso de Analista do Banco Central",
+      category: "Concurso",
+      difficulty: "advanced",
+      duration: "6 meses",
+      progress: 42,
+      moduleCount: 12,
+      completedModules: 5,
+      totalModules: 12,
+      estimatedHours: 180,
+      isActive: true,
+      tags: ["Concurso", "Direito", "Economia", "Finanças"],
+    },
+  };
+
+  const track = mockTracks[trackId] || null;
+  return createStub(track);
+}
+
 export async function getActiveTrackStub(): Promise<Track | null> {
   return createStub<Track | null>({
     id: "track-1",
@@ -92,6 +130,17 @@ export async function getTracksCatalogStub(filters?: {
   duration?: string;
 }): Promise<Track[]> {
   return createStub<Track[]>([
+    {
+      id: "mock-track-frontend-react",
+      title: "Desenvolvedor Frontend com React",
+      description: "Torne-se um desenvolvedor frontend completo com React e TypeScript",
+      category: "Tecnologia",
+      difficulty: "intermediate",
+      duration: "6 meses",
+      moduleCount: 8,
+      estimatedHours: 150,
+      tags: ["React", "TypeScript", "Frontend", "JavaScript"],
+    },
     {
       id: "track-2",
       title: "CFA Level I",

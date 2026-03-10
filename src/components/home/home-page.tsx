@@ -19,6 +19,8 @@ import { type LearningPreferencesFormValues } from "@/components/learning-prefer
 import { useDashboardData } from "@/hooks/dashboard/use-dashboard-data";
 import { LoadingState } from "@/components/ui/loading-state";
 import { UpgradeCard } from "@/components/upgrade/upgrade-card";
+import { LearningSystemCard } from "@/components/dashboard/learning-system-card";
+import { LearningQuickAccess } from "@/components/learning/ui/learning-quick-access";
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
@@ -83,6 +85,9 @@ export const HomePage = () => {
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Left column */}
           <div className="space-y-6">
+            {/* Learning System Card - New! */}
+            <LearningSystemCard />
+
             {/* New Session - Create Track with AI */}
             <NewSessionCard />
 
@@ -133,6 +138,9 @@ export const HomePage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Learning Quick Access - Floating Card */}
+      <LearningQuickAccess />
     </div>
   );
 };

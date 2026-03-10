@@ -1,0 +1,53 @@
+﻿export function NewHowItWorks() {
+  const steps = [
+    {
+      title: "Crie sua conta",
+      description: "Rápido e sem complicação"
+    },
+    {
+      title: "Defina seu objetivo",
+      description: "O que você quer conquistar?"
+    },
+    {
+      title: "Comece a estudar",
+      description: "A IA cria seu plano personalizado"
+    },
+    {
+      title: "Evolua todo dia",
+      description: "Progresso consistente e visível"
+    }
+  ];
+
+  return (
+    <section id="como-funciona" className="relative py-20 bg-gradient-to-b from-white via-gray-50/30 to-white">
+      <div className="max-w-[1400px] mx-auto px-8">
+        {/* Header */}
+        <div className="mb-12 text-center max-w-4xl mx-auto">
+          <span className="text-sm font-semibold text-[#4A9FFF] tracking-wider uppercase block mb-6">Simplicidade</span>
+          <h2 className="text-7xl md:text-8xl font-normal text-gray-900 mb-8" style={{ textShadow: "1px 1px 0 rgba(192,192,192,0.6), 2px 1px 2px rgba(0,0,0,0.15), 4px 2px 4px rgba(0,0,0,0.1), 8px 3px 8px rgba(0,0,0,0.1), 12px 4px 12px rgba(0,0,0,0.05)" }}>
+            Comece em minutos
+          </h2>
+          <p className="text-2xl text-gray-600">
+            Sem burocracia. Direto ao ponto.
+          </p>
+        </div>
+
+        {/* Steps - centered grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] hover:bg-white/50 hover:backdrop-blur-2xl hover:shadow-[0_12px_48px_rgba(74,159,255,0.18),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:border-white/80 hover:scale-[1.02] transition-all duration-300"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-2xl font-semibold text-[#4A9FFF]">0{index + 1}</span>
+                <h3 className="text-2xl font-normal text-gray-900">{step.title}</h3>
+              </div>
+              <p className="text-base text-gray-600 leading-relaxed">{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

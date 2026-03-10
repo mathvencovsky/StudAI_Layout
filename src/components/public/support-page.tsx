@@ -1,5 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+﻿import { PublicLayout } from "@/components/layout/public-layout";
 import { BookOpen, MessageSquare, Mail, HelpCircle, Video, FileText } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 
@@ -10,42 +9,24 @@ export function SupportPage() {
       title: "FAQ",
       description: "Respostas para as perguntas mais frequentes",
       link: "/faq",
-      color: "text-blue-500",
     },
     {
       icon: BookOpen,
       title: "Documentação",
       description: "Guias completos sobre como usar a plataforma",
       link: "/how-it-works",
-      color: "text-green-500",
-    },
-    {
-      icon: Video,
-      title: "Tutoriais em Vídeo",
-      description: "Aprenda visualmente com nossos tutoriais",
-      link: "#",
-      color: "text-red-500",
     },
     {
       icon: MessageSquare,
       title: "Chat ao Vivo",
       description: "Fale com nossa equipe em tempo real",
       link: "/contact",
-      color: "text-purple-500",
     },
     {
       icon: Mail,
       title: "Email",
       description: "Envie sua dúvida por email",
       link: "/contact",
-      color: "text-orange-500",
-    },
-    {
-      icon: FileText,
-      title: "Base de Conhecimento",
-      description: "Artigos e guias detalhados",
-      link: "#",
-      color: "text-cyan-500",
     },
   ];
 
@@ -69,81 +50,74 @@ export function SupportPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 py-12 flex-1">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Central de Ajuda</h1>
-            <p className="text-lg text-muted-foreground">
-              Encontre respostas, tutoriais e entre em contato com nosso suporte
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {resources.map((resource, idx) => {
-              const Icon = resource.icon;
-              return (
-                <Card key={idx} className="hover:shadow-lg transition-shadow">
-                  <CardHeader className="text-center">
-                    <Icon className={`h-10 w-10 mx-auto mb-3 ${resource.color}`} />
-                    <CardTitle className="text-lg">{resource.title}</CardTitle>
-                    <CardDescription>{resource.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="text-center">
-                    {resource.link.startsWith('/') ? (
-                      <Link to={resource.link}>
-                        <Button variant="outline" size="sm">
-                          Acessar
-                        </Button>
-                      </Link>
-                    ) : (
-                      <Button variant="outline" size="sm" disabled>
-                        Em Breve
-                      </Button>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">Problemas Comuns</h2>
-            <div className="space-y-4">
-              {commonIssues.map((issue, idx) => (
-                <Card key={idx}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{issue.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{issue.answer}</p>
-                  </CardContent>
-                </Card>
-              ))}
+    <PublicLayout>
+      <div className="py-20">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="mb-16 text-center">
+              <span className="text-sm font-semibold text-[#4A9FFF] tracking-wider uppercase block mb-6">Suporte</span>
+              <h1 className="text-6xl md:text-7xl font-normal text-gray-900 mb-6" style={{ textShadow: "1px 1px 0 rgba(192,192,192,0.6), 2px 1px 2px rgba(0,0,0,0.15), 4px 2px 4px rgba(0,0,0,0.1), 8px 3px 8px rgba(0,0,0,0.1), 12px 4px 12px rgba(0,0,0,0.05)" }}>
+                Central de Ajuda
+              </h1>
+              <p className="text-xl text-gray-600">
+                Encontre respostas, tutoriais e entre em contato com nosso suporte
+              </p>
             </div>
-          </div>
 
-          <Card className="bg-primary text-primary-foreground">
-            <CardContent className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Ainda precisa de ajuda?</h2>
-              <p className="mb-6 opacity-90">
+            {/* Resources Grid */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              {resources.map((resource, idx) => {
+                const Icon = resource.icon;
+                return (
+                  <Link key={idx} to={resource.link}>
+                    <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] hover:bg-white/50 hover:backdrop-blur-2xl hover:shadow-[0_12px_48px_rgba(74,159,255,0.18),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:border-white/80 hover:scale-[1.02] transition-all duration-300 text-center h-full">
+                      <Icon className="h-12 w-12 mx-auto mb-4 text-[#4A9FFF]" />
+                      <h3 className="text-xl font-normal text-gray-900 mb-2">{resource.title}</h3>
+                      <p className="text-sm text-gray-600">{resource.description}</p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Common Issues */}
+            <div className="mb-16">
+              <h2 className="text-4xl font-normal text-gray-900 mb-8 text-center" style={{ textShadow: "1px 1px 0 rgba(192,192,192,0.6), 2px 1px 2px rgba(0,0,0,0.15), 4px 2px 4px rgba(0,0,0,0.1)" }}>
+                Problemas Comuns
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {commonIssues.map((issue, idx) => (
+                  <div key={idx} className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset]">
+                    <h3 className="text-xl font-normal text-gray-900 mb-4">{issue.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{issue.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="p-12 rounded-3xl bg-gradient-to-br from-[#4A9FFF]/10 to-[#4A9FFF]/5 border border-[#4A9FFF]/20 text-center">
+              <h2 className="text-3xl font-normal text-gray-900 mb-4">Ainda precisa de ajuda?</h2>
+              <p className="text-gray-600 mb-8">
                 Nossa equipe está pronta para ajudar você
               </p>
-              <div className="flex gap-4 justify-center">
+              <div className="flex gap-4 justify-center flex-wrap">
                 <Link to="/contact">
-                  <Button variant="secondary">
+                  <button className="px-8 py-4 bg-[#4A9FFF] hover:bg-[#3A8FEF] text-white font-semibold rounded-full transition-all duration-200 hover:scale-105 shadow-lg">
                     Entrar em Contato
-                  </Button>
+                  </button>
                 </Link>
                 <Link to="/faq">
-                  <Button variant="outline" className="border-primary-foreground/20 hover:bg-primary-foreground/10">
+                  <button className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-full transition-all duration-200 hover:scale-105 border-2 border-gray-200">
                     Ver FAQ Completo
-                  </Button>
+                  </button>
                 </Link>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
-      </div>    </div>
+      </div>
+    </PublicLayout>
   );
 }

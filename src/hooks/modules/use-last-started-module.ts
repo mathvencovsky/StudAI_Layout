@@ -1,13 +1,17 @@
 import { useQuery, queryOptions } from "@tanstack/react-query";
 import { getLastStartedModule } from "@/api/module-progress";
+import { getLastStartedModuleStub } from "@/api/stubs/module-progress-stub";
 import type { UserModuleProgress } from "@/model/user-module-progress";
+
+// Use stub implementation for development
+const USE_STUBS = true;
 
 export const getLastStartedModuleQueryOptions = () =>
   queryOptions<UserModuleProgress | null>({
     queryKey: ["lastStartedModule"],
     queryFn: () => {
       try {
-        return getLastStartedModule();
+        return USE_STUBS ? getLastStartedModuleStub() : getLastStartedModule();
       } catch (error) {
         console.error(error);
         throw error;

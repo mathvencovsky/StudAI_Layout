@@ -9,8 +9,454 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ArrowLeft, ArrowRight, Sparkles, CheckCircle2, Search, MessageSquare, Loader2, Code, Palette, BarChart, Briefcase, Globe, Cpu, BookOpen, Users } from "lucide-react";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
+import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
+import { useIsAiUser } from "@/hooks/use-is-ai-user";
+import { useAiChat } from "@/hooks/ai/use-ai-chat";
+import { markdownConfig } from "@/lib/markdown-config";
+import { AiChatWaitlist } from "@/components/content/ai-chat-waitlist";
+
+// Learning Areas Data - Brazilian-focused comprehensive structure
+const LEARNING_AREAS = [
+  {
+    id: "vestibular-enem",
+    title: "Vestibular & ENEM",
+    description: "Preparação para ENEM, vestibulares tradicionais e estratégias de prova",
+    icon: BookOpen,
+    color: "bg-blue-100 text-blue-800 border-blue-200",
+    examples: ["ENEM", "FUVEST", "UNICAMP", "Redação", "Estratégias"]
+  },
+  {
+    id: "concursos-publicos",
+    title: "Concursos Públicos",
+    description: "Preparação para concursos administrativos, tribunais, polícia e fiscais",
+    icon: Briefcase,
+    color: "bg-green-100 text-green-800 border-green-200",
+    examples: ["Administrativos", "Tribunais", "Policiais", "Fiscais", "Bancários"]
+  },
+  {
+    id: "programming",
+    title: "Programação & Desenvolvimento",
+    description: "Desenvolvimento de software, web, mobile e automação",
+    icon: Code,
+    color: "bg-purple-100 text-purple-800 border-purple-200",
+    examples: ["Frontend", "Backend", "Full-Stack", "Mobile", "Games"]
+  },
+  {
+    id: "data-ai",
+    title: "Dados & Inteligência Artificial",
+    description: "Análise de dados, ciência de dados, machine learning e IA",
+    icon: BarChart,
+    color: "bg-orange-100 text-orange-800 border-orange-200",
+    examples: ["Análise de Dados", "Data Science", "Machine Learning", "BI", "GenAI"]
+  },
+  {
+    id: "technology-infra",
+    title: "Tecnologia & Infraestrutura",
+    description: "Cloud, DevOps, segurança, redes e administração de sistemas",
+    icon: Cpu,
+    color: "bg-indigo-100 text-indigo-800 border-indigo-200",
+    examples: ["Cloud", "DevOps", "Segurança", "Linux", "Redes"]
+  },
+  {
+    id: "certifications",
+    title: "Certificações Profissionais",
+    description: "Certificações em cloud, redes, segurança, dados e gestão",
+    icon: Users,
+    color: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    examples: ["AWS", "Azure", "CCNA", "Security+", "PMP"]
+  },
+  {
+    id: "languages",
+    title: "Idiomas",
+    description: "Inglês, espanhol, francês e outros idiomas para comunicação global",
+    icon: Globe,
+    color: "bg-teal-100 text-teal-800 border-teal-200",
+    examples: ["Inglês", "Espanhol", "Francês", "Português", "Libras"]
+  },
+  {
+    id: "math-logic",
+    title: "Matemática & Raciocínio Lógico",
+    description: "Matemática básica, álgebra, geometria, estatística e RLM",
+    icon: Palette,
+    color: "bg-pink-100 text-pink-800 border-pink-200",
+    examples: ["Matemática Básica", "Álgebra", "Geometria", "Estatística", "RLM"]
+  },
+  {
+    id: "productivity-tools",
+    title: "Ferramentas de Produtividade",
+    description: "Excel, PowerPoint, Notion, Git e automação de trabalho",
+    icon: Search,
+    color: "bg-gray-100 text-gray-800 border-gray-200",
+    examples: ["Excel", "PowerPoint", "Notion", "Git", "Automação"]
+  },
+  {
+    id: "career-market",
+    title: "Carreira & Mercado",
+    description: "Desenvolvimento de carreira, entrevistas, networking e soft skills",
+    icon: Users,
+    color: "bg-red-100 text-red-800 border-red-200",
+    examples: ["Carreira Tech", "Empregabilidade", "Liderança", "Entrevistas"]
+  },
+  {
+    id: "business-entrepreneurship",
+    title: "Negócios & Empreendedorismo",
+    description: "Administração, gestão de produtos, finanças e estratégia",
+    icon: Briefcase,
+    color: "bg-amber-100 text-amber-800 border-amber-200",
+    examples: ["Administração", "Produto", "Finanças", "Estratégia"]
+  },
+  {
+    id: "marketing-sales",
+    title: "Marketing & Vendas",
+    description: "Marketing digital, SEO, copywriting, vendas e analytics",
+    icon: MessageSquare,
+    color: "bg-lime-100 text-lime-800 border-lime-200",
+    examples: ["Marketing Digital", "SEO", "Copywriting", "Vendas", "Analytics"]
+  },
+  {
+    id: "design-creative",
+    title: "Design & Conteúdo Criativo",
+    description: "UI/UX, design gráfico, motion design, 3D e criação de conteúdo",
+    icon: Palette,
+    color: "bg-violet-100 text-violet-800 border-violet-200",
+    examples: ["UI/UX", "Design Gráfico", "Motion", "3D", "Conteúdo"]
+  },
+  {
+    id: "law",
+    title: "Direito",
+    description: "OAB, direito constitucional, administrativo, penal e civil",
+    icon: BookOpen,
+    color: "bg-slate-100 text-slate-800 border-slate-200",
+    examples: ["OAB", "Constitucional", "Administrativo", "Penal", "Civil"]
+  }
+];
+// Comprehensive Brazilian-focused specialties within each area
+const AREA_SPECIALTIES = {
+  "vestibular-enem": [
+    {
+      id: "enem-matematica",
+      title: "ENEM - Matemática",
+      description: "Funções, geometria, estatística/probabilidade, razão/proporção",
+      examples: ["Funções", "Geometria", "Estatística", "Probabilidade", "Razão e Proporção"],
+      icon: "📐"
+    },
+    {
+      id: "enem-linguagens",
+      title: "ENEM - Linguagens",
+      description: "Interpretação de texto, gramática aplicada, literatura, inglês/espanhol",
+      examples: ["Interpretação de Texto", "Gramática", "Literatura", "Inglês", "Espanhol"],
+      icon: "📚"
+    },
+    {
+      id: "enem-humanas",
+      title: "ENEM - Ciências Humanas",
+      description: "História do Brasil, história geral, geografia, sociologia/filosofia, atualidades",
+      examples: ["História do Brasil", "História Geral", "Geografia", "Sociologia", "Filosofia"],
+      icon: "🌍"
+    },
+    {
+      id: "enem-natureza",
+      title: "ENEM - Ciências da Natureza",
+      description: "Física (mecânica/eletricidade), química (estequiometria/orgânica), biologia (ecologia/genética)",
+      examples: ["Física", "Química", "Biologia", "Mecânica", "Genética"],
+      icon: "🔬"
+    },
+    {
+      id: "enem-redacao",
+      title: "ENEM - Redação",
+      description: "Repertório sociocultural, tese/argumentação, coesão/coerência",
+      examples: ["Repertório Sociocultural", "Argumentação", "Coesão", "Coerência", "Tese"],
+      icon: "✍️"
+    },
+    {
+      id: "vestibulares-tradicionais",
+      title: "Vestibulares Tradicionais",
+      description: "FUVEST, UNICAMP, 2ª fase, obras literárias, questões discursivas",
+      examples: ["FUVEST", "UNICAMP", "2ª Fase", "Obras Literárias", "Questões Discursivas"],
+      icon: "🎓"
+    },
+    {
+      id: "estrategias-prova",
+      title: "Estratégias de Prova",
+      description: "Gestão de tempo, simulados, revisão espaçada, análise de erros",
+      examples: ["Gestão de Tempo", "Simulados", "Revisão Espaçada", "Análise de Erros"],
+      icon: "⏰"
+    }
+  ],
+  "concursos-publicos": [
+    {
+      id: "administrativos",
+      title: "Concursos Administrativos",
+      description: "Português, RLM, informática, administração pública, legislação básica",
+      examples: ["Português", "RLM", "Informática", "Administração Pública", "Legislação"],
+      icon: "🏛️"
+    },
+    {
+      id: "tribunais",
+      title: "Concursos de Tribunais",
+      description: "Direito Constitucional, Administrativo, Civil, Processo, Penal, legislação específica",
+      examples: ["Direito Constitucional", "Direito Administrativo", "Direito Civil", "Direito Penal"],
+      icon: "⚖️"
+    },
+    {
+      id: "policiais",
+      title: "Concursos Policiais",
+      description: "Penal/Processo Penal, Constitucional, direitos humanos, legislação penal especial, TAF",
+      examples: ["Direito Penal", "Processo Penal", "Direitos Humanos", "TAF", "Legislação Especial"],
+      icon: "👮"
+    },
+    {
+      id: "fiscais",
+      title: "Concursos Fiscais",
+      description: "Tributário, contabilidade, auditoria, TI aplicada, legislação",
+      examples: ["Direito Tributário", "Contabilidade", "Auditoria", "TI Aplicada", "Legislação Fiscal"],
+      icon: "💼"
+    },
+    {
+      id: "bancarios",
+      title: "Concursos Bancários",
+      description: "Conhecimentos bancários, matemática financeira, atualidades, português, vendas/atendimento",
+      examples: ["Conhecimentos Bancários", "Matemática Financeira", "Atualidades", "Vendas"],
+      icon: "🏦"
+    },
+    {
+      id: "ti-concursos",
+      title: "Concursos de TI",
+      description: "Redes, segurança, banco de dados, desenvolvimento, engenharia de software, governança",
+      examples: ["Redes", "Segurança", "Banco de Dados", "Desenvolvimento", "ITIL", "COBIT"],
+      icon: "💻"
+    }
+  ],
+  programming: [
+    {
+      id: "frontend",
+      title: "Frontend",
+      description: "HTML/CSS, JavaScript, TypeScript, React, Vue, Angular, acessibilidade, performance, testes",
+      examples: ["HTML/CSS", "JavaScript", "TypeScript", "React", "Vue", "Angular"],
+      icon: "🌐"
+    },
+    {
+      id: "backend",
+      title: "Backend",
+      description: "APIs REST, autenticação (JWT/OAuth), bancos (SQL/NoSQL), cache/filas, microserviços",
+      examples: ["APIs REST", "JWT/OAuth", "SQL/NoSQL", "Microserviços", "Cache"],
+      icon: "⚙️"
+    },
+    {
+      id: "fullstack",
+      title: "Full Stack",
+      description: "React + Node, React + Django/FastAPI, Next.js, arquitetura e deploy",
+      examples: ["React + Node", "Django/FastAPI", "Next.js", "Arquitetura", "Deploy"],
+      icon: "🔄"
+    },
+    {
+      id: "mobile",
+      title: "Mobile",
+      description: "Android (Kotlin), iOS (Swift), Flutter, React Native",
+      examples: ["Android", "iOS", "Flutter", "React Native", "Kotlin", "Swift"],
+      icon: "📱"
+    },
+    {
+      id: "games",
+      title: "Games",
+      description: "Unity (C#), Godot, lógica de gameplay, física, assets",
+      examples: ["Unity", "Godot", "C#", "Gameplay", "Física", "Assets"],
+      icon: "🎮"
+    },
+    {
+      id: "automacao-scripts",
+      title: "Automação/Scripts",
+      description: "Python para automação, web scraping, bots, integração com planilhas/APIs",
+      examples: ["Python", "Web Scraping", "Bots", "APIs", "Automação"],
+      icon: "🤖"
+    },
+    {
+      id: "sistemas-low-level",
+      title: "Sistemas/Low-level",
+      description: "C/C++, Rust, estrutura de dados, sistemas operacionais, redes, otimização",
+      examples: ["C/C++", "Rust", "Estrutura de Dados", "Sistemas Operacionais", "Otimização"],
+      icon: "🔧"
+    }
+  ],
+  "data-ai": [
+    {
+      id: "analise-dados",
+      title: "Análise de Dados",
+      description: "Excel/Sheets, SQL, Power BI, estatística básica, storytelling com dados",
+      examples: ["Excel", "SQL", "Power BI", "Estatística", "Storytelling"],
+      icon: "📊"
+    },
+    {
+      id: "business-intelligence",
+      title: "BI (Business Intelligence)",
+      description: "Modelagem dimensional, DAX (Power BI), indicadores (KPIs), dashboards",
+      examples: ["Modelagem Dimensional", "DAX", "KPIs", "Dashboards", "Power BI"],
+      icon: "📈"
+    },
+    {
+      id: "ciencia-dados",
+      title: "Ciência de Dados",
+      description: "Python (Pandas/NumPy), EDA, features, validação, métricas, projetos de ponta a ponta",
+      examples: ["Python", "Pandas", "NumPy", "EDA", "Features", "Validação"],
+      icon: "🔬"
+    },
+    {
+      id: "machine-learning",
+      title: "Machine Learning",
+      description: "Regressão/classificação, árvores/boosting, pipelines, avaliação e overfitting",
+      examples: ["Regressão", "Classificação", "Árvores", "Boosting", "Pipelines"],
+      icon: "🤖"
+    },
+    {
+      id: "deep-learning",
+      title: "Deep Learning",
+      description: "Redes neurais, CNN, RNN/Transformers, fine-tuning",
+      examples: ["Redes Neurais", "CNN", "RNN", "Transformers", "Fine-tuning"],
+      icon: "🧠"
+    },
+    {
+      id: "nlp",
+      title: "NLP",
+      description: "Tokenização, embeddings, classificação de texto, chatbots",
+      examples: ["Tokenização", "Embeddings", "Classificação de Texto", "Chatbots"],
+      icon: "💬"
+    },
+    {
+      id: "visao-computacional",
+      title: "Visão Computacional",
+      description: "Detecção/classificação, segmentação, OCR",
+      examples: ["Detecção", "Classificação", "Segmentação", "OCR"],
+      icon: "👁️"
+    },
+    {
+      id: "genai-llms",
+      title: "GenAI / LLMs",
+      description: "Prompt engineering, RAG, agentes, avaliação, segurança/guardrails",
+      examples: ["Prompt Engineering", "RAG", "Agentes", "Avaliação", "Guardrails"],
+      icon: "✨"
+    },
+    {
+      id: "engenharia-dados",
+      title: "Engenharia de Dados",
+      description: "ETL/ELT, Airflow, Spark, data lake/warehouse, qualidade/linhagem",
+      examples: ["ETL/ELT", "Airflow", "Spark", "Data Lake", "Data Warehouse"],
+      icon: "🏗️"
+    },
+    {
+      id: "mlops",
+      title: "MLOps",
+      description: "Versionamento, deploy, monitoramento, experiment tracking",
+      examples: ["Versionamento", "Deploy", "Monitoramento", "Experiment Tracking"],
+      icon: "🔄"
+    }
+  ]
+};
+// Continuação das especialidades para as outras áreas
+const AREA_SPECIALTIES_EXTENDED = {
+  ...AREA_SPECIALTIES,
+  "technology-infra": [
+    {
+      id: "cloud",
+      title: "Cloud",
+      description: "AWS/Azure/GCP, IAM, redes, storage, compute, custos",
+      examples: ["AWS", "Azure", "GCP", "IAM", "Storage", "Compute"],
+      icon: "☁️"
+    },
+    {
+      id: "devops",
+      title: "DevOps",
+      description: "CI/CD, Docker, Kubernetes, Terraform, observabilidade",
+      examples: ["CI/CD", "Docker", "Kubernetes", "Terraform", "Observabilidade"],
+      icon: "🔧"
+    }
+  ],
+  certifications: [
+    {
+      id: "cloud-certs",
+      title: "Cloud",
+      description: "AWS Cloud Practitioner/SAA, Azure Fundamentals/AZ-104, Google Cloud Digital Leader",
+      examples: ["AWS SAA", "Azure AZ-104", "Google Cloud", "Cloud Practitioner"],
+      icon: "☁️"
+    }
+  ],
+  languages: [
+    {
+      id: "ingles",
+      title: "Inglês",
+      description: "Conversação, leitura técnica, escrita, entrevistas, TOEFL/IELTS",
+      examples: ["Conversação", "Leitura Técnica", "Escrita", "TOEFL", "IELTS"],
+      icon: "🇺🇸"
+    }
+  ],
+  "math-logic": [
+    {
+      id: "matematica-basica",
+      title: "Matemática Básica",
+      description: "Frações, porcentagem, regra de três, equações",
+      examples: ["Frações", "Porcentagem", "Regra de Três", "Equações"],
+      icon: "🔢"
+    }
+  ],
+  "productivity-tools": [
+    {
+      id: "excel-sheets",
+      title: "Excel/Google Sheets",
+      description: "PROCV/XLOOKUP, Tabelas Dinâmicas, Power Query, gráficos",
+      examples: ["PROCV", "XLOOKUP", "Tabelas Dinâmicas", "Power Query", "Gráficos"],
+      icon: "📊"
+    }
+  ],
+  "career-market": [
+    {
+      id: "carreira-tech",
+      title: "Carreira em Tech",
+      description: "Portfólio, currículo/LinkedIn, entrevistas, roadmap, soft skills",
+      examples: ["Portfólio", "LinkedIn", "Entrevistas", "Roadmap", "Soft Skills"],
+      icon: "💻"
+    }
+  ],
+  "business-entrepreneurship": [
+    {
+      id: "administracao",
+      title: "Administração",
+      description: "Processos, indicadores, operações",
+      examples: ["Processos", "Indicadores", "Operações", "Administração"],
+      icon: "📋"
+    }
+  ],
+  "marketing-sales": [
+    {
+      id: "marketing-digital",
+      title: "Marketing Digital",
+      description: "Tráfego pago, orgânico, social media",
+      examples: ["Tráfego Pago", "Tráfego Orgânico", "Social Media", "Marketing Digital"],
+      icon: "📱"
+    }
+  ],
+  "design-creative": [
+    {
+      id: "ui-ux",
+      title: "UI/UX",
+      description: "Pesquisa, prototipagem, heurísticas, design system",
+      examples: ["Pesquisa", "Prototipagem", "Heurísticas", "Design System"],
+      icon: "🎨"
+    }
+  ],
+  law: [
+    {
+      id: "oab",
+      title: "OAB",
+      description: "1ª fase (disciplinas), 2ª fase (peça e prática)",
+      examples: ["1ª Fase", "2ª Fase", "Peça Prática", "OAB"],
+      icon: "⚖️"
+    }
+  ]
+};
 
 interface QuestionnaireData {
   topic: string;
@@ -25,9 +471,33 @@ interface QuestionnaireData {
 export function CriarTrilhaPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("questionnaire");
   const [step, setStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
   const totalSteps = 6;
+
+  // AI Chat functionality
+  const { isAiUser, isLoading: isCheckingAiUser } = useIsAiUser();
+  const [aiInput, setAiInput] = useState("");
+  const [{ data: aiData, isLoading: isAiLoading }, sendAiMessage] = useAIConversation("TrackCreation");
+  useAiChat({ showIcon: true });
+
+  // AI Area Selection
+  const [selectedArea, setSelectedArea] = useState<string>("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("");
+  const [showSpecialtySelection, setShowSpecialtySelection] = useState(false);
+  const [showAiChat, setShowAiChat] = useState(false);
+
+  // Debug: Log para verificar se os dados estão carregados
+  console.log("Debug - Dados carregados:", {
+    learningAreasCount: LEARNING_AREAS.length,
+    specialtiesKeys: Object.keys(AREA_SPECIALTIES_EXTENDED),
+    activeTab,
+    isAiUser,
+    isCheckingAiUser,
+    showSpecialtySelection,
+    showAiChat
+  });
 
   const [formData, setFormData] = useState<QuestionnaireData>({
     topic: "",
@@ -74,13 +544,77 @@ export function CriarTrilhaPage() {
     }
   };
 
+  const handleAreaSelect = (areaId: string) => {
+    setSelectedArea(areaId);
+    setSelectedSpecialty("");
+    setShowSpecialtySelection(true);
+    setShowAiChat(false);
+    const area = LEARNING_AREAS.find(a => a.id === areaId);
+    if (area) {
+      toast.success(`Área selecionada: ${area.title}`);
+    }
+  };
+
+  const handleSpecialtySelect = (specialtyId: string) => {
+    setSelectedSpecialty(specialtyId);
+    setShowAiChat(true);
+    const specialty = AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.find(s => s.id === specialtyId);
+    if (specialty) {
+      toast.success(`Especialidade selecionada: ${specialty.title}`);
+    }
+  };
+
+  const handleBackToAreaSelection = () => {
+    setShowAiChat(false);
+    setShowSpecialtySelection(false);
+    setSelectedArea("");
+    setSelectedSpecialty("");
+  };
+
+  const handleBackToSpecialtySelection = () => {
+    setShowAiChat(false);
+  };
+
+  const handleAiSend = () => {
+    if (!aiInput.trim()) return;
+    
+    const selectedAreaData = LEARNING_AREAS.find(a => a.id === selectedArea);
+    const selectedSpecialtyData = AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.find(s => s.id === selectedSpecialty);
+    
+    const aiContext = aiData.messages.length === 0 
+      ? { 
+          purpose: "track_creation",
+          selectedArea: selectedAreaData?.title || "",
+          selectedSpecialty: selectedSpecialtyData?.title || "",
+          specialtyDescription: selectedSpecialtyData?.description || "",
+          specialtyExamples: selectedSpecialtyData?.examples.join(", ") || "",
+          instructions: `Você é um assistente especializado em criar trilhas de aprendizado personalizadas na área de "${selectedAreaData?.title}", especificamente em "${selectedSpecialtyData?.title}".`
+        }
+      : undefined;
+    
+    sendAiMessage({ content: [{ text: aiInput }], aiContext });
+    setAiInput("");
+  };
+
+  const handleCreateFromAi = async () => {
+    setIsGenerating(true);
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      toast.success("Trilha criada com sucesso usando IA!");
+      navigate({ to: "/explorar" });
+    } catch (error) {
+      toast.error("Erro ao criar trilha com IA");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const handleGenerate = async () => {
     setIsGenerating(true);
     
     try {
-      // TODO: Chamar API para gerar trilha com IA usando as preferências salvas + questionário
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
       toast.success(t("questionnaire-track-created"));
       navigate({ to: "/explorar" });
     } catch (error) {
@@ -89,247 +623,8 @@ export function CriarTrilhaPage() {
       setIsGenerating(false);
     }
   };
-
-  const renderStep = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="topic" className="text-lg font-semibold">
-                {t("questionnaire-topic-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-3">
-                {t("questionnaire-topic-helper")}
-              </p>
-              <Input
-                id="topic"
-                placeholder={t("questionnaire-topic-placeholder")}
-                value={formData.topic}
-                onChange={(e) => updateFormData("topic", e.target.value)}
-                className="text-lg"
-                autoFocus
-              />
-            </div>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="goal" className="text-lg font-semibold">
-                {t("questionnaire-goal-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-3">
-                {t("questionnaire-goal-helper")}
-              </p>
-              <Textarea
-                id="goal"
-                placeholder={t("questionnaire-goal-placeholder")}
-                value={formData.goal}
-                onChange={(e) => updateFormData("goal", e.target.value)}
-                rows={4}
-                className="resize-none"
-              />
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label className="text-lg font-semibold">
-                {t("questionnaire-knowledge-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-4">
-                {t("questionnaire-knowledge-helper")}
-              </p>
-              <RadioGroup
-                value={formData.currentKnowledge}
-                onValueChange={(value) => updateFormData("currentKnowledge", value)}
-                className="space-y-3"
-              >
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="beginner" id="beginner" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="beginner" className="font-semibold cursor-pointer">
-                      {t("questionnaire-knowledge-beginner")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-knowledge-beginner-desc")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="intermediate" id="intermediate" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="intermediate" className="font-semibold cursor-pointer">
-                      {t("questionnaire-knowledge-intermediate")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-knowledge-intermediate-desc")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="advanced" id="advanced" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="advanced" className="font-semibold cursor-pointer">
-                      {t("questionnaire-knowledge-advanced")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-knowledge-advanced-desc")}
-                    </p>
-                  </div>
-                </div>
-              </RadioGroup>
-            </div>
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="timeAvailable" className="text-lg font-semibold">
-                {t("questionnaire-time-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-4">
-                {t("questionnaire-time-helper")}
-              </p>
-              <Select
-                value={formData.timeAvailable}
-                onValueChange={(value) => updateFormData("timeAvailable", value)}
-              >
-                <SelectTrigger className="text-lg">
-                  <SelectValue placeholder={t("questionnaire-time-placeholder")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1-3">{t("questionnaire-time-1-3")}</SelectItem>
-                  <SelectItem value="4-7">{t("questionnaire-time-4-7")}</SelectItem>
-                  <SelectItem value="8-14">{t("questionnaire-time-8-14")}</SelectItem>
-                  <SelectItem value="15+">{t("questionnaire-time-15-plus")}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        );
-
-      case 5:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label className="text-lg font-semibold">
-                {t("questionnaire-style-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-4">
-                {t("questionnaire-style-helper")}
-              </p>
-              <RadioGroup
-                value={formData.learningStyle}
-                onValueChange={(value) => updateFormData("learningStyle", value)}
-                className="space-y-3"
-              >
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="video" id="video" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="video" className="font-semibold cursor-pointer">
-                      {t("questionnaire-style-video")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-style-video-desc")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="reading" id="reading" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="reading" className="font-semibold cursor-pointer">
-                      {t("questionnaire-style-reading")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-style-reading-desc")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="practice" id="practice" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="practice" className="font-semibold cursor-pointer">
-                      {t("questionnaire-style-practice")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-style-practice-desc")}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3 p-4 border rounded-lg hover:bg-accent cursor-pointer">
-                  <RadioGroupItem value="mixed" id="mixed" className="mt-1" />
-                  <div className="flex-1">
-                    <Label htmlFor="mixed" className="font-semibold cursor-pointer">
-                      {t("questionnaire-style-mixed")}
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      {t("questionnaire-style-mixed-desc")}
-                    </p>
-                  </div>
-                </div>
-              </RadioGroup>
-            </div>
-          </div>
-        );
-
-      case 6:
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="deadline" className="text-lg font-semibold">
-                {t("questionnaire-deadline-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-3">
-                {t("questionnaire-deadline-helper")}
-              </p>
-              <Input
-                id="deadline"
-                placeholder={t("questionnaire-deadline-placeholder")}
-                value={formData.deadline}
-                onChange={(e) => updateFormData("deadline", e.target.value)}
-              />
-            </div>
-
-            <div className="mt-6">
-              <Label htmlFor="specificTopics" className="text-lg font-semibold">
-                {t("questionnaire-topics-title")}
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1 mb-3">
-                {t("questionnaire-topics-helper")}
-              </p>
-              <Textarea
-                id="specificTopics"
-                placeholder={t("questionnaire-topics-placeholder")}
-                value={formData.specificTopics}
-                onChange={(e) => updateFormData("specificTopics", e.target.value)}
-                rows={4}
-                className="resize-none"
-              />
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="container max-w-3xl mx-auto px-4 py-8 pb-24 md:pb-8">
+    <div className="container max-w-4xl mx-auto px-4 py-8 pb-24 md:pb-8">
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
@@ -341,124 +636,354 @@ export function CriarTrilhaPage() {
         </p>
       </div>
 
-      {/* Progress */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium">
-            {t("questionnaire-step-of", { step, total: totalSteps })}
-          </span>
-          <span className="text-sm text-muted-foreground">
-            {t("questionnaire-progress", { percent: Math.round((step / totalSteps) * 100) })}
-          </span>
-        </div>
-        <Progress value={(step / totalSteps) * 100} className="h-2" />
-      </div>
+      {/* Tabs */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsTrigger value="questionnaire" className="flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4" />
+            Questionário Guiado
+          </TabsTrigger>
+          <TabsTrigger value="ai-search" className="flex items-center gap-2">
+            <MessageSquare className="h-4 w-4" />
+            Busca com IA
+          </TabsTrigger>
+        </TabsList>
 
-      {/* Question Card */}
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle className="text-2xl">
-            {step === 1 && t("questionnaire-topic-title")}
-            {step === 2 && t("questionnaire-goal-title")}
-            {step === 3 && t("questionnaire-knowledge-title")}
-            {step === 4 && t("questionnaire-time-title")}
-            {step === 5 && t("questionnaire-style-title")}
-            {step === 6 && t("questionnaire-details-title")}
-          </CardTitle>
-          <CardDescription>
-            {step === 1 && t("questionnaire-topic-helper")}
-            {step === 2 && t("questionnaire-goal-helper")}
-            {step === 3 && t("questionnaire-knowledge-helper")}
-            {step === 4 && t("questionnaire-time-helper")}
-            {step === 5 && t("questionnaire-style-helper")}
-            {step === 6 && t("questionnaire-deadline-helper")}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>{renderStep()}</CardContent>
-      </Card>
+        {/* Questionnaire Tab */}
+        <TabsContent value="questionnaire" className="space-y-8">
+          <div className="text-center py-8">
+            <p className="text-muted-foreground">Questionário em desenvolvimento...</p>
+          </div>
+        </TabsContent>
 
-      {/* Navigation */}
-      <div className="flex items-center justify-between gap-4">
-        <Button
-          variant="outline"
-          onClick={handleBack}
-          disabled={step === 1 || isGenerating}
-          className="gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t("previous")}
-        </Button>
+        {/* AI Search Tab */}
+        <TabsContent value="ai-search" className="space-y-6">
+          {isCheckingAiUser ? (
+            <div className="flex items-center justify-center h-64">
+              <Loader2 className="h-6 w-6 animate-spin" />
+            </div>
+          ) : !isAiUser ? (
+            <AiChatWaitlist />
+          ) : !showSpecialtySelection && !showAiChat ? (
+            /* Area Selection Step */
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Search className="h-5 w-5" />
+                    Passo 1: Escolha sua Área de Interesse
+                  </CardTitle>
+                  <CardDescription>
+                    Selecione a área que você quer estudar para que nossa IA possa criar uma trilha mais direcionada e eficiente.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {LEARNING_AREAS.map((area) => {
+                      const Icon = area.icon;
+                      const isSelected = selectedArea === area.id;
+                      
+                      return (
+                        <Card
+                          key={area.id}
+                          className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                            isSelected 
+                              ? "ring-2 ring-primary border-primary bg-primary/5" 
+                              : "hover:border-primary/50"
+                          }`}
+                          onClick={() => handleAreaSelect(area.id)}
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-start space-x-3">
+                              <div className={`p-2 rounded-lg ${area.color}`}>
+                                <Icon className="h-5 w-5" />
+                              </div>
+                              
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-semibold text-sm mb-1">{area.title}</h3>
+                                <p className="text-xs text-muted-foreground mb-2">
+                                  {area.description}
+                                </p>
+                                
+                                <div className="flex flex-wrap gap-1">
+                                  {area.examples.slice(0, 3).map((example, index) => (
+                                    <span
+                                      key={index}
+                                      className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground"
+                                    >
+                                      {example}
+                                    </span>
+                                  ))}
+                                  {area.examples.length > 3 && (
+                                    <span className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground">
+                                      +{area.examples.length - 3}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              {isSelected && (
+                                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
 
-        {step < totalSteps ? (
-          <Button
-            onClick={handleNext}
-            disabled={!canProceed() || isGenerating}
-            className="gap-2"
-          >
-            {t("next")}
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        ) : (
-          <Button
-            onClick={handleGenerate}
-            disabled={isGenerating}
-            className="gap-2"
-          >
-            {isGenerating ? (
-              <>
-                <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                {t("questionnaire-generating")}
-              </>
-            ) : (
-              <>
-                <CheckCircle2 className="h-4 w-4" />
-                {t("questionnaire-create-track")}
-              </>
-            )}
-          </Button>
-        )}
-      </div>
+              {/* Why Area Selection Helps */}
+              <Card className="border-blue-200 bg-blue-50/50 dark:bg-blue-950/20">
+                <CardHeader>
+                  <CardTitle className="text-lg text-blue-800 dark:text-blue-200">
+                    🎯 Por que escolher uma área?
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-blue-700 dark:text-blue-300">
+                  <ul className="space-y-2">
+                    <li>• <strong>Trilhas mais direcionadas:</strong> A IA conhece as especificidades de cada área</li>
+                    <li>• <strong>Recursos especializados:</strong> Sugestões de ferramentas e materiais específicos</li>
+                    <li>• <strong>Progressão lógica:</strong> Sequência de aprendizado otimizada para a área</li>
+                    <li>• <strong>Projetos práticos:</strong> Exercícios relevantes para sua área de interesse</li>
+                    <li>• <strong>Mercado de trabalho:</strong> Orientações sobre oportunidades na área</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </>
+          ) : showSpecialtySelection && !showAiChat ? (
+            /* Specialty Selection Step */
+            <>
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Search className="h-5 w-5" />
+                      <div>
+                        <CardTitle>Passo 2: Escolha sua Especialidade</CardTitle>
+                        <CardDescription>
+                          Área: <span className="font-medium text-foreground">
+                            {LEARNING_AREAS.find(a => a.id === selectedArea)?.title}
+                          </span>
+                        </CardDescription>
+                      </div>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleBackToAreaSelection}
+                      className="gap-2"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Voltar
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.map((specialty) => {
+                      const isSelected = selectedSpecialty === specialty.id;
+                      
+                      return (
+                        <Card
+                          key={specialty.id}
+                          className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+                            isSelected 
+                              ? "ring-2 ring-primary border-primary bg-primary/5" 
+                              : "hover:border-primary/50"
+                          }`}
+                          onClick={() => handleSpecialtySelect(specialty.id)}
+                        >
+                          <CardContent className="p-4">
+                            <div className="flex items-start space-x-3">
+                              <div className="text-2xl">{specialty.icon}</div>
+                              
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-semibold text-sm mb-1">{specialty.title}</h3>
+                                <p className="text-xs text-muted-foreground mb-2">
+                                  {specialty.description}
+                                </p>
+                                
+                                <div className="flex flex-wrap gap-1">
+                                  {specialty.examples.slice(0, 4).map((example, index) => (
+                                    <span
+                                      key={index}
+                                      className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground"
+                                    >
+                                      {example}
+                                    </span>
+                                  ))}
+                                  {specialty.examples.length > 4 && (
+                                    <span className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground">
+                                      +{specialty.examples.length - 4}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              {isSelected && (
+                                <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                              )}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
 
-      {/* Summary Preview (última etapa) */}
-      {step === totalSteps && (
-        <Card className="mt-8 border-primary/20 bg-primary/5">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-primary" />
-              {t("questionnaire-summary-title")}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2 text-sm">
-            <div>
-              <span className="font-semibold">{t("questionnaire-summary-topic")}</span> {formData.topic}
-            </div>
-            <div>
-              <span className="font-semibold">{t("questionnaire-summary-goal")}</span> {formData.goal}
-            </div>
-            <div>
-              <span className="font-semibold">{t("questionnaire-summary-level")}</span>{" "}
-              {formData.currentKnowledge === "beginner" && t("questionnaire-knowledge-beginner")}
-              {formData.currentKnowledge === "intermediate" && t("questionnaire-knowledge-intermediate")}
-              {formData.currentKnowledge === "advanced" && t("questionnaire-knowledge-advanced")}
-            </div>
-            <div>
-              <span className="font-semibold">{t("questionnaire-summary-time")}</span> {formData.timeAvailable}
-            </div>
-            <div>
-              <span className="font-semibold">{t("questionnaire-summary-style")}</span>{" "}
-              {formData.learningStyle === "video" && t("questionnaire-style-video")}
-              {formData.learningStyle === "reading" && t("questionnaire-style-reading")}
-              {formData.learningStyle === "practice" && t("questionnaire-style-practice")}
-              {formData.learningStyle === "mixed" && t("questionnaire-style-mixed")}
-            </div>
-            {formData.deadline && (
-              <div>
-                <span className="font-semibold">{t("questionnaire-summary-deadline")}</span> {formData.deadline}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
+              {/* Specialty Selection Tips */}
+              <Card className="border-green-200 bg-green-50/50 dark:bg-green-950/20">
+                <CardHeader>
+                  <CardTitle className="text-lg text-green-800 dark:text-green-200">
+                    💡 Escolha a especialidade mais próxima do seu objetivo
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-green-700 dark:text-green-300">
+                  <p className="mb-2">
+                    Não se preocupe se não encontrar uma especialidade exata - a IA pode ajudar a personalizar ainda mais sua trilha durante a conversa.
+                  </p>
+                  <ul className="space-y-1">
+                    <li>• Pense no seu objetivo principal (emprego, projeto pessoal, certificação)</li>
+                    <li>• Considere seu nível atual de conhecimento na área</li>
+                    <li>• Escolha a especialidade que mais se aproxima do que você quer aprender</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </>
+          ) : (
+            /* AI Chat Step */
+            <>
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Search className="h-5 w-5" />
+                      <div>
+                        <CardTitle>Passo 3: Criar Trilha com IA</CardTitle>
+                        <CardDescription>
+                          <span className="font-medium text-foreground">
+                            {LEARNING_AREAS.find(a => a.id === selectedArea)?.title}
+                          </span>
+                          {" → "}
+                          <span className="font-medium text-foreground">
+                            {AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.find(s => s.id === selectedSpecialty)?.title}
+                          </span>
+                        </CardDescription>
+                      </div>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleBackToSpecialtySelection}
+                      className="gap-2"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Trocar Especialidade
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {/* AI Conversation */}
+                    <div className="border rounded-lg">
+                      <ScrollArea className="h-96 p-4">
+                        {aiData.messages.length === 0 ? (
+                          <div className="text-center text-muted-foreground py-8">
+                            <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                            <p className="text-lg font-medium mb-2">Comece sua conversa com a IA</p>
+                            <p className="text-sm mb-4">
+                              Nossa IA especializada em <strong>{AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.find(s => s.id === selectedSpecialty)?.title}</strong> está pronta para te ajudar!
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {aiData.messages.map((msg) => (
+                              <div
+                                key={msg.id}
+                                className={msg.role === "user" ? "flex justify-end" : "flex justify-start"}
+                              >
+                                <div className={`p-3 rounded-lg max-w-[80%] ${
+                                  msg.role === "user" 
+                                    ? "bg-primary text-primary-foreground" 
+                                    : "bg-muted"
+                                }`}>
+                                  <div className="prose prose-sm dark:prose-invert max-w-none [&_*]:break-words [&_code]:break-all [&_pre]:overflow-x-auto">
+                                    <ReactMarkdown {...markdownConfig}>
+                                      {msg.content[0].text}
+                                    </ReactMarkdown>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </ScrollArea>
+                    </div>
+
+                    {/* Input Area */}
+                    <div className="space-y-2">
+                      <Textarea
+                        value={aiInput}
+                        onChange={(e) => setAiInput(e.target.value)}
+                        placeholder={`Descreva o que você quer aprender sobre ${AREA_SPECIALTIES_EXTENDED[selectedArea as keyof typeof AREA_SPECIALTIES_EXTENDED]?.find(s => s.id === selectedSpecialty)?.title || LEARNING_AREAS.find(a => a.id === selectedArea)?.title.toLowerCase()}...`}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handleAiSend();
+                          }
+                        }}
+                        rows={3}
+                      />
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-muted-foreground">
+                          Pressione Enter para enviar, Shift+Enter para nova linha
+                        </p>
+                        <div className="flex gap-2">
+                          <Button 
+                            onClick={handleAiSend} 
+                            disabled={isAiLoading || !aiInput.trim()}
+                            size="sm"
+                          >
+                            {isAiLoading ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              "Enviar"
+                            )}
+                          </Button>
+                          {aiData.messages.length > 0 && (
+                            <Button
+                              onClick={handleCreateFromAi}
+                              disabled={isGenerating}
+                              variant="outline"
+                              size="sm"
+                              className="gap-2"
+                            >
+                              {isGenerating ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                  Criando...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-4 w-4" />
+                                  Criar Trilha
+                                </>
+                              )}
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

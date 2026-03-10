@@ -1,34 +1,25 @@
-import { useMemo, useState } from "react";
-import { Eye, EyeOff, HelpCircle } from "lucide-react";
-import { useI18n } from "@/i18n";
-import { cn } from "@/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 
 type AuthAdapter = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
+  signInWithGoogle?: () => Promise<void>;
 };
-
-function toastFallback(message: string) {
-  if (typeof window !== "undefined") window.alert(message);
-}
 
 function getAdapter(): AuthAdapter | null {
   try {
     const anyWin = window as any;
-    const adapter = anyWin.__STUDAI_AUTH_ADAPTER__ as AuthAdapter | undefined;
-    return adapter ?? null;
+    return anyWin.__STUDAI_AUTH_ADAPTER__ ?? null;
   } catch {
     return null;
   }
 }
 
-export function AuthCard({ className }: { className?: string }) {
-  const { t } = useI18n();
+export function AuthCard() {
   const [tab, setTab] = useState<"login" | "register">("register");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,30 +27,25 @@ export function AuthCard({ className }: { className?: string }) {
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  const minPasswordOk = useMemo(() => password.length >= 6, [password]);
-  const passwordsMatch = useMemo(
-    () => confirmPassword === password,
-    [confirmPassword, password]
-  );
+  const minPasswordOk = password.length >= 6;
+  const passwordsMatch = confirmPassword === password;
 
   async function handleLogin() {
     if (!email || !password) {
-      toastFallback(t("auth.toast.fillFields"));
+      alert("Preencha email e senha");
       return;
     }
     setBusy(true);
     try {
       const adapter = getAdapter();
       if (!adapter) {
-        toastFallback(
-          "Integração de autenticação pendente. Configure __STUDAI_AUTH_ADAPTER__."
-        );
+        alert("Sistema de autenticação não configurado");
         return;
       }
       await adapter.signIn(email.trim(), password);
-      toastFallback(t("auth.toast.welcomeBack"));
+      alert("Login realizado com sucesso!");
     } catch {
-      toastFallback(t("auth.toast.loginError"));
+      alert("Erro ao fazer login");
     } finally {
       setBusy(false);
     }
@@ -67,249 +53,311 @@ export function AuthCard({ className }: { className?: string }) {
 
   async function handleRegister() {
     if (!email || !password || !confirmPassword) {
-      toastFallback(t("auth.toast.fillAllFields"));
+      alert("Preencha todos os campos");
       return;
     }
     if (!minPasswordOk) {
-      toastFallback(t("auth.toast.minPassword"));
+      alert("Senha deve ter no mínimo 6 caracteres");
       return;
     }
     if (!passwordsMatch) {
-      toastFallback(t("auth.toast.passwordsDontMatch"));
+      alert("As senhas não coincidem");
       return;
     }
     setBusy(true);
     try {
       const adapter = getAdapter();
       if (!adapter) {
-        toastFallback(
-          "Integração de autenticação pendente. Configure __STUDAI_AUTH_ADAPTER__."
-        );
+        alert("Sistema de autenticação não configurado");
         return;
       }
       await adapter.signUp(email.trim(), password);
-      toastFallback(t("auth.toast.accountCreated"));
+      alert("Conta criada! Verifique seu email.");
       setTab("login");
     } catch {
-      toastFallback(t("auth.toast.registerError"));
+      alert("Erro ao criar conta");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleGoogleLogin() {
+    setBusy(true);
+    try {
+      const adapter = getAdapter();
+      if (!adapter?.signInWithGoogle) {
+        alert("Login com Google não disponível");
+        return;
+      }
+      await adapter.signInWithGoogle();
+    } catch {
+      alert("Erro ao fazer login com Google");
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <Card className={cn("w-full max-w-md border-2 shadow-2xl", className)} id="auth-card">
-      <CardContent className="p-5 sm:p-6">
-        <Tabs value={tab} onValueChange={(v) => setTab(v as any)} className="w-full">
-          <TabsList className="grid grid-cols-2 w-full">
-            <TabsTrigger value="login" className="font-bold">
-              {t("auth.tabLogin")}
-            </TabsTrigger>
-            <TabsTrigger value="register" className="font-bold">
-              {t("auth.tabRegister")}
-            </TabsTrigger>
-          </TabsList>
+    <div className="w-full max-w-md mx-auto bg-white rounded-3xl p-8 shadow-xl">
+      {/* Tabs */}
+      <div className="grid grid-cols-2 bg-gray-100 p-1.5 gap-1.5 mb-8 rounded-2xl">
+        <button
+          onClick={() => setTab("login")}
+          className={`py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
+            tab === "login"
+              ? "bg-white text-gray-900 shadow-sm"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Sign in
+        </button>
+        <button
+          onClick={() => setTab("register")}
+          className={`py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 ${
+            tab === "register"
+              ? "bg-white text-gray-900 shadow-sm"
+              : "text-gray-500 hover:text-gray-700"
+          }`}
+        >
+          Create account
+        </button>
+      </div>
 
-          <TabsContent value="login" className="mt-5 space-y-4">
+      {/* Content */}
+      <div>
+        {tab === "login" ? (
+          <div className="space-y-6">
+            {/* Header */}
             <div>
-              <h3 className="text-lg font-extrabold text-foreground">
-                {t("auth.loginTitle")}
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                Welcome back
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                {t("auth.loginDesc")}
+              <p className="text-sm text-gray-600">
+                Sign in to continue your learning journey
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Label htmlFor="login-email" className="font-semibold">
-                  {t("auth.email")}
-                </Label>
-                <Input
-                  id="login-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder={t("auth.emailPlaceholder")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+            {/* Google button */}
+            <button
+              onClick={handleGoogleLogin}
+              disabled={busy}
+              className="w-full h-12 flex items-center justify-center gap-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 font-semibold text-gray-900 disabled:opacity-50"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 />
-              </div>
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                />
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                />
+              </svg>
+              Continue with Google
+            </button>
 
-              <div className="space-y-2">
-                <Label htmlFor="login-password" className="font-semibold">
-                  {t("auth.password")}
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="login-password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="current-password"
-                    placeholder={t("auth.passwordPlaceholder")}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pr-11"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((s) => !s)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
-                    aria-label={
-                      showPassword
-                        ? t("auth.hidePassword")
-                        : t("auth.showPassword")
-                    }
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-white text-gray-500 font-medium">or</span>
               </div>
             </div>
 
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="login-email" className="text-sm font-semibold text-gray-700">
+                Email
+              </Label>
+              <Input
+                id="login-email"
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="h-12 rounded-xl bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4A9FFF] focus:ring-[#4A9FFF]"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <Label htmlFor="login-password" className="text-sm font-semibold text-gray-700">
+                Password
+              </Label>
+              <div className="relative">
+                <Input
+                  id="login-password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Minimum 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12 rounded-xl bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4A9FFF] focus:ring-[#4A9FFF] pr-12"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Submit */}
             <Button
               onClick={handleLogin}
               disabled={busy}
-              className="w-full font-bold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
+              className="w-full h-12 bg-[#4A9FFF] text-white font-semibold rounded-xl shadow-lg shadow-[#4A9FFF]/20 hover:shadow-xl hover:shadow-[#4A9FFF]/40 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {busy ? t("auth.loggingIn") : t("auth.loginButton")}
+              {busy ? "Signing in..." : "Sign in"}
             </Button>
-
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span className="font-semibold">{t("auth.cantAccess")}</span>
-              <a
-                href="mailto:support@studi.app"
-                className="inline-flex items-center gap-1 font-bold hover:text-foreground"
-              >
-                <HelpCircle className="h-3.5 w-3.5" />
-                {t("auth.needHelp")}
-              </a>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="register" className="mt-5 space-y-4">
+          </div>
+        ) : (
+          <div className="space-y-6">
+            {/* Header */}
             <div>
-              <h3 className="text-lg font-extrabold text-foreground">
-                {t("auth.registerTitle")}
+              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                Create your account
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                {t("auth.registerDesc")}
+              <p className="text-sm text-gray-600">
+                Takes just a few minutes. Confirm via email.
               </p>
             </div>
 
-            <div className="space-y-3">
-              <div className="space-y-2">
-                <Label htmlFor="register-email" className="font-semibold">
-                  {t("auth.email")}
-                </Label>
-                <Input
-                  id="register-email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder={t("auth.emailPlaceholder")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+            {/* Google button */}
+            <button
+              onClick={handleGoogleLogin}
+              disabled={busy}
+              className="w-full h-12 flex items-center justify-center gap-3 rounded-xl border-2 border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-200 font-semibold text-gray-900 disabled:opacity-50"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <path
+                  fill="#4285F4"
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="register-password" className="font-semibold">
-                  {t("auth.password")}
-                </Label>
-                <div className="relative">
-                  <Input
-                    id="register-password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="new-password"
-                    placeholder={t("auth.minPasswordPlaceholder")}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="pr-11"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword((s) => !s)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
-                    aria-label={
-                      showPassword
-                        ? t("auth.hidePassword")
-                        : t("auth.showPassword")
-                    }
-                  >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </button>
-                </div>
-                <p
-                  className={cn(
-                    "text-xs font-semibold",
-                    minPasswordOk ? "text-success" : "text-muted-foreground"
-                  )}
-                >
-                  {t("auth.minChars")}
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="register-confirm" className="font-semibold">
-                  {t("auth.confirmPassword")}
-                </Label>
-                <Input
-                  id="register-confirm"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
-                  placeholder={t("auth.minPasswordPlaceholder")}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                <path
+                  fill="#34A853"
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
                 />
-                {confirmPassword.length > 0 && (
-                  <p
-                    className={cn(
-                      "text-xs font-semibold",
-                      passwordsMatch ? "text-success" : "text-destructive"
-                    )}
-                  >
-                    {passwordsMatch
-                      ? t("auth.passwordsMatch")
-                      : t("auth.toast.passwordsDontMatch")}
-                  </p>
-                )}
+                <path
+                  fill="#FBBC05"
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                />
+                <path
+                  fill="#EA4335"
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                />
+              </svg>
+              Continue with Google
+            </button>
+
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-200"></div>
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-4 bg-white text-gray-500 font-medium">or</span>
               </div>
             </div>
 
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="register-email" className="text-sm font-semibold text-gray-700">
+                Email
+              </Label>
+              <Input
+                id="register-email"
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="h-12 rounded-xl bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4A9FFF] focus:ring-[#4A9FFF]"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="space-y-2">
+              <Label htmlFor="register-password" className="text-sm font-semibold text-gray-700">
+                Password
+              </Label>
+              <div className="relative">
+                <Input
+                  id="register-password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Minimum 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12 rounded-xl bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4A9FFF] focus:ring-[#4A9FFF] pr-12"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+              <p className={`text-xs font-medium ${minPasswordOk ? "text-green-500" : "text-gray-400"}`}>
+                At least 6 characters
+              </p>
+            </div>
+
+            {/* Confirm Password */}
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password" className="text-sm font-semibold text-gray-700">
+                Confirm password
+              </Label>
+              <Input
+                id="confirm-password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Minimum 6 characters"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="h-12 rounded-xl bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-[#4A9FFF] focus:ring-[#4A9FFF]"
+              />
+              {confirmPassword && (
+                <p className={`text-xs font-medium ${passwordsMatch ? "text-green-500" : "text-red-500"}`}>
+                  {passwordsMatch ? "Passwords match" : "Passwords don't match"}
+                </p>
+              )}
+            </div>
+
+            {/* Submit */}
             <Button
               onClick={handleRegister}
               disabled={busy}
-              className="w-full font-bold bg-gradient-to-r from-primary to-accent shadow-lg shadow-primary/20"
+              className="w-full h-12 bg-[#4A9FFF] text-white font-semibold rounded-xl shadow-lg shadow-[#4A9FFF]/20 hover:shadow-xl hover:shadow-[#4A9FFF]/40 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {busy ? t("auth.registering") : t("auth.registerButton")}
+              {busy ? "Creating account..." : "Create account"}
             </Button>
 
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              {t("auth.agreeTerms")}{" "}
-              <a
-                className="font-bold hover:text-foreground underline"
-                href="/terms"
-              >
-                {t("common.terms")}
+            {/* Terms */}
+            <p className="text-xs text-gray-500 text-center leading-relaxed">
+              By creating your account, you agree to the{" "}
+              <a href="/termos" className="text-[#4A9FFF] hover:text-gray-900 font-semibold underline">
+                Terms
               </a>{" "}
-              {t("auth.andPrivacy")}{" "}
-              <a
-                className="font-bold hover:text-foreground underline"
-                href="/privacy"
-              >
-                {t("common.privacy")}
+              and{" "}
+              <a href="/privacidade" className="text-[#4A9FFF] hover:text-gray-900 font-semibold underline">
+                Privacy
               </a>
-              .
             </p>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
+
+

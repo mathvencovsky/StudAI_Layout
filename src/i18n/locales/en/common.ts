@@ -428,3 +428,47 @@ export default {
   "upgrade.cta": "Upgrade",
   "upgrade.cta-full": "View Plans & Pricing",
 } as const;
+
+// Stats Section
+export const statsTranslations = {
+  "stats.title": "The Power of",
+  "stats.titleHighlight": "AI-Driven Learning",
+  "stats.subtitle": "Real results from students who transformed their study routine with StudAI",
+  "stats.faster": "Faster Learning",
+  "stats.fasterDesc": "AI-powered study paths",
+  "stats.success": "Success Rate",
+  "stats.successDesc": "Students reaching goals",
+  "stats.retention": "Better Retention",
+  "stats.retentionDesc": "Spaced repetition system",
+  "stats.students": "Active Students",
+  "stats.studentsDesc": "Learning every day",
+};
+
+// Features Section
+export const featuresTranslations = {
+  "features.title": "Everything you need to",
+  "features.titleHighlight": "succeed",
+  "features.subtitle": "All the tools and features you need to achieve your learning goals",
+  "features.ai.title": "AI-Powered Learning",
+  "features.ai.description": "Personalized study paths that adapt to your learning style and pace",
+  "features.goals.title": "Goal Tracking",
+  "features.goals.description": "Set clear objectives and track your progress with detailed analytics",
+  "features.speed.title": "Learn Faster",
+  "features.speed.description": "Spaced repetition and active recall techniques for better retention",
+  "features.content.title": "Rich Content",
+  "features.content.description": "Access thousands of curated study materials and resources",
+  "features.analytics.title": "Advanced Analytics",
+  "features.analytics.description": "Detailed insights into your learning patterns and performance",
+  "features.community.title": "Study Community",
+  "features.community.description": "Connect with fellow learners and share knowledge",
+};
+
+// Header Section
+export const headerTranslations = {
+  "header.product": "Product",
+  "header.howItWorks": "How it works",
+  "header.useCases": "Use cases",
+  "header.testimonials": "Testimonials",
+  "header.pricing": "Pricing",
+  "header.getStarted": "Get Started",
+};

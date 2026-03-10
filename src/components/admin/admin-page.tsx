@@ -3,24 +3,24 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Switch } from "@/components/ui/switch";
+import { Link } from "@tanstack/react-router";
 import { 
   Shield, 
   Users, 
   BookOpen, 
   BarChart3,
-  Settings,
   Database,
-  AlertTriangle
+  AlertTriangle,
+  Plus,
+  Edit
 } from "lucide-react";
 import { useAdminUsers } from "@/hooks/admin/use-admin-users";
 import { useFeatureToggles, useUpdateFeatureToggle } from "@/hooks/admin/use-feature-toggles";
 import { useCatalogResources } from "@/hooks/admin/use-catalog-resources";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
-import { useTranslation } from "react-i18next";
 
 export function AdminPage() {
-  const { t } = useTranslation();
   const { data: usersData, isLoading: usersLoading, error: usersError, refetch: refetchUsers } = useAdminUsers();
   const { data: features, isLoading: featuresLoading, error: featuresError, refetch: refetchFeatures } = useFeatureToggles();
   const { data: catalog, isLoading: catalogLoading, error: catalogError, refetch: refetchCatalog } = useCatalogResources();
@@ -47,7 +47,7 @@ export function AdminPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">{t("pages.admin.title")}</h1>
+          <h1 className="text-3xl font-bold mb-2">Administração</h1>
           <p className="text-muted-foreground">
             Painel de controle e gerenciamento da plataforma
           </p>
@@ -69,6 +69,28 @@ export function AdminPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Quick Actions */}
+      <div className="flex gap-3">
+        <Link to="/admin/content-manager">
+          <Button>
+            <BookOpen className="h-4 w-4 mr-2" />
+            Gerenciar Conteúdos
+          </Button>
+        </Link>
+        <Link to="/admin/track-editor">
+          <Button variant="outline">
+            <Plus className="h-4 w-4 mr-2" />
+            Nova Trilha
+          </Button>
+        </Link>
+        <Link to="/admin/track-editor" search={{ trackId: 'track-1' }}>
+          <Button variant="outline">
+            <Edit className="h-4 w-4 mr-2" />
+            Editar Trilha de Exemplo
+          </Button>
+        </Link>
+      </div>
 
       {/* Stats */}
       <div className="grid gap-4 md:grid-cols-4">
@@ -136,9 +158,9 @@ export function AdminPage() {
       {/* Tabs */}
       <Tabs defaultValue="users" className="w-full">
         <TabsList>
-          <TabsTrigger value="users">{t("pages.admin.users")}</TabsTrigger>
-          <TabsTrigger value="features">{t("pages.admin.features")}</TabsTrigger>
-          <TabsTrigger value="catalog">{t("pages.admin.catalog")}</TabsTrigger>
+          <TabsTrigger value="users">Usuários</TabsTrigger>
+          <TabsTrigger value="features">Features</TabsTrigger>
+          <TabsTrigger value="catalog">Catálogo</TabsTrigger>
           <TabsTrigger value="system">Sistema</TabsTrigger>
         </TabsList>
 

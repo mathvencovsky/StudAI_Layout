@@ -35,11 +35,11 @@ export function PesquisarPage() {
   const getTypeLabel = (type: string) => {
     switch (type) {
       case "track":
-        return "Trilha";
+        return t("pages.search.type-track");
       case "content":
-        return "Conteúdo";
+        return t("pages.search.type-content-single");
       case "assessment":
-        return "Avaliação";
+        return t("pages.search.type-assessment");
       default:
         return type;
     }
@@ -58,7 +58,7 @@ export function PesquisarPage() {
       <div>
         <h1 className="text-3xl font-bold mb-2">{t("pages.search.title")}</h1>
         <p className="text-muted-foreground">
-          Encontre cursos, trilhas, conteúdos e recursos
+          {t("pages.search.description")}
         </p>
       </div>
 
@@ -153,7 +153,7 @@ export function PesquisarPage() {
                       to={`/${result.type}/${result.id}`}
                       className="text-sm text-primary hover:underline"
                     >
-                      Ver detalhes →
+                      {t("pages.search.view-details")} →
                     </Link>
                   </CardContent>
                 </Card>

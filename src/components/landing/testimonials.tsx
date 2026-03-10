@@ -1,6 +1,6 @@
 import { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 import { Card, CardContent } from "@/components/ui/card";
-import { useI18n } from "@/i18n";
+import { useCustomI18n as useI18n } from "@/i18n";
 
 export function Testimonials() {
   const { t } = useI18n();

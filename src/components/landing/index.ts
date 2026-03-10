@@ -12,6 +12,8 @@ export { PricingSection } from "./pricing-section";
 export { FAQSection } from "./faq-section";
 export { FinalCTA } from "./final-cta";
 export { LandingFooter } from "./landing-footer";
+export { StatsSection } from "./stats-section";
+export { FeaturesSection } from "./features-section";
 export { SectionWrapper, KickerBadge, HeadlineHighlight } from "./ui";
 
 // Legacy exports for backward compatibility

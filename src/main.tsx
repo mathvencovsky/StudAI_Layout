@@ -18,6 +18,7 @@ import { routeTree } from "./routeTree.gen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context-providers/auth/auth-provider";
 import { ThemeProvider } from "@/context-providers/theme/theme-provider";
+import { I18nProvider } from "@/i18n/I18nContext";
 import { useAuth } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
 import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
@@ -71,11 +72,13 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <ErrorBoundary>
         <ThemeProvider defaultColorTheme="studai">
-          <AuthProvider>
-            <QueryClientProvider client={queryClient}>
-              <InnerApp />
-            </QueryClientProvider>
-          </AuthProvider>
+          <I18nProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <InnerApp />
+              </QueryClientProvider>
+            </AuthProvider>
+          </I18nProvider>
         </ThemeProvider>
       </ErrorBoundary>
     </StrictMode>,

@@ -1,0 +1,107 @@
+﻿import { Check } from "lucide-react";
+
+export function NewPricingSection() {
+  const plans = [
+    {
+      name: "Grátis",
+      price: "R$ 0",
+      period: "para sempre",
+      description: "Tudo que você precisa para começar",
+      features: [
+        "1 trilha de estudos ativa",
+        "Plano diário personalizado",
+        "Revisões automáticas",
+        "Progresso e métricas",
+        "Suporte por email"
+      ],
+      cta: "Começar grátis",
+      popular: false
+    },
+    {
+      name: "Pro",
+      price: "Em breve",
+      period: "",
+      description: "Para quem quer ir além",
+      features: [
+        "Trilhas ilimitadas",
+        "IA avançada",
+        "Relatórios detalhados",
+        "Sessões assistidas",
+        "Suporte prioritário",
+        "Exportação de dados"
+      ],
+      cta: "Em breve",
+      popular: true
+    }
+  ];
+
+  return (
+    <section id="planos" className="relative py-20">
+      <div className="max-w-[1400px] mx-auto px-8">
+        {/* Header */}
+        <div className="mb-12 text-center max-w-4xl mx-auto">
+          <span className="text-sm font-semibold text-[#4A9FFF] tracking-wider uppercase block mb-6">Planos</span>
+          <h2 className="text-7xl md:text-8xl font-normal text-gray-900 mb-8" style={{ textShadow: "1px 1px 0 rgba(192,192,192,0.6), 2px 1px 2px rgba(0,0,0,0.15), 4px 2px 4px rgba(0,0,0,0.1), 8px 3px 8px rgba(0,0,0,0.1), 12px 4px 12px rgba(0,0,0,0.05)" }}>
+            Comece grátis
+          </h2>
+          <p className="text-2xl text-gray-600">
+            Sem cartão. Sem compromisso.
+          </p>
+        </div>
+
+        {/* Pricing cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
+          {plans.map((plan, index) => (
+            <div
+              key={index}
+              className="relative p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] hover:bg-white/50 hover:backdrop-blur-2xl hover:shadow-[0_12px_48px_rgba(74,159,255,0.18),0_0_0_1px_rgba(255,255,255,0.8)_inset] hover:border-white/80 hover:scale-[1.02] transition-all duration-300 flex flex-col"
+            >
+              {plan.popular && (
+                <div className="absolute -top-3 left-6">
+                  <span className="px-3 py-1 bg-[#4A9FFF] text-white text-xs font-semibold rounded-full">
+                    EM BREVE
+                  </span>
+                </div>
+              )}
+
+              <div className="mb-8">
+                <div className="text-sm font-semibold text-[#4A9FFF] mb-6 uppercase tracking-wider">{plan.name}</div>
+                <div className="flex items-baseline gap-3 mb-4">
+                  <span className="text-5xl font-normal text-gray-900">{plan.price}</span>
+                  {plan.period && <span className="text-gray-600">{plan.period}</span>}
+                </div>
+                <p className="text-gray-600">{plan.description}</p>
+              </div>
+
+              <ul className="space-y-4 mb-8 flex-grow">
+                {plan.features.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-[#4A9FFF] flex-shrink-0 mt-0.5" />
+                    <span className="text-gray-600">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                onClick={() => document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth" })}
+                className={`w-full py-4 rounded-3xl font-semibold transition-all ${
+                  plan.popular
+                    ? "bg-[#4A9FFF] hover:bg-[#3A8FEF] text-white"
+                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                }`}
+              >
+                {plan.cta}
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <p className="text-gray-600 text-sm">
+            Comece grátis hoje mesmo
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

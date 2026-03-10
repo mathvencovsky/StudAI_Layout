@@ -1,93 +1,98 @@
-import { Card, CardContent } from "@/components/ui/card";
+﻿import { PublicLayout } from "@/components/layout/public-layout";
 
 export function PrivacyPage() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="container mx-auto px-4 py-12 flex-1">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">Política de Privacidade</h1>
-          <p className="text-muted-foreground mb-8">Última atualização: Fevereiro 2026</p>
+    <PublicLayout>
+      <div className="py-20">
+        <div className="max-w-[1400px] mx-auto px-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="mb-16 text-center">
+              <span className="text-sm font-semibold text-[#4A9FFF] tracking-wider uppercase block mb-6">Legal</span>
+              <h1 className="text-6xl md:text-7xl font-normal text-gray-900 mb-6" style={{ textShadow: "1px 1px 0 rgba(192,192,192,0.6), 2px 1px 2px rgba(0,0,0,0.15), 4px 2px 4px rgba(0,0,0,0.1), 8px 3px 8px rgba(0,0,0,0.1), 12px 4px 12px rgba(0,0,0,0.05)" }}>
+                Política de Privacidade
+              </h1>
+              <p className="text-lg text-gray-600">Última atualização: Fevereiro 2026</p>
+            </div>
 
-          <Card className="mb-6">
-            <CardContent className="p-6 prose prose-sm max-w-none">
-              <h2 className="text-2xl font-bold mb-4">1. Informações que Coletamos</h2>
-              <p className="mb-4">
-                Coletamos informações que você nos fornece diretamente ao criar uma conta, usar nossos serviços e interagir com nossa plataforma:
-              </p>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Informações de conta: nome, email, senha (criptografada)</li>
-                <li>Dados de perfil: preferências de aprendizado, objetivos, nível</li>
-                <li>Dados de uso: progresso de estudos, cursos criados, sessões</li>
-                <li>Dados de interação: mensagens com IA, feedback, avaliações</li>
-              </ul>
+            {/* Content */}
+            <div className="prose prose-lg max-w-none">
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">1. Informações que Coletamos</h2>
+                <p className="text-gray-600 mb-4">
+                  Coletamos informações que você nos fornece diretamente ao criar uma conta, usar nossos serviços e interagir com nossa plataforma:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                  <li>Informações de conta: nome, email, senha (criptografada)</li>
+                  <li>Dados de perfil: preferências de aprendizado, objetivos, nível</li>
+                  <li>Dados de uso: progresso de estudos, cursos criados, sessões</li>
+                  <li>Dados de interação: mensagens com IA, feedback, avaliações</li>
+                </ul>
+              </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8">2. Como Usamos suas Informações</h2>
-              <p className="mb-4">Usamos as informações coletadas para:</p>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Fornecer e melhorar nossos serviços</li>
-                <li>Personalizar sua experiência de aprendizado</li>
-                <li>Gerar cursos e recomendações com IA</li>
-                <li>Enviar notificações e lembretes (se habilitado)</li>
-                <li>Analisar uso e melhorar a plataforma</li>
-                <li>Prevenir fraudes e garantir segurança</li>
-              </ul>
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">2. Como Usamos suas Informações</h2>
+                <p className="text-gray-600 mb-4">Usamos as informações coletadas para:</p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                  <li>Fornecer e melhorar nossos serviços</li>
+                  <li>Personalizar sua experiência de aprendizado</li>
+                  <li>Gerar cursos e recomendações com IA</li>
+                  <li>Enviar notificações e lembretes (se habilitado)</li>
+                  <li>Analisar uso e melhorar a plataforma</li>
+                  <li>Prevenir fraudes e garantir segurança</li>
+                </ul>
+              </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8">3. Compartilhamento de Dados</h2>
-              <p className="mb-4">
-                Não vendemos seus dados pessoais. Compartilhamos informações apenas quando:
-              </p>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Você nos autoriza explicitamente</li>
-                <li>Necessário para fornecer o serviço (ex: AWS para hospedagem)</li>
-                <li>Exigido por lei ou ordem judicial</li>
-                <li>Para proteger direitos e segurança</li>
-              </ul>
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">3. Compartilhamento de Dados</h2>
+                <p className="text-gray-600 mb-4">
+                  Não vendemos seus dados pessoais. Compartilhamos informações apenas quando:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                  <li>Você nos autoriza explicitamente</li>
+                  <li>Necessário para fornecer o serviço (ex: AWS para hospedagem)</li>
+                  <li>Exigido por lei ou ordem judicial</li>
+                  <li>Para proteger direitos e segurança</li>
+                </ul>
+              </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8">4. Segurança</h2>
-              <p className="mb-4">
-                Implementamos medidas de segurança técnicas e organizacionais para proteger seus dados:
-              </p>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Criptografia de dados em trânsito e em repouso</li>
-                <li>Autenticação segura via AWS Cognito</li>
-                <li>Controle de acesso baseado em proprietário</li>
-                <li>Monitoramento contínuo de segurança</li>
-                <li>Backups regulares</li>
-              </ul>
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">4. Segurança</h2>
+                <p className="text-gray-600 mb-4">
+                  Implementamos medidas de segurança técnicas e organizacionais para proteger seus dados:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                  <li>Criptografia de dados em trânsito e em repouso</li>
+                  <li>Autenticação segura via AWS Cognito</li>
+                  <li>Controle de acesso baseado em proprietário</li>
+                  <li>Monitoramento contínuo de segurança</li>
+                  <li>Backups regulares</li>
+                </ul>
+              </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8">5. Seus Direitos</h2>
-              <p className="mb-4">Você tem direito a:</p>
-              <ul className="list-disc pl-6 mb-4 space-y-2">
-                <li>Acessar seus dados pessoais</li>
-                <li>Corrigir informações incorretas</li>
-                <li>Solicitar exclusão de dados</li>
-                <li>Exportar seus dados</li>
-                <li>Revogar consentimentos</li>
-                <li>Opor-se ao processamento</li>
-              </ul>
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">5. Seus Direitos</h2>
+                <p className="text-gray-600 mb-4">Você tem direito a:</p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2">
+                  <li>Acessar seus dados pessoais</li>
+                  <li>Corrigir informações incorretas</li>
+                  <li>Solicitar exclusão de dados</li>
+                  <li>Exportar seus dados</li>
+                  <li>Revogar consentimentos</li>
+                  <li>Opor-se ao processamento</li>
+                </ul>
+              </div>
 
-              <h2 className="text-2xl font-bold mb-4 mt-8">6. Cookies e Tecnologias</h2>
-              <p className="mb-4">
-                Usamos cookies e tecnologias similares para melhorar sua experiência, analisar uso e personalizar conteúdo. Você pode gerenciar preferências de cookies nas configurações do navegador.
-              </p>
-
-              <h2 className="text-2xl font-bold mb-4 mt-8">7. Retenção de Dados</h2>
-              <p className="mb-4">
-                Mantemos seus dados enquanto sua conta estiver ativa ou conforme necessário para fornecer serviços. Você pode solicitar exclusão a qualquer momento.
-              </p>
-
-              <h2 className="text-2xl font-bold mb-4 mt-8">8. Alterações nesta Política</h2>
-              <p className="mb-4">
-                Podemos atualizar esta política periodicamente. Notificaremos sobre mudanças significativas por email ou através da plataforma.
-              </p>
-
-              <h2 className="text-2xl font-bold mb-4 mt-8">9. Contato</h2>
-              <p className="mb-4">
-                Para questões sobre privacidade, entre em contato: privacy@studai.com
-              </p>
-            </CardContent>
-          </Card>
+              <div className="p-8 rounded-3xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),0_0_0_1px_rgba(255,255,255,0.5)_inset] mb-8">
+                <h2 className="text-3xl font-normal text-gray-900 mb-6">6. Contato</h2>
+                <p className="text-gray-600">
+                  Para questões sobre privacidade, entre em contato: <a href="mailto:privacy@studai.app" className="text-[#4A9FFF] hover:text-[#3A8FEF] font-medium">privacy@studai.app</a>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>    </div>
+      </div>
+    </PublicLayout>
   );
 }
