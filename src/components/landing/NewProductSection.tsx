@@ -1,0 +1,282 @@
+﻿import { useState } from "react";
+import { Brain, Calendar, RotateCcw, TrendingUp, BookOpen, Clock } from "lucide-react";
+import { useCustomI18n as useI18n } from "@/i18n";
+
+export function NewProductSection() {
+  const { t } = useI18n();
+  const [selectedFeature, setSelectedFeature] = useState(0);
+
+  const features = [
+    {
+      icon: Brain,
+      title: t("newProduct.feature1.title"),
+      description: t("newProduct.feature1.desc"),
+      detailedDescription: t("newProduct.feature1.detailed"),
+      stats: { label: t("newProduct.feature1.stats"), active: true }
+    },
+    {
+      icon: Calendar,
+      title: t("newProduct.feature2.title"),
+      description: t("newProduct.feature2.desc"),
+      detailedDescription: t("newProduct.feature2.detailed"),
+      stats: { label: t("newProduct.feature2.stats"), active: false }
+    },
+    {
+      icon: RotateCcw,
+      title: t("newProduct.feature3.title"),
+      description: t("newProduct.feature3.desc"),
+      detailedDescription: t("newProduct.feature3.detailed"),
+      stats: { label: t("newProduct.feature3.stats"), active: false }
+    },
+    {
+      icon: TrendingUp,
+      title: t("newProduct.feature4.title"),
+      description: t("newProduct.feature4.desc"),
+      detailedDescription: t("newProduct.feature4.detailed"),
+      stats: { label: t("newProduct.feature4.stats"), active: false }
+    },
+    {
+      icon: BookOpen,
+      title: t("newProduct.feature5.title"),
+      description: t("newProduct.feature5.desc"),
+      detailedDescription: t("newProduct.feature5.detailed"),
+      stats: { label: t("newProduct.feature5.stats"), active: false }
+    },
+    {
+      icon: Clock,
+      title: t("newProduct.feature6.title"),
+      description: t("newProduct.feature6.desc"),
+      detailedDescription: t("newProduct.feature6.detailed"),
+      stats: { label: t("newProduct.feature6.stats"), active: false }
+    }
+  ];
+
+  const selectedFeatureData = features[selectedFeature];
+  const SelectedIcon = selectedFeatureData.icon;
+
+  return (
+    <section id="produto" className="relative bg-white py-12 overflow-hidden">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:64px_64px]" />
+
+      <div className="relative w-full max-w-[1400px] mx-auto px-6 md:px-12">
+        {/* Header - Left aligned, more bold */}
+        <div className="max-w-3xl mb-24">
+          <div className="inline-flex items-center gap-3 px-5 py-3 bg-blue-50 border border-blue-100 rounded-full mb-10">
+            <span className="text-sm font-semibold text-blue-700">{t("newProduct.badge")}</span>
+          </div>
+          <h2 className="text-6xl md:text-7xl font-bold text-gray-900 mb-8 leading-[1.05]">
+            {t("newProduct.headline1")}
+            <br />
+            {t("newProduct.headline2")} <span className="text-blue-600">{t("newProduct.headline3")}</span>
+          </h2>
+          <p className="text-2xl text-gray-600 leading-relaxed">
+            {t("newProduct.subheadline")}
+          </p>
+        </div>
+
+        {/* Interactive Features Layout */}
+        <div className="space-y-8">
+          {/* Top row: Expanded feature + IA Adaptativa side by side */}
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Expanded feature - takes 2 columns */}
+            <div className="lg:col-span-2">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-12 h-full text-white shadow-2xl transition-all duration-500">
+                <div className="w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-8 animate-in fade-in duration-500">
+                  <SelectedIcon className="w-10 h-10 text-white" />
+                </div>
+                
+                <h3 className="text-4xl font-bold mb-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  {selectedFeatureData.title}
+                </h3>
+                
+                <p className="text-xl text-blue-50 leading-relaxed mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  {selectedFeatureData.detailedDescription}
+                </p>
+
+                {/* Visual indicator */}
+                <div className="flex items-center gap-4 pt-6 border-t border-white/20 animate-in fade-in duration-1000">
+                  <div className="flex items-center gap-2">
+                    {selectedFeatureData.stats.active && (
+                      <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
+                    )}
+                    <span className="text-sm font-medium text-blue-50">
+                      {selectedFeatureData.stats.active ? t("newProduct.activeNow") : t("newProduct.available")}
+                    </span>
+                  </div>
+                  <div className="text-sm text-blue-100">{selectedFeatureData.stats.label}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right side: IA Adaptativa + Plano Diário + Calendário stacked - full height */}
+            <div className="flex flex-col gap-4">
+              {/* IA Adaptativa (index 0) */}
+              {(() => {
+                const feature = features[0];
+                const Icon = feature.icon;
+                const isSelected = selectedFeature === 0;
+                
+                return (
+                  <button
+                    onClick={() => setSelectedFeature(0)}
+                    className={`w-full text-left rounded-3xl p-6 transition-all duration-300 flex-1 ${
+                      isSelected
+                        ? 'bg-blue-100 border-2 border-blue-600 shadow-lg scale-105'
+                        : 'bg-white border-2 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isSelected ? 'bg-blue-600' : 'bg-blue-100'
+                      }`}>
+                        <Icon className={`w-6 h-6 transition-colors ${
+                          isSelected ? 'text-white' : 'text-blue-600'
+                        }`} />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`text-lg font-bold mb-1 transition-colors ${
+                          isSelected ? 'text-blue-900' : 'text-gray-900'
+                        }`}>
+                          {feature.title}
+                        </h3>
+                        <p className={`text-sm leading-relaxed transition-colors ${
+                          isSelected ? 'text-blue-700' : 'text-gray-600'
+                        }`}>
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })()}
+
+              {/* Plano Diário (index 1) */}
+              {(() => {
+                const feature = features[1];
+                const Icon = feature.icon;
+                const isSelected = selectedFeature === 1;
+                
+                return (
+                  <button
+                    onClick={() => setSelectedFeature(1)}
+                    className={`w-full text-left rounded-3xl p-6 transition-all duration-300 flex-1 ${
+                      isSelected
+                        ? 'bg-blue-100 border-2 border-blue-600 shadow-lg scale-105'
+                        : 'bg-white border-2 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isSelected ? 'bg-blue-600' : 'bg-blue-100'
+                      }`}>
+                        <Icon className={`w-6 h-6 transition-colors ${
+                          isSelected ? 'text-white' : 'text-blue-600'
+                        }`} />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`text-lg font-bold mb-1 transition-colors ${
+                          isSelected ? 'text-blue-900' : 'text-gray-900'
+                        }`}>
+                          {feature.title}
+                        </h3>
+                        <p className={`text-sm leading-relaxed transition-colors ${
+                          isSelected ? 'text-blue-700' : 'text-gray-600'
+                        }`}>
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })()}
+
+              {/* Calendário Inteligente (index 5) */}
+              {(() => {
+                const feature = features[5];
+                const Icon = feature.icon;
+                const isSelected = selectedFeature === 5;
+                
+                return (
+                  <button
+                    onClick={() => setSelectedFeature(5)}
+                    className={`w-full text-left rounded-3xl p-6 transition-all duration-300 flex-1 ${
+                      isSelected
+                        ? 'bg-blue-100 border-2 border-blue-600 shadow-lg scale-105'
+                        : 'bg-white border-2 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors ${
+                        isSelected ? 'bg-blue-600' : 'bg-blue-100'
+                      }`}>
+                        <Icon className={`w-6 h-6 transition-colors ${
+                          isSelected ? 'text-white' : 'text-blue-600'
+                        }`} />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`text-lg font-bold mb-1 transition-colors ${
+                          isSelected ? 'text-blue-900' : 'text-gray-900'
+                        }`}>
+                          {feature.title}
+                        </h3>
+                        <p className={`text-sm leading-relaxed transition-colors ${
+                          isSelected ? 'text-blue-700' : 'text-gray-600'
+                        }`}>
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })()}
+            </div>
+          </div>
+
+          {/* Bottom row: 3 cards full width (Revisões, Progresso, Conteúdo) */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {[2, 3, 4].map((index) => {
+              const feature = features[index];
+              const Icon = feature.icon;
+              const isSelected = selectedFeature === index;
+              
+              return (
+                <button
+                  key={index}
+                  onClick={() => setSelectedFeature(index)}
+                  className={`w-full text-left rounded-3xl p-8 transition-all duration-300 ${
+                    isSelected
+                      ? 'bg-blue-100 border-2 border-blue-600 shadow-lg scale-105'
+                      : 'bg-white border-2 border-gray-200 hover:border-blue-300 hover:shadow-md'
+                  }`}
+                >
+                  <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-colors ${
+                    isSelected ? 'bg-blue-600' : 'bg-blue-100'
+                  }`}>
+                    <Icon className={`w-7 h-7 transition-colors ${
+                      isSelected ? 'text-white' : 'text-blue-600'
+                    }`} />
+                  </div>
+                  
+                  <h3 className={`text-xl font-bold mb-3 transition-colors ${
+                    isSelected ? 'text-blue-900' : 'text-gray-900'
+                  }`}>
+                    {feature.title}
+                  </h3>
+                  <p className={`text-base leading-relaxed transition-colors ${
+                    isSelected ? 'text-blue-700' : 'text-gray-600'
+                  }`}>
+                    {feature.description}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

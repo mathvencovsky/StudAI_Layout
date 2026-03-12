@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -230,11 +231,13 @@ body {
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
 }
 
@@ -294,4 +297,1225 @@ body {
   --xy-controls-button-background-color-hover-default: oklch(0.28 0.04 265);
   --xy-controls-button-color-default: oklch(0.95 0.005 250);
   --xy-controls-button-border-color-default: oklch(0.32 0.04 265);
+}
+
+/* Landing Page Styles */
+@layer utilities {
+  /* Remove any section gaps */
+  section {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+  }
+
+  /* Noise background effect */
+  .noise-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Display headings for landing page */
+  .display-h1 {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight;
+  }
+
+  .display-h2 {
+    @apply text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight;
+  }
+
+  .display-h3 {
+    @apply text-xl sm:text-2xl md:text-3xl font-bold tracking-tight;
+  }
+
+  /* Accent warm color for landing page */
+  .text-accent-warm {
+    color: oklch(0.65 0.18 45);
+  }
+
+  .bg-accent-warm {
+    background-color: oklch(0.65 0.18 45);
+  }
+
+  .border-accent-warm {
+    border-color: oklch(0.65 0.18 45);
+  }
+
+  .text-accent-warm-foreground {
+    color: oklch(1 0 0);
+  }
+
+  /* Dark mode accent warm */
+  :root.dark .text-accent-warm {
+    color: oklch(0.7 0.16 45);
+  }
+
+  :root.dark .bg-accent-warm {
+    background-color: oklch(0.7 0.16 45);
+  }
+
+  :root.dark .border-accent-warm {
+    border-color: oklch(0.7 0.16 45);
+  }
+}
+
+/* ============================================================================
+   LANDING PAGE - Custom Animations & Effects
+   ============================================================================ */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out;
+  }
+
+  /* Stagger animation delays */
+  .animate-stagger-1 {
+    animation-delay: 100ms;
+  }
+
+  .animate-stagger-2 {
+    animation-delay: 200ms;
+  }
+
+  .animate-stagger-3 {
+    animation-delay: 300ms;
+  }
+
+  .animate-stagger-4 {
+    animation-delay: 400ms;
+  }
+
+  /* Accent color utilities */
+  .text-accent-warm {
+    color: hsl(var(--accent-warm));
+  }
+
+  .bg-accent-warm {
+    background-color: hsl(var(--accent-warm));
+  }
+
+  .border-accent-warm {
+    border-color: hsl(var(--accent-warm));
+  }
+
+  .text-accent-cool {
+    color: hsl(var(--accent-cool));
+  }
+
+  .bg-accent-cool {
+    background-color: hsl(var(--accent-cool));
+  }
+
+  .border-accent-cool {
+    border-color: hsl(var(--accent-cool));
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Premium shadow utilities (using design system variables) */
+  .shadow-premium-sm {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-premium-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-premium-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-premium-xl {
+    box-shadow: var(--shadow-xl);
+  }
+
+  .shadow-glow-primary {
+    box-shadow: var(--shadow-glow-primary);
+  }
+
+  .shadow-glow-warm {
+    box-shadow: var(--shadow-glow-warm);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fix dropdown menu positioning when page is scrolled */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+  position: fixed !important;
+}
+
+[data-slot="dropdown-menu-content"] {
+  z-index: 9999 !important;
+}
+
+/* Refined grid background */
+.bg-grid-white\/5 {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Typography utilities */
+.font-black {
+  font-weight: 900;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Gradient text utilities */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Refined shadows */
+.shadow-refined {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.shadow-refined-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Futuristic glassmorphism and animation utilities */
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .gradient-animate {
+    background: linear-gradient(270deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--accent-warm)));
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .mesh-gradient {
+    background: 
+      radial-gradient(at 0% 0%, hsla(var(--primary) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(var(--accent) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(var(--accent-warm) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(var(--primary) / 0.15) 0px, transparent 50%);
+  }
+  
+  .glow-primary {
+    box-shadow: 0 0 40px hsla(var(--primary) / 0.3);
+  }
+  
+  .glow-accent {
+    box-shadow: 0 0 40px hsla(var(--accent) / 0.3);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--accent-warm)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-animate {
+    background: linear-gradient(270deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--accent-warm)));
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 8s ease infinite;
+  }
+  
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  .pulse-glow {
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px hsla(var(--primary) / 0.2); }
+    50% { box-shadow: 0 0 60px hsla(var(--primary) / 0.4); }
+  }
+  
+  .border-gradient {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--background), var(--background)) padding-box,
+                linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent))) border-box;
+  }
+}
+
+/* Revolutionary animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left 0.8s ease-out;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 4s ease infinite;
+}
+
+/* Smooth scroll with offset for fixed header */
+html {
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
+}
+
+/* Enhanced transitions for all interactive elements */
+button, a {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Perfect border radius consistency */
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+/* Enhanced shadow system for depth */
+.shadow-refined-xl {
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 60px -15px rgba(37, 95, 241, 0.3);
+}
+
+/* Glassmorphism perfection */
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Gradient animation for text */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Perfect focus states */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #255FF1;
+  outline-offset: 4px;
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Storm and lightning animations for hero section */
+@keyframes lightning-strike {
+  0%, 93%, 100% {
+    opacity: 0;
+  }
+  94% {
+    opacity: 0.8;
+  }
+  94.5% {
+    opacity: 0.2;
+  }
+  95% {
+    opacity: 1;
+  }
+  95.5% {
+    opacity: 0.4;
+  }
+  96% {
+    opacity: 0.9;
+  }
+  97% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes cloud-drift {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(30px) translateY(-10px);
+  }
+}
+
+@keyframes cloud-drift-slow {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    transform: translateX(-40px) translateY(15px);
+  }
+}
+
+.animate-lightning-strike {
+  animation: lightning-strike 10s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
+}
+
+.animate-cloud-drift {
+  animation: cloud-drift 20s ease-in-out infinite;
+}
+
+.animate-cloud-drift-slow {
+  animation: cloud-drift-slow 30s ease-in-out infinite;
+}
+
+/* ============================================================================
+   LEARNING EXPERIENCE - Custom Animations & Styles
+   ============================================================================ */
+
+/* Learning Experience Animations */
+@keyframes shimmer-learning {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gradient-learning {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-learning {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-soft-learning {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: var(--progress-width);
+  }
+}
+
+@keyframes checkpoint-success {
+  0% {
+    transform: scale(1);
+    background-color: hsl(var(--success) / 0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    background-color: hsl(var(--success) / 0.2);
+  }
+  100% {
+    transform: scale(1);
+    background-color: hsl(var(--success) / 0.1);
+  }
+}
+
+@keyframes xp-gain {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes lesson-complete {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 hsl(var(--success) / 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px hsl(var(--success) / 0.1);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 20px hsl(var(--success) / 0);
+  }
+}
+
+@layer utilities {
+  .animate-shimmer-learning {
+    animation: shimmer-learning 2s infinite;
+  }
+
+  .animate-gradient-learning {
+    animation: gradient-learning 3s ease infinite;
+  }
+
+  .animate-float-learning {
+    animation: float-learning 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-soft-learning {
+    animation: pulse-soft-learning 2s ease-in-out infinite;
+  }
+
+  .animate-progress-fill {
+    animation: progress-fill 1s ease-out forwards;
+  }
+
+  .animate-checkpoint-success {
+    animation: checkpoint-success 0.6s ease-out;
+  }
+
+  .animate-xp-gain {
+    animation: xp-gain 1.5s ease-out forwards;
+  }
+
+  .animate-lesson-complete {
+    animation: lesson-complete 1s ease-out;
+  }
+}
+
+/* Custom scrollbar for learning content */
+.learning-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.learning-scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+.learning-scrollbar::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+.learning-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Progress bar enhancements */
+.progress-glow {
+  box-shadow: 0 0 10px hsl(var(--primary) / 0.3);
+}
+
+.progress-track {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--background) / 0.8),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: shimmer-learning 2s infinite;
+}
+
+/* Video player enhancements */
+.video-controls-fade {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.video-controls-fade:hover {
+  opacity: 1 !important;
+}
+
+.video-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 30%,
+    transparent 60%
+  );
+}
+
+/* Checkpoint and exercise styling */
+.checkpoint-correct {
+  background: linear-gradient(135deg, hsl(var(--success) / 0.1) 0%, hsl(var(--success) / 0.05) 100%);
+  border-color: hsl(var(--success) / 0.3);
+  position: relative;
+}
+
+.checkpoint-correct::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsl(var(--success) / 0.1), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  animation: checkpoint-success 0.6s ease-out;
+}
+
+.checkpoint-incorrect {
+  background: linear-gradient(135deg, hsl(var(--destructive) / 0.1) 0%, hsl(var(--destructive) / 0.05) 100%);
+  border-color: hsl(var(--destructive) / 0.3);
+}
+
+.exercise-container {
+  position: relative;
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) + 2px);
+}
+
+.exercise-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.05), transparent);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exercise-container:hover::before {
+  opacity: 1;
+}
+
+/* AI Assistant styling */
+.ai-message-user {
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.8) 100%);
+  color: hsl(var(--primary-foreground));
+  border-radius: 1rem 1rem 0.25rem 1rem;
+  position: relative;
+}
+
+.ai-message-assistant {
+  background: linear-gradient(135deg, hsl(var(--muted)) 0%, hsl(var(--muted) / 0.7) 100%);
+  color: hsl(var(--foreground));
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  position: relative;
+}
+
+.ai-typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ai-typing-dot {
+  width: 4px;
+  height: 4px;
+  background: hsl(var(--muted-foreground));
+  border-radius: 50%;
+  animation: ai-typing 1.4s infinite ease-in-out;
+}
+
+.ai-typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.ai-typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes ai-typing {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Learning path visualization */
+.learning-path-line {
+  background: linear-gradient(90deg, 
+    hsl(var(--muted-foreground) / 0.2) 0%, 
+    hsl(var(--primary) / 0.5) 50%, 
+    hsl(var(--muted-foreground) / 0.2) 100%
+  );
+  position: relative;
+}
+
+.learning-path-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%,
+    hsl(var(--primary) / 0.3) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shimmer-learning 3s infinite;
+}
+
+.learning-path-completed {
+  background: linear-gradient(90deg, 
+    hsl(var(--success)) 0%, 
+    hsl(var(--success) / 0.8) 100%
+  );
+}
+
+.learning-path-node {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.learning-path-node:hover {
+  transform: scale(1.05);
+}
+
+.learning-path-node.completed {
+  animation: lesson-complete 0.6s ease-out;
+}
+
+/* Navigation sidebar enhancements */
+.nav-sidebar {
+  background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border-right: 1px solid hsl(var(--border));
+}
+
+.nav-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: hsl(var(--primary));
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-item.active::before {
+  transform: scaleY(1);
+}
+
+.nav-item:hover {
+  background: linear-gradient(90deg, hsl(var(--muted) / 0.5), transparent);
+}
+
+/* Continuity actions styling */
+.continuity-card {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.2) 100%);
+  border: 1px solid hsl(var(--border));
+  position: relative;
+  overflow: hidden;
+}
+
+.continuity-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.continuity-card:hover::before {
+  opacity: 1;
+}
+
+.next-lesson-preview {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--primary) / 0.05) 100%);
+  border: 2px solid hsl(var(--primary) / 0.2);
+  position: relative;
+}
+
+.completion-celebration {
+  background: linear-gradient(135deg, hsl(var(--success) / 0.1) 0%, hsl(var(--warning) / 0.1) 100%);
+  border: 2px solid hsl(var(--success) / 0.2);
+  animation: lesson-complete 1s ease-out;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .mobile-learning-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-video-aspect {
+    aspect-ratio: 16/9;
+    max-height: 250px;
+  }
+
+  .mobile-nav-drawer {
+    background: hsl(var(--background));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .mobile-lesson-header {
+    background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Focus states for accessibility */
+.learning-focus:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.checkpoint-option:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  transform: scale(1.02);
+}
+
+.exercise-button:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsl(var(--primary) / 0.1);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .progress-bar {
+    border: 1px solid currentColor;
+  }
+  
+  .checkpoint-option {
+    border: 2px solid currentColor;
+  }
+
+  .learning-path-line {
+    background: currentColor;
+  }
+
+  .nav-item.active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer-learning,
+  .animate-gradient-learning,
+  .animate-float-learning,
+  .animate-pulse-soft-learning,
+  .animate-progress-fill,
+  .animate-checkpoint-success,
+  .animate-xp-gain,
+  .animate-lesson-complete {
+    animation: none;
+  }
+  
+  .learning-path-line::after,
+  .progress-track::after {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* XP and achievement animations */
+.xp-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, hsl(var(--warning)) 0%, hsl(var(--warning) / 0.8) 100%);
+  color: hsl(var(--warning-foreground));
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  z-index: 1000;
+  animation: xp-gain 2s ease-out forwards;
+}
+
+.achievement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(var(--success) / 0.8) 100%);
+  color: hsl(var(--success-foreground));
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  animation: lesson-complete 0.8s ease-out;
+}
+
+/* Streak indicator */
+.streak-flame {
+  color: #ff6b35;
+  filter: drop-shadow(0 0 4px #ff6b35);
+  animation: pulse-soft-learning 2s ease-in-out infinite;
+}
+
+/* Module completion celebration */
+.module-complete-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, hsl(var(--success) / 0.9) 0%, hsl(var(--primary) / 0.9) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fade-in 0.5s ease-out;
+}
+
+.confetti-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: hsl(var(--warning));
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Learning analytics visualization */
+.analytics-chart {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--muted) / 0.3) 100%);
+  border: 1px solid hsl(var(--border));
+  border-radius: calc(var(--radius) + 2px);
+}
+
+.analytics-metric {
+  background: linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, transparent 100%);
+  border-left: 3px solid hsl(var(--primary));
+  padding: 1rem;
+  border-radius: 0 calc(var(--radius)) calc(var(--radius)) 0;
+}
+
+/* Certificate preview */
+.certificate-preview {
+  background: linear-gradient(135deg, hsl(var(--warning) / 0.1) 0%, hsl(var(--success) / 0.1) 100%);
+  border: 2px solid hsl(var(--warning) / 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, hsl(var(--warning) / 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  animation: shimmer-learning 3s infinite;
+}
+
+/* Responsive design enhancements */
+@media (max-width: 1024px) {
+  .learning-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .learning-sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .learning-content {
+    padding: 1rem;
+  }
+
+  .checkpoint-options {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exercise-tabs {
+    flex-direction: column;
+  }
+
+  .continuity-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Print styles for certificates */
+@media print {
+  .learning-layout {
+    display: none;
+  }
+
+  .certificate-print {
+    display: block !important;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    color: black;
+  }
 }

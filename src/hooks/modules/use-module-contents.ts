@@ -3,7 +3,11 @@ import {
   type ModuleContentWithContentType,
   getModuleContents,
 } from "@/api/module-content";
+import { getModuleContentsStub } from "@/api/stubs/modules-stub";
 import { useQuery, queryOptions } from "@tanstack/react-query";
+
+// Use stub implementation for development
+const USE_STUBS = true;
 
 export const getModuleContentsQueryOptions = (
   params: GetModuleContentsParams,
@@ -12,7 +16,7 @@ export const getModuleContentsQueryOptions = (
     queryKey: ["moduleContents", params],
     queryFn: async () => {
       try {
-        return await getModuleContents(params);
+        return USE_STUBS ? await getModuleContentsStub(params.moduleId) : await getModuleContents(params);
       } catch (error) {
         console.error(error);
         throw error;

@@ -1,13 +1,17 @@
 import { getUserContentProgress } from "@/api/user-content-progress";
+import { getUserContentProgressStub } from "@/api/stubs/modules-stub";
 import { type UserContentProgress } from "@/model/user-content-progress";
 import { useQuery, queryOptions } from "@tanstack/react-query";
+
+// Use stub implementation for development
+const USE_STUBS = true;
 
 export const getUserContentProgressQueryOptions = (moduleId: string) =>
   queryOptions<UserContentProgress[]>({
     queryKey: ["userContentProgress", moduleId],
     queryFn: async () => {
       try {
-        return await getUserContentProgress(moduleId);
+        return USE_STUBS ? await getUserContentProgressStub(moduleId) : await getUserContentProgress(moduleId);
       } catch (error) {
         console.error(error);
         throw error;

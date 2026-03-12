@@ -10,6 +10,16 @@ const translations: Record<Locale, TranslationKeys> = {
   "en-US": enUS,
 };
 
+// Debug: Log translations on module load
+if (typeof window !== "undefined") {
+  console.log("I18n translations loaded:", {
+    "pt-BR keys": Object.keys(ptBR).length,
+    "en-US keys": Object.keys(enUS).length,
+    "sample pt-BR": ptBR["hero.headline"],
+    "sample en-US": enUS["hero.headline"],
+  });
+}
+
 function detectLocale(): Locale {
   // 1. Check localStorage for saved preference
   if (typeof window !== "undefined") {
@@ -37,11 +47,25 @@ const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(detectLocale);
+  const [, forceUpdate] = useState({});
+
+  // Debug: Log provider initialization
+  useEffect(() => {
+    console.log("I18nProvider mounted with locale:", locale);
+    console.log("Translations available:", {
+      locale,
+      translationsCount: Object.keys(translations[locale] || {}).length,
+      sampleKey: translations[locale]?.["hero.headline"],
+    });
+  }, [locale]);
 
   const setLocale = useCallback((newLocale: Locale) => {
+    console.log("Changing locale from", locale, "to", newLocale);
     setLocaleState(newLocale);
     localStorage.setItem(STORAGE_KEY, newLocale);
-  }, []);
+    // Force re-render of all consumers
+    forceUpdate({});
+  }, [locale]);
 
   // Update <html lang> whenever locale changes
   useEffect(() => {
@@ -50,7 +74,19 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback(
     (key: keyof TranslationKeys): string => {
-      return translations[locale][key] ?? translations["pt-BR"][key] ?? key;
+      const translation = translations[locale]?.[key];
+      if (translation) return translation;
+      
+      const fallback = translations["pt-BR"]?.[key];
+      if (fallback) return fallback;
+      
+      console.warn(`Missing translation for key: ${key}`, {
+        locale,
+        hasLocaleTranslations: !!translations[locale],
+        hasFallbackTranslations: !!translations["pt-BR"],
+        translationsKeys: Object.keys(translations[locale] || {}).slice(0, 5),
+      });
+      return key;
     },
     [locale]
   );

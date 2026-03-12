@@ -8,17 +8,35 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import "./index.css";
 import "./i18n/i18n";
 import { initZodI18n } from "@/i18n/zod-i18n";
+import { initializeMockAuthAdapter } from "@/lib/auth-adapter-mock";
+import { initializeMockLearningPreferenceAdapter } from "@/lib/learning-preference-adapter-mock";
 
 initZodI18n();
+initializeMockAuthAdapter();
+initializeMockLearningPreferenceAdapter();
 import { routeTree } from "./routeTree.gen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/context-providers/auth/auth-provider";
 import { ThemeProvider } from "@/context-providers/theme/theme-provider";
+import { I18nProvider } from "@/i18n/I18nContext";
 import { useAuth } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
+import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 0 } },
+  defaultOptions: {
+    queries: {
+      retry: 3, // 3 tentativas com exponential backoff
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      staleTime: 60000, // 1 minuto - dados considerados frescos
+      gcTime: 300000, // 5 minutos - tempo no cache (era cacheTime)
+      refetchOnWindowFocus: true, // Refetch ao focar na janela
+      refetchOnReconnect: true, // Refetch ao reconectar
+    },
+    mutations: {
+      retry: 0, // Não retry em mutations por padrão
+    },
+  },
 });
 
 const router = createRouter({
@@ -52,13 +70,17 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <ThemeProvider defaultColorTheme="studai">
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <InnerApp />
-          </QueryClientProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider defaultColorTheme="studai">
+          <I18nProvider>
+            <AuthProvider>
+              <QueryClientProvider client={queryClient}>
+                <InnerApp />
+              </QueryClientProvider>
+            </AuthProvider>
+          </I18nProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
     </StrictMode>,
   );
 }

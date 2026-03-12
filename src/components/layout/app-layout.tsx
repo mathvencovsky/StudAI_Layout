@@ -1,16 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/use-auth";
 import { useSignOut } from "@/hooks/use-sign-out";
-import { useIsAdminUser } from "@/hooks/use-is-admin-user";
 import { useTranslation } from "react-i18next";
 import {
-  LayoutDashboard,
-  BookOpen,
-  Map,
-  Heart,
-  MessageSquare,
-  Settings,
   Menu,
   ChevronLeft,
   GraduationCap,
@@ -21,6 +14,8 @@ import {
   MessageCircle,
   Sparkles,
 } from "lucide-react";
+import { NavGroup } from "./nav-group";
+import { navigationGroups } from "./navigation-config";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -37,15 +32,10 @@ import { LanguageSelector } from "@/components/language-selector";
 import { ThemeSelector } from "@/components/theme-selector";
 import { useAiChatContext } from "@/contexts/ai-chat-context";
 import { useAiIconVisible } from "@/contexts/ai-icon-context";
+import { GlobalFooter } from "@/components/layout/global-footer";
 
 interface AppLayoutProps {
   children: React.ReactNode;
-}
-
-interface NavItem {
-  to: string;
-  icon: React.ElementType;
-  label: string;
 }
 
 export function AppLayout({ children }: AppLayoutProps) {
@@ -56,13 +46,9 @@ export function AppLayout({ children }: AppLayoutProps) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { mutateAsync: logOut } = useSignOut();
-  const { isAdmin: isAdminUser } = useIsAdminUser();
   const { t } = useTranslation();
   const { toggleChat, isOpen: isChatOpen } = useAiChatContext();
   const showAiIcon = useAiIconVisible();
-
-  const routerState = useRouterState();
-  const currentPath = routerState.location.pathname;
 
   const handleSignOut = async () => {
     await logOut();
@@ -74,88 +60,16 @@ export function AppLayout({ children }: AppLayoutProps) {
   const userAvatar = user?.photoURL ?? undefined;
   const userInitials = userName.charAt(0).toUpperCase();
 
-  // Navigation sections
-  const mainItems: NavItem[] = [
-    { to: "/", icon: LayoutDashboard, label: t("home") },
-    ...(isAdminUser
-      ? [{ to: "/chat", icon: MessageSquare, label: t("chat") }]
-      : []),
-    { to: "/track", icon: Map, label: t("tracks") },
-    { to: "/module", icon: BookOpen, label: t("modules") },
-    { to: "/favourites", icon: Heart, label: t("favourites") },
-  ];
-
-  const secondaryItems: NavItem[] = [
-    ...(isAdminUser
-      ? [{ to: "/content", icon: Settings, label: t("manage-content") }]
-      : []),
-  ];
-
-  const mobileNavItems: NavItem[] = [
-    { to: "/", icon: LayoutDashboard, label: t("home") },
-    { to: "/track", icon: Map, label: t("tracks") },
-    { to: "/module", icon: BookOpen, label: t("modules") },
-    { to: "/favourites", icon: Heart, label: t("favourites") },
-    ...(isAdminUser
-      ? [{ to: "/chat", icon: MessageSquare, label: t("chat") }]
-      : []),
-  ];
-
-  const isActive = (to: string) => {
-    if (to === "/") return currentPath === "/";
-    return currentPath.startsWith(to);
-  };
-
-  const NavSection = ({
-    items,
-    label,
-    collapsed = false,
-  }: {
-    items: NavItem[];
-    label: string;
-    collapsed?: boolean;
-  }) => {
-    if (items.length === 0) return null;
-    return (
-      <div className="space-y-0.5">
-        {!collapsed && (
-          <p className="px-3 py-2 text-[10px] font-medium uppercase tracking-wider text-muted-foreground/70">
-            {label}
-          </p>
-        )}
-        {items.map((item) => (
-          <Link
-            key={item.to}
-            to={item.to}
-            onClick={() => setMobileMenuOpen(false)}
-            className={`flex items-center gap-3 px-3 py-2 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors ${collapsed ? "justify-center" : ""} ${
-              isActive(item.to)
-                ? "bg-primary/10 text-primary font-medium"
-                : ""
-            }`}
-          >
-            <item.icon size={18} />
-            {!collapsed && <span className="text-sm">{item.label}</span>}
-          </Link>
-        ))}
-      </div>
-    );
-  };
-
   const NavContent = ({ collapsed = false }: { collapsed?: boolean }) => (
     <nav className="flex flex-col gap-4 p-2">
-      <NavSection
-        items={mainItems}
-        label={t("navigation") ?? "Navigation"}
-        collapsed={collapsed}
-      />
-      {secondaryItems.length > 0 && (
-        <NavSection
-          items={secondaryItems}
-          label={t("admin") ?? "Admin"}
+      {navigationGroups.map((group) => (
+        <NavGroup
+          key={group.label}
+          group={group}
           collapsed={collapsed}
+          onNavigate={() => setMobileMenuOpen(false)}
         />
-      )}
+      ))}
       {/* Feedback button */}
       <div className="space-y-0.5">
         {!collapsed && (
@@ -282,7 +196,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         </header>
 
         {/* Desktop Top Header */}
-        <header className="hidden md:flex items-center justify-between gap-4 px-6 py-2.5 border-b bg-card sticky top-0 z-40">
+        <header className="hidden md:flex items-center justify-between gap-4 px-6 py-2.5 border-b bg-card sticky top-0 z-50">
           {/* Search Bar */}
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -311,7 +225,7 @@ export function AppLayout({ children }: AppLayoutProps) {
             )}
 
             {/* User Dropdown */}
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
@@ -330,7 +244,10 @@ export function AppLayout({ children }: AppLayoutProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-48 bg-popover border shadow-md z-50 p-0"
+                sideOffset={5}
+                collisionPadding={10}
+                strategy="fixed"
+                className="w-48 bg-popover border shadow-md p-0 z-[9999]"
               >
                 {/* User Info Header */}
                 <div className="flex items-center gap-2 p-3 border-b">
@@ -350,22 +267,14 @@ export function AppLayout({ children }: AppLayoutProps) {
 
                 {/* Menu Items */}
                 <div className="p-1">
+                  <Link to="/perfil">
+                    <DropdownMenuItem className="flex items-center gap-2 px-2 py-1.5 cursor-pointer text-sm text-muted-foreground">
+                      <User className="h-4 w-4" />
+                      <span>{t("profile")}</span>
+                    </DropdownMenuItem>
+                  </Link>
                   <LanguageSelector />
                   <ThemeSelector />
-                </div>
-
-                <DropdownMenuSeparator className="my-0" />
-
-                <div className="p-1">
-                  <DropdownMenuItem
-                    onClick={() =>
-                      navigate({ to: "/learning-preferences" })
-                    }
-                    className="flex items-center gap-2 px-2 py-1.5 cursor-pointer text-sm"
-                  >
-                    <User className="h-4 w-4 text-muted-foreground" />
-                    <span>{t("learning-preferences")}</span>
-                  </DropdownMenuItem>
                 </div>
 
                 <DropdownMenuSeparator className="my-0" />
@@ -389,21 +298,8 @@ export function AppLayout({ children }: AppLayoutProps) {
           {children}
         </main>
 
-        {/* Mobile Bottom Navigation */}
-        <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t flex justify-around items-center py-1 px-1 z-40">
-          {mobileNavItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`flex flex-col items-center gap-0.5 p-2 rounded-md text-muted-foreground hover:text-foreground transition-colors min-w-[48px] min-h-[44px] justify-center ${
-                isActive(item.to) ? "text-primary" : ""
-              }`}
-            >
-              <item.icon size={20} />
-              <span className="text-[10px]">{item.label}</span>
-            </Link>
-          ))}
-        </nav>
+        {/* Global Footer */}
+        <GlobalFooter />
       </div>
 
       {/* Feedback Dialog */}
