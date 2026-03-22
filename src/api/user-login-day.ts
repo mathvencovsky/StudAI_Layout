@@ -28,7 +28,8 @@ export const getLoginDaysCount = async (): Promise<number> => {
   await getCurrentUserId();
 
   const result = await client.models.UserLoginDay.list();
-  return result.data?.length ?? 0;
+  const uniqueDates = new Set(result.data?.map((d) => d.date) ?? []);
+  return uniqueDates.size;
 };
 
 /**
