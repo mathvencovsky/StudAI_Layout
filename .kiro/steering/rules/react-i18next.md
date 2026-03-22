@@ -131,3 +131,15 @@ const t("fooEquals", { count })
   "fooEquals": "Foo = {{count}}"
 }
 ```
+
+
+## Always use correct Portuguese in pt-BR translations
+
+When writing or reviewing pt-BR translation values, always use proper Portuguese with correct accents and special characters. Never omit accents or use unaccented substitutes.
+
+Common mistakes to avoid:
+- Missing accents: `nao` → `não`, `voce` → `você`, `esta` → `está`, `e` → `é`, `Gratis` → `Grátis`
+- Missing cedilla: `Organizacao` → `Organização`, `execucao` → `execução`, `informacoes` → `informações`, `certificacao` → `certificação`
+- Missing acute accents: `topico` → `tópico`, `pratica` → `prática`, `revisao` → `revisão`, `conclusao` → `conclusão`, `Metricas` → `Métricas`
+- Missing circumflex: `voce` → `você`, `esta` → `está`
+- Missing tilde: `nao` → `não`, `manutencao` → `manutenção`
