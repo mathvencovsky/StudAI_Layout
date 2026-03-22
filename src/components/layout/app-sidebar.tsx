@@ -3,7 +3,6 @@ import {
   IconActivity,
   IconAdjustments,
   IconBooks,
-  IconChartBar,
   IconFileText,
   IconHeart,
   IconHome,

@@ -15,7 +15,7 @@ import { UpgradeCard } from "@/components/upgrade/upgrade-card";
 export default function ProfilePageIntegrated() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { data: profile, isLoading, error, refetch } = useMyProfile();
+  const { isLoading, error, refetch } = useMyProfile();
   const { data: loginDays = [] } = useListLoginDays();
   const { data: sessions = [] } = useListStudySessions();
   const { current: streak } = useMemo(() => calculateStreak(loginDays), [loginDays]);

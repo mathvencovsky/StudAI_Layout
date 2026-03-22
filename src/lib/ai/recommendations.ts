@@ -282,7 +282,7 @@ async function getRelevantResources(
  */
 function scoreResources(
   resources: Schema["ResourceCatalog"]["type"][],
-  profile: Schema["UserProfile"]["type"] | null,
+  _profile: Schema["UserProfile"]["type"] | null,
   preferences: Schema["LearningPreference"]["type"] | null,
   goals: Schema["Goal"]["type"][],
   recentContent: Schema["UserContentProgress"]["type"][]

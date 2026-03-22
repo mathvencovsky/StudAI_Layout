@@ -15,7 +15,7 @@ import { useMemo } from "react";
 export function ProfilePage() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { data: profile, isLoading, error, refetch } = useMyProfile();
+  const { isLoading, error, refetch } = useMyProfile();
   const { data: loginDays = [] } = useListLoginDays();
   const { data: sessions = [] } = useListStudySessions();
   const { current: streak } = useMemo(() => calculateStreak(loginDays), [loginDays]);
