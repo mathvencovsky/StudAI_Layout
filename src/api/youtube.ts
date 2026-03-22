@@ -2,6 +2,9 @@ import { type ExtractedMetadata } from "./metadata";
 import { Duration } from "luxon";
 
 const MATTW_YT_API_BASE = "/ytapi/v3/videos";
+const MATTW_YT_PLAYLIST_ITEMS_BASE = "/ytapi/v3/playlistItems";
+const MATTW_YT_API_KEY = "foo1";
+const MATTW_YT_QUOTA_USER = "SXACBVqKu9yJxSFrhDsERdToUoBWKAHPwGrXDXYu";
 
 /**
  * Call Microlink API (primary source).
@@ -67,12 +70,9 @@ export async function fetchFromMattwApi(
   videoId: string,
 ): Promise<ExtractedMetadata | null> {
   try {
-    const apiKey = "foo1";
-    const quotaUser = "5a8QtDaGG5qEWbJoLUWEmkbIrlNLUvkhALF18mKJ";
-
     const params = new URLSearchParams({
-      key: apiKey,
-      quotaUser,
+      key: MATTW_YT_API_KEY,
+      quotaUser: MATTW_YT_QUOTA_USER,
       part: "snippet,statistics,recordingDetails,status,liveStreamingDetails,localizations,contentDetails,paidProductPlacementDetails,player,topicDetails",
       id: videoId,
     });
@@ -123,6 +123,82 @@ export async function fetchFromMattwApi(
     console.error(`Error calling Mattw YouTube API for ${url}:`, error);
     return null;
   }
+}
+
+/**
+ * Extracts the playlist ID from a YouTube playlist URL.
+ */
+export interface PlaylistData {
+  title: string;
+  description: string;
+  videoUrls: string[];
+}
+
+/**
+ * Extracts the playlist ID from a YouTube playlist URL.
+ */
+export function getYouTubePlaylistId(url: string): string | null {
+  const match = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+  return match ? match[1] : null;
+}
+
+/**
+ * Fetches playlist metadata and all video URLs from a YouTube playlist using the Mattw API.
+ * Handles pagination automatically.
+ */
+export async function fetchPlaylistData(playlistId: string): Promise<PlaylistData> {
+  const playlistParams = new URLSearchParams({
+    key: MATTW_YT_API_KEY,
+    quotaUser: MATTW_YT_QUOTA_USER,
+    part: "snippet",
+    id: playlistId,
+  });
+
+  const playlistResponse = await fetch(`/ytapi/v3/playlists?${playlistParams.toString()}`);
+  const playlistJson = playlistResponse.ok ? await playlistResponse.json() : null;
+  const snippet = playlistJson?.items?.[0]?.snippet;
+
+  const videoUrls: string[] = [];
+  let pageToken = "";
+
+  do {
+    const params = new URLSearchParams({
+      key: MATTW_YT_API_KEY,
+      quotaUser: MATTW_YT_QUOTA_USER,
+      part: "snippet",
+      playlistId,
+      maxResults: "50",
+      ...(pageToken ? { pageToken } : {}),
+    });
+
+    const response = await fetch(
+      `${MATTW_YT_PLAYLIST_ITEMS_BASE}?${params.toString()}`,
+    );
+
+    if (!response.ok) {
+      console.error(
+        `Mattw playlist items API returned non-OK status: ${response.status}`,
+      );
+      break;
+    }
+
+    const data = await response.json();
+
+    for (const item of data.items ?? []) {
+      const videoId: string | undefined = item?.snippet?.resourceId?.videoId;
+      if (videoId) {
+        videoUrls.push(`https://www.youtube.com/watch?v=${videoId}`);
+      }
+    }
+
+    pageToken = data.nextPageToken ?? "";
+  } while (pageToken);
+
+  return {
+    title: snippet?.title ?? "",
+    description: snippet?.description ?? "",
+    videoUrls,
+  };
 }
 
 /**

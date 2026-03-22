@@ -401,6 +401,12 @@ export default {
   "how-it-works-step3-title": "Execute e acompanhe",
   "how-it-works-subheadline":
     "Tres passos para sair da desorganizacao e entrar em uma rotina que funciona.",
+  "import-from-playlist": "Importar da playlist",
+  "import-from-playlist-description": "Cole a URL de uma playlist do YouTube para importar todos os vídeos e preencher o formulário.",
+  "import-from-playlist-error": "Não foi possível carregar a playlist. Verifique a URL e tente novamente.",
+  "import-from-playlist-importing": "Importando...",
+  "import-from-playlist-placeholder": "https://www.youtube.com/playlist?list=...",
+  "import-from-playlist-title": "Importar de Playlist do YouTube",
   "in-progress": "Em Andamento",
   "language-selector": "Selecionar Idioma",
   "learning-preferences": "Preferências de Aprendizado",

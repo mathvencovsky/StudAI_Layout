@@ -392,6 +392,12 @@ export default {
   "how-it-works-step3-title": "Execute and track",
   "how-it-works-subheadline":
     "Three steps to go from disorganized to a routine that works.",
+  "import-from-playlist": "Import from playlist",
+  "import-from-playlist-description": "Paste a YouTube playlist URL to import all videos and fill in the form.",
+  "import-from-playlist-error": "Could not load playlist. Check the URL and try again.",
+  "import-from-playlist-importing": "Importing...",
+  "import-from-playlist-placeholder": "https://www.youtube.com/playlist?list=...",
+  "import-from-playlist-title": "Import from YouTube Playlist",
   "in-progress": "In Progress",
   "language-selector": "Select Language",
   "learning-preferences": "Learning Preferences",
