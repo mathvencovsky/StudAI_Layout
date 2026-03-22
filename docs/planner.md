@@ -56,9 +56,11 @@ _Define testable acceptance criteria using Given/When/Then format. Include edge 
 
 ## 3. Implementation Tasks
 
-_Break down the implementation into specific file-level tasks. Each task should include the file path, a title, description, and summarized code snippets showing what to add or change._
+_Break down the implementation into logical areas that can be completed together without breaking the build. Each group should include the relevant file paths, a title, description, and summarized code snippets showing what to add or change._
 
-### [ ] 3.1 `path/to/file.ts` - <title>
+### [ ] 3.1 <title>
+
+#### `path/to/file.ts`
 
 Description of changes.
 
@@ -66,10 +68,19 @@ Description of changes.
 // Summarized code to add/change
 ```
 
-### [ ] 3.2 `path/to/file.ts` - <title>
+#### `path/to/other.ts`
 
-- Specific change 1
-- Specific change 2
+Description of changes.
+
+```ts
+// Summarized code to add/change
+```
+
+### [ ] 3.2 <title>
+
+#### `path/to/file.ts`
+
+Description of changes.
 
 ```ts
 // Summarized code to add/change

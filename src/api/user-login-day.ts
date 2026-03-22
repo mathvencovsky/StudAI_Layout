@@ -28,5 +28,17 @@ export const getLoginDaysCount = async (): Promise<number> => {
   await getCurrentUserId();
 
   const result = await client.models.UserLoginDay.list();
-  return result.data?.length ?? 0;
+  const uniqueDates = new Set(result.data?.map((d) => d.date) ?? []);
+  return uniqueDates.size;
+};
+
+/**
+ * Lists all login day dates for the current user.
+ * @returns Array of ISO date strings (YYYY-MM-DD)
+ */
+export const listLoginDays = async (): Promise<string[]> => {
+  await getCurrentUserId();
+
+  const result = await client.models.UserLoginDay.list();
+  return (result.data ?? []).map((d) => d.date);
 };

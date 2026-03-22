@@ -4,10 +4,13 @@ export const contentFormSchema = z.object({
   id: z.string().optional(),
   title: z.string().min(1),
   description: z.string().min(1),
-  type: z.enum(["youtube_video", "article", "quiz", "assignment", "lab"]).nullable().optional(),
+  type: z
+    .enum(["youtube_video", "article", "quiz", "assignment", "lab"])
+    .nullable()
+    .optional(),
   durationInSeconds: z.number().int().min(0),
   link: z.string().url(),
-  category: z.string().min(1),
+  category: z.string().nullable().optional(),
   level: z.enum(["beginner", "intermediate", "advanced"]).nullable().optional(),
   thumbnailUrl: z.string().url().nullable().optional(),
   author: z.string().nullable().optional(),

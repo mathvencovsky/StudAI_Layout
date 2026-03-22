@@ -8,23 +8,7 @@
   ],
   "toolAliases": {},
   "allowedTools": [
-    "fs_read",
-    "write",
-    "glob",
-    "grep",
-    "code",
-    "shell",
-    "take_snapshot",
-    "take_screenshot",
-    "list_pages",
-    "list_network_requests",
-    "list_console_messages",
-    "get_network_request",
-    "get_console_message",
-    "web_search",
-    "web_fetch",
-    "introspect",
-    "thinking"
+    "*"
   ],
   "resources": [
     "file://README.md",

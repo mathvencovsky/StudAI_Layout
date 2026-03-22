@@ -24,6 +24,13 @@ export const UserGreeting = ({ displayName }: UserGreetingProps) => {
   const name = displayName ?? t("user");
 
   return (
-    <h1 className="text-3xl font-bold">{t(getGreetingKey(), { name })}</h1>
+    <section className="pb-1">
+      <h1 className="text-lg font-medium text-foreground">
+        {t(getGreetingKey(), { name })}
+      </h1>
+      <p className="text-sm text-muted-foreground mt-0.5">
+        {t("dashboard-overview") ?? "Overview of your progress."}
+      </p>
+    </section>
   );
 };

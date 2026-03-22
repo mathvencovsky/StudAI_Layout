@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth";
+import { fetchUserAttributes, getCurrentUser, signOut as amplifySignOut } from "aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 import {
   AuthContext,
@@ -8,7 +8,8 @@ import {
 } from "@/context-providers/auth/auth-context";
 
 /**
- * AuthProvider component that manages authentication state using Amplify
+ * AuthProvider component that manages authentication state
+ * Supports both Amplify and Mock authentication
  */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -17,6 +18,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
+        // Use Amplify auth
         const currentUser = await getCurrentUser();
         const attributes = await fetchUserAttributes();
         setUser({
@@ -24,8 +26,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email: attributes.email ?? currentUser.signInDetails?.loginId,
           displayName:
             attributes["custom:display_name"] ?? attributes.email ?? attributes.name,
+          photoURL: attributes.picture,
         });
-      } catch {
+      } catch (error) {
+        console.log("No user authenticated");
         setUser(null);
       } finally {
         setLoading(false);
@@ -34,6 +38,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     initializeAuth();
 
+    // Listen for auth changes (Amplify)
     const unsubscribe = Hub.listen("auth", (hubPayload) => {
       const payload = hubPayload.payload as { event: string };
       switch (payload.event) {
@@ -48,7 +53,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const value = useMemo<AuthContextValue>(
@@ -56,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user,
       isAuthenticated: !!user,
       loading,
+      signOut: () => amplifySignOut(),
     }),
     [user, loading],
   );

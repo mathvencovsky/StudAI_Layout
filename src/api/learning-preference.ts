@@ -14,7 +14,7 @@ const client = generateClient<Schema>();
 export const getMyLearningPreference =
   async (): Promise<LearningPreference | null> => {
     const result = await client.models.LearningPreference.list();
-    return result.data?.[0] ?? null;
+    return result.data?.find((item) => item !== null) ?? null;
   };
 
 /**

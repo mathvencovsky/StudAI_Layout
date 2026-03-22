@@ -100,6 +100,18 @@ export const completeModule = async (
 };
 
 /**
+ * List all module progress records for the current user
+ */
+export const listUserModuleProgress = async (): Promise<UserModuleProgress[]> => {
+  const result = await client.models.UserModuleProgress.list();
+  if (!result.data) {
+    console.error("Failed to list user module progress:", result.errors);
+    return [];
+  }
+  return result.data;
+};
+
+/**
  * Mark a module as incomplete for the current user
  */
 export const uncompleteModule = async (

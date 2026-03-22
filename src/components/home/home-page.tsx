@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
-import { useRecordLoginDay } from "@/hooks/user/use-record-login-day";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
@@ -11,6 +10,12 @@ import { LearningPreferencesForm } from "@/components/learning-preferences/learn
 import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
 import { useSaveLearningPreference } from "@/hooks/learning-preference/use-save-learning-preference";
 import { type LearningPreferencesFormValues } from "@/components/learning-preferences/schema";
+import { useDashboardData } from "@/hooks/dashboard/use-dashboard-data";
+import { LoadingState } from "@/components/ui/loading-state";
+import { UpgradeCard } from "@/components/upgrade/upgrade-card";
+import { useLastStartedTrackWithDetails } from "@/hooks/track/use-last-started-track-with-details";
+import { useLastStartedModuleWithContents } from "@/hooks/modules/use-last-started-module-with-contents";
+import { RecommendedTracksEmptyState } from "@/components/home/recommended-tracks-empty-state";
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
@@ -19,20 +24,21 @@ import { type LearningPreferencesFormValues } from "@/components/learning-prefer
 export const HomePage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { mutate: recordLogin } = useRecordLoginDay();
   const { data: existingPreference, isLoading: isLoadingPreference } =
     useMyLearningPreference();
   const { mutate: savePreference, isPending: isSaving } =
     useSaveLearningPreference();
-
-  useEffect(() => {
-    recordLogin();
-  }, [recordLogin]);
+  const { isLoading: isDashboardLoading } = useDashboardData();
+  const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
+  const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
 
   const handleSavePreference = useCallback(
     (data: LearningPreferencesFormValues) => {
       savePreference(
-        { data },
+        {
+          id: existingPreference?.id,
+          data: { ...data, days: data.days ?? [], formats: data.formats ?? [] },
+        },
         {
           onSuccess: () => {
             toast.success(t("learning-preferences-save-success"));
@@ -46,7 +52,7 @@ export const HomePage = () => {
     [savePreference, t],
   );
 
-  if (isLoadingPreference) return null;
+  if (isLoadingPreference || isDashboardLoading) return <LoadingState />;
 
   if (!existingPreference) {
     return (
@@ -59,22 +65,37 @@ export const HomePage = () => {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="max-w-4xl space-y-8">
+    <div className="px-4 sm:px-6 lg:px-8 py-4 pb-24 md:pb-6 max-w-6xl mx-auto">
+      <div className="space-y-4">
         <UserGreeting displayName={user?.displayName} />
         <StatsCards />
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            {t("continue-learning")}
-          </h2>
-          <LastStartedModuleSection />
-        </div>
-        <div>
-          <h2 className="text-xl font-semibold mb-4">
-            {t("continue-track")}
-          </h2>
-          <LastStartedTrackSection />
-        </div>
+        <UpgradeCard variant="compact" />
+
+        {isLoadingTrack || isLoadingModule ? (
+          <LoadingState />
+        ) : lastTrack || lastModule ? (
+          <div className="grid gap-4 lg:grid-cols-2">
+            <section className="border rounded-lg bg-card overflow-hidden">
+              <div className="p-3 border-b">
+                <h3 className="font-medium text-sm text-foreground">{t("continue-learning")}</h3>
+              </div>
+              <div className="p-3">
+                <LastStartedModuleSection />
+              </div>
+            </section>
+
+            <section className="border rounded-lg bg-card overflow-hidden">
+              <div className="p-3 border-b">
+                <h3 className="font-medium text-sm text-foreground">{t("continue-track")}</h3>
+              </div>
+              <div className="p-3">
+                <LastStartedTrackSection />
+              </div>
+            </section>
+          </div>
+        ) : (
+          <RecommendedTracksEmptyState interests={existingPreference?.interests} />
+        )}
       </div>
     </div>
   );

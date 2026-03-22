@@ -1,20 +1,27 @@
 import { useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCreateTrack } from "@/hooks/track/use-create-track";
 import { useUpdateTrack } from "@/hooks/track/use-update-track";
 import { TrackFlowEditor } from "@/components/track/track-flow-editor";
+import { type Category } from "@/model/category";
+import {
+  INTEREST_OPTIONS,
+  INTEREST_TRANSLATION_KEYS,
+} from "@/components/learning-preferences/constants";
 
 type ParentMap = Record<string, string>;
 
 type FormValues = {
   title: string;
   description: string;
+  categories: Category[];
 };
 
 export interface TrackFormProps {
@@ -25,6 +32,7 @@ export interface TrackFormProps {
     description: string;
     rootModuleId: string;
     parentByModuleId: ParentMap;
+    categories?: Category[];
   };
 }
 
@@ -38,35 +46,40 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
   const updateTrackMutation = useUpdateTrack();
 
   const [rootModuleId, setRootModuleId] = useState(
-    initialData?.rootModuleId ?? ""
+    initialData?.rootModuleId ?? "",
   );
   const [parentByModuleId, setParentByModuleId] = useState<ParentMap>(
-    initialData?.parentByModuleId ?? {}
+    initialData?.parentByModuleId ?? {},
   );
   const [hasCycle, setHasCycle] = useState(false);
 
   const {
     register,
     handleSubmit,
+    control,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
       title: initialData?.title ?? "",
       description: initialData?.description ?? "",
+      categories: initialData?.categories ?? [],
     },
   });
+
+  const selectedCategories = useWatch({ control, name: "categories" });
 
   const handleFlowChange = useCallback(
     (
       newRootModuleId: string,
       newParentByModuleId: ParentMap,
-      newHasCycle: boolean
+      newHasCycle: boolean,
     ) => {
       setRootModuleId(newRootModuleId);
       setParentByModuleId(newParentByModuleId);
       setHasCycle(newHasCycle);
     },
-    []
+    [],
   );
 
   const isPending =
@@ -84,12 +97,13 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           rootModuleId,
           parentByModuleId,
           positionByModuleId: {},
+          categories: values.categories,
         },
         {
           onSuccess: (track) => {
             navigate({ to: "/track/$trackId", params: { trackId: track.id } });
           },
-        }
+        },
       );
     } else if (mode === "edit" && trackId) {
       updateTrackMutation.mutate(
@@ -100,12 +114,13 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           rootModuleId,
           parentByModuleId,
           positionByModuleId: {},
+          categories: values.categories,
         },
         {
           onSuccess: () => {
             navigate({ to: "/track/$trackId", params: { trackId } });
           },
-        }
+        },
       );
     }
   };
@@ -127,11 +142,35 @@ export const TrackForm = ({ mode, trackId, initialData }: TrackFormProps) => {
           <Label htmlFor="description">{t("description")}</Label>
           <Textarea
             id="description"
-            {...register("description", { required: t("description-required") })}
+            {...register("description", {
+              required: t("description-required"),
+            })}
           />
           {errors.description && (
             <p className="text-sm text-red-600">{errors.description.message}</p>
           )}
+        </div>
+        <div className="space-y-2">
+          <Label>{t("track-categories-label")}</Label>
+          <ToggleGroup
+            type="multiple"
+            value={selectedCategories}
+            onValueChange={(value) =>
+              setValue("categories", value as Category[])
+            }
+            className="flex flex-wrap gap-2 justify-start"
+            spacing={4}
+          >
+            {INTEREST_OPTIONS.map((category) => (
+              <ToggleGroupItem
+                key={category}
+                value={category}
+                variant="outline"
+              >
+                {t(INTEREST_TRANSLATION_KEYS[category])}
+              </ToggleGroupItem>
+            ))}
+          </ToggleGroup>
         </div>
       </div>
 

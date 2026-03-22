@@ -12,23 +12,58 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as TrackCreateRouteImport } from './routes/track-create'
 import { Route as TrackRouteImport } from './routes/track'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SupportRouteImport } from './routes/support'
 import { Route as SignUpRouteImport } from './routes/sign-up'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SessionsRouteImport } from './routes/sessions'
+import { Route as SecurityRouteImport } from './routes/security'
+import { Route as SearchTracksRouteImport } from './routes/search-tracks'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SavedRouteImport } from './routes/saved'
+import { Route as ReviewsRouteImport } from './routes/reviews'
+import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as QuizzesRouteImport } from './routes/quizzes'
+import { Route as ProgramsRouteImport } from './routes/programs'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PlansRouteImport } from './routes/plans'
+import { Route as MyTrackRouteImport } from './routes/my-track'
+import { Route as MyPlanRouteImport } from './routes/my-plan'
+import { Route as MyGoalRouteImport } from './routes/my-goal'
+import { Route as MyCoursesRouteImport } from './routes/my-courses'
+import { Route as ModuleCreateWithContentRouteImport } from './routes/module-create-with-content'
 import { Route as ModuleCreateRouteImport } from './routes/module-create'
 import { Route as ModuleRouteImport } from './routes/module'
+import { Route as MetricsRouteImport } from './routes/metrics'
 import { Route as LearningPreferencesRouteImport } from './routes/learning-preferences'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FavouritesRouteImport } from './routes/favourites'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as CreateTrackRouteImport } from './routes/create-track'
+import { Route as CreateCourseRouteImport } from './routes/create-course'
 import { Route as ContentCreateRouteImport } from './routes/content-create'
 import { Route as ContentRouteImport } from './routes/content'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChatRouteImport } from './routes/chat'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as AssessmentsRouteImport } from './routes/assessments'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrackIndexRouteImport } from './routes/track/index'
 import { Route as ModuleIndexRouteImport } from './routes/module/index'
 import { Route as FavouritesIndexRouteImport } from './routes/favourites/index'
 import { Route as ContentIndexRouteImport } from './routes/content/index'
 import { Route as TrackTrackIdRouteImport } from './routes/track/$trackId'
+import { Route as QuizQuizIdRouteImport } from './routes/quiz/$quizId'
 import { Route as ModuleModuleIdRouteImport } from './routes/module/$moduleId'
 import { Route as ModuleEditModuleIdRouteImport } from './routes/module-edit/$moduleId'
+import { Route as ExploreTrackIdRouteImport } from './routes/explore/$trackId'
+import { Route as CourseCourseIdRouteImport } from './routes/course/$courseId'
 import { Route as ContentContentIdRouteImport } from './routes/content/$contentId'
 import { Route as TrackTrackIdIndexRouteImport } from './routes/track/$trackId/index'
 import { Route as ModuleModuleIdIndexRouteImport } from './routes/module/$moduleId/index'
@@ -52,14 +87,119 @@ const TrackRoute = TrackRouteImport.update({
   path: '/track',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SupportRoute = SupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignUpRoute = SignUpRouteImport.update({
   id: '/sign-up',
   path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionsRoute = SessionsRouteImport.update({
+  id: '/sessions',
+  path: '/sessions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchTracksRoute = SearchTracksRouteImport.update({
+  id: '/search-tracks',
+  path: '/search-tracks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewsRoute = ReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourcesRoute = ResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportsRoute = ReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizzesRoute = QuizzesRouteImport.update({
+  id: '/quizzes',
+  path: '/quizzes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramsRoute = ProgramsRouteImport.update({
+  id: '/programs',
+  path: '/programs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlansRoute = PlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyTrackRoute = MyTrackRouteImport.update({
+  id: '/my-track',
+  path: '/my-track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyPlanRoute = MyPlanRouteImport.update({
+  id: '/my-plan',
+  path: '/my-plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyGoalRoute = MyGoalRouteImport.update({
+  id: '/my-goal',
+  path: '/my-goal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyCoursesRoute = MyCoursesRouteImport.update({
+  id: '/my-courses',
+  path: '/my-courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModuleCreateWithContentRoute = ModuleCreateWithContentRouteImport.update({
+  id: '/module-create-with-content',
+  path: '/module-create-with-content',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModuleCreateRoute = ModuleCreateRouteImport.update({
@@ -72,14 +212,44 @@ const ModuleRoute = ModuleRouteImport.update({
   path: '/module',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MetricsRoute = MetricsRouteImport.update({
+  id: '/metrics',
+  path: '/metrics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LearningPreferencesRoute = LearningPreferencesRouteImport.update({
   id: '/learning-preferences',
   path: '/learning-preferences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavouritesRoute = FavouritesRouteImport.update({
   id: '/favourites',
   path: '/favourites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateTrackRoute = CreateTrackRouteImport.update({
+  id: '/create-track',
+  path: '/create-track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreateCourseRoute = CreateCourseRouteImport.update({
+  id: '/create-course',
+  path: '/create-course',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContentCreateRoute = ContentCreateRouteImport.update({
@@ -92,9 +262,34 @@ const ContentRoute = ContentRouteImport.update({
   path: '/content',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentsRoute = AssessmentsRouteImport.update({
+  id: '/assessments',
+  path: '/assessments',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -127,6 +322,11 @@ const TrackTrackIdRoute = TrackTrackIdRouteImport.update({
   path: '/$trackId',
   getParentRoute: () => TrackRoute,
 } as any)
+const QuizQuizIdRoute = QuizQuizIdRouteImport.update({
+  id: '/quiz/$quizId',
+  path: '/quiz/$quizId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ModuleModuleIdRoute = ModuleModuleIdRouteImport.update({
   id: '/$moduleId',
   path: '/$moduleId',
@@ -135,6 +335,16 @@ const ModuleModuleIdRoute = ModuleModuleIdRouteImport.update({
 const ModuleEditModuleIdRoute = ModuleEditModuleIdRouteImport.update({
   id: '/module-edit/$moduleId',
   path: '/module-edit/$moduleId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreTrackIdRoute = ExploreTrackIdRouteImport.update({
+  id: '/$trackId',
+  path: '/$trackId',
+  getParentRoute: () => ExploreRoute,
+} as any)
+const CourseCourseIdRoute = CourseCourseIdRouteImport.update({
+  id: '/course/$courseId',
+  path: '/course/$courseId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContentContentIdRoute = ContentContentIdRouteImport.update({
@@ -176,21 +386,56 @@ const ModuleModuleIdContentContentIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/admin': typeof AdminRoute
+  '/assessments': typeof AssessmentsRoute
+  '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
+  '/contact': typeof ContactRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
+  '/create-course': typeof CreateCourseRoute
+  '/create-track': typeof CreateTrackRoute
+  '/explore': typeof ExploreRouteWithChildren
+  '/faq': typeof FaqRoute
   '/favourites': typeof FavouritesRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
   '/learning-preferences': typeof LearningPreferencesRoute
+  '/metrics': typeof MetricsRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
+  '/my-courses': typeof MyCoursesRoute
+  '/my-goal': typeof MyGoalRoute
+  '/my-plan': typeof MyPlanRoute
+  '/my-track': typeof MyTrackRoute
+  '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
+  '/quizzes': typeof QuizzesRoute
+  '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resources': typeof ResourcesRoute
+  '/reviews': typeof ReviewsRoute
+  '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/search-tracks': typeof SearchTracksRoute
+  '/security': typeof SecurityRoute
+  '/sessions': typeof SessionsRoute
+  '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
+  '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
+  '/course/$courseId': typeof CourseCourseIdRoute
+  '/explore/$trackId': typeof ExploreTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
+  '/quiz/$quizId': typeof QuizQuizIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
   '/favourites/': typeof FavouritesIndexRoute
@@ -205,15 +450,50 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/admin': typeof AdminRoute
+  '/assessments': typeof AssessmentsRoute
+  '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
+  '/contact': typeof ContactRoute
   '/content-create': typeof ContentCreateRoute
+  '/create-course': typeof CreateCourseRoute
+  '/create-track': typeof CreateTrackRoute
+  '/explore': typeof ExploreRouteWithChildren
+  '/faq': typeof FaqRoute
+  '/how-it-works': typeof HowItWorksRoute
   '/learning-preferences': typeof LearningPreferencesRoute
+  '/metrics': typeof MetricsRoute
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
+  '/my-courses': typeof MyCoursesRoute
+  '/my-goal': typeof MyGoalRoute
+  '/my-plan': typeof MyPlanRoute
+  '/my-track': typeof MyTrackRoute
+  '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
+  '/quizzes': typeof QuizzesRoute
+  '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resources': typeof ResourcesRoute
+  '/reviews': typeof ReviewsRoute
+  '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/search-tracks': typeof SearchTracksRoute
+  '/security': typeof SecurityRoute
+  '/sessions': typeof SessionsRoute
+  '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
+  '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/course/$courseId': typeof CourseCourseIdRoute
+  '/explore/$trackId': typeof ExploreTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
+  '/quiz/$quizId': typeof QuizQuizIdRoute
   '/content': typeof ContentIndexRoute
   '/favourites': typeof FavouritesIndexRoute
   '/module': typeof ModuleIndexRoute
@@ -228,21 +508,56 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/admin': typeof AdminRoute
+  '/assessments': typeof AssessmentsRoute
+  '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
+  '/contact': typeof ContactRoute
   '/content': typeof ContentRouteWithChildren
   '/content-create': typeof ContentCreateRoute
+  '/create-course': typeof CreateCourseRoute
+  '/create-track': typeof CreateTrackRoute
+  '/explore': typeof ExploreRouteWithChildren
+  '/faq': typeof FaqRoute
   '/favourites': typeof FavouritesRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
   '/learning-preferences': typeof LearningPreferencesRoute
+  '/metrics': typeof MetricsRoute
   '/module': typeof ModuleRouteWithChildren
   '/module-create': typeof ModuleCreateRoute
+  '/module-create-with-content': typeof ModuleCreateWithContentRoute
+  '/my-courses': typeof MyCoursesRoute
+  '/my-goal': typeof MyGoalRoute
+  '/my-plan': typeof MyPlanRoute
+  '/my-track': typeof MyTrackRoute
+  '/plans': typeof PlansRoute
+  '/privacy': typeof PrivacyRoute
+  '/profile': typeof ProfileRoute
+  '/programs': typeof ProgramsRoute
+  '/quizzes': typeof QuizzesRoute
+  '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/resources': typeof ResourcesRoute
+  '/reviews': typeof ReviewsRoute
+  '/saved': typeof SavedRoute
+  '/search': typeof SearchRoute
+  '/search-tracks': typeof SearchTracksRoute
+  '/security': typeof SecurityRoute
+  '/sessions': typeof SessionsRoute
+  '/settings': typeof SettingsRoute
   '/sign-up': typeof SignUpRoute
+  '/support': typeof SupportRoute
+  '/terms': typeof TermsRoute
   '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
+  '/course/$courseId': typeof CourseCourseIdRoute
+  '/explore/$trackId': typeof ExploreTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
   '/module/$moduleId': typeof ModuleModuleIdRouteWithChildren
+  '/quiz/$quizId': typeof QuizQuizIdRoute
   '/track/$trackId': typeof TrackTrackIdRouteWithChildren
   '/content/': typeof ContentIndexRoute
   '/favourites/': typeof FavouritesIndexRoute
@@ -259,21 +574,56 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/activity'
+    | '/admin'
+    | '/assessments'
+    | '/calendar'
     | '/chat'
+    | '/contact'
     | '/content'
     | '/content-create'
+    | '/create-course'
+    | '/create-track'
+    | '/explore'
+    | '/faq'
     | '/favourites'
+    | '/how-it-works'
     | '/learning-preferences'
+    | '/metrics'
     | '/module'
     | '/module-create'
+    | '/module-create-with-content'
+    | '/my-courses'
+    | '/my-goal'
+    | '/my-plan'
+    | '/my-track'
+    | '/plans'
+    | '/privacy'
+    | '/profile'
+    | '/programs'
+    | '/quizzes'
+    | '/reports'
     | '/reset-password'
+    | '/resources'
+    | '/reviews'
+    | '/saved'
+    | '/search'
+    | '/search-tracks'
+    | '/security'
+    | '/sessions'
+    | '/settings'
     | '/sign-up'
+    | '/support'
+    | '/terms'
     | '/track'
     | '/track-create'
     | '/verify-email'
     | '/content/$contentId'
+    | '/course/$courseId'
+    | '/explore/$trackId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
+    | '/quiz/$quizId'
     | '/track/$trackId'
     | '/content/'
     | '/favourites/'
@@ -288,15 +638,50 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/activity'
+    | '/admin'
+    | '/assessments'
+    | '/calendar'
     | '/chat'
+    | '/contact'
     | '/content-create'
+    | '/create-course'
+    | '/create-track'
+    | '/explore'
+    | '/faq'
+    | '/how-it-works'
     | '/learning-preferences'
+    | '/metrics'
     | '/module-create'
+    | '/module-create-with-content'
+    | '/my-courses'
+    | '/my-goal'
+    | '/my-plan'
+    | '/my-track'
+    | '/plans'
+    | '/privacy'
+    | '/profile'
+    | '/programs'
+    | '/quizzes'
+    | '/reports'
     | '/reset-password'
+    | '/resources'
+    | '/reviews'
+    | '/saved'
+    | '/search'
+    | '/search-tracks'
+    | '/security'
+    | '/sessions'
+    | '/settings'
     | '/sign-up'
+    | '/support'
+    | '/terms'
     | '/track-create'
     | '/verify-email'
+    | '/course/$courseId'
+    | '/explore/$trackId'
     | '/module-edit/$moduleId'
+    | '/quiz/$quizId'
     | '/content'
     | '/favourites'
     | '/module'
@@ -310,21 +695,56 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/activity'
+    | '/admin'
+    | '/assessments'
+    | '/calendar'
     | '/chat'
+    | '/contact'
     | '/content'
     | '/content-create'
+    | '/create-course'
+    | '/create-track'
+    | '/explore'
+    | '/faq'
     | '/favourites'
+    | '/how-it-works'
     | '/learning-preferences'
+    | '/metrics'
     | '/module'
     | '/module-create'
+    | '/module-create-with-content'
+    | '/my-courses'
+    | '/my-goal'
+    | '/my-plan'
+    | '/my-track'
+    | '/plans'
+    | '/privacy'
+    | '/profile'
+    | '/programs'
+    | '/quizzes'
+    | '/reports'
     | '/reset-password'
+    | '/resources'
+    | '/reviews'
+    | '/saved'
+    | '/search'
+    | '/search-tracks'
+    | '/security'
+    | '/sessions'
+    | '/settings'
     | '/sign-up'
+    | '/support'
+    | '/terms'
     | '/track'
     | '/track-create'
     | '/verify-email'
     | '/content/$contentId'
+    | '/course/$courseId'
+    | '/explore/$trackId'
     | '/module-edit/$moduleId'
     | '/module/$moduleId'
+    | '/quiz/$quizId'
     | '/track/$trackId'
     | '/content/'
     | '/favourites/'
@@ -340,19 +760,53 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivityRoute: typeof ActivityRoute
+  AdminRoute: typeof AdminRoute
+  AssessmentsRoute: typeof AssessmentsRoute
+  CalendarRoute: typeof CalendarRoute
   ChatRoute: typeof ChatRoute
+  ContactRoute: typeof ContactRoute
   ContentRoute: typeof ContentRouteWithChildren
   ContentCreateRoute: typeof ContentCreateRoute
+  CreateCourseRoute: typeof CreateCourseRoute
+  CreateTrackRoute: typeof CreateTrackRoute
+  ExploreRoute: typeof ExploreRouteWithChildren
+  FaqRoute: typeof FaqRoute
   FavouritesRoute: typeof FavouritesRouteWithChildren
+  HowItWorksRoute: typeof HowItWorksRoute
   LearningPreferencesRoute: typeof LearningPreferencesRoute
+  MetricsRoute: typeof MetricsRoute
   ModuleRoute: typeof ModuleRouteWithChildren
   ModuleCreateRoute: typeof ModuleCreateRoute
+  ModuleCreateWithContentRoute: typeof ModuleCreateWithContentRoute
+  MyCoursesRoute: typeof MyCoursesRoute
+  MyGoalRoute: typeof MyGoalRoute
+  MyPlanRoute: typeof MyPlanRoute
+  MyTrackRoute: typeof MyTrackRoute
+  PlansRoute: typeof PlansRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ProfileRoute: typeof ProfileRoute
+  ProgramsRoute: typeof ProgramsRoute
+  QuizzesRoute: typeof QuizzesRoute
+  ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ResourcesRoute: typeof ResourcesRoute
+  ReviewsRoute: typeof ReviewsRoute
+  SavedRoute: typeof SavedRoute
+  SearchRoute: typeof SearchRoute
+  SearchTracksRoute: typeof SearchTracksRoute
+  SecurityRoute: typeof SecurityRoute
+  SessionsRoute: typeof SessionsRoute
+  SettingsRoute: typeof SettingsRoute
   SignUpRoute: typeof SignUpRoute
+  SupportRoute: typeof SupportRoute
+  TermsRoute: typeof TermsRoute
   TrackRoute: typeof TrackRouteWithChildren
   TrackCreateRoute: typeof TrackCreateRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
+  CourseCourseIdRoute: typeof CourseCourseIdRoute
   ModuleEditModuleIdRoute: typeof ModuleEditModuleIdRoute
+  QuizQuizIdRoute: typeof QuizQuizIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -378,6 +832,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/support': {
+      id: '/support'
+      path: '/support'
+      fullPath: '/support'
+      preLoaderRoute: typeof SupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-up': {
       id: '/sign-up'
       path: '/sign-up'
@@ -385,11 +853,144 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sessions': {
+      id: '/sessions'
+      path: '/sessions'
+      fullPath: '/sessions'
+      preLoaderRoute: typeof SessionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search-tracks': {
+      id: '/search-tracks'
+      path: '/search-tracks'
+      fullPath: '/search-tracks'
+      preLoaderRoute: typeof SearchTracksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reviews': {
+      id: '/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof ReviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resources': {
+      id: '/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports': {
+      id: '/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quizzes': {
+      id: '/quizzes'
+      path: '/quizzes'
+      fullPath: '/quizzes'
+      preLoaderRoute: typeof QuizzesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/programs': {
+      id: '/programs'
+      path: '/programs'
+      fullPath: '/programs'
+      preLoaderRoute: typeof ProgramsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plans': {
+      id: '/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof PlansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-track': {
+      id: '/my-track'
+      path: '/my-track'
+      fullPath: '/my-track'
+      preLoaderRoute: typeof MyTrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-plan': {
+      id: '/my-plan'
+      path: '/my-plan'
+      fullPath: '/my-plan'
+      preLoaderRoute: typeof MyPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-goal': {
+      id: '/my-goal'
+      path: '/my-goal'
+      fullPath: '/my-goal'
+      preLoaderRoute: typeof MyGoalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-courses': {
+      id: '/my-courses'
+      path: '/my-courses'
+      fullPath: '/my-courses'
+      preLoaderRoute: typeof MyCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/module-create-with-content': {
+      id: '/module-create-with-content'
+      path: '/module-create-with-content'
+      fullPath: '/module-create-with-content'
+      preLoaderRoute: typeof ModuleCreateWithContentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/module-create': {
@@ -406,6 +1007,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModuleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/metrics': {
+      id: '/metrics'
+      path: '/metrics'
+      fullPath: '/metrics'
+      preLoaderRoute: typeof MetricsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/learning-preferences': {
       id: '/learning-preferences'
       path: '/learning-preferences'
@@ -413,11 +1021,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningPreferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favourites': {
       id: '/favourites'
       path: '/favourites'
       fullPath: '/favourites'
       preLoaderRoute: typeof FavouritesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create-track': {
+      id: '/create-track'
+      path: '/create-track'
+      fullPath: '/create-track'
+      preLoaderRoute: typeof CreateTrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/create-course': {
+      id: '/create-course'
+      path: '/create-course'
+      fullPath: '/create-course'
+      preLoaderRoute: typeof CreateCourseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/content-create': {
@@ -434,11 +1077,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
       fullPath: '/chat'
       preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessments': {
+      id: '/assessments'
+      path: '/assessments'
+      fullPath: '/assessments'
+      preLoaderRoute: typeof AssessmentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -483,6 +1161,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackTrackIdRouteImport
       parentRoute: typeof TrackRoute
     }
+    '/quiz/$quizId': {
+      id: '/quiz/$quizId'
+      path: '/quiz/$quizId'
+      fullPath: '/quiz/$quizId'
+      preLoaderRoute: typeof QuizQuizIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/module/$moduleId': {
       id: '/module/$moduleId'
       path: '/$moduleId'
@@ -495,6 +1180,20 @@ declare module '@tanstack/react-router' {
       path: '/module-edit/$moduleId'
       fullPath: '/module-edit/$moduleId'
       preLoaderRoute: typeof ModuleEditModuleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore/$trackId': {
+      id: '/explore/$trackId'
+      path: '/$trackId'
+      fullPath: '/explore/$trackId'
+      preLoaderRoute: typeof ExploreTrackIdRouteImport
+      parentRoute: typeof ExploreRoute
+    }
+    '/course/$courseId': {
+      id: '/course/$courseId'
+      path: '/course/$courseId'
+      fullPath: '/course/$courseId'
+      preLoaderRoute: typeof CourseCourseIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/content/$contentId': {
@@ -575,6 +1274,17 @@ const ContentRouteChildren: ContentRouteChildren = {
 const ContentRouteWithChildren =
   ContentRoute._addFileChildren(ContentRouteChildren)
 
+interface ExploreRouteChildren {
+  ExploreTrackIdRoute: typeof ExploreTrackIdRoute
+}
+
+const ExploreRouteChildren: ExploreRouteChildren = {
+  ExploreTrackIdRoute: ExploreTrackIdRoute,
+}
+
+const ExploreRouteWithChildren =
+  ExploreRoute._addFileChildren(ExploreRouteChildren)
+
 interface FavouritesRouteChildren {
   FavouritesIndexRoute: typeof FavouritesIndexRoute
 }
@@ -642,19 +1352,53 @@ const TrackRouteWithChildren = TrackRoute._addFileChildren(TrackRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivityRoute: ActivityRoute,
+  AdminRoute: AdminRoute,
+  AssessmentsRoute: AssessmentsRoute,
+  CalendarRoute: CalendarRoute,
   ChatRoute: ChatRoute,
+  ContactRoute: ContactRoute,
   ContentRoute: ContentRouteWithChildren,
   ContentCreateRoute: ContentCreateRoute,
+  CreateCourseRoute: CreateCourseRoute,
+  CreateTrackRoute: CreateTrackRoute,
+  ExploreRoute: ExploreRouteWithChildren,
+  FaqRoute: FaqRoute,
   FavouritesRoute: FavouritesRouteWithChildren,
+  HowItWorksRoute: HowItWorksRoute,
   LearningPreferencesRoute: LearningPreferencesRoute,
+  MetricsRoute: MetricsRoute,
   ModuleRoute: ModuleRouteWithChildren,
   ModuleCreateRoute: ModuleCreateRoute,
+  ModuleCreateWithContentRoute: ModuleCreateWithContentRoute,
+  MyCoursesRoute: MyCoursesRoute,
+  MyGoalRoute: MyGoalRoute,
+  MyPlanRoute: MyPlanRoute,
+  MyTrackRoute: MyTrackRoute,
+  PlansRoute: PlansRoute,
+  PrivacyRoute: PrivacyRoute,
+  ProfileRoute: ProfileRoute,
+  ProgramsRoute: ProgramsRoute,
+  QuizzesRoute: QuizzesRoute,
+  ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ResourcesRoute: ResourcesRoute,
+  ReviewsRoute: ReviewsRoute,
+  SavedRoute: SavedRoute,
+  SearchRoute: SearchRoute,
+  SearchTracksRoute: SearchTracksRoute,
+  SecurityRoute: SecurityRoute,
+  SessionsRoute: SessionsRoute,
+  SettingsRoute: SettingsRoute,
   SignUpRoute: SignUpRoute,
+  SupportRoute: SupportRoute,
+  TermsRoute: TermsRoute,
   TrackRoute: TrackRouteWithChildren,
   TrackCreateRoute: TrackCreateRoute,
   VerifyEmailRoute: VerifyEmailRoute,
+  CourseCourseIdRoute: CourseCourseIdRoute,
   ModuleEditModuleIdRoute: ModuleEditModuleIdRoute,
+  QuizQuizIdRoute: QuizQuizIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

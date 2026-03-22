@@ -1,17 +1,34 @@
-export const INTEREST_OPTIONS = [
-  "web-development",
-  "mobile-development",
-  "data-science",
-  "machine-learning",
-  "cloud-computing",
+import { type Category } from "@/model/category";
+
+export const INTEREST_OPTIONS: Category[] = [
+  "web_development",
+  "mobile_development",
+  "data_science",
+  "machine_learning",
+  "cloud_computing",
   "devops",
   "cybersecurity",
   "databases",
-  "ui-ux-design",
-  "game-development",
+  "ui_ux_design",
+  "game_development",
   "blockchain",
-  "embedded-systems",
-] as const;
+  "embedded_systems",
+];
+
+export const INTEREST_TRANSLATION_KEYS = {
+  blockchain: "learning-preferences-interest-blockchain",
+  cloud_computing: "learning-preferences-interest-cloud-computing",
+  cybersecurity: "learning-preferences-interest-cybersecurity",
+  data_science: "learning-preferences-interest-data-science",
+  databases: "learning-preferences-interest-databases",
+  devops: "learning-preferences-interest-devops",
+  embedded_systems: "learning-preferences-interest-embedded-systems",
+  game_development: "learning-preferences-interest-game-development",
+  machine_learning: "learning-preferences-interest-machine-learning",
+  mobile_development: "learning-preferences-interest-mobile-development",
+  ui_ux_design: "learning-preferences-interest-ui-ux-design",
+  web_development: "learning-preferences-interest-web-development",
+} as const satisfies Record<Category, string>;
 
 export const MINUTES_PRESETS = [10, 20, 30, 45, 60] as const;
 export const MINUTES_MIN = 5;

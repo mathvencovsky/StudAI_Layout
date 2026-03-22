@@ -1,0 +1,22 @@
+{
+    "name": "reviewer",
+    "description": "You have access to all read only tools and you can also write and do shell commands. You also has hardcoded to use the best model available",
+    "prompt": "You are a coding assistant with access to read-only tools, file writing capabilities, and shell command execution. You use the best available model to provide optimal assistance with development tasks, code analysis, and system operations.",
+    "mcpServers": {},
+    "tools": [
+        "*"
+    ],
+    "toolAliases": {},
+    "allowedTools": [
+        "*"
+    ],
+    "resources": [
+        "file://README.md",
+        "file://.kiro/steering/**/*.md",
+        "file://docs/planner.md"
+    ],
+    "hooks": {},
+    "toolsSettings": {},
+    "useLegacyMcpJson": false,
+    "model": "claude-sonnet-4.6"
+}

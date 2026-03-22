@@ -1,6 +1,18 @@
-import { Amplify } from "aws-amplify";
+import { Amplify, ResourcesConfig } from "aws-amplify";
+import { parseAmplifyConfig } from "aws-amplify/utils";
 import outputs from "../amplify_outputs.json";
-Amplify.configure(outputs);
+
+const config = parseAmplifyConfig(outputs);
+
+Amplify.configure({
+  ...config,
+  Auth: {
+    Cognito: {
+      ...config.Auth?.Cognito,
+      signUpVerificationMethod: "link",
+    },
+  } as ResourcesConfig["Auth"],
+});
 
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
@@ -16,9 +28,22 @@ import { AuthProvider } from "@/context-providers/auth/auth-provider";
 import { ThemeProvider } from "@/context-providers/theme/theme-provider";
 import { useAuth } from "@/hooks/use-auth";
 import { Toaster } from "@/components/ui/sonner";
+import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { retry: 0 } },
+  defaultOptions: {
+    queries: {
+      retry: 3, // 3 tentativas com exponential backoff
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      staleTime: 60000, // 1 minuto - dados considerados frescos
+      gcTime: 300000, // 5 minutos - tempo no cache (era cacheTime)
+      refetchOnWindowFocus: true, // Refetch ao focar na janela
+      refetchOnReconnect: true, // Refetch ao reconectar
+    },
+    mutations: {
+      retry: 0, // Não retry em mutations por padrão
+    },
+  },
 });
 
 const router = createRouter({
@@ -52,13 +77,15 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <ThemeProvider defaultColorTheme="studai">
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <InnerApp />
-          </QueryClientProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider defaultColorTheme="studai">
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <InnerApp />
+            </QueryClientProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
     </StrictMode>,
   );
 }

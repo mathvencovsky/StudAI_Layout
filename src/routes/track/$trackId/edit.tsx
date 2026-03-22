@@ -30,6 +30,7 @@ function TrackEditPage() {
           description: track.description,
           rootModuleId: track.rootModuleId,
           parentByModuleId: track.parentByModuleId as Record<string, string>,
+          categories: track.categories ?? [],
         }}
       />
     </div>

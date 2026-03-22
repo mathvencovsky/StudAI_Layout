@@ -50,24 +50,39 @@ export const FavouritesListContainer = () => {
 
   if (hasNoFavourites) {
     return (
-      <div className="text-center text-muted-foreground py-8">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto text-center text-muted-foreground py-8">
         {t("no-favourites")}
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-8 max-w-4xl mx-auto space-y-6">
+      <section className="pb-1">
+        <h1 className="text-lg font-medium text-foreground">{t("favourites")}</h1>
+        <p className="text-sm text-muted-foreground mt-0.5">
+          {t("favourites-description") ?? "Your saved items."}
+        </p>
+      </section>
+
       {favouriteModules && favouriteModules.length > 0 && (
-        <section>
-          <h2 className="text-xl font-semibold mb-4">{t("modules")}</h2>
-          <FavouriteModulesList favourites={favouriteModules} />
+        <section className="border rounded-lg bg-card overflow-hidden">
+          <div className="p-4 border-b">
+            <h3 className="font-medium text-foreground">{t("modules")}</h3>
+          </div>
+          <div className="p-4">
+            <FavouriteModulesList favourites={favouriteModules} />
+          </div>
         </section>
       )}
       {favouriteContents && favouriteContents.length > 0 && (
-        <section>
-          <h2 className="text-xl font-semibold mb-4">{t("contents")}</h2>
-          <FavouriteContentsList favourites={favouriteContents} />
+        <section className="border rounded-lg bg-card overflow-hidden">
+          <div className="p-4 border-b">
+            <h3 className="font-medium text-foreground">{t("contents")}</h3>
+          </div>
+          <div className="p-4">
+            <FavouriteContentsList favourites={favouriteContents} />
+          </div>
         </section>
       )}
     </div>
