@@ -36,6 +36,7 @@ export const HomePage = () => {
     (data: LearningPreferencesFormValues) => {
       savePreference(
         {
+          id: existingPreference?.id,
           data: { ...data, days: data.days ?? [], formats: data.formats ?? [] },
         },
         {

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -26,10 +25,6 @@ import { useCreateAiWaitlist } from "@/hooks/ai-waitlist/use-create-ai-waitlist"
 
 export function MyPlanPage() {
   const { t } = useTranslation();
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">(
-    "monthly",
-  );
-
   const currentPlan = "free"; // Mock - in production this would come from a hook
 
   const { data: waitlistEntry } = useMyAiWaitlist();
@@ -60,14 +55,8 @@ export function MyPlanPage() {
       id: "pro",
       name: t("pricing-pro-name"),
       tagline: t("pricing-pro-tagline"),
-      price:
-        billingCycle === "monthly"
-          ? t("pricing-pro-price-monthly")
-          : t("pricing-pro-price-yearly"),
-      period:
-        billingCycle === "monthly"
-          ? t("pricing-period-monthly")
-          : t("pricing-period-yearly"),
+      price: "",
+      period: "",
       description: t("pricing-pro-desc"),
       features: [
         t("pricing-pro-feature1"),
@@ -83,7 +72,7 @@ export function MyPlanPage() {
       ctaVariant: "default" as const,
       popular: true,
       icon: Crown,
-      savings: billingCycle === "yearly" ? t("pricing-pro-savings") : null,
+      savings: null,
     },
   ];
 
@@ -138,46 +127,7 @@ export function MyPlanPage() {
         </p>
       </div>
 
-      {/* Billing Toggle */}
-      <div className="flex items-center justify-center gap-3">
-        <span
-          className={
-            billingCycle === "monthly"
-              ? "font-semibold"
-              : "text-muted-foreground"
-          }
-        >
-          {t("pricing-billing-monthly")}
-        </span>
-        <button
-          onClick={() =>
-            setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
-          }
-          className={`relative w-14 h-7 rounded-full transition-colors ${
-            billingCycle === "yearly" ? "bg-primary" : "bg-muted"
-          }`}
-        >
-          <span
-            className={`absolute top-1 left-1 w-5 h-5 bg-white rounded-full transition-transform ${
-              billingCycle === "yearly" ? "translate-x-7" : ""
-            }`}
-          />
-        </button>
-        <span
-          className={
-            billingCycle === "yearly"
-              ? "font-semibold"
-              : "text-muted-foreground"
-          }
-        >
-          {t("pricing-billing-yearly")}
-        </span>
-        {billingCycle === "yearly" && (
-          <Badge variant="secondary" className="ml-2">
-            {t("pricing-yearly-discount")}
-          </Badge>
-        )}
-      </div>
+
 
       {/* Plans Grid */}
       <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -217,19 +167,7 @@ export function MyPlanPage() {
                   )}
                 </div>
 
-                <div className="mt-4">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-bold">{plan.price}</span>
-                    <span className="text-muted-foreground text-sm">
-                      {plan.period}
-                    </span>
-                  </div>
-                  {plan.savings && (
-                    <p className="text-sm text-green-600 dark:text-green-400 font-medium mt-1">
-                      {plan.savings}
-                    </p>
-                  )}
-                </div>
+
               </CardHeader>
 
               <CardContent className="space-y-6">

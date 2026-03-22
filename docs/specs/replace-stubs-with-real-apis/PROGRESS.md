@@ -7,6 +7,7 @@ Added `Assessment`, `FeatureToggle`, `SavedItem`, `Program`, and `UserProgramPro
 ## 3.2 - Create model type files
 
 Created the following model files with schema-inferred types:
+
 - `src/model/assessment.ts`
 - `src/model/feature-toggle.ts`
 - `src/model/saved-item.ts`
@@ -22,6 +23,7 @@ Created `src/api/assessment.ts` with `listAssessments`, `createAssessment`, and 
 ## 3.4 - Create assessment hooks
 
 Created:
+
 - `src/hooks/assessment/use-list-assessments.ts` — `listAssessmentsQueryOptions` + `useListAssessments`
 - `src/hooks/assessment/use-update-assessment.ts` — `useUpdateAssessment` with cache invalidation
 
@@ -34,6 +36,7 @@ Created `src/api/feature-toggle.ts` with `listFeatureToggles` and `updateFeature
 ## 3.6 - Create feature toggle hooks
 
 Created:
+
 - `src/hooks/feature-toggle/use-list-feature-toggles.ts` — `listFeatureTogglesQueryOptions` + `useListFeatureToggles`
 - `src/hooks/feature-toggle/use-update-feature-toggle.ts` — `useUpdateFeatureToggle` with cache invalidation
 
@@ -46,6 +49,7 @@ Created `src/api/saved-item.ts` with `listSavedItems`, `createSavedItem`, and `d
 ## 3.8 - Create saved item hooks
 
 Created:
+
 - `src/hooks/saved-item/use-list-saved-items.ts` — `listSavedItemsQueryOptions` + `useListSavedItems`
 - `src/hooks/saved-item/use-create-saved-item.ts` — `useCreateSavedItem` with cache invalidation
 - `src/hooks/saved-item/use-delete-saved-item.ts` — `useDeleteSavedItem` with cache invalidation
@@ -55,6 +59,7 @@ Build passes (exit 0).
 ## 3.9 - Create program API functions
 
 Created:
+
 - `src/api/program.ts` with `listPrograms` function
 - `src/api/user-program-progress.ts` with `listUserProgramProgress`, `createUserProgramProgress`, and `updateUserProgramProgress` functions
 
@@ -63,6 +68,7 @@ Both use the Amplify client following the same pattern as other API files. Build
 ## 3.10 - Create program and user-program-progress hooks
 
 Created:
+
 - `src/hooks/program/use-list-programs.ts` — `listProgramsQueryOptions` + `useListPrograms`
 - `src/hooks/user-program-progress/use-list-user-program-progress.ts` — `listUserProgramProgressQueryOptions` + `useListUserProgramProgress`
 - `src/hooks/user-program-progress/use-update-user-program-progress.ts` — `useUpdateUserProgramProgress` with cache invalidation
@@ -85,6 +91,7 @@ Build passes (exit 0).
 ## 3.13 - Rewrite useReportData to aggregate from real data
 
 Rewrote `src/hooks/reports/use-reports.ts` to:
+
 - Export `ReportPeriod` type (moved from stub)
 - Fetch real `StudySession` records via `listStudySessions`
 - Compute `totalHours`, `consistency` (active days), `evolution` (% vs previous period), `breakdown` (session vs review minutes), and `chartData` (minutes per day) from real data
@@ -94,6 +101,7 @@ Updated `src/components/analytics/relatorios-page-integrated.tsx` to import `Rep
 ## 3.14 - Rewrite useEngagement to aggregate from real data
 
 Rewrote `src/hooks/engagement/use-engagement.ts` to:
+
 - Export `EngagementMetrics` and `WeeklyTrend` types (moved from stub)
 - Compute `avgSessionsPerDay`, `avgSessionDuration`, `avgTimePerWeek`, `aiSessionsPercent`, `weeklyGrowth` from real `StudySession` data via `useListStudySessions`
 - Compute `quizCompletionRate` from real `QuizAttempt` data via `useListQuizAttempts`
@@ -105,6 +113,7 @@ Build passes (exit 0).
 ## 3.15 - Rewrite useMetrics to compute from real data
 
 Rewrote `src/hooks/metrics/use-metrics.ts` to:
+
 - Fetch real `StudySession` data via `useListStudySessions` for study time totals, weekly activity, and monthly stats
 - Fetch real `QuizAttempt` data via `useListQuizAttempts` for completions and achievement thresholds
 - Fetch real `UserProfile` data via `useMyProfile` for XP, level, streak, and daily goal
@@ -117,6 +126,7 @@ Build passes (exit 0).
 ## 3.16 - Rewrite useROI to compute from real data
 
 Rewrote `src/hooks/roi/use-roi.ts` to:
+
 - Export `ROIMetrics` and `ModuleEfficiency` types (moved from stub)
 - `useROIMetrics`: computes `timeInvested` (total hours from sessions), `efficiency` (average score of scored sessions), `estimatedROI` (total hours × R$50/h), and `velocity` (sessions last 7 days vs baseline of 5/week) from real `StudySession` data via `useListStudySessions`
 - `useModuleEfficiency`: computes per-module efficiency from `StudySession` (hours per module), `UserModuleProgress` (which modules were started), and `Module` (titles) — uses a default expected hours of 10h per module
@@ -130,6 +140,7 @@ Build passes (exit 0).
 ## 3.18 - Replace admin stubs
 
 Rewrote all three admin hooks:
+
 - `src/hooks/admin/use-admin-users.ts`: Returns empty result (Cognito `listUsers` requires admin credentials not available client-side; graceful empty state per edge case E5)
 - `src/hooks/admin/use-catalog-resources.ts`: Composes from `useTracks`, `useListContent`, and `useModules`, mapping to `CatalogResource` shape with client-side type/search filtering
 - `src/hooks/admin/use-feature-toggles.ts`: Re-exports `useListFeatureToggles` as `useFeatureToggles` and `useUpdateFeatureToggle` from the new feature-toggle hooks; exports `FeatureToggle` type from model
@@ -141,6 +152,7 @@ Also fixed `admin-page.tsx` to use `feature.enabled ?? false` for the `Switch` c
 Deleted `src/hooks/profile/use-user-profile.ts` (and the now-empty `src/hooks/profile/` directory).
 
 Updated both `perfil-page-integrated.tsx` and `perfil-page.tsx` to:
+
 - Use `useMyProfile` from `src/hooks/user-profile/use-my-profile.ts`
 - Use `useAuth` to get `email` and `displayName` from Cognito
 - Derive `initials` from `displayName`
@@ -155,6 +167,7 @@ Build passes (exit 0).
 Deleted `src/hooks/settings/use-user-account.ts` and `src/hooks/settings/use-user-preferences.ts` (and the now-empty `src/hooks/settings/` directory).
 
 Updated `src/components/settings/configuracoes-page-integrated.tsx` to:
+
 - Use `useMyProfile` from `src/hooks/user-profile/use-my-profile.ts` for loading state, error state, `dailyGoalMinutes`, `notificationsEnabled`, `dailyReminderEnabled`, and `createdAt`
 - Use `useAuth` for `user.email` in the account section
 - Map `profile.notificationsEnabled` → `localNotifications` initial state
@@ -169,6 +182,7 @@ Build passes (exit 0).
 Deleted `src/hooks/goals/` directory (contained `use-goals.ts`, `use-active-goal.ts`, `use-goal-history.ts` — all using stub imports).
 
 Updated `src/components/goal/metas-page-integrated.tsx` to:
+
 - Use `useListGoals` from `src/hooks/goal/use-list-goals.ts`
 - Derive `activeGoal` by filtering `goals` where `isActive === true`
 - Derive `history` by filtering `goals` where `status === 'completed'`
@@ -181,12 +195,14 @@ Build passes (exit 0).
 
 Deleted `src/hooks/sessions/use-sessions.ts` (and the now-empty `src/hooks/sessions/` directory).
 
-Updated `src/components/sessions/sessoes-page-integrated.tsx` to:
+Updated `src/components/sessions/Sessões-page-integrated.tsx` to:
+
 - Use `useListStudySessions` from `src/hooks/study-session/use-list-sessions.ts`
 - Compute `totalMinutes`, `averageDuration`, and `sessionsThisWeek` from the sessions array
 - Map real schema fields: `startedAt` (timestamp in seconds), `durationMinutes`, `xpEarned`, `notes`/`type` for display
 
 Updated `src/components/study/estudar-page.tsx` to:
+
 - Use `useListStudySessions` to get all sessions; derive `activeSession` by filtering for sessions without `endedAt`
 - Use `useCreateStudySession` to start a new session (with `startedAt`, `tasksCompleted`, `xpEarned`)
 - Use `useUpdateStudySession` to end a session (with `endedAt`, `durationMinutes`, `xpEarned`)
@@ -199,6 +215,7 @@ Build passes (exit 0).
 Deleted `src/hooks/calendar/use-upcoming-events.ts` (and the now-empty `src/hooks/calendar/` directory).
 
 Updated `src/components/calendar/calendario-page-integrated.tsx` to:
+
 - Use `useListCalendarEvents` from `src/hooks/calendar-event/use-list-calendar-events.ts`
 - Map real schema fields: `eventType` (instead of `type`), `startDate`/`endDate` (timestamps in seconds, instead of `startTime`/`endTime` strings)
 - Format timestamps using `new Date(ts * 1000).toLocaleString()`
@@ -210,6 +227,7 @@ Build passes (exit 0).
 Deleted `src/hooks/ranking/use-ranking.ts` (stub-based hook).
 
 Updated `src/components/ranking/ranking-page-integrated.tsx` to:
+
 - Use `useWeeklyRanking` from `src/hooks/ranking/use-weekly-ranking.ts`
 - Use `useMyProfile` to identify the current user (matching `entry.userId === profile?.owner`)
 - Map real schema fields: `displayName` (instead of `name`), `xpWeek` (instead of `xp`)
@@ -222,6 +240,7 @@ Updated `src/components/ranking/ranking-page-integrated.tsx` to:
 Deleted `src/hooks/reviews/use-reviews.ts` (and the now-empty `src/hooks/reviews/` directory).
 
 Updated `src/components/review/revisoes-page-integrated.tsx` to:
+
 - Use `useListReviewItems` from `src/hooks/review-item/use-list-review-items.ts`
 - Filter pending reviews client-side: items where `nextDueAt <= now`
 - Filter completed today: items where `lastStudiedAt` is within today's date range
@@ -237,6 +256,7 @@ Build passes (exit 0).
 Deleted `src/hooks/tracks/` directory (contained `use-tracks-catalog.ts`, `use-active-track.ts`, `use-track-modules.ts` — all using stub imports).
 
 Rewrote `src/components/tracks/explorar-trilhas-page.tsx` to:
+
 - Use `useTracks` from `src/hooks/track/use-tracks.ts` for the catalog tab
 - Show an empty state for the "my track" tab (no active track concept in real schema without `UserTrackProgress` hook)
 - Remove fields not in real schema: `progress`, `completedModules`, `totalModules`, `estimatedHours`, `tags`, `moduleCount`, `status`, `duration`
@@ -249,6 +269,7 @@ Build passes (exit 0).
 Deleted `src/hooks/contents/use-contents.ts` (and the now-empty `src/hooks/contents/` directory).
 
 Updated `src/components/content/conteudos-page-integrated.tsx` to:
+
 - Use `useListContent` from `src/hooks/content/use-list-content.ts`
 - Import `Content` type from `@/model/content` instead of the stub
 - Do client-side type filtering (instead of passing type to the hook)

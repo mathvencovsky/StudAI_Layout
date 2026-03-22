@@ -82,16 +82,16 @@ UserProgramProgress: a
 
 No new models needed for these domains — they are derived/computed from existing data:
 
-| Stub Domain | Derive From |
-|---|---|
-| `dashboard-stub` | `UserProfile` + `Goal` + `StudySession` + `DailyTask` |
-| `activity-stub` | `StudySession` + `QuizAttempt` + `UserContentProgress` + `UserModuleProgress` |
-| `engagement-stub` | `StudySession` + `UserLoginDay` + `QuizAttempt` (admin aggregation) |
-| `metrics-stub` | `StudySession` + `QuizAttempt` (user aggregation) |
-| `reports-stub` | `StudySession` + `QuizAttempt` + `ReviewItem` (user aggregation) |
-| `roi-stub` | `StudySession` + `UserModuleProgress` (user computation) |
-| `ranking-stub` | `RankingEntry` (already exists) |
-| `search-stub` | Client-side filter across `Track`, `Content`, `Module` |
+| Stub Domain       | Derive From                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| `dashboard-stub`  | `UserProfile` + `Goal` + `StudySession` + `DailyTask`                         |
+| `activity-stub`   | `StudySession` + `QuizAttempt` + `UserContentProgress` + `UserModuleProgress` |
+| `engagement-stub` | `StudySession` + `UserLoginDay` + `QuizAttempt` (admin aggregation)           |
+| `metrics-stub`    | `StudySession` + `QuizAttempt` (user aggregation)                             |
+| `reports-stub`    | `StudySession` + `QuizAttempt` + `ReviewItem` (user aggregation)              |
+| `roi-stub`        | `StudySession` + `UserModuleProgress` (user computation)                      |
+| `ranking-stub`    | `RankingEntry` (already exists)                                               |
+| `search-stub`     | Client-side filter across `Track`, `Content`, `Module`                        |
 
 ### 1.2 Type definitions
 
@@ -138,8 +138,10 @@ export type ProgramIdentifier = Schema["Program"]["identifier"];
 import { type Schema } from "../../amplify/data/resource";
 
 export type UserProgramProgress = Schema["UserProgramProgress"]["type"];
-export type UserProgramProgressCreateInput = Schema["UserProgramProgress"]["createType"];
-export type UserProgramProgressUpdateInput = Schema["UserProgramProgress"]["updateType"];
+export type UserProgramProgressCreateInput =
+  Schema["UserProgramProgress"]["createType"];
+export type UserProgramProgressUpdateInput =
+  Schema["UserProgramProgress"]["updateType"];
 ```
 
 Delete `src/types/dashboard.ts` — replace with schema-inferred types composed in the dashboard hook.
@@ -183,7 +185,8 @@ export const updateUserProgramProgress = async (input: ...): Promise<...> => { .
 
 ```ts
 // src/hooks/assessment/use-list-assessments.ts
-export const listAssessmentsQueryOptions = () => queryOptions({ queryKey: ["assessments", "list"], queryFn: listAssessments });
+export const listAssessmentsQueryOptions = () =>
+  queryOptions({ queryKey: ["assessments", "list"], queryFn: listAssessments });
 export const useListAssessments = () => useQuery(listAssessmentsQueryOptions());
 ```
 
@@ -266,54 +269,54 @@ export const useListUserProgramProgress = () => useQuery(...);
 
 #### Existing hooks to rewire (Category A — real hooks already exist)
 
-| Stub Hook | Delete | Replace With (already exists) |
-|---|---|---|
-| `src/hooks/profile/use-user-profile.ts` | Yes | `src/hooks/user-profile/use-my-profile.ts` |
-| `src/hooks/settings/use-user-account.ts` | Yes | `src/hooks/user-profile/use-my-profile.ts` |
-| `src/hooks/settings/use-user-preferences.ts` | Yes | `src/hooks/learning-preference/use-my-learning-preference.ts` |
-| `src/hooks/goals/use-goals.ts` | Yes | `src/hooks/goal/use-list-goals.ts` + `use-create-goal.ts` |
-| `src/hooks/goals/use-active-goal.ts` | Yes | `src/hooks/goal/use-list-goals.ts` (filter active) |
-| `src/hooks/goals/use-goal-history.ts` | Yes | `src/hooks/goal/use-list-goals.ts` (filter completed) |
-| `src/hooks/sessions/use-sessions.ts` | Yes | `src/hooks/study-session/use-list-sessions.ts` |
-| `src/hooks/calendar/use-upcoming-events.ts` | Yes | `src/hooks/calendar-event/use-list-calendar-events.ts` |
-| `src/hooks/ranking/use-ranking.ts` | Yes | `src/hooks/ranking/use-weekly-ranking.ts` |
-| `src/hooks/reviews/use-reviews.ts` | Yes | `src/hooks/review-item/use-list-review-items.ts` |
-| `src/hooks/tracks/use-tracks-catalog.ts` | Yes | `src/hooks/track/use-tracks.ts` |
-| `src/hooks/tracks/use-active-track.ts` | Yes | `src/hooks/track/use-tracks.ts` (filter active) |
-| `src/hooks/tracks/use-track-modules.ts` | Yes | `src/hooks/modules/use-modules.ts` (filter by track) |
-| `src/hooks/contents/use-contents.ts` | Yes | `src/hooks/content/use-list-content.ts` |
-| `src/hooks/admin/use-admin-users.ts` | Yes | Cognito admin API (see 1.4) |
+| Stub Hook                                    | Delete | Replace With (already exists)                                 |
+| -------------------------------------------- | ------ | ------------------------------------------------------------- |
+| `src/hooks/profile/use-user-profile.ts`      | Yes    | `src/hooks/user-profile/use-my-profile.ts`                    |
+| `src/hooks/settings/use-user-account.ts`     | Yes    | `src/hooks/user-profile/use-my-profile.ts`                    |
+| `src/hooks/settings/use-user-preferences.ts` | Yes    | `src/hooks/learning-preference/use-my-learning-preference.ts` |
+| `src/hooks/goals/use-goals.ts`               | Yes    | `src/hooks/goal/use-list-goals.ts` + `use-create-goal.ts`     |
+| `src/hooks/goals/use-active-goal.ts`         | Yes    | `src/hooks/goal/use-list-goals.ts` (filter active)            |
+| `src/hooks/goals/use-goal-history.ts`        | Yes    | `src/hooks/goal/use-list-goals.ts` (filter completed)         |
+| `src/hooks/sessions/use-sessions.ts`         | Yes    | `src/hooks/study-session/use-list-sessions.ts`                |
+| `src/hooks/calendar/use-upcoming-events.ts`  | Yes    | `src/hooks/calendar-event/use-list-calendar-events.ts`        |
+| `src/hooks/ranking/use-ranking.ts`           | Yes    | `src/hooks/ranking/use-weekly-ranking.ts`                     |
+| `src/hooks/reviews/use-reviews.ts`           | Yes    | `src/hooks/review-item/use-list-review-items.ts`              |
+| `src/hooks/tracks/use-tracks-catalog.ts`     | Yes    | `src/hooks/track/use-tracks.ts`                               |
+| `src/hooks/tracks/use-active-track.ts`       | Yes    | `src/hooks/track/use-tracks.ts` (filter active)               |
+| `src/hooks/tracks/use-track-modules.ts`      | Yes    | `src/hooks/modules/use-modules.ts` (filter by track)          |
+| `src/hooks/contents/use-contents.ts`         | Yes    | `src/hooks/content/use-list-content.ts`                       |
+| `src/hooks/admin/use-admin-users.ts`         | Yes    | Cognito admin API (see 1.4)                                   |
 
 ### 1.4 Page changes
 
 Every page keeps its current layout and behavior. Only the data source changes.
 
-| Page | Current Stub Hook(s) | New Data Source |
-|---|---|---|
-| `src/components/home/home-page.tsx` | `useDashboardData` | Rewritten `useDashboardData` composing real hooks |
-| `src/components/goal/metas-page-integrated.tsx` | `useActiveGoal`, `useGoalHistory`, `useGoals` | `useListGoals` + `useCreateGoal` from `src/hooks/goal/` |
-| `src/components/profile/perfil-page-integrated.tsx` | `useUserProfile` | `useMyProfile` from `src/hooks/user-profile/` |
-| `src/components/profile/perfil-page.tsx` | `useUserProfile` | `useMyProfile` from `src/hooks/user-profile/` |
-| `src/components/ranking/ranking-page-integrated.tsx` | `useRanking` | `useWeeklyRanking` from `src/hooks/ranking/` |
-| `src/components/ranking/ranking-page.tsx` | `useRanking` | `useWeeklyRanking` from `src/hooks/ranking/` |
-| `src/components/calendar/calendario-page-integrated.tsx` | `useUpcomingEvents` | `useListCalendarEvents` from `src/hooks/calendar-event/` |
-| `src/components/sessions/sessoes-page-integrated.tsx` | `useSessions` | `useListStudySessions` from `src/hooks/study-session/` |
-| `src/components/study/estudar-page.tsx` | `useSessions` (stub) | `useListStudySessions` from `src/hooks/study-session/` |
-| `src/components/review/revisoes-page-integrated.tsx` | `useReviews` | `useListReviewItems` from `src/hooks/review-item/` |
-| `src/components/saved/salvos-page-integrated.tsx` | `useSavedItems` | `useListSavedItems` from `src/hooks/saved-item/` |
-| `src/components/saved/salvos-page.tsx` | `useSavedItems` | `useListSavedItems` from `src/hooks/saved-item/` |
-| `src/components/tracks/explorar-trilhas-page.tsx` | `useTracksCatalog`, `useActiveTrack`, `useTrackModules` | `useTracks` from `src/hooks/track/` |
-| `src/components/content/conteudos-page-integrated.tsx` | `useContents` | `useListContent` from `src/hooks/content/` |
-| `src/components/settings/configuracoes-page-integrated.tsx` | `useUserAccount`, `useUserPreferences` | `useMyProfile` + `useMyLearningPreference` |
-| `src/components/activity/atividade-page.tsx` | `useActivityFeed` | Rewritten `useActivityFeed` deriving from real data |
-| `src/components/analytics/relatorios-page-integrated.tsx` | `useReports` | Rewritten `useReports` aggregating real `StudySession` data |
-| `src/components/assessments/avaliacoes-page.tsx` | `useAssessments` | `useListAssessments` from `src/hooks/assessment/` |
-| `src/components/engagement/engajamento-page-integrated.tsx` | `useEngagement` | Rewritten `useEngagement` aggregating real data |
-| `src/components/programs/programas-page-integrated.tsx` | `usePrograms` | `useListPrograms` + `useListUserProgramProgress` |
-| `src/components/roi/roi-estudo-page-integrated.tsx` | `useROI` | Rewritten `useROI` computing from real data |
-| `src/components/admin/admin-page.tsx` | `useAdminUsers`, `useCatalogResources`, `useFeatureToggles` | Cognito list users API + `useListFeatureToggles` + existing resource catalog hooks |
-| `src/components/search/pesquisar-page-integrated.tsx` | `useSearch` | Rewritten `useSearch` with client-side filtering |
-| `src/components/search/pesquisar-page.tsx` | `useSearch` | Rewritten `useSearch` with client-side filtering |
+| Page                                                        | Current Stub Hook(s)                                        | New Data Source                                                                    |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `src/components/home/home-page.tsx`                         | `useDashboardData`                                          | Rewritten `useDashboardData` composing real hooks                                  |
+| `src/components/goal/metas-page-integrated.tsx`             | `useActiveGoal`, `useGoalHistory`, `useGoals`               | `useListGoals` + `useCreateGoal` from `src/hooks/goal/`                            |
+| `src/components/profile/perfil-page-integrated.tsx`         | `useUserProfile`                                            | `useMyProfile` from `src/hooks/user-profile/`                                      |
+| `src/components/profile/perfil-page.tsx`                    | `useUserProfile`                                            | `useMyProfile` from `src/hooks/user-profile/`                                      |
+| `src/components/ranking/ranking-page-integrated.tsx`        | `useRanking`                                                | `useWeeklyRanking` from `src/hooks/ranking/`                                       |
+| `src/components/ranking/ranking-page.tsx`                   | `useRanking`                                                | `useWeeklyRanking` from `src/hooks/ranking/`                                       |
+| `src/components/calendar/calendario-page-integrated.tsx`    | `useUpcomingEvents`                                         | `useListCalendarEvents` from `src/hooks/calendar-event/`                           |
+| `src/components/sessions/Sessões-page-integrated.tsx`       | `useSessions`                                               | `useListStudySessions` from `src/hooks/study-session/`                             |
+| `src/components/study/estudar-page.tsx`                     | `useSessions` (stub)                                        | `useListStudySessions` from `src/hooks/study-session/`                             |
+| `src/components/review/revisoes-page-integrated.tsx`        | `useReviews`                                                | `useListReviewItems` from `src/hooks/review-item/`                                 |
+| `src/components/saved/salvos-page-integrated.tsx`           | `useSavedItems`                                             | `useListSavedItems` from `src/hooks/saved-item/`                                   |
+| `src/components/saved/salvos-page.tsx`                      | `useSavedItems`                                             | `useListSavedItems` from `src/hooks/saved-item/`                                   |
+| `src/components/tracks/explorar-trilhas-page.tsx`           | `useTracksCatalog`, `useActiveTrack`, `useTrackModules`     | `useTracks` from `src/hooks/track/`                                                |
+| `src/components/content/conteudos-page-integrated.tsx`      | `useContents`                                               | `useListContent` from `src/hooks/content/`                                         |
+| `src/components/settings/configuracoes-page-integrated.tsx` | `useUserAccount`, `useUserPreferences`                      | `useMyProfile` + `useMyLearningPreference`                                         |
+| `src/components/activity/atividade-page.tsx`                | `useActivityFeed`                                           | Rewritten `useActivityFeed` deriving from real data                                |
+| `src/components/analytics/relatorios-page-integrated.tsx`   | `useReports`                                                | Rewritten `useReports` aggregating real `StudySession` data                        |
+| `src/components/assessments/avaliacoes-page.tsx`            | `useAssessments`                                            | `useListAssessments` from `src/hooks/assessment/`                                  |
+| `src/components/engagement/engajamento-page-integrated.tsx` | `useEngagement`                                             | Rewritten `useEngagement` aggregating real data                                    |
+| `src/components/programs/programas-page-integrated.tsx`     | `usePrograms`                                               | `useListPrograms` + `useListUserProgramProgress`                                   |
+| `src/components/roi/roi-estudo-page-integrated.tsx`         | `useROI`                                                    | Rewritten `useROI` computing from real data                                        |
+| `src/components/admin/admin-page.tsx`                       | `useAdminUsers`, `useCatalogResources`, `useFeatureToggles` | Cognito list users API + `useListFeatureToggles` + existing resource catalog hooks |
+| `src/components/search/pesquisar-page-integrated.tsx`       | `useSearch`                                                 | Rewritten `useSearch` with client-side filtering                                   |
+| `src/components/search/pesquisar-page.tsx`                  | `useSearch`                                                 | Rewritten `useSearch` with client-side filtering                                   |
 
 ### 1.5 Component changes
 
@@ -396,6 +399,7 @@ Add `Assessment`, `FeatureToggle`, `SavedItem`, `Program`, and `UserProgramProgr
 ### [x] 3.2 `src/model/` - Create model type files
 
 Create the following files with schema-inferred types as described in section 1.2:
+
 - `src/model/assessment.ts`
 - `src/model/feature-toggle.ts`
 - `src/model/saved-item.ts`
@@ -411,6 +415,7 @@ Create `listAssessments`, `createAssessment`, `updateAssessment` functions using
 ### [x] 3.4 `src/hooks/assessment/` - Assessment hooks
 
 Create:
+
 - `use-list-assessments.ts`
 - `use-update-assessment.ts`
 
@@ -421,6 +426,7 @@ Create `listFeatureToggles`, `updateFeatureToggle` functions.
 ### [x] 3.6 `src/hooks/feature-toggle/` - Feature toggle hooks
 
 Create:
+
 - `use-list-feature-toggles.ts`
 - `use-update-feature-toggle.ts`
 
@@ -431,6 +437,7 @@ Create `listSavedItems`, `createSavedItem`, `deleteSavedItem` functions.
 ### [x] 3.8 `src/hooks/saved-item/` - Saved item hooks
 
 Create:
+
 - `use-list-saved-items.ts`
 - `use-create-saved-item.ts`
 - `use-delete-saved-item.ts`
@@ -442,6 +449,7 @@ Create `listPrograms`, `listUserProgramProgress`, `createUserProgramProgress`, `
 ### [x] 3.10 `src/hooks/program/` + `src/hooks/user-program-progress/` - Program hooks
 
 Create:
+
 - `use-list-programs.ts`
 - `use-list-user-program-progress.ts`
 - `use-update-user-program-progress.ts`
@@ -498,7 +506,7 @@ Delete entire directory. Update `metas-page-integrated.tsx` to import from `src/
 
 ### [x] 3.22 `src/hooks/sessions/use-sessions.ts` - Delete, update consumers
 
-Delete file. Update `sessoes-page-integrated.tsx` and `estudar-page.tsx` to import `useListStudySessions`.
+Delete file. Update `Sessões-page-integrated.tsx` and `estudar-page.tsx` to import `useListStudySessions`.
 
 ### [x] 3.23 `src/hooks/calendar/use-upcoming-events.ts` - Delete, update consumer
 

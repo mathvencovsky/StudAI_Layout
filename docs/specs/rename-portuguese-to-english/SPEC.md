@@ -3,7 +3,7 @@
 ## 0. Summary
 
 **Goal:** Rename all Portuguese-named files (components, routes) and URL paths to English, and review/translate all Portuguese code inside those files (exported names, variable names, comments, hardcoded strings) to comply with the project's code-language guideline that all code and file names must be in English.
-**Out of scope:** Renaming i18n locale files/directories (e.g., `i18n/pt-BR.ts`, `i18n/locales/pt-BR/`), and changing translation string *values* inside locale files. AI prompt content in `lib/ai/system-prompt.ts` and `lib/ai/course-generator.ts` is also out of scope since those prompts may intentionally target Portuguese-speaking users.
+**Out of scope:** Renaming i18n locale files/directories (e.g., `i18n/pt-BR.ts`, `i18n/locales/pt-BR/`), and changing translation string _values_ inside locale files. AI prompt content in `lib/ai/system-prompt.ts` and `lib/ai/course-generator.ts` is also out of scope since those prompts may intentionally target Portuguese-speaking users.
 
 ## 1. Technical Design
 
@@ -33,7 +33,7 @@ All route files with Portuguese names must be renamed. Since TanStack Router use
 | `routes/pesquisar-trilhas.tsx` | `routes/search-tracks.tsx`    | `/pesquisar-trilhas` | `/search-tracks`    |
 | `routes/estudar.tsx`           | `routes/study.tsx`            | `/estudar`           | `/study`            |
 | `routes/avaliacoes.tsx`        | `routes/assessments.tsx`      | `/avaliacoes`        | `/assessments`      |
-| `routes/sessoes.tsx`           | `routes/sessions.tsx`         | `/sessoes`           | `/sessions`         |
+| `routes/Sessões.tsx`           | `routes/sessions.tsx`         | `/Sessões`           | `/sessions`         |
 | `routes/calendario.tsx`        | `routes/calendar.tsx`         | `/calendario`        | `/calendar`         |
 | `routes/meu-objetivo.tsx`      | `routes/my-goal.tsx`          | `/meu-objetivo`      | `/my-goal`          |
 | `routes/revisoes.tsx`          | `routes/reviews.tsx`          | `/revisoes`          | `/reviews`          |
@@ -82,8 +82,8 @@ All Portuguese-named component files must be renamed. Exported component/functio
 | `components/engagement/engajamento-page-integrated.tsx` | `components/engagement/engagement-page-integrated.tsx` |
 | `components/programs/programas-page-integrated.tsx`     | `components/programs/programs-page-integrated.tsx`     |
 | `components/programs/programas-page.tsx`                | `components/programs/programs-page.tsx`                |
-| `components/sessions/sessoes-page.tsx`                  | `components/sessions/sessions-page.tsx`                |
-| `components/sessions/sessoes-page-integrated.tsx`       | `components/sessions/sessions-page-integrated.tsx`     |
+| `components/sessions/Sessões-page.tsx`                  | `components/sessions/sessions-page.tsx`                |
+| `components/sessions/Sessões-page-integrated.tsx`       | `components/sessions/sessions-page-integrated.tsx`     |
 | `components/profile/perfil-page-integrated.tsx`         | `components/profile/profile-page-integrated.tsx`       |
 | `components/profile/perfil-page.tsx`                    | `components/profile/profile-page.tsx`                  |
 | `components/review/revisoes-page-integrated.tsx`        | `components/review/reviews-page-integrated.tsx`        |
@@ -112,6 +112,7 @@ Every file being renamed (and any other file found to contain Portuguese code) m
 **Files with hardcoded Portuguese strings (excluding i18n locale files and AI prompt files):**
 
 High impact (10+ hardcoded Portuguese strings):
+
 - `components/plan/meu-plano-page.tsx` (22) — pricing page with hardcoded PT-BR text everywhere
 - `components/public/faq-page.tsx` (21)
 - `components/public/how-it-works-page.tsx` (13)
@@ -129,12 +130,13 @@ High impact (10+ hardcoded Portuguese strings):
 - `api/stubs/activity-stub.ts` (7) — stub data
 
 Medium impact (3–9 hardcoded Portuguese strings):
+
 - `components/landing/LandingHero.tsx` (9)
 - `components/review/revisoes-page-integrated.tsx` (9)
 - `components/analytics/relatorios-page-integrated.tsx` (9)
 - `components/public/security-page.tsx` (8)
 - `components/public/support-page.tsx` (8)
-- `components/sessions/sessoes-page-integrated.tsx` (7)
+- `components/sessions/Sessões-page-integrated.tsx` (7)
 - `components/saved/salvos-page-integrated.tsx` (6)
 - `components/roi/roi-estudo-page-integrated.tsx` (6)
 - `components/settings/configuracoes-page-integrated.tsx` (6)
@@ -158,6 +160,7 @@ Medium impact (3–9 hardcoded Portuguese strings):
 - `api/stubs/dashboard-stub.ts` (3)
 
 Low impact (1–2 hardcoded Portuguese strings):
+
 - `components/landing/faq-section.tsx` (2)
 - `components/landing/auth-card.tsx` (2)
 - `components/landing/landing-header.tsx` (2)
@@ -184,9 +187,11 @@ Low impact (1–2 hardcoded Portuguese strings):
 - And several more with 1 match each
 
 **Files with Portuguese comments (~30 across 23 files):**
+
 - `main.tsx`, `types/dashboard.ts`, `components/layout/nav-group.tsx`, `components/admin/admin-page.tsx`, `components/tracks/criar-trilha-page.tsx`, `components/profile/perfil-page-integrated.tsx`, `components/profile/perfil-page.tsx`, `components/guards/auth-guard.tsx`, `components/study/estudar-page.tsx`, `components/plan/meu-plano-page.tsx`, `components/landing/ui.tsx` (5 comments), `hooks/search/use-search.ts`, `api/stubs/reports-stub.ts`, `api/stubs/sessions-stub.ts`, `api/stubs/metrics-stub.ts`, `api/stubs/search-stub.ts`
 
 **Strategy for hardcoded strings:**
+
 - For UI-facing strings in components: replace with `t("key")` calls and add keys to both locale files
 - For mock/seed/stub data files: translate the data values to English directly (these are developer-facing test data, not user-facing i18n content)
 - For variable names used as object keys in footers/nav (e.g., `produto`, `empresa`, `suporte`): rename to English equivalents
@@ -316,7 +321,7 @@ Full mapping for this file:
 - `/pesquisar` → `/search`
 - `/estudar` → `/study`
 - `/avaliacoes` → `/assessments`
-- `/sessoes` → `/sessions`
+- `/Sessões` → `/sessions`
 - `/calendario` → `/calendar`
 - `/meu-objetivo` → `/my-goal`
 - `/revisoes` → `/reviews`
@@ -363,6 +368,7 @@ Also translate Portuguese variable names (`produto`, `empresa`, `suporte`) and h
 ### [x] 3.6 Translate `global-footer.tsx` — hardcoded Portuguese UI strings
 
 Replace all hardcoded Portuguese strings with `t()` calls:
+
 - Section headers: "Recursos", "Suporte", "Sobre"
 - Link labels: "Catálogo de Recursos", "Como Funciona", "Planos", "Contato"
 - Description text: "Plataforma de aprendizado inteligente..."
@@ -371,6 +377,7 @@ Replace all hardcoded Portuguese strings with `t()` calls:
 ### [x] 3.7 Translate remaining files with Portuguese code (non-renamed files)
 
 Completed translations:
+
 - `components/landing/landing-hero.tsx` - Translated static profiles object to English
 - `components/landing/ui.tsx` - Translated all Portuguese comments to English
 - Other landing components already using translation keys
