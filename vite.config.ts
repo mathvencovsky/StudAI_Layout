@@ -23,16 +23,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      // any path starting with /ytapi will be proxied
-      "/ytapi": {
-        target: "https://ytapi.apps.mattw.io",
-        changeOrigin: true,
-        secure: true,
-        // optional: strip the /ytapi prefix before forwarding
-        rewrite: (path) => path.replace(/^\/ytapi/, ""),
-      },
-    },
-  },
+
 });

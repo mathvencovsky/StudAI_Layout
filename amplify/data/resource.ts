@@ -1,4 +1,10 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import {
+  type ClientSchema,
+  a,
+  defineData,
+  defineFunction,
+  secret,
+} from "@aws-amplify/backend";
 import { defineConversationHandlerFunction } from "@aws-amplify/backend-ai/conversation";
 
 export const chatHandler = defineConversationHandlerFunction({
@@ -11,7 +17,172 @@ export const chatHandler = defineConversationHandlerFunction({
   ],
 });
 
+const youtubeProxyHandler = defineFunction({
+  name: "youtube-proxy",
+  entry: "./youtube-proxy/handler.ts",
+  environment: {
+    YOUTUBE_API_KEY: secret("YOUTUBE_API_KEY"),
+  },
+});
+
 const schema = a.schema({
+  // YouTube API custom types
+  YouTubePageInfo: a.customType({
+    totalResults: a.integer(),
+    resultsPerPage: a.integer(),
+  }),
+
+  YouTubeThumbnail: a.customType({
+    url: a.string(),
+    width: a.integer(),
+    height: a.integer(),
+  }),
+
+  YouTubeThumbnails: a.customType({
+    default: a.ref("YouTubeThumbnail"),
+    medium: a.ref("YouTubeThumbnail"),
+    high: a.ref("YouTubeThumbnail"),
+    standard: a.ref("YouTubeThumbnail"),
+    maxres: a.ref("YouTubeThumbnail"),
+  }),
+
+  // Video types
+  YouTubeVideoSnippet: a.customType({
+    publishedAt: a.string(),
+    channelId: a.string(),
+    title: a.string(),
+    description: a.string(),
+    thumbnails: a.ref("YouTubeThumbnails"),
+    channelTitle: a.string(),
+    tags: a.string().array(),
+    categoryId: a.string(),
+    liveBroadcastContent: a.string(),
+    defaultLanguage: a.string(),
+    defaultAudioLanguage: a.string(),
+  }),
+
+  YouTubeVideoContentDetails: a.customType({
+    duration: a.string(),
+    dimension: a.string(),
+    definition: a.string(),
+    caption: a.string(),
+    licensedContent: a.boolean(),
+    projection: a.string(),
+  }),
+
+  YouTubeVideoStatistics: a.customType({
+    viewCount: a.string(),
+    likeCount: a.string(),
+    favoriteCount: a.string(),
+    commentCount: a.string(),
+  }),
+
+  YouTubeVideoStatus: a.customType({
+    uploadStatus: a.string(),
+    privacyStatus: a.string(),
+    license: a.string(),
+    embeddable: a.boolean(),
+    publicStatsViewable: a.boolean(),
+    madeForKids: a.boolean(),
+  }),
+
+  YouTubeVideoItem: a.customType({
+    kind: a.string(),
+    etag: a.string(),
+    id: a.string(),
+    snippet: a.ref("YouTubeVideoSnippet"),
+    contentDetails: a.ref("YouTubeVideoContentDetails"),
+    statistics: a.ref("YouTubeVideoStatistics"),
+    status: a.ref("YouTubeVideoStatus"),
+  }),
+
+  YouTubeVideoListResponse: a.customType({
+    kind: a.string(),
+    etag: a.string(),
+    nextPageToken: a.string(),
+    prevPageToken: a.string(),
+    pageInfo: a.ref("YouTubePageInfo"),
+    items: a.ref("YouTubeVideoItem").array(),
+  }),
+
+  // Playlist types
+  YouTubePlaylistSnippet: a.customType({
+    publishedAt: a.string(),
+    channelId: a.string(),
+    title: a.string(),
+    description: a.string(),
+    thumbnails: a.ref("YouTubeThumbnails"),
+    channelTitle: a.string(),
+    defaultLanguage: a.string(),
+  }),
+
+  YouTubePlaylistContentDetails: a.customType({
+    itemCount: a.integer(),
+  }),
+
+  YouTubePlaylistStatus: a.customType({
+    privacyStatus: a.string(),
+  }),
+
+  YouTubePlaylistItem: a.customType({
+    kind: a.string(),
+    etag: a.string(),
+    id: a.string(),
+    snippet: a.ref("YouTubePlaylistSnippet"),
+    contentDetails: a.ref("YouTubePlaylistContentDetails"),
+    status: a.ref("YouTubePlaylistStatus"),
+  }),
+
+  YouTubePlaylistListResponse: a.customType({
+    kind: a.string(),
+    etag: a.string(),
+    nextPageToken: a.string(),
+    pageInfo: a.ref("YouTubePageInfo"),
+    items: a.ref("YouTubePlaylistItem").array(),
+  }),
+
+  // PlaylistItem types (items inside a playlist)
+  YouTubeResourceId: a.customType({
+    kind: a.string(),
+    videoId: a.string(),
+  }),
+
+  YouTubePlaylistItemSnippet: a.customType({
+    publishedAt: a.string(),
+    channelId: a.string(),
+    title: a.string(),
+    description: a.string(),
+    thumbnails: a.ref("YouTubeThumbnails"),
+    channelTitle: a.string(),
+    playlistId: a.string(),
+    position: a.integer(),
+    resourceId: a.ref("YouTubeResourceId"),
+  }),
+
+  YouTubePlaylistItemContentDetails: a.customType({
+    videoId: a.string(),
+    videoPublishedAt: a.string(),
+  }),
+
+  YouTubePlaylistItemStatus: a.customType({
+    privacyStatus: a.string(),
+  }),
+
+  YouTubePlaylistItemEntry: a.customType({
+    kind: a.string(),
+    etag: a.string(),
+    id: a.string(),
+    snippet: a.ref("YouTubePlaylistItemSnippet"),
+    contentDetails: a.ref("YouTubePlaylistItemContentDetails"),
+    status: a.ref("YouTubePlaylistItemStatus"),
+  }),
+
+  // Composite response type
+  YouTubeFullPlaylistResponse: a.customType({
+    playlist: a.ref("YouTubePlaylistListResponse"),
+    items: a.ref("YouTubePlaylistItemEntry").array(),
+  }),
+
   Category: a.enum([
     "web_development",
     "mobile_development",
@@ -248,7 +419,9 @@ const schema = a.schema({
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
-    .authorization((allow) => [allow.owner().to(["create", "read", "update", "delete"])]),
+    .authorization((allow) => [
+      allow.owner().to(["create", "read", "update", "delete"]),
+    ]),
 
   Quiz: a
     .model({
@@ -579,6 +752,21 @@ const schema = a.schema({
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
     .authorization((allow) => [allow.owner()]),
+
+  // YouTube proxy custom queries
+  getYouTubeVideo: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.ref("YouTubeVideoListResponse"))
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubePlaylistFull: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.ref("YouTubeFullPlaylistResponse"))
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
