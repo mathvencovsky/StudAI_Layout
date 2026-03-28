@@ -13,6 +13,7 @@ type YouTubeProxyHandler = SharedHandler<
  * Routes based on event.info.fieldName to the appropriate YouTube API helper.
  */
 export const handler: YouTubeProxyHandler = async (event) => {
+  console.log(JSON.stringify(event));
   switch (event.info.fieldName) {
     case "getYouTubeVideo":
       return await getVideoById(event.arguments.id);
