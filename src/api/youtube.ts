@@ -1,133 +1,7 @@
 import { type ExtractedMetadata } from "./metadata";
 import { Duration } from "luxon";
+import { getYouTubeVideo, getYouTubePlaylistFull } from "./youtube-proxy";
 
-const MATTW_YT_API_BASE = "/ytapi/v3/videos";
-const MATTW_YT_PLAYLIST_ITEMS_BASE = "/ytapi/v3/playlistItems";
-const MATTW_YT_API_KEY = "foo1";
-const MATTW_YT_QUOTA_USER = "SXACBVqKu9yJxSFrhDsERdToUoBWKAHPwGrXDXYu";
-
-/**
- * Call Microlink API (primary source).
- */
-async function fetchFromMicrolink(
-  url: string,
-  videoId: string,
-): Promise<ExtractedMetadata | null> {
-  try {
-    const response = await fetch(
-      `https://api.microlink.io?url=${encodeURIComponent(
-        `https://www.youtube.com/watch?v=${videoId}`,
-      )}`,
-    );
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const data = await response.json();
-
-    if (!data.data) {
-      return null;
-    }
-
-    const metadata: ExtractedMetadata = {
-      title: data.data.title || "YouTube Video",
-      description: data.data.description || "",
-      image: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-      favicon: data.data.logo?.url,
-      url,
-      durationInSeconds: 0,
-    };
-
-    return metadata;
-  } catch (error) {
-    console.error(`Error calling Microlink for ${url}:`, error);
-    return null;
-  }
-}
-
-/**
- * Call the Mattw YouTube API (fallback source).
- *
- * Expects a response shaped like:
- * {
- *   kind: "youtube#videoListResponse",
- *   items: [
- *     {
- *       id: "...",
- *       snippet: {
- *         title: "...",
- *         description: "...",
- *         thumbnails: { maxres?: { url }, high?: { url }, ... }
- *       },
- *       ...
- *     }
- *   ]
- * }
- */
-export async function fetchFromMattwApi(
-  url: string,
-  videoId: string,
-): Promise<ExtractedMetadata | null> {
-  try {
-    const params = new URLSearchParams({
-      key: MATTW_YT_API_KEY,
-      quotaUser: MATTW_YT_QUOTA_USER,
-      part: "snippet,statistics,recordingDetails,status,liveStreamingDetails,localizations,contentDetails,paidProductPlacementDetails,player,topicDetails",
-      id: videoId,
-    });
-
-    const response = await fetch(`${MATTW_YT_API_BASE}?${params.toString()}`);
-
-    if (!response.ok) {
-      console.error(
-        `Mattw YouTube API returned non-OK status: ${response.status}`,
-      );
-      return null;
-    }
-
-    const data = await response.json();
-
-    const item = data?.items?.[0];
-    if (!item || !item.snippet) {
-      console.error("Mattw YouTube API: no items/snippet in response");
-      return null;
-    }
-
-    const { snippet, contentDetails } = item;
-    const thumbnails = snippet.thumbnails ?? {};
-    const duration = contentDetails?.duration ?? "PT0S";
-
-    const thumbnail =
-      thumbnails.maxres?.url ??
-      thumbnails.standard?.url ??
-      thumbnails.high?.url ??
-      thumbnails.medium?.url ??
-      thumbnails.default?.url ??
-      `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-
-    const metadata: ExtractedMetadata = {
-      title: snippet.title || "YouTube Video",
-      description: snippet.description || "",
-      image: thumbnail,
-      favicon: undefined,
-      durationInSeconds: Duration.fromISO(duration).as("seconds"),
-      url,
-      author: snippet.channelTitle,
-      publishedAt: snippet.publishedAt,
-      language: snippet.defaultLanguage,
-    };
-
-    return metadata;
-  } catch (error) {
-    console.error(`Error calling Mattw YouTube API for ${url}:`, error);
-    return null;
-  }
-}
-
-/**
- * Extracts the playlist ID from a YouTube playlist URL.
- */
 export interface PlaylistData {
   title: string;
   description: string;
@@ -143,92 +17,118 @@ export function getYouTubePlaylistId(url: string): string | null {
 }
 
 /**
- * Fetches playlist metadata and all video URLs from a YouTube playlist using the Mattw API.
- * Handles pagination automatically.
+ * Fetches video metadata from the YouTube proxy Lambda and transforms it into ExtractedMetadata.
  */
-export async function fetchPlaylistData(playlistId: string): Promise<PlaylistData> {
-  const playlistParams = new URLSearchParams({
-    key: MATTW_YT_API_KEY,
-    quotaUser: MATTW_YT_QUOTA_USER,
-    part: "snippet",
-    id: playlistId,
-  });
+export async function fetchVideoMetadata(
+  url: string,
+  videoId: string,
+): Promise<ExtractedMetadata | null> {
+  try {
+    const data = (await getYouTubeVideo(videoId)) as {
+      items?: {
+        snippet?: {
+          title?: string;
+          description?: string;
+          thumbnails?: {
+            maxres?: { url: string };
+            standard?: { url: string };
+            high?: { url: string };
+            medium?: { url: string };
+            default?: { url: string };
+          };
+          channelTitle?: string;
+          publishedAt?: string;
+          defaultLanguage?: string;
+        };
+        contentDetails?: { duration?: string };
+      }[];
+    };
 
-  const playlistResponse = await fetch(`/ytapi/v3/playlists?${playlistParams.toString()}`);
-  const playlistJson = playlistResponse.ok ? await playlistResponse.json() : null;
-  const snippet = playlistJson?.items?.[0]?.snippet;
-
-  const videoUrls: string[] = [];
-  let pageToken = "";
-
-  do {
-    const params = new URLSearchParams({
-      key: MATTW_YT_API_KEY,
-      quotaUser: MATTW_YT_QUOTA_USER,
-      part: "snippet",
-      playlistId,
-      maxResults: "50",
-      ...(pageToken ? { pageToken } : {}),
-    });
-
-    const response = await fetch(
-      `${MATTW_YT_PLAYLIST_ITEMS_BASE}?${params.toString()}`,
-    );
-
-    if (!response.ok) {
-      console.error(
-        `Mattw playlist items API returned non-OK status: ${response.status}`,
-      );
-      break;
+    const item = data?.items?.[0];
+    if (!item?.snippet) {
+      console.error("YouTube proxy: no items/snippet in response");
+      return null;
     }
 
-    const data = await response.json();
+    const { snippet, contentDetails } = item;
+    const thumbnails = snippet.thumbnails ?? {};
+    const duration = contentDetails?.duration ?? "PT0S";
 
-    for (const item of data.items ?? []) {
-      const videoId: string | undefined = item?.snippet?.resourceId?.videoId;
-      if (videoId) {
-        videoUrls.push(`https://www.youtube.com/watch?v=${videoId}`);
-      }
-    }
+    const thumbnail =
+      thumbnails.maxres?.url ??
+      thumbnails.standard?.url ??
+      thumbnails.high?.url ??
+      thumbnails.medium?.url ??
+      thumbnails.default?.url ??
+      `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-    pageToken = data.nextPageToken ?? "";
-  } while (pageToken);
-
-  return {
-    title: snippet?.title ?? "",
-    description: snippet?.description ?? "",
-    videoUrls,
-  };
+    return {
+      title: snippet.title || "YouTube Video",
+      description: snippet.description || "",
+      image: thumbnail,
+      favicon: undefined,
+      durationInSeconds: Duration.fromISO(duration).as("seconds"),
+      url,
+      author: snippet.channelTitle,
+      publishedAt: snippet.publishedAt,
+      language: snippet.defaultLanguage,
+    };
+  } catch (error) {
+    console.error(`Error fetching YouTube metadata for ${url}:`, error);
+    return null;
+  }
 }
 
 /**
- * Extracts metadata from a YouTube video using the Microlink API with the video ID.
- *
- * @param url - The original YouTube URL
- * @param videoId - The extracted YouTube video ID
- * @returns Extracted metadata object, or null if extraction fails
+ * Extracts metadata from a YouTube video using the Lambda proxy.
  */
 export async function extractYouTubeMetadata(
   url: string,
   videoId: string,
 ): Promise<ExtractedMetadata | null> {
   try {
-    const mattwResult = await fetchFromMattwApi(url, videoId);
-    if (mattwResult) {
-      return mattwResult;
-    }
-
-    const microlinkResult = await fetchFromMicrolink(url, videoId);
-    if (microlinkResult) {
-      return microlinkResult;
-    }
-
-    console.error(
-      `Failed to extract YouTube metadata from both Microlink and Mattw for ${url}`,
-    );
-    return null;
+    return await fetchVideoMetadata(url, videoId);
   } catch (error) {
     console.error(`Error extracting YouTube metadata for ${url}:`, error);
     return null;
+  }
+}
+
+/**
+ * Fetches playlist metadata and all video URLs from a YouTube playlist via the Lambda proxy.
+ */
+export async function fetchPlaylistData(
+  playlistId: string,
+): Promise<PlaylistData> {
+  try {
+    const data = (await getYouTubePlaylistFull(playlistId)) as {
+      playlist?: {
+        items?: {
+          snippet?: { title?: string; description?: string };
+        }[];
+      };
+      items?: {
+        snippet?: { resourceId?: { videoId?: string } };
+      }[];
+    };
+
+    const snippet = data?.playlist?.items?.[0]?.snippet;
+    const videoUrls: string[] = [];
+
+    for (const item of data?.items ?? []) {
+      const videoId = item?.snippet?.resourceId?.videoId;
+      if (videoId) {
+        videoUrls.push(`https://www.youtube.com/watch?v=${videoId}`);
+      }
+    }
+
+    return {
+      title: snippet?.title ?? "",
+      description: snippet?.description ?? "",
+      videoUrls,
+    };
+  } catch (error) {
+    console.error(`Error fetching playlist data for ${playlistId}:`, error);
+    return { title: "", description: "", videoUrls: [] };
   }
 }

@@ -1,4 +1,10 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import {
+  type ClientSchema,
+  a,
+  defineData,
+  defineFunction,
+  secret,
+} from "@aws-amplify/backend";
 import { defineConversationHandlerFunction } from "@aws-amplify/backend-ai/conversation";
 
 export const chatHandler = defineConversationHandlerFunction({
@@ -9,6 +15,14 @@ export const chatHandler = defineConversationHandlerFunction({
       modelId: a.ai.model("Amazon Nova Micro"),
     },
   ],
+});
+
+const youtubeProxyHandler = defineFunction({
+  name: "youtube-proxy",
+  entry: "./youtube-proxy/handler.ts",
+  environment: {
+    YOUTUBE_API_KEY: secret("YOUTUBE_API_KEY"),
+  },
 });
 
 const schema = a.schema({
@@ -579,6 +593,114 @@ const schema = a.schema({
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),
     })
     .authorization((allow) => [allow.owner()]),
+
+  // YouTube proxy custom queries
+  getYouTubeVideo: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeVideos: a
+    .query()
+    .arguments({ ids: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeVideoFull: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeChannel: a
+    .query()
+    .arguments({ id: a.string(), forHandle: a.string() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeChannelFull: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubePlaylist: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubePlaylistFull: a
+    .query()
+    .arguments({ id: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubePlaylistItems: a
+    .query()
+    .arguments({
+      playlistId: a.string().required(),
+      maxResults: a.integer(),
+      pageToken: a.string(),
+    })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  searchYouTube: a
+    .query()
+    .arguments({
+      q: a.string().required(),
+      type: a.string(),
+      maxResults: a.integer(),
+      pageToken: a.string(),
+    })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeComments: a
+    .query()
+    .arguments({ videoId: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeActivities: a
+    .query()
+    .arguments({ channelId: a.string().required() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeI18nLanguages: a
+    .query()
+    .arguments({ hl: a.string() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeI18nRegions: a
+    .query()
+    .arguments({ hl: a.string() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
+
+  getYouTubeVideoCategories: a
+    .query()
+    .arguments({ regionCode: a.string(), hl: a.string() })
+    .returns(a.json())
+    .authorization((allow) => [allow.authenticated()])
+    .handler(a.handler.function(youtubeProxyHandler)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
