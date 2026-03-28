@@ -10,11 +10,11 @@ type YouTubeProxyHandler = SharedHandler<
 
 /**
  * Shared handler for YouTube proxy custom queries.
- * Routes based on event.info.fieldName to the appropriate YouTube API helper.
+ * Routes based on event.fieldName to the appropriate YouTube API helper.
  */
 export const handler: YouTubeProxyHandler = async (event) => {
-  console.log(JSON.stringify(event));
-  switch (event.info.fieldName) {
+  const fieldName = event.fieldName || event.info.fieldName;
+  switch (fieldName) {
     case "getYouTubeVideo":
       return await getVideoById(event.arguments.id);
 
@@ -22,6 +22,6 @@ export const handler: YouTubeProxyHandler = async (event) => {
       return await getFullPlaylistMetadata(event.arguments.id);
 
     default:
-      throw new Error(`Unknown query: ${event.info.fieldName}`);
+      throw new Error(`Unknown query: ${event.fieldName}`);
   }
 };
