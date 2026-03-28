@@ -1,91 +1,26 @@
+import type { SharedHandler } from "../../utils/types";
 import type { Schema } from "../resource";
-import {
-  getActivitiesByChannelId,
-  getChannelById,
-  getChannelByHandle,
-  getCommentThreadsByVideoId,
-  getI18nLanguages,
-  getI18nRegions,
-  getPlaylistById,
-  getPlaylistItems,
-  getVideoById,
-  getVideoCategories,
-  getVideosByIds,
-  searchYouTube,
-} from "./youtube-helpers";
-import {
-  getFullChannelMetadata,
-  getFullPlaylistMetadata,
-  getFullVideoMetadata,
-} from "./youtube-composite";
+import { getVideoById } from "./youtube-helpers";
+import { getFullPlaylistMetadata } from "./youtube-composite";
 
-type YouTubeQueryHandler = Schema["getYouTubeVideo"]["functionHandler"];
+type YouTubeProxyHandler = SharedHandler<
+  | Schema["getYouTubeVideo"]["functionHandler"]
+  | Schema["getYouTubePlaylistFull"]["functionHandler"]
+>;
 
 /**
- * Shared handler for all YouTube proxy custom queries.
- * Routes based on event.fieldName to the appropriate YouTube API helper.
+ * Shared handler for YouTube proxy custom queries.
+ * Routes based on event.info.fieldName to the appropriate YouTube API helper.
  */
-export const handler: YouTubeQueryHandler = async (event) => {
-  const args = event.arguments;
-  const field = event.fieldName;
-
-  switch (field) {
+export const handler: YouTubeProxyHandler = async (event) => {
+  switch (event.info.fieldName) {
     case "getYouTubeVideo":
-      return await getVideoById(args.id);
-
-    case "getYouTubeVideos":
-      return await getVideosByIds(args.ids.split(","));
-
-    case "getYouTubeVideoFull":
-      return await getFullVideoMetadata(args.id);
-
-    case "getYouTubeChannel":
-      if (args.id) return await getChannelById(args.id);
-      if (args.forHandle) return await getChannelByHandle(args.forHandle);
-      throw new Error("Missing required argument: id or forHandle");
-
-    case "getYouTubeChannelFull":
-      return await getFullChannelMetadata(args.id);
-
-    case "getYouTubePlaylist":
-      return await getPlaylistById(args.id);
+      return await getVideoById(event.arguments.id);
 
     case "getYouTubePlaylistFull":
-      return await getFullPlaylistMetadata(args.id);
-
-    case "getYouTubePlaylistItems":
-      return await getPlaylistItems(
-        args.playlistId,
-        args.maxResults ?? undefined,
-        args.pageToken ?? undefined,
-      );
-
-    case "searchYouTube":
-      return await searchYouTube(args.q, {
-        type: args.type ?? undefined,
-        maxResults: args.maxResults ?? undefined,
-        pageToken: args.pageToken ?? undefined,
-      });
-
-    case "getYouTubeComments":
-      return await getCommentThreadsByVideoId(args.videoId);
-
-    case "getYouTubeActivities":
-      return await getActivitiesByChannelId(args.channelId);
-
-    case "getYouTubeI18nLanguages":
-      return await getI18nLanguages(args.hl ?? undefined);
-
-    case "getYouTubeI18nRegions":
-      return await getI18nRegions(args.hl ?? undefined);
-
-    case "getYouTubeVideoCategories":
-      return await getVideoCategories(
-        args.regionCode ?? undefined,
-        args.hl ?? undefined,
-      );
+      return await getFullPlaylistMetadata(event.arguments.id);
 
     default:
-      throw new Error(`Unknown query: ${field}`);
+      throw new Error(`Unknown query: ${event.info.fieldName}`);
   }
 };
