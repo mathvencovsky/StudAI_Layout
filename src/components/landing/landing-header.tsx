@@ -3,13 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { GraduationCap, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Navigation header for the landing page with mobile menu support.
  */
 export function LandingHeader() {
-  const { t, locale, setLocale } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
+  const setLocale = (lang: string) => i18n.changeLanguage(lang);
   const [isOpen, setIsOpen] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -36,13 +38,13 @@ export function LandingHeader() {
               onClick={() => scrollToSection("produto")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              {t("header.product")}
+              {t("header-product")}
             </button>
             <button
               onClick={() => scrollToSection("como-funciona")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              {t("header.howItWorks")}
+              {t("header-how-it-works")}
             </button>
             <button
               onClick={() => scrollToSection("casos-de-uso")}
@@ -54,19 +56,19 @@ export function LandingHeader() {
               onClick={() => scrollToSection("depoimentos")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              {t("header.testimonials")}
+              {t("header-testimonials")}
             </button>
             <button
               onClick={() => scrollToSection("planos")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              {t("header.plans")}
+              {t("header-plans")}
             </button>
             <button
               onClick={() => scrollToSection("faq")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              {t("header.faq")}
+              {t("header-faq")}
             </button>
           </nav>
 
@@ -82,7 +84,7 @@ export function LandingHeader() {
               onClick={() => scrollToSection("auth-section")}
               className="h-11 px-6 rounded-3xl text-base font-semibold bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40 hover:scale-[1.02] transition-all duration-300"
             >
-              {t("common.startFree")}
+              {t("common-start-free")}
             </Button>
           </div>
 
@@ -99,13 +101,13 @@ export function LandingHeader() {
                   onClick={() => scrollToSection("produto")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  {t("header.product")}
+                  {t("header-product")}
                 </button>
                 <button
                   onClick={() => scrollToSection("como-funciona")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  {t("header.howItWorks")}
+                  {t("header-how-it-works")}
                 </button>
                 <button
                   onClick={() => scrollToSection("casos-de-uso")}
@@ -117,25 +119,25 @@ export function LandingHeader() {
                   onClick={() => scrollToSection("depoimentos")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  {t("header.testimonials")}
+                  {t("header-testimonials")}
                 </button>
                 <button
                   onClick={() => scrollToSection("planos")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  {t("header.plans")}
+                  {t("header-plans")}
                 </button>
                 <button
                   onClick={() => scrollToSection("faq")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  {t("header.faq")}
+                  {t("header-faq")}
                 </button>
                 <Button
                   onClick={() => scrollToSection("auth-section")}
                   className="w-full h-14 rounded-3xl text-lg font-semibold bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40"
                 >
-                  {t("common.startFree")}
+                  {t("common-start-free")}
                 </Button>
               </nav>
             </SheetContent>

@@ -12,13 +12,13 @@ import { NewTransparencySection } from "./new-transparency-section";
 import { NewFAQSection } from "./new-faq-section";
 import { NewFooter } from "./new-footer";
 import { AuthCard } from "./auth-card";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Main landing page component that composes all landing sections.
  */
 export function LandingPage() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -41,10 +41,10 @@ export function LandingPage() {
             <div className="max-w-3xl mx-auto">
               <div className="mb-20 text-center">
                 <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-tight">
-                  {t("finalCta.headline")} <span className="text-primary">{t("finalCta.headlineHighlight")}</span>
+                  {t("final-cta-headline")} <span className="text-primary">{t("final-cta-headline-highlight")}</span>
                 </h2>
                 <p className="text-2xl text-muted-foreground">
-                  {t("finalCta.subheadline")}
+                  {t("final-cta-subheadline")}
                 </p>
               </div>
               <AuthCard className="mx-auto" />

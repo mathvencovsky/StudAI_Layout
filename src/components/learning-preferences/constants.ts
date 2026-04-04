@@ -13,6 +13,17 @@ export const INTEREST_OPTIONS: Category[] = [
   "game_development",
   "blockchain",
   "embedded_systems",
+  "vestibular_enem",
+  "concursos_publicos",
+  "certifications",
+  "languages",
+  "math_logic",
+  "productivity_tools",
+  "career_market",
+  "business_entrepreneurship",
+  "marketing_sales",
+  "design_creative",
+  "law",
 ];
 
 export const INTEREST_TRANSLATION_KEYS = {
@@ -28,6 +39,18 @@ export const INTEREST_TRANSLATION_KEYS = {
   mobile_development: "learning-preferences-interest-mobile-development",
   ui_ux_design: "learning-preferences-interest-ui-ux-design",
   web_development: "learning-preferences-interest-web-development",
+  vestibular_enem: "learning-preferences-interest-vestibular-enem",
+  concursos_publicos: "learning-preferences-interest-concursos-publicos",
+  certifications: "learning-preferences-interest-certifications",
+  languages: "learning-preferences-interest-languages",
+  math_logic: "learning-preferences-interest-math-logic",
+  productivity_tools: "learning-preferences-interest-productivity-tools",
+  career_market: "learning-preferences-interest-career-market",
+  business_entrepreneurship:
+    "learning-preferences-interest-business-entrepreneurship",
+  marketing_sales: "learning-preferences-interest-marketing-sales",
+  design_creative: "learning-preferences-interest-design-creative",
+  law: "learning-preferences-interest-law",
 } as const satisfies Record<Category, string>;
 
 export const MINUTES_PRESETS = [10, 20, 30, 45, 60] as const;

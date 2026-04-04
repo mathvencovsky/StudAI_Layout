@@ -1,11 +1,11 @@
 import { Brain, Zap, TrendingUp } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * AI showcase section highlighting the platform's AI-powered features and stats.
  */
 export function AIShowcaseSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   return (
     <section className="relative bg-background py-12 overflow-hidden">
@@ -15,17 +15,17 @@ export function AIShowcaseSection() {
         <div className="max-w-3xl mb-24">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full mb-10">
             <Brain className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">{t("aiShowcase.badge")}</span>
+            <span className="text-sm font-semibold text-primary">{t("ai-showcase-badge")}</span>
           </div>
 
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("aiShowcase.headline1")}
+            {t("ai-showcase-headline1")}
             <br />
-            <span className="text-primary">{t("aiShowcase.headline2")}</span>
+            <span className="text-primary">{t("ai-showcase-headline2")}</span>
           </h2>
 
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            {t("aiShowcase.subheadline")}
+            {t("ai-showcase-subheadline")}
           </p>
         </div>
 
@@ -37,30 +37,30 @@ export function AIShowcaseSection() {
               </div>
 
               <h3 className="text-4xl font-bold text-foreground mb-6">
-                {t("aiShowcase.feature1.title")}
+                {t("ai-showcase-feature1-title")}
               </h3>
 
               <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                {t("aiShowcase.feature1.desc")}
+                {t("ai-showcase-feature1-desc")}
               </p>
 
               <div className="bg-muted/50 rounded-2xl p-6 space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-foreground/80">{t("aiShowcase.feature1.difficultyDetected")}</span>
-                  <span className="text-xs px-3 py-1 bg-warning/20 text-warning-foreground rounded-full font-semibold">{t("aiShowcase.feature1.adjusting")}</span>
+                  <span className="text-sm font-medium text-foreground/80">{t("ai-showcase-feature1-difficulty-detected")}</span>
+                  <span className="text-xs px-3 py-1 bg-warning/20 text-warning-foreground rounded-full font-semibold">{t("ai-showcase-feature1-adjusting")}</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="text-sm text-muted-foreground">{t("aiShowcase.feature1.action1")}</span>
+                    <span className="text-sm text-muted-foreground">{t("ai-showcase-feature1-action1")}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="text-sm text-muted-foreground">{t("aiShowcase.feature1.action2")}</span>
+                    <span className="text-sm text-muted-foreground">{t("ai-showcase-feature1-action2")}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="text-sm text-muted-foreground">{t("aiShowcase.feature1.action3")}</span>
+                    <span className="text-sm text-muted-foreground">{t("ai-showcase-feature1-action3")}</span>
                   </div>
                 </div>
               </div>
@@ -74,11 +74,11 @@ export function AIShowcaseSection() {
               </div>
 
               <h3 className="text-2xl font-bold text-foreground mb-4">
-                {t("aiShowcase.feature2.title")}
+                {t("ai-showcase-feature2-title")}
               </h3>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                {t("aiShowcase.feature2.desc")}
+                {t("ai-showcase-feature2-desc")}
               </p>
             </div>
 
@@ -88,11 +88,11 @@ export function AIShowcaseSection() {
               </div>
 
               <h3 className="text-2xl font-bold text-foreground mb-4">
-                {t("aiShowcase.feature3.title")}
+                {t("ai-showcase-feature3-title")}
               </h3>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                {t("aiShowcase.feature3.desc")}
+                {t("ai-showcase-feature3-desc")}
               </p>
             </div>
           </div>
@@ -102,20 +102,20 @@ export function AIShowcaseSection() {
         <div className="mt-20 bg-primary rounded-3xl p-12">
           <div className="grid md:grid-cols-4 gap-12 text-center">
             <div>
-              <div className="text-5xl font-bold text-background mb-3">{t("aiShowcase.stat1.value")}</div>
-              <div className="text-primary-foreground/70 text-lg">{t("aiShowcase.stat1.label")}</div>
+              <div className="text-5xl font-bold text-background mb-3">{t("ai-showcase-stat1-value")}</div>
+              <div className="text-primary-foreground/70 text-lg">{t("ai-showcase-stat1-label")}</div>
             </div>
             <div>
-              <div className="text-5xl font-bold text-background mb-3">{t("aiShowcase.stat2.value")}</div>
-              <div className="text-primary-foreground/70 text-lg">{t("aiShowcase.stat2.label")}</div>
+              <div className="text-5xl font-bold text-background mb-3">{t("ai-showcase-stat2-value")}</div>
+              <div className="text-primary-foreground/70 text-lg">{t("ai-showcase-stat2-label")}</div>
             </div>
             <div>
-              <div className="text-5xl font-bold text-background mb-3">{t("aiShowcase.stat3.value")}</div>
-              <div className="text-primary-foreground/70 text-lg">{t("aiShowcase.stat3.label")}</div>
+              <div className="text-5xl font-bold text-background mb-3">{t("ai-showcase-stat3-value")}</div>
+              <div className="text-primary-foreground/70 text-lg">{t("ai-showcase-stat3-label")}</div>
             </div>
             <div>
-              <div className="text-5xl font-bold text-background mb-3">{t("aiShowcase.stat4.value")}</div>
-              <div className="text-primary-foreground/70 text-lg">{t("aiShowcase.stat4.label")}</div>
+              <div className="text-5xl font-bold text-background mb-3">{t("ai-showcase-stat4-value")}</div>
+              <div className="text-primary-foreground/70 text-lg">{t("ai-showcase-stat4-label")}</div>
             </div>
           </div>
         </div>

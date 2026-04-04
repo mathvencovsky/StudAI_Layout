@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { UserPlus, Target, Rocket, TrendingUp } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * How it works section with animated step-by-step guide.
  */
 export function NewHowItWorks() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const [rocketOffset, setRocketOffset] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -43,27 +43,27 @@ export function NewHowItWorks() {
   const steps = [
     { 
       icon: UserPlus,
-      number: t("newHowItWorks.step1.number"),
-      title: t("newHowItWorks.step1.title"), 
-      description: t("newHowItWorks.step1.desc")
+      number: t("new-how-it-works-step1-number"),
+      title: t("new-how-it-works-step1-title"), 
+      description: t("new-how-it-works-step1-desc")
     },
     { 
       icon: Target,
-      number: t("newHowItWorks.step2.number"),
-      title: t("newHowItWorks.step2.title"), 
-      description: t("newHowItWorks.step2.desc")
+      number: t("new-how-it-works-step2-number"),
+      title: t("new-how-it-works-step2-title"), 
+      description: t("new-how-it-works-step2-desc")
     },
     { 
       icon: Rocket,
-      number: t("newHowItWorks.step3.number"),
-      title: t("newHowItWorks.step3.title"), 
-      description: t("newHowItWorks.step3.desc")
+      number: t("new-how-it-works-step3-number"),
+      title: t("new-how-it-works-step3-title"), 
+      description: t("new-how-it-works-step3-desc")
     },
     { 
       icon: TrendingUp,
-      number: t("newHowItWorks.step4.number"),
-      title: t("newHowItWorks.step4.title"), 
-      description: t("newHowItWorks.step4.desc")
+      number: t("new-how-it-works-step4-number"),
+      title: t("new-how-it-works-step4-title"), 
+      description: t("new-how-it-works-step4-desc")
     }
   ];
 
@@ -77,15 +77,15 @@ export function NewHowItWorks() {
         <div className="max-w-4xl mb-32">
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-primary rounded-full mb-12">
             <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full animate-pulse" />
-            <span className="text-xs font-medium text-primary-foreground uppercase tracking-widest">{t("newHowItWorks.badge")}</span>
+            <span className="text-xs font-medium text-primary-foreground uppercase tracking-widest">{t("new-how-it-works-badge")}</span>
           </div>
           <h2 className="text-7xl md:text-8xl font-medium text-foreground mb-10 leading-[0.9] tracking-tight">
-            {t("newHowItWorks.headline1")}
+            {t("new-how-it-works-headline1")}
             <br />
-            <span className="text-primary">{t("newHowItWorks.headline2")}</span>
+            <span className="text-primary">{t("new-how-it-works-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed font-light">
-            {t("newHowItWorks.subheadline")}
+            {t("new-how-it-works-subheadline")}
           </p>
         </div>
 
@@ -140,7 +140,7 @@ export function NewHowItWorks() {
             onClick={() => document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth" })}
             className="inline-flex items-center gap-4 px-12 py-6 bg-primary text-primary-foreground text-xl font-medium rounded-2xl hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-2xl"
           >
-            {t("newHowItWorks.ctaButton")}
+            {t("new-how-it-works-cta-button")}
             <span className="text-2xl">→</span>
           </button>
         </div>

@@ -1,33 +1,33 @@
 import { useState } from "react";
 import { X, Check, TrendingUp, ArrowRight } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Before/after comparison section showing the transformation StudAI provides.
  */
 export function NewBeforeAfterSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [activeView, setActiveView] = useState<"before" | "after">("after");
 
   const beforeItems = [
-    t("beforeAfter.before1"),
-    t("beforeAfter.before2"),
-    t("beforeAfter.before3"),
-    t("beforeAfter.before4"),
+    t("before-after-before1"),
+    t("before-after-before2"),
+    t("before-after-before3"),
+    t("before-after-before4"),
   ];
 
   const afterItems = [
-    t("beforeAfter.after1"),
-    t("beforeAfter.after2"),
-    t("beforeAfter.after3"),
-    t("beforeAfter.after4"),
+    t("before-after-after1"),
+    t("before-after-after2"),
+    t("before-after-after3"),
+    t("before-after-after4"),
   ];
 
   const stats = [
-    { value: t("beforeAfter.stat1.value"), label: t("beforeAfter.stat1.label") },
-    { value: t("beforeAfter.stat2.value"), label: t("beforeAfter.stat2.label") },
-    { value: t("beforeAfter.stat3.value"), label: t("beforeAfter.stat3.label") },
-    { value: t("beforeAfter.stat4.value"), label: t("beforeAfter.stat4.label") },
+    { value: t("before-after-stat1-value"), label: t("before-after-stat1-label") },
+    { value: t("before-after-stat2-value"), label: t("before-after-stat2-label") },
+    { value: t("before-after-stat3-value"), label: t("before-after-stat3-label") },
+    { value: t("before-after-stat4-value"), label: t("before-after-stat4-label") },
   ];
 
   return (
@@ -39,15 +39,15 @@ export function NewBeforeAfterSection() {
         <div className="max-w-3xl mb-20">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full mb-10">
             <TrendingUp className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">{t("beforeAfter.badge")}</span>
+            <span className="text-sm font-semibold text-primary">{t("before-after-badge")}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("beforeAfter.headline1")}
+            {t("before-after-headline1")}
             <br />
-            <span className="text-primary">{t("beforeAfter.headline2")}</span>
+            <span className="text-primary">{t("before-after-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            {t("beforeAfter.subheadline")}
+            {t("before-after-subheadline")}
           </p>
         </div>
 
@@ -61,7 +61,7 @@ export function NewBeforeAfterSection() {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {t("beforeAfter.toggleWithout")}
+              {t("before-after-toggle-without")}
             </button>
             <button
               onClick={() => setActiveView("after")}
@@ -71,7 +71,7 @@ export function NewBeforeAfterSection() {
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
-              {t("beforeAfter.toggleWith")}
+              {t("before-after-toggle-with")}
             </button>
           </div>
         </div>
@@ -86,8 +86,8 @@ export function NewBeforeAfterSection() {
                   <X className="w-8 h-8 text-muted-foreground" />
                 </div>
                 <div>
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{t("beforeAfter.beforeLabel")}</span>
-                  <h3 className="text-3xl font-bold text-foreground">{t("beforeAfter.beforeTitle")}</h3>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">{t("before-after-before-label")}</span>
+                  <h3 className="text-3xl font-bold text-foreground">{t("before-after-before-title")}</h3>
                 </div>
               </div>
 
@@ -113,8 +113,8 @@ export function NewBeforeAfterSection() {
                     <Check className="w-8 h-8 text-primary-foreground" />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold text-primary-foreground/70 uppercase tracking-wide">{t("beforeAfter.afterLabel")}</span>
-                    <h3 className="text-3xl font-bold text-primary-foreground">{t("beforeAfter.afterTitle")}</h3>
+                    <span className="text-xs font-semibold text-primary-foreground/70 uppercase tracking-wide">{t("before-after-after-label")}</span>
+                    <h3 className="text-3xl font-bold text-primary-foreground">{t("before-after-after-title")}</h3>
                   </div>
                 </div>
 
@@ -131,7 +131,7 @@ export function NewBeforeAfterSection() {
                   onClick={() => document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth" })}
                   className="mt-8 w-full flex items-center justify-center gap-2 px-8 py-4 bg-primary-foreground text-primary font-semibold rounded-xl hover:bg-primary-foreground/90 transition-all group"
                 >
-                  {t("beforeAfter.ctaButton")}
+                  {t("before-after-cta-button")}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>

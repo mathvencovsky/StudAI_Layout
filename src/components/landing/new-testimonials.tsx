@@ -1,42 +1,42 @@
 import { useState } from "react";
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Testimonials carousel section with user success stories.
  */
 export function NewTestimonials() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
 
   const testimonials = [
     {
-      quote: t("newTestimonials.testimonial1.quote"),
-      author: t("newTestimonials.testimonial1.author"),
-      role: t("newTestimonials.testimonial1.role"),
+      quote: t("new-testimonials-testimonial1-quote"),
+      author: t("new-testimonials-testimonial1-author"),
+      role: t("new-testimonials-testimonial1-role"),
       rating: 5,
-      highlight: t("newTestimonials.testimonial1.highlight")
+      highlight: t("new-testimonials-testimonial1-highlight")
     },
     {
-      quote: t("newTestimonials.testimonial2.quote"),
-      author: t("newTestimonials.testimonial2.author"),
-      role: t("newTestimonials.testimonial2.role"),
+      quote: t("new-testimonials-testimonial2-quote"),
+      author: t("new-testimonials-testimonial2-author"),
+      role: t("new-testimonials-testimonial2-role"),
       rating: 5,
-      highlight: t("newTestimonials.testimonial2.highlight")
+      highlight: t("new-testimonials-testimonial2-highlight")
     },
     {
-      quote: t("newTestimonials.testimonial3.quote"),
-      author: t("newTestimonials.testimonial3.author"),
-      role: t("newTestimonials.testimonial3.role"),
+      quote: t("new-testimonials-testimonial3-quote"),
+      author: t("new-testimonials-testimonial3-author"),
+      role: t("new-testimonials-testimonial3-role"),
       rating: 5,
-      highlight: t("newTestimonials.testimonial3.highlight")
+      highlight: t("new-testimonials-testimonial3-highlight")
     },
     {
-      quote: t("newTestimonials.testimonial4.quote"),
-      author: t("newTestimonials.testimonial4.author"),
-      role: t("newTestimonials.testimonial4.role"),
+      quote: t("new-testimonials-testimonial4-quote"),
+      author: t("new-testimonials-testimonial4-author"),
+      role: t("new-testimonials-testimonial4-role"),
       rating: 5,
-      highlight: t("newTestimonials.testimonial4.highlight")
+      highlight: t("new-testimonials-testimonial4-highlight")
     }
   ];
 
@@ -59,15 +59,15 @@ export function NewTestimonials() {
         <div className="max-w-3xl mb-20">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-background border border-border rounded-full mb-10 shadow-sm">
             <Star className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-foreground/80">{t("newTestimonials.badge")}</span>
+            <span className="text-sm font-semibold text-foreground/80">{t("new-testimonials-badge")}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("newTestimonials.headline1")}
+            {t("new-testimonials-headline1")}
             <br />
-            <span className="text-primary">{t("newTestimonials.headline2")}</span>
+            <span className="text-primary">{t("new-testimonials-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            {t("newTestimonials.subheadline")}
+            {t("new-testimonials-subheadline")}
           </p>
         </div>
 

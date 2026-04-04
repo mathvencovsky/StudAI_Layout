@@ -196,6 +196,51 @@ const schema = a.schema({
     "game_development",
     "blockchain",
     "embedded_systems",
+    "vestibular_enem",
+    "concursos_publicos",
+    "certifications",
+    "languages",
+    "math_logic",
+    "productivity_tools",
+    "career_market",
+    "business_entrepreneurship",
+    "marketing_sales",
+    "design_creative",
+    "law",
+  ]),
+
+  LearningContext: a.enum([
+    "beginner",
+    "career_change",
+    "upskilling",
+    "job_prep",
+    "academic",
+    "personal_project",
+  ]),
+
+  Objective: a.enum([
+    "employment",
+    "career_change",
+    "skill_improvement",
+    "personal_project",
+    "academic_growth",
+  ]),
+
+  Budget: a.enum(["free", "paid"]),
+
+  LearningStyle: a.enum([
+    "visual",
+    "hands_on",
+    "theoretical",
+    "interactive",
+    "self_paced",
+    "structured",
+  ]),
+
+  ExperienceLevel: a.enum([
+    "beginner",
+    "intermediate",
+    "advanced",
   ]),
 
   Content: a
@@ -385,6 +430,18 @@ const schema = a.schema({
       days: a.string().required().array().required(),
       formats: a.string().required().array().required(),
       contentLength: a.enum(["bite_sized", "short", "medium", "deep_dive"]),
+      objectives: a.ref("Objective").required().array(),
+      context: a.ref("LearningContext"),
+      learningStyles: a.ref("LearningStyle").required().array(),
+      preferencePace: a.integer(),
+      preferenceDepth: a.integer(),
+      preferenceStructure: a.integer(),
+      preferenceChallenge: a.integer(),
+      hoursPerWeek: a.integer(),
+      totalWeeks: a.integer(),
+      budget: a.ref("Budget"),
+      urgency: a.integer(),
+      experienceLevel: a.ref("ExperienceLevel"),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),

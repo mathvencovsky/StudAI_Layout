@@ -1,33 +1,33 @@
-import { useCustomI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 import { Brain, Target, TrendingUp, Users } from "lucide-react";
 
 export function StatsSection() {
-  const { t } = useCustomI18n();
+  const { t } = useTranslation();
 
   const stats = [
     {
       icon: Brain,
       value: "10x",
-      label: t("stats.faster") || "Faster Learning",
-      description: t("stats.fasterDesc") || "AI-powered study paths",
+      label: t("stats-faster") || "Faster Learning",
+      description: t("stats-faster-desc") || "AI-powered study paths",
     },
     {
       icon: Target,
       value: "95%",
-      label: t("stats.success") || "Success Rate",
-      description: t("stats.successDesc") || "Students reaching goals",
+      label: t("stats-success") || "Success Rate",
+      description: t("stats-success-desc") || "Students reaching goals",
     },
     {
       icon: TrendingUp,
       value: "3x",
-      label: t("stats.retention") || "Better Retention",
-      description: t("stats.retentionDesc") || "Spaced repetition system",
+      label: t("stats-retention") || "Better Retention",
+      description: t("stats-retention-desc") || "Spaced repetition system",
     },
     {
       icon: Users,
       value: "50k+",
-      label: t("stats.students") || "Active Students",
-      description: t("stats.studentsDesc") || "Learning every day",
+      label: t("stats-students") || "Active Students",
+      description: t("stats-students-desc") || "Learning every day",
     },
   ];
 
@@ -36,14 +36,14 @@ export function StatsSection() {
       <div className="container relative">
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance">
-            {t("stats.title") || "The Power of"}
+            {t("stats-title") || "The Power of"}
             {" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {t("stats.titleHighlight") || "AI-Driven Learning"}
+              {t("stats-title-highlight") || "AI-Driven Learning"}
             </span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            {t("stats.subtitle") || "Real results from students who transformed their study routine with StudAI"}
+            {t("stats-subtitle") || "Real results from students who transformed their study routine with StudAI"}
           </p>
         </div>
 

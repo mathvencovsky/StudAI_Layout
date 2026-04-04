@@ -1,58 +1,58 @@
 import { useState } from "react";
 import { Shield, Database, Lock, Download } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Transparency section explaining data privacy and security principles.
  */
 export function NewTransparencySection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
 
   const principles = [
     {
       icon: Database,
-      title: t("transparency.principle1.title"),
-      description: t("transparency.principle1.desc"),
+      title: t("transparency-principle1-title"),
+      description: t("transparency-principle1-desc"),
       details: [
-        t("transparency.principle1.detail1"),
-        t("transparency.principle1.detail2"),
-        t("transparency.principle1.detail3"),
-        t("transparency.principle1.detail4"),
+        t("transparency-principle1-detail1"),
+        t("transparency-principle1-detail2"),
+        t("transparency-principle1-detail3"),
+        t("transparency-principle1-detail4"),
       ],
     },
     {
       icon: Shield,
-      title: t("transparency.principle2.title"),
-      description: t("transparency.principle2.desc"),
+      title: t("transparency-principle2-title"),
+      description: t("transparency-principle2-desc"),
       details: [
-        t("transparency.principle2.detail1"),
-        t("transparency.principle2.detail2"),
-        t("transparency.principle2.detail3"),
-        t("transparency.principle2.detail4"),
+        t("transparency-principle2-detail1"),
+        t("transparency-principle2-detail2"),
+        t("transparency-principle2-detail3"),
+        t("transparency-principle2-detail4"),
       ],
     },
     {
       icon: Lock,
-      title: t("transparency.principle3.title"),
-      description: t("transparency.principle3.desc"),
+      title: t("transparency-principle3-title"),
+      description: t("transparency-principle3-desc"),
       details: [
-        t("transparency.principle3.detail1"),
-        t("transparency.principle3.detail2"),
-        t("transparency.principle3.detail3"),
-        t("transparency.principle3.detail4"),
+        t("transparency-principle3-detail1"),
+        t("transparency-principle3-detail2"),
+        t("transparency-principle3-detail3"),
+        t("transparency-principle3-detail4"),
       ],
     },
     {
       icon: Download,
-      title: t("transparency.principle4.title"),
-      description: t("transparency.principle4.desc"),
+      title: t("transparency-principle4-title"),
+      description: t("transparency-principle4-desc"),
       details: [
-        t("transparency.principle4.detail1"),
-        t("transparency.principle4.detail2"),
-        t("transparency.principle4.detail3"),
-        t("transparency.principle4.detail4"),
+        t("transparency-principle4-detail1"),
+        t("transparency-principle4-detail2"),
+        t("transparency-principle4-detail3"),
+        t("transparency-principle4-detail4"),
       ],
     },
   ];
@@ -68,15 +68,15 @@ export function NewTransparencySection() {
         <div className="max-w-3xl mb-20">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full mb-10">
             <Shield className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">{t("transparency.badge")}</span>
+            <span className="text-sm font-semibold text-primary">{t("transparency-badge")}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("transparency.headline1")}
+            {t("transparency-headline1")}
             <br />
-            <span className="text-primary">{t("transparency.headline2")}</span>
+            <span className="text-primary">{t("transparency-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            {t("transparency.subheadline")}
+            {t("transparency-subheadline")}
           </p>
         </div>
 
@@ -85,26 +85,26 @@ export function NewTransparencySection() {
             <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
               <span className="text-primary-foreground text-xl">⚡</span>
             </div>
-            {t("transparency.summaryTitle")}
+            {t("transparency-summary-title")}
           </h3>
           <ul className="space-y-5 text-foreground/80">
             <li className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-primary text-lg">✓</span>
               </div>
-              <span className="text-lg">{t("transparency.summary1")}</span>
+              <span className="text-lg">{t("transparency-summary1")}</span>
             </li>
             <li className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-primary text-lg">✓</span>
               </div>
-              <span className="text-lg">{t("transparency.summary2")}</span>
+              <span className="text-lg">{t("transparency-summary2")}</span>
             </li>
             <li className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-primary text-lg">✓</span>
               </div>
-              <span className="text-lg">{t("transparency.summary3")}</span>
+              <span className="text-lg">{t("transparency-summary3")}</span>
             </li>
           </ul>
         </div>
@@ -170,10 +170,10 @@ export function NewTransparencySection() {
 
         <div className="flex flex-wrap gap-8 justify-center pt-12 border-t border-border">
           {[
-            { to: "/privacy", label: t("transparency.linkPrivacy") },
-            { to: "/security", label: t("transparency.linkSecurity") },
-            { to: "/terms", label: t("transparency.linkTerms") },
-            { to: "/support", label: t("transparency.linkSupport") },
+            { to: "/privacy", label: t("transparency-link-privacy") },
+            { to: "/security", label: t("transparency-link-security") },
+            { to: "/terms", label: t("transparency-link-terms") },
+            { to: "/support", label: t("transparency-link-support") },
           ].map((link, i) => (
             <Link
               key={i}

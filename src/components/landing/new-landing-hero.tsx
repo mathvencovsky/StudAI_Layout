@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { ArrowRight, Sparkles, Zap, Brain } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Hero section for the new landing page with AI-powered study plan messaging.
  */
 export function NewLandingHero() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<'exam' | 'certification' | 'vestibular'>('exam');
 
   const scrollToAuth = () => {
@@ -16,31 +16,31 @@ export function NewLandingHero() {
 
   const useCases = {
     exam: {
-      title: t("newHero.exam"),
+      title: t("new-hero-exam"),
       subjects: [
-        { name: t("newHero.exam.subject1"), progress: 87 },
-        { name: t("newHero.exam.subject2"), progress: 72 },
-        { name: t("newHero.exam.subject3"), progress: 94 }
+        { name: t("new-hero-exam-subject1"), progress: 87 },
+        { name: t("new-hero-exam-subject2"), progress: 72 },
+        { name: t("new-hero-exam-subject3"), progress: 94 }
       ],
-      recommendation: t("newHero.exam.recommendation")
+      recommendation: t("new-hero-exam-recommendation")
     },
     certification: {
-      title: t("newHero.certification"),
+      title: t("new-hero-certification"),
       subjects: [
-        { name: t("newHero.certification.subject1"), progress: 78 },
-        { name: t("newHero.certification.subject2"), progress: 85 },
-        { name: t("newHero.certification.subject3"), progress: 91 }
+        { name: t("new-hero-certification-subject1"), progress: 78 },
+        { name: t("new-hero-certification-subject2"), progress: 85 },
+        { name: t("new-hero-certification-subject3"), progress: 91 }
       ],
-      recommendation: t("newHero.certification.recommendation")
+      recommendation: t("new-hero-certification-recommendation")
     },
     vestibular: {
-      title: t("newHero.vestibular"),
+      title: t("new-hero-vestibular"),
       subjects: [
-        { name: t("newHero.vestibular.subject1"), progress: 85 },
-        { name: t("newHero.vestibular.subject2"), progress: 92 },
-        { name: t("newHero.vestibular.subject3"), progress: 88 }
+        { name: t("new-hero-vestibular-subject1"), progress: 85 },
+        { name: t("new-hero-vestibular-subject2"), progress: 92 },
+        { name: t("new-hero-vestibular-subject3"), progress: 88 }
       ],
-      recommendation: t("newHero.vestibular.recommendation")
+      recommendation: t("new-hero-vestibular-recommendation")
     }
   };
 
@@ -61,25 +61,25 @@ export function NewLandingHero() {
             <div className="mb-10 inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full">
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-semibold text-primary">
-                {t("newHero.poweredByAI")}
+                {t("new-hero-powered-by-ai")}
               </span>
             </div>
 
             {/* Headline */}
             <h1 className="text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-bold text-foreground leading-[0.95] tracking-tight mb-8">
-              {t("newHero.headline1")}
+              {t("new-hero-headline1")}
               <br />
-              <span className="text-primary">{t("newHero.headline2")}</span>
+              <span className="text-primary">{t("new-hero-headline2")}</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-8 max-w-xl">
-              {t("newHero.subheadline")}
+              {t("new-hero-subheadline")}
             </p>
 
             {/* Use Case Tabs */}
             <div className="mb-12">
-              <p className="text-sm font-medium text-muted-foreground mb-4">{t("newHero.studyingFor")}</p>
+              <p className="text-sm font-medium text-muted-foreground mb-4">{t("new-hero-studying-for")}</p>
               
               {/* Tabs */}
               <div className="grid grid-cols-3 gap-3 mb-6">
@@ -123,12 +123,12 @@ export function NewLandingHero() {
                 onClick={scrollToAuth}
                 className="group inline-flex items-center gap-3 px-10 py-5 bg-primary hover:bg-primary/90 text-primary-foreground text-lg font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all hover:scale-105"
               >
-                {t("newHero.ctaButton")}
+                {t("new-hero-cta-button")}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <div className="flex flex-col justify-center px-2">
-                <span className="text-sm text-muted-foreground">{t("newHero.freeForever")}</span>
-                <span className="text-sm text-muted-foreground">{t("newHero.setup60s")}</span>
+                <span className="text-sm text-muted-foreground">{t("new-hero-free-forever")}</span>
+                <span className="text-sm text-muted-foreground">{t("new-hero-setup60s")}</span>
               </div>
             </div>
 
@@ -136,17 +136,17 @@ export function NewLandingHero() {
             <div className="flex items-center gap-6 pt-8 border-t border-border">
               <div>
                 <div className="text-3xl font-bold text-foreground">10k+</div>
-                <div className="text-sm text-muted-foreground">{t("newHero.activeStudents")}</div>
+                <div className="text-sm text-muted-foreground">{t("new-hero-active-students")}</div>
               </div>
               <div className="w-px h-12 bg-border" />
               <div>
                 <div className="text-3xl font-bold text-foreground">95%</div>
-                <div className="text-sm text-muted-foreground">{t("newHero.completionRate")}</div>
+                <div className="text-sm text-muted-foreground">{t("new-hero-completion-rate")}</div>
               </div>
               <div className="w-px h-12 bg-border" />
               <div>
                 <div className="text-3xl font-bold text-foreground">4.9/5</div>
-                <div className="text-sm text-muted-foreground">{t("newHero.avgRating")}</div>
+                <div className="text-sm text-muted-foreground">{t("new-hero-avg-rating")}</div>
               </div>
             </div>
           </div>
@@ -170,9 +170,9 @@ export function NewLandingHero() {
                   <div className="flex items-center justify-between pb-4 border-b border-border">
                     <div className="flex items-center gap-3">
                       <div className="w-3 h-3 rounded-full bg-success animate-pulse" />
-                      <span className="text-sm font-semibold text-foreground/80">{t("newHero.aiAnalyzing")}</span>
+                      <span className="text-sm font-semibold text-foreground/80">{t("new-hero-ai-analyzing")}</span>
                     </div>
-                    <div className="text-xs text-muted-foreground">{t("newHero.realTime")}</div>
+                    <div className="text-xs text-muted-foreground">{t("new-hero-real-time")}</div>
                   </div>
 
                   {/* Progress bars */}
@@ -200,7 +200,7 @@ export function NewLandingHero() {
                         <Sparkles className="w-4 h-4 text-primary-foreground" />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-foreground mb-1">{t("newHero.aiRecommendation")}</div>
+                        <div className="text-sm font-semibold text-foreground mb-1">{t("new-hero-ai-recommendation")}</div>
                         <div className="text-sm text-muted-foreground">{useCases[activeTab].recommendation}</div>
                       </div>
                     </div>
@@ -210,15 +210,15 @@ export function NewLandingHero() {
                   <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-foreground">12</div>
-                      <div className="text-xs text-muted-foreground">{t("newHero.daysStreak")}</div>
+                      <div className="text-xs text-muted-foreground">{t("new-hero-days-streak")}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-foreground">3.2h</div>
-                      <div className="text-xs text-muted-foreground">{t("newHero.today")}</div>
+                      <div className="text-xs text-muted-foreground">{t("new-hero-today")}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-foreground">89%</div>
-                      <div className="text-xs text-muted-foreground">{t("newHero.accuracy")}</div>
+                      <div className="text-xs text-muted-foreground">{t("new-hero-accuracy")}</div>
                     </div>
                   </div>
                 </div>

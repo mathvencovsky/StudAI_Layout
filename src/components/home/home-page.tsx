@@ -1,15 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
-import { useCallback } from "react";
-import { toast } from "sonner";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
 import { LastStartedModuleSection } from "@/components/dashboard/last-started-module-section";
 import { LastStartedTrackSection } from "@/components/home/last-started-track-section";
-import { LearningPreferencesForm } from "@/components/learning-preferences/learning-preferences-form";
+import { DiscoveryPage } from "@/components/discovery";
 import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
-import { useSaveLearningPreference } from "@/hooks/learning-preference/use-save-learning-preference";
-import { type LearningPreferencesFormValues } from "@/components/learning-preferences/schema";
 import { useDashboardData } from "@/hooks/dashboard/use-dashboard-data";
 import { LoadingState } from "@/components/ui/loading-state";
 import { UpgradeCard } from "@/components/upgrade/upgrade-card";
@@ -19,49 +15,21 @@ import { RecommendedTracksEmptyState } from "@/components/home/recommended-track
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
- * Shows the learning preferences form if the user hasn't set preferences yet.
+ * Shows the discovery form if the user hasn't set preferences yet.
  */
 export const HomePage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { data: existingPreference, isLoading: isLoadingPreference } =
     useMyLearningPreference();
-  const { mutate: savePreference, isPending: isSaving } =
-    useSaveLearningPreference();
   const { isLoading: isDashboardLoading } = useDashboardData();
   const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
   const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
 
-  const handleSavePreference = useCallback(
-    (data: LearningPreferencesFormValues) => {
-      savePreference(
-        {
-          id: existingPreference?.id,
-          data: { ...data, days: data.days ?? [], formats: data.formats ?? [] },
-        },
-        {
-          onSuccess: () => {
-            toast.success(t("learning-preferences-save-success"));
-          },
-          onError: () => {
-            toast.error(t("learning-preferences-save-error"));
-          },
-        },
-      );
-    },
-    [savePreference, t],
-  );
-
   if (isLoadingPreference || isDashboardLoading) return <LoadingState />;
 
   if (!existingPreference) {
-    return (
-      <LearningPreferencesForm
-        existingPreference={existingPreference}
-        isSaving={isSaving}
-        onSave={handleSavePreference}
-      />
-    );
+    return <DiscoveryPage />;
   }
 
   return (

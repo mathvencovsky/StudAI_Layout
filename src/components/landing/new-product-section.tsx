@@ -1,56 +1,56 @@
 import { useState } from "react";
 import { Brain, Calendar, RotateCcw, TrendingUp, BookOpen, Clock } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Product features section with interactive feature selector.
  */
 export function NewProductSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [selectedFeature, setSelectedFeature] = useState(0);
 
   const features = [
     {
       icon: Brain,
-      title: t("newProduct.feature1.title"),
-      description: t("newProduct.feature1.desc"),
-      detailedDescription: t("newProduct.feature1.detailed"),
-      stats: { label: t("newProduct.feature1.stats"), active: true }
+      title: t("new-product-feature1-title"),
+      description: t("new-product-feature1-desc"),
+      detailedDescription: t("new-product-feature1-detailed"),
+      stats: { label: t("new-product-feature1-stats"), active: true }
     },
     {
       icon: Calendar,
-      title: t("newProduct.feature2.title"),
-      description: t("newProduct.feature2.desc"),
-      detailedDescription: t("newProduct.feature2.detailed"),
-      stats: { label: t("newProduct.feature2.stats"), active: false }
+      title: t("new-product-feature2-title"),
+      description: t("new-product-feature2-desc"),
+      detailedDescription: t("new-product-feature2-detailed"),
+      stats: { label: t("new-product-feature2-stats"), active: false }
     },
     {
       icon: RotateCcw,
-      title: t("newProduct.feature3.title"),
-      description: t("newProduct.feature3.desc"),
-      detailedDescription: t("newProduct.feature3.detailed"),
-      stats: { label: t("newProduct.feature3.stats"), active: false }
+      title: t("new-product-feature3-title"),
+      description: t("new-product-feature3-desc"),
+      detailedDescription: t("new-product-feature3-detailed"),
+      stats: { label: t("new-product-feature3-stats"), active: false }
     },
     {
       icon: TrendingUp,
-      title: t("newProduct.feature4.title"),
-      description: t("newProduct.feature4.desc"),
-      detailedDescription: t("newProduct.feature4.detailed"),
-      stats: { label: t("newProduct.feature4.stats"), active: false }
+      title: t("new-product-feature4-title"),
+      description: t("new-product-feature4-desc"),
+      detailedDescription: t("new-product-feature4-detailed"),
+      stats: { label: t("new-product-feature4-stats"), active: false }
     },
     {
       icon: BookOpen,
-      title: t("newProduct.feature5.title"),
-      description: t("newProduct.feature5.desc"),
-      detailedDescription: t("newProduct.feature5.detailed"),
-      stats: { label: t("newProduct.feature5.stats"), active: false }
+      title: t("new-product-feature5-title"),
+      description: t("new-product-feature5-desc"),
+      detailedDescription: t("new-product-feature5-detailed"),
+      stats: { label: t("new-product-feature5-stats"), active: false }
     },
     {
       icon: Clock,
-      title: t("newProduct.feature6.title"),
-      description: t("newProduct.feature6.desc"),
-      detailedDescription: t("newProduct.feature6.detailed"),
-      stats: { label: t("newProduct.feature6.stats"), active: false }
+      title: t("new-product-feature6-title"),
+      description: t("new-product-feature6-desc"),
+      detailedDescription: t("new-product-feature6-detailed"),
+      stats: { label: t("new-product-feature6-stats"), active: false }
     }
   ];
 
@@ -66,15 +66,15 @@ export function NewProductSection() {
         {/* Header */}
         <div className="max-w-3xl mb-24">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full mb-10">
-            <span className="text-sm font-semibold text-primary">{t("newProduct.badge")}</span>
+            <span className="text-sm font-semibold text-primary">{t("new-product-badge")}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("newProduct.headline1")}
+            {t("new-product-headline1")}
             <br />
-            {t("newProduct.headline2")} <span className="text-primary">{t("newProduct.headline3")}</span>
+            {t("new-product-headline2")} <span className="text-primary">{t("new-product-headline3")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed">
-            {t("newProduct.subheadline")}
+            {t("new-product-subheadline")}
           </p>
         </div>
 
@@ -104,7 +104,7 @@ export function NewProductSection() {
                       <div className="w-3 h-3 rounded-full bg-success animate-pulse" />
                     )}
                     <span className="text-sm font-medium text-primary-foreground/80">
-                      {selectedFeatureData.stats.active ? t("newProduct.activeNow") : t("newProduct.available")}
+                      {selectedFeatureData.stats.active ? t("new-product-active-now") : t("new-product-available")}
                     </span>
                   </div>
                   <div className="text-sm text-primary-foreground/60">{selectedFeatureData.stats.label}</div>

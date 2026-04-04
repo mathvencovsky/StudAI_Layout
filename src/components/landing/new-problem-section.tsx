@@ -1,10 +1,10 @@
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Problem/solution section explaining the study challenges StudAI addresses.
  */
 export function NewProblemSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
 
   return (
     <section className="relative bg-background py-12 overflow-hidden">
@@ -15,16 +15,16 @@ export function NewProblemSection() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-destructive/10 border border-destructive/20 rounded-full mb-6">
               <div className="w-2 h-2 bg-destructive rounded-full" />
-              <span className="text-sm font-medium text-destructive">{t("problem.badgeProblem")}</span>
+              <span className="text-sm font-medium text-destructive">{t("problem-badge-problem")}</span>
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
-              {t("problem.headline")}
+              {t("problem-headline")}
             </h2>
 
             <div className="space-y-4 text-lg text-muted-foreground">
-              <p>{t("problem.desc1")}</p>
-              <p>{t("problem.desc2")}</p>
+              <p>{t("problem-desc1")}</p>
+              <p>{t("problem-desc2")}</p>
             </div>
           </div>
 
@@ -33,15 +33,15 @@ export function NewProblemSection() {
             <div className="relative bg-gradient-to-br from-primary/5 to-purple-50 border border-primary/20 rounded-2xl p-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-background border border-primary/20 rounded-full mb-6">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                <span className="text-sm font-medium text-primary">{t("problem.badgeSolution")}</span>
+                <span className="text-sm font-medium text-primary">{t("problem-badge-solution")}</span>
               </div>
 
               <h3 className="text-3xl font-bold text-foreground mb-4">
-                {t("problem.solutionTitle")}
+                {t("problem-solution-title")}
               </h3>
 
               <p className="text-lg text-foreground/80 mb-6">
-                {t("problem.solutionDesc")}
+                {t("problem-solution-desc")}
               </p>
 
               <div className="flex items-center gap-3">
@@ -52,7 +52,7 @@ export function NewProblemSection() {
                     </div>
                   ))}
                 </div>
-                <span className="text-sm font-medium text-muted-foreground">{t("problem.thousandsOfStudents")}</span>
+                <span className="text-sm font-medium text-muted-foreground">{t("problem-thousands-of-students")}</span>
               </div>
             </div>
           </div>

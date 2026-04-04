@@ -1,50 +1,50 @@
 import { useState } from "react";
 import { GraduationCap, Award, BookOpen, Stethoscope, Briefcase, Languages } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Use cases section showcasing different study goals StudAI supports.
  */
 export function NewUseCasesSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const useCases = [
     { 
       icon: Award,
-      title: t("newUseCases.case1.title"), 
-      description: t("newUseCases.case1.desc"),
-      stats: t("newUseCases.case1.stats")
+      title: t("new-use-cases-case1-title"), 
+      description: t("new-use-cases-case1-desc"),
+      stats: t("new-use-cases-case1-stats")
     },
     { 
       icon: GraduationCap,
-      title: t("newUseCases.case2.title"), 
-      description: t("newUseCases.case2.desc"),
-      stats: t("newUseCases.case2.stats")
+      title: t("new-use-cases-case2-title"), 
+      description: t("new-use-cases-case2-desc"),
+      stats: t("new-use-cases-case2-stats")
     },
     { 
       icon: BookOpen,
-      title: t("newUseCases.case3.title"), 
-      description: t("newUseCases.case3.desc"),
-      stats: t("newUseCases.case3.stats")
+      title: t("new-use-cases-case3-title"), 
+      description: t("new-use-cases-case3-desc"),
+      stats: t("new-use-cases-case3-stats")
     },
     { 
       icon: Stethoscope,
-      title: t("newUseCases.case4.title"), 
-      description: t("newUseCases.case4.desc"),
-      stats: t("newUseCases.case4.stats")
+      title: t("new-use-cases-case4-title"), 
+      description: t("new-use-cases-case4-desc"),
+      stats: t("new-use-cases-case4-stats")
     },
     { 
       icon: Briefcase,
-      title: t("newUseCases.case5.title"), 
-      description: t("newUseCases.case5.desc"),
-      stats: t("newUseCases.case5.stats")
+      title: t("new-use-cases-case5-title"), 
+      description: t("new-use-cases-case5-desc"),
+      stats: t("new-use-cases-case5-stats")
     },
     { 
       icon: Languages,
-      title: t("newUseCases.case6.title"), 
-      description: t("newUseCases.case6.desc"),
-      stats: t("newUseCases.case6.stats")
+      title: t("new-use-cases-case6-title"), 
+      description: t("new-use-cases-case6-desc"),
+      stats: t("new-use-cases-case6-stats")
     }
   ];
 
@@ -57,15 +57,15 @@ export function NewUseCasesSection() {
         <div className="text-center mb-32">
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-primary rounded-full mb-12">
             <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full" />
-            <span className="text-xs font-medium text-primary-foreground uppercase tracking-widest">{t("newUseCases.badge")}</span>
+            <span className="text-xs font-medium text-primary-foreground uppercase tracking-widest">{t("new-use-cases-badge")}</span>
           </div>
           <h2 className="text-7xl md:text-8xl font-medium text-foreground mb-10 leading-[0.9] tracking-tight">
-            {t("newUseCases.headline1")}
+            {t("new-use-cases-headline1")}
             <br />
-            <span className="text-primary">{t("newUseCases.headline2")}</span>
+            <span className="text-primary">{t("new-use-cases-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto font-light">
-            {t("newUseCases.subheadline")}
+            {t("new-use-cases-subheadline")}
           </p>
         </div>
 
@@ -122,13 +122,13 @@ export function NewUseCasesSection() {
         {/* Bottom CTA */}
         <div className="mt-32 text-center">
           <p className="text-xl text-muted-foreground mb-8 font-light">
-            {t("newUseCases.bottomText")}
+            {t("new-use-cases-bottom-text")}
           </p>
           <button
             onClick={() => document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth" })}
             className="inline-flex items-center gap-4 px-12 py-6 bg-primary text-primary-foreground text-xl font-medium rounded-2xl hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-2xl"
           >
-            {t("newUseCases.ctaButton")}
+            {t("new-use-cases-cta-button")}
             <span className="text-2xl">→</span>
           </button>
         </div>

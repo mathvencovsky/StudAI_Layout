@@ -1,39 +1,39 @@
-import { useCustomI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 import { Sparkles, Target, Zap, BookOpen, BarChart3, Users2 } from "lucide-react";
 
 export function FeaturesSection() {
-  const { t } = useCustomI18n();
+  const { t } = useTranslation();
 
   const features = [
     {
       icon: Sparkles,
-      title: t("features.ai.title") || "AI-Powered Learning",
-      description: t("features.ai.description") || "Personalized study paths that adapt to your learning style and pace",
+      title: t("features-ai-title") || "AI-Powered Learning",
+      description: t("features-ai-description") || "Personalized study paths that adapt to your learning style and pace",
     },
     {
       icon: Target,
-      title: t("features.goals.title") || "Goal Tracking",
-      description: t("features.goals.description") || "Set clear objectives and track your progress with detailed analytics",
+      title: t("features-goals-title") || "Goal Tracking",
+      description: t("features-goals-description") || "Set clear objectives and track your progress with detailed analytics",
     },
     {
       icon: Zap,
-      title: t("features.speed.title") || "Learn Faster",
-      description: t("features.speed.description") || "Spaced repetition and active recall techniques for better retention",
+      title: t("features-speed-title") || "Learn Faster",
+      description: t("features-speed-description") || "Spaced repetition and active recall techniques for better retention",
     },
     {
       icon: BookOpen,
-      title: t("features.content.title") || "Rich Content",
-      description: t("features.content.description") || "Access thousands of curated study materials and resources",
+      title: t("features-content-title") || "Rich Content",
+      description: t("features-content-description") || "Access thousands of curated study materials and resources",
     },
     {
       icon: BarChart3,
-      title: t("features.analytics.title") || "Advanced Analytics",
-      description: t("features.analytics.description") || "Detailed insights into your learning patterns and performance",
+      title: t("features-analytics-title") || "Advanced Analytics",
+      description: t("features-analytics-description") || "Detailed insights into your learning patterns and performance",
     },
     {
       icon: Users2,
-      title: t("features.community.title") || "Study Community",
-      description: t("features.community.description") || "Connect with fellow learners and share knowledge",
+      title: t("features-community-title") || "Study Community",
+      description: t("features-community-description") || "Connect with fellow learners and share knowledge",
     },
   ];
 
@@ -42,14 +42,14 @@ export function FeaturesSection() {
       <div className="container">
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-balance">
-            {t("features.title") || "Everything you need to"}
+            {t("features-title") || "Everything you need to"}
             {" "}
             <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {t("features.titleHighlight") || "succeed"}
+              {t("features-title-highlight") || "succeed"}
             </span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            {t("features.subtitle") || "All the tools and features you need to achieve your learning goals"}
+            {t("features-subtitle") || "All the tools and features you need to achieve your learning goals"}
           </p>
         </div>
 

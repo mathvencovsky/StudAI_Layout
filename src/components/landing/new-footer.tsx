@@ -1,12 +1,14 @@
 import { GraduationCap, Globe } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Footer component for the new landing page with navigation links and locale toggle.
  */
 export function NewFooter() {
-  const { t, locale, setLocale } = useI18n();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
+  const setLocale = (lang: string) => i18n.changeLanguage(lang);
 
   const toggleLanguage = () => {
     setLocale(locale === "pt-BR" ? "en-US" : "pt-BR");
@@ -26,11 +28,11 @@ export function NewFooter() {
               <span className="font-semibold text-foreground text-xl">StudAI</span>
             </div>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed max-w-sm">
-              {t("footer.tagline")}
+              {t("footer-tagline")}
             </p>
             <div className="space-y-2 mb-6">
               <p className="text-sm text-foreground/80 font-medium">
-                {t("common.support")}:{" "}
+                {t("common-support")}:{" "}
                 <a 
                   href="mailto:support@studai.app" 
                   className="text-primary hover:text-primary/80 hover:underline"
@@ -54,14 +56,14 @@ export function NewFooter() {
           <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
             {/* Product */}
             <nav>
-              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common.product")}</h4>
+              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common-product")}</h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     to="/resources"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("footer.resources")}
+                    {t("footer-resources")}
                   </Link>
                 </li>
                 <li>
@@ -69,7 +71,7 @@ export function NewFooter() {
                     to="/how-it-works"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("footer.howItWorks")}
+                    {t("footer-how-it-works")}
                   </Link>
                 </li>
                 <li>
@@ -77,7 +79,7 @@ export function NewFooter() {
                     to="/plans"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("footer.plans")}
+                    {t("footer-plans")}
                   </Link>
                 </li>
                 <li>
@@ -85,7 +87,7 @@ export function NewFooter() {
                     to="/faq"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("footer.faqLink")}
+                    {t("footer-faq-link")}
                   </Link>
                 </li>
               </ul>
@@ -93,14 +95,14 @@ export function NewFooter() {
 
             {/* Company */}
             <nav>
-              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common.company")}</h4>
+              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common-company")}</h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     to="/contact"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.about")}
+                    {t("common-about")}
                   </Link>
                 </li>
                 <li>
@@ -108,7 +110,7 @@ export function NewFooter() {
                     to="/contact"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.contact")}
+                    {t("common-contact")}
                   </Link>
                 </li>
               </ul>
@@ -116,14 +118,14 @@ export function NewFooter() {
 
             {/* Support */}
             <nav>
-              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common.support")}</h4>
+              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common-support")}</h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     to="/support"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("footer.talkToSupport")}
+                    {t("footer-talk-to-support")}
                   </Link>
                 </li>
                 <li>
@@ -131,7 +133,7 @@ export function NewFooter() {
                     to="/security"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.security")}
+                    {t("common-security")}
                   </Link>
                 </li>
                 <li>
@@ -139,7 +141,7 @@ export function NewFooter() {
                     to="/privacy"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.privacy")}
+                    {t("common-privacy")}
                   </Link>
                 </li>
               </ul>
@@ -147,14 +149,14 @@ export function NewFooter() {
 
             {/* Legal */}
             <nav>
-              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common.legal")}</h4>
+              <h4 className="font-semibold text-foreground mb-4 text-sm">{t("common-legal")}</h4>
               <ul className="space-y-3">
                 <li>
                   <Link
                     to="/privacy"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.privacy")}
+                    {t("common-privacy")}
                   </Link>
                 </li>
                 <li>
@@ -162,7 +164,7 @@ export function NewFooter() {
                     to="/terms"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.terms")}
+                    {t("common-terms")}
                   </Link>
                 </li>
                 <li>
@@ -170,7 +172,7 @@ export function NewFooter() {
                     to="/security"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
-                    {t("common.security")}
+                    {t("common-security")}
                   </Link>
                 </li>
               </ul>
@@ -182,7 +184,7 @@ export function NewFooter() {
         <div className="pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} StudAI. {t("footer.allRights")}
+              © {new Date().getFullYear()} StudAI. {t("footer-all-rights")}
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
@@ -196,19 +198,19 @@ export function NewFooter() {
                 to="/privacy" 
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {t("common.privacy")}
+                {t("common-privacy")}
               </Link>
               <Link 
                 to="/terms" 
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {t("common.terms")}
+                {t("common-terms")}
               </Link>
               <Link 
                 to="/security" 
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {t("common.security")}
+                {t("common-security")}
               </Link>
             </div>
           </div>

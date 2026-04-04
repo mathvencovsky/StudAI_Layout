@@ -1,29 +1,29 @@
 import { useState } from "react";
 import { Check, Sparkles, Zap, Crown } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * Pricing section with free and pro plan cards.
  */
 export function NewPricingSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [hoveredPlan, setHoveredPlan] = useState<'free' | 'pro' | null>(null);
 
   const freeFeatures = [
-    t("newPricing.free.feature1"),
-    t("newPricing.free.feature2"),
-    t("newPricing.free.feature3"),
-    t("newPricing.free.feature4"),
-    t("newPricing.free.feature5")
+    t("new-pricing-free-feature1"),
+    t("new-pricing-free-feature2"),
+    t("new-pricing-free-feature3"),
+    t("new-pricing-free-feature4"),
+    t("new-pricing-free-feature5")
   ];
 
   const proFeatures = [
-    t("newPricing.pro.feature1"),
-    t("newPricing.pro.feature2"),
-    t("newPricing.pro.feature3"),
-    t("newPricing.pro.feature4"),
-    t("newPricing.pro.feature5"),
-    t("newPricing.pro.feature6")
+    t("new-pricing-pro-feature1"),
+    t("new-pricing-pro-feature2"),
+    t("new-pricing-pro-feature3"),
+    t("new-pricing-pro-feature4"),
+    t("new-pricing-pro-feature5"),
+    t("new-pricing-pro-feature6")
   ];
 
   return (
@@ -36,15 +36,15 @@ export function NewPricingSection() {
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-full mb-10">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">{t("newPricing.badge")}</span>
+            <span className="text-sm font-semibold text-primary">{t("new-pricing-badge")}</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-[1.05]">
-            {t("newPricing.headline1")}
+            {t("new-pricing-headline1")}
             <br />
-            <span className="text-primary">{t("newPricing.headline2")}</span>
+            <span className="text-primary">{t("new-pricing-headline2")}</span>
           </h2>
           <p className="text-2xl text-muted-foreground">
-            {t("newPricing.subheadline")}
+            {t("new-pricing-subheadline")}
           </p>
         </div>
 
@@ -73,14 +73,14 @@ export function NewPricingSection() {
               </div>
 
               <div className="mb-10">
-                <h3 className="text-3xl font-bold text-foreground mb-4">{t("newPricing.free.title")}</h3>
+                <h3 className="text-3xl font-bold text-foreground mb-4">{t("new-pricing-free-title")}</h3>
                 <div className="flex items-baseline gap-2 mb-6">
                   <span className="text-7xl font-bold text-foreground">
-                    {t("newPricing.free.price")}
+                    {t("new-pricing-free-price")}
                   </span>
-                  <span className="text-2xl text-muted-foreground">{t("newPricing.free.perMonth")}</span>
+                  <span className="text-2xl text-muted-foreground">{t("new-pricing-free-per-month")}</span>
                 </div>
-                <p className="text-xl text-muted-foreground">{t("newPricing.free.desc")}</p>
+                <p className="text-xl text-muted-foreground">{t("new-pricing-free-desc")}</p>
               </div>
 
               <ul className="space-y-5 mb-10 flex-1">
@@ -99,13 +99,13 @@ export function NewPricingSection() {
                   onClick={() => document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth" })}
                   className="w-full py-5 bg-primary hover:bg-primary/90 text-primary-foreground text-lg font-semibold rounded-xl shadow-md hover:shadow-lg transition-all"
                 >
-                  {t("newPricing.free.cta")}
+                  {t("new-pricing-free-cta")}
                 </button>
 
                 {/* Popular badge */}
                 <div className="mt-6 text-center">
                   <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 text-primary rounded-full text-sm font-semibold">
-                    <span>⭐</span> {t("newPricing.free.popular")}
+                    <span>⭐</span> {t("new-pricing-free-popular")}
                   </span>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export function NewPricingSection() {
             {/* Coming soon badge */}
             <div className="h-10 mb-5 flex items-center justify-center">
               <div className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-bold rounded-full shadow-lg">
-                {t("newPricing.pro.comingSoon")}
+                {t("new-pricing-pro-coming-soon")}
               </div>
             </div>
 
@@ -139,13 +139,13 @@ export function NewPricingSection() {
               </div>
 
               <div className="mb-10">
-                <h3 className="text-3xl font-bold text-white mb-4">{t("newPricing.pro.title")}</h3>
+                <h3 className="text-3xl font-bold text-white mb-4">{t("new-pricing-pro-title")}</h3>
                 <div className="flex items-baseline gap-2 mb-6">
                   <span className="text-7xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    {t("newPricing.pro.price")}
+                    {t("new-pricing-pro-price")}
                   </span>
                 </div>
-                <p className="text-xl text-gray-400">{t("newPricing.pro.desc")}</p>
+                <p className="text-xl text-gray-400">{t("new-pricing-pro-desc")}</p>
               </div>
 
               <ul className="space-y-5 mb-10 flex-1">
@@ -164,13 +164,13 @@ export function NewPricingSection() {
                   disabled
                   className="w-full py-5 bg-gradient-to-r from-gray-800 to-gray-700 text-gray-500 text-lg font-semibold rounded-xl cursor-not-allowed"
                 >
-                  {t("newPricing.pro.cta")}
+                  {t("new-pricing-pro-cta")}
                 </button>
 
                 {/* Notify badge */}
                 <div className="mt-6 text-center">
                   <span className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-gray-400 rounded-full text-sm font-semibold">
-                    <span>🔔</span> {t("newPricing.pro.notify")}
+                    <span>🔔</span> {t("new-pricing-pro-notify")}
                   </span>
                 </div>
               </div>
@@ -185,8 +185,8 @@ export function NewPricingSection() {
               <span className="text-xl">✓</span>
             </div>
             <div className="text-left">
-              <p className="font-bold text-foreground">{t("newPricing.guarantee.title")}</p>
-              <p className="text-sm text-muted-foreground">{t("newPricing.guarantee.desc")}</p>
+              <p className="font-bold text-foreground">{t("new-pricing-guarantee-title")}</p>
+              <p className="text-sm text-muted-foreground">{t("new-pricing-guarantee-desc")}</p>
             </div>
           </div>
         </div>

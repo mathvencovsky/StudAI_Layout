@@ -1,38 +1,38 @@
 import { useState } from "react";
 import { ChevronDown, HelpCircle, Mail } from "lucide-react";
-import { useCustomI18n as useI18n } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
 /**
  * FAQ section with expandable questions and answers.
  */
 export function NewFAQSection() {
-  const { t } = useI18n();
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
     {
-      question: t("newFaq.q1"),
-      answer: t("newFaq.a1")
+      question: t("new-faq-q1"),
+      answer: t("new-faq-a1")
     },
     {
-      question: t("newFaq.q2"),
-      answer: t("newFaq.a2")
+      question: t("new-faq-q2"),
+      answer: t("new-faq-a2")
     },
     {
-      question: t("newFaq.q3"),
-      answer: t("newFaq.a3")
+      question: t("new-faq-q3"),
+      answer: t("new-faq-a3")
     },
     {
-      question: t("newFaq.q4"),
-      answer: t("newFaq.a4")
+      question: t("new-faq-q4"),
+      answer: t("new-faq-a4")
     },
     {
-      question: t("newFaq.q5"),
-      answer: t("newFaq.a5")
+      question: t("new-faq-q5"),
+      answer: t("new-faq-a5")
     },
     {
-      question: t("newFaq.q6"),
-      answer: t("newFaq.a6")
+      question: t("new-faq-q6"),
+      answer: t("new-faq-a6")
     }
   ];
 
@@ -43,13 +43,13 @@ export function NewFAQSection() {
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-background border border-border rounded-full mb-8 shadow-sm">
             <HelpCircle className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-foreground/80">{t("newFaq.badge")}</span>
+            <span className="text-sm font-medium text-foreground/80">{t("new-faq-badge")}</span>
           </div>
           <h2 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            {t("newFaq.headline")}
+            {t("new-faq-headline")}
           </h2>
           <p className="text-2xl text-muted-foreground">
-            {t("newFaq.subheadline")}
+            {t("new-faq-subheadline")}
           </p>
         </div>
 
@@ -84,12 +84,12 @@ export function NewFAQSection() {
         {/* Contact CTA */}
         <div className="text-center p-10 bg-primary/5 border border-primary/20 rounded-2xl">
           <Mail className="w-10 h-10 text-primary mx-auto mb-6" />
-          <p className="text-xl text-foreground/80 mb-6">{t("newFaq.stillQuestions")}</p>
+          <p className="text-xl text-foreground/80 mb-6">{t("new-faq-still-questions")}</p>
           <a
-            href={`mailto:${t("newFaq.contactEmail")}`}
+            href={`mailto:${t("new-faq-contact-email")}`}
             className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-semibold text-lg"
           >
-            {t("newFaq.contactEmail")}
+            {t("new-faq-contact-email")}
             <span>→</span>
           </a>
         </div>
