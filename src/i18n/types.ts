@@ -434,6 +434,36 @@ export type TranslationKeys = {
   "newUseCases.bottomText": string;
   "newUseCases.ctaButton": string;
 
+  // Features Section
+  "features.ai.description": string;
+  "features.ai.title": string;
+  "features.analytics.description": string;
+  "features.analytics.title": string;
+  "features.community.description": string;
+  "features.community.title": string;
+  "features.content.description": string;
+  "features.content.title": string;
+  "features.goals.description": string;
+  "features.goals.title": string;
+  "features.speed.description": string;
+  "features.speed.title": string;
+  "features.subtitle": string;
+  "features.title": string;
+  "features.titleHighlight": string;
+
+  // Stats Section
+  "stats.faster": string;
+  "stats.fasterDesc": string;
+  "stats.retention": string;
+  "stats.retentionDesc": string;
+  "stats.students": string;
+  "stats.studentsDesc": string;
+  "stats.subtitle": string;
+  "stats.success": string;
+  "stats.successDesc": string;
+  "stats.title": string;
+  "stats.titleHighlight": string;
+
   // Final CTA Section (new keys)
   "finalCta.badge": string;
   "finalCta.headline1": string;

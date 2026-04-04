@@ -431,11 +431,40 @@ export const ptBR: TranslationKeys = {
   "newUseCases.bottomText": "Nao importa seu objetivo, o StudAI te ajuda a chegar la",
   "newUseCases.ctaButton": "Comecar agora",
 
+  // Features Section
+  "features.ai.description": "Caminhos de estudo personalizados que se adaptam ao seu estilo e ritmo de aprendizado",
+  "features.ai.title": "Aprendizado com IA",
+  "features.analytics.description": "Insights detalhados sobre seus padrões de aprendizado e desempenho",
+  "features.analytics.title": "Análise Avançada",
+  "features.community.description": "Conecte-se com outros estudantes e compartilhe conhecimento",
+  "features.community.title": "Comunidade de Estudos",
+  "features.content.description": "Acesse milhares de materiais de estudo curados e recursos",
+  "features.content.title": "Conteúdo Rico",
+  "features.goals.description": "Defina objetivos claros e acompanhe seu progresso com análises detalhadas",
+  "features.goals.title": "Acompanhamento de Metas",
+  "features.speed.description": "Técnicas de repetição espaçada e recordação ativa para melhor retenção",
+  "features.speed.title": "Aprenda Mais Rápido",
+  "features.subtitle": "Todas as ferramentas e recursos que você precisa para alcançar seus objetivos de aprendizado",
+  "features.title": "Tudo que você precisa para",
+  "features.titleHighlight": "ter sucesso",
+
+  // Stats Section
+  "stats.faster": "Aprendizado Mais Rápido",
+  "stats.fasterDesc": "Caminhos de estudo com IA",
+  "stats.retention": "Melhor Retenção",
+  "stats.retentionDesc": "Sistema de repetição espaçada",
+  "stats.students": "Estudantes Ativos",
+  "stats.studentsDesc": "Aprendendo todos os dias",
+  "stats.subtitle": "Resultados reais de estudantes que transformaram sua rotina de estudos com o StudAI",
+  "stats.success": "Taxa de Sucesso",
+  "stats.successDesc": "Estudantes alcançando metas",
+  "stats.title": "O Poder do",
+  "stats.titleHighlight": "Aprendizado com IA",
+
   // Final CTA Section
   "finalCta.badge": "Comece agora",
   "finalCta.headline1": "Menos de",
   "finalCta.headline2": "1 minuto",
-  "finalCta.subheadline": "Sua jornada comeca aqui",
 
   // New Testimonials
   "newTestimonials.badge": "Impacto real",

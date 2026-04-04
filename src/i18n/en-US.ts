@@ -431,11 +431,40 @@ export const enUS: TranslationKeys = {
   "newUseCases.bottomText": "No matter your goal, StudAI helps you get there",
   "newUseCases.ctaButton": "Start now",
 
+  // Features Section
+  "features.ai.description": "Personalized study paths that adapt to your learning style and pace",
+  "features.ai.title": "AI-Powered Learning",
+  "features.analytics.description": "Detailed insights into your learning patterns and performance",
+  "features.analytics.title": "Advanced Analytics",
+  "features.community.description": "Connect with fellow learners and share knowledge",
+  "features.community.title": "Study Community",
+  "features.content.description": "Access thousands of curated study materials and resources",
+  "features.content.title": "Rich Content",
+  "features.goals.description": "Set clear objectives and track your progress with detailed analytics",
+  "features.goals.title": "Goal Tracking",
+  "features.speed.description": "Spaced repetition and active recall techniques for better retention",
+  "features.speed.title": "Learn Faster",
+  "features.subtitle": "All the tools and features you need to achieve your learning goals",
+  "features.title": "Everything you need to",
+  "features.titleHighlight": "succeed",
+
+  // Stats Section
+  "stats.faster": "Faster Learning",
+  "stats.fasterDesc": "AI-powered study paths",
+  "stats.retention": "Better Retention",
+  "stats.retentionDesc": "Spaced repetition system",
+  "stats.students": "Active Students",
+  "stats.studentsDesc": "Learning every day",
+  "stats.subtitle": "Real results from students who transformed their study routine with StudAI",
+  "stats.success": "Success Rate",
+  "stats.successDesc": "Students reaching goals",
+  "stats.title": "The Power of",
+  "stats.titleHighlight": "AI-Driven Learning",
+
   // Final CTA Section
   "finalCta.badge": "Start now",
   "finalCta.headline1": "Less than",
   "finalCta.headline2": "1 minute",
-  "finalCta.subheadline": "Your journey starts here",
 
   // New Testimonials
   "newTestimonials.badge": "Real impact",
@@ -610,4 +639,5 @@ export const enUS: TranslationKeys = {
   "transparency.linkSecurity": "Security",
   "transparency.linkTerms": "Terms of Use",
   "transparency.linkSupport": "Talk to Support",
+  "nav.discovery": "Discover Trail",
 };

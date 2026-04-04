@@ -8,13 +8,6 @@ import { useCustomI18n as useI18n } from "@/i18n";
 export function NewFooter() {
   const { t, locale, setLocale } = useI18n();
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const toggleLanguage = () => {
     setLocale(locale === "pt-BR" ? "en-US" : "pt-BR");
   };
@@ -104,7 +97,7 @@ export function NewFooter() {
               <ul className="space-y-3">
                 <li>
                   <Link
-                    to="/about"
+                    to="/contact"
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
                   >
                     {t("common.about")}
