@@ -38,15 +38,15 @@ export const PasswordResetForm: React.FC<PasswordResetFormProps> = ({
                         <Label htmlFor="email">Email</Label>
                         <Input id="email" type="email" autoComplete="email" {...register("email")} />
                         {errors.email && (
-                            <p className="text-sm text-red-600">{errors.email.message}</p>
+                            <p className="text-sm text-destructive">{errors.email.message}</p>
                         )}
                     </div>
 
                     {successMessage ? (
-                        <p className="text-sm text-green-700">{successMessage}</p>
+                        <p className="text-sm text-success">{successMessage}</p>
                     ) : null}
                     {errorMessage ? (
-                        <p className="text-sm text-red-600" role="alert">{errorMessage}</p>
+                        <p className="text-sm text-destructive" role="alert">{errorMessage}</p>
                     ) : null}
 
                     <Button type="submit" disabled={isSubmitting} className="w-full">

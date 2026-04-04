@@ -1,50 +1,61 @@
-import { useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
-import { useAuth } from "@/hooks/use-auth";
-import {
-  LandingHeader,
-  LandingHero,
-  LogoStrip,
-  ProductSection,
-  HowItWorks,
-  TrustSection,
-  Testimonials,
-  PricingSection,
-  FAQSection,
-  FinalCTA,
-  LandingFooter,
-} from "./index";
+import { LandingHeader } from "./landing-header";
+import { NewLandingHero } from "./new-landing-hero";
+import { AIShowcaseSection } from "./ai-showcase-section";
+import { NewProblemSection } from "./new-problem-section";
+import { NewBeforeAfterSection } from "./new-before-after-section";
+import { NewProductSection } from "./new-product-section";
+import { NewHowItWorks } from "./new-how-it-works";
+import { NewUseCasesSection } from "./new-use-cases-section";
+import { NewTestimonials } from "./new-testimonials";
+import { NewPricingSection } from "./new-pricing-section";
+import { NewTransparencySection } from "./new-transparency-section";
+import { NewFAQSection } from "./new-faq-section";
+import { NewFooter } from "./new-footer";
+import { AuthCard } from "./auth-card";
+import { useCustomI18n as useI18n } from "@/i18n";
 
+/**
+ * Main landing page component that composes all landing sections.
+ */
 export function LandingPage() {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  // Redirect authenticated users to dashboard
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate({ to: "/" });
-    }
-  }, [isAuthenticated, navigate]);
-
-  if (isAuthenticated) {
-    return null;
-  }
+  const { t } = useI18n();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
       <LandingHeader />
-      <main>
-        <LandingHero />
-        <LogoStrip />
-        <ProductSection />
-        <HowItWorks />
-        <TrustSection />
-        <Testimonials />
-        <PricingSection />
-        <FAQSection />
-        <FinalCTA />
+      <main className="relative bg-background">
+        <NewLandingHero />
+        <AIShowcaseSection />
+        <NewProblemSection />
+        <NewBeforeAfterSection />
+        <NewProductSection />
+        <NewHowItWorks />
+        <NewUseCasesSection />
+        <NewTestimonials />
+        <NewPricingSection />
+
+        <section id="auth-section" className="relative bg-background py-12">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px]" />
+
+          <div className="relative w-full max-w-6xl mx-auto px-6 md:px-8">
+            <div className="max-w-3xl mx-auto">
+              <div className="mb-20 text-center">
+                <h2 className="text-6xl md:text-7xl font-bold text-foreground mb-8 leading-tight">
+                  {t("finalCta.headline")} <span className="text-primary">{t("finalCta.headlineHighlight")}</span>
+                </h2>
+                <p className="text-2xl text-muted-foreground">
+                  {t("finalCta.subheadline")}
+                </p>
+              </div>
+              <AuthCard className="mx-auto" />
+            </div>
+          </div>
+        </section>
+
+        <NewTransparencySection />
+        <NewFAQSection />
       </main>
-      <LandingFooter />
+      <NewFooter />
     </div>
   );
 }

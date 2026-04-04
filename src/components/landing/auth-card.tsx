@@ -61,7 +61,7 @@ export function AuthCard({ className }: { className?: string }) {
 
   return (
     <Card
-      className={cn("w-full max-w-md border-2 shadow-2xl", className)}
+      className={cn("w-full max-w-md border-2 rounded-3xl shadow-2xl", className)}
       id="auth-card"
     >
       <CardContent className="p-5 sm:p-6">
