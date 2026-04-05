@@ -50,7 +50,7 @@ export function LandingHeader() {
               onClick={() => scrollToSection("casos-de-uso")}
               className="text-base font-semibold text-muted-foreground hover:text-primary transition-colors duration-300"
             >
-              Casos de uso
+              {t("header-use-cases")}
             </button>
             <button
               onClick={() => scrollToSection("depoimentos")}
@@ -75,7 +75,7 @@ export function LandingHeader() {
           {/* CTA + Language */}
           <div className="hidden md:flex items-center gap-6">
             <button
-              onClick={() => setLocale(locale === "pt-BR" ? "en-US" : "pt-BR")}
+              onClick={() => setLocale(locale === "pt-BR" ? "en" : "pt-BR")}
               className="text-sm font-medium text-muted-foreground/70 hover:text-foreground transition-colors duration-300 tracking-wide"
             >
               {locale === "pt-BR" ? "EN" : "PT"}
@@ -113,7 +113,7 @@ export function LandingHeader() {
                   onClick={() => scrollToSection("casos-de-uso")}
                   className="text-xl font-semibold text-foreground hover:text-primary transition-colors text-left"
                 >
-                  Casos de uso
+                  {t("header-use-cases")}
                 </button>
                 <button
                   onClick={() => scrollToSection("depoimentos")}

@@ -11,7 +11,7 @@ export function NewFooter() {
   const setLocale = (lang: string) => i18n.changeLanguage(lang);
 
   const toggleLanguage = () => {
-    setLocale(locale === "pt-BR" ? "en-US" : "pt-BR");
+    setLocale(locale === "pt-BR" ? "en" : "pt-BR");
   };
 
   return (

@@ -431,6 +431,7 @@ export default {
   "greeting-evening": "Good evening, {{name}}!",
   "greeting-morning": "Good morning, {{name}}!",
   "header-faq": "FAQ",
+  "header-use-cases": "Use cases",
   "header-how-it-works": "How it works",
   "header-plans": "Plans",
   "header-product": "Product",
