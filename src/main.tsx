@@ -33,15 +33,15 @@ import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 3, // 3 tentativas com exponential backoff
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-      staleTime: 60000, // 1 minuto - dados considerados frescos
-      gcTime: 300000, // 5 minutos - tempo no cache (era cacheTime)
-      refetchOnWindowFocus: true, // Refetch ao focar na janela
-      refetchOnReconnect: true, // Refetch ao reconectar
+      retry: 1,
+      retryDelay: 1000,
+      staleTime: 60000,
+      gcTime: 300000,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     },
     mutations: {
-      retry: 0, // Não retry em mutations por padrão
+      retry: 0,
     },
   },
 });
@@ -79,11 +79,11 @@ if (!rootElement.innerHTML) {
     <StrictMode>
       <ErrorBoundary>
         <ThemeProvider defaultColorTheme="studai">
+          <QueryClientProvider client={queryClient}>
             <AuthProvider>
-              <QueryClientProvider client={queryClient}>
-                <InnerApp />
-              </QueryClientProvider>
+              <InnerApp />
             </AuthProvider>
+          </QueryClientProvider>
         </ThemeProvider>
       </ErrorBoundary>
     </StrictMode>,
