@@ -10,6 +10,7 @@ export type UpdateUserProfileInput = Schema["UserProfile"]["updateType"];
  * Get current user's profile
  */
 export const getMyProfile = async (): Promise<Schema["UserProfile"]["type"] | null> => {
+  if (!client.models.UserProfile) return null;
   const result = await client.models.UserProfile.list();
   if (!result.data || result.data.length === 0) {
     return null;

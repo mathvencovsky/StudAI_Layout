@@ -156,6 +156,7 @@ export const uncompleteTrack = async (
  * List all track progress records for the current user
  */
 export const listUserTrackProgress = async (): Promise<UserTrackProgress[]> => {
+  if (!client.models.UserTrackProgress) return [];
   const result = await client.models.UserTrackProgress.list();
   if (!result.data) {
     console.error("Failed to list user track progress:", result.errors);

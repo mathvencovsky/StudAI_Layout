@@ -10,6 +10,7 @@ export type UpdateCalendarEventInput = Schema["CalendarEvent"]["updateType"];
  * List user's calendar events
  */
 export const listCalendarEvents = async (): Promise<Schema["CalendarEvent"]["type"][]> => {
+  if (!client.models.CalendarEvent) return [];
   const result = await client.models.CalendarEvent.list();
   if (!result.data) {
     console.error("Failed to list calendar events:", result.errors);

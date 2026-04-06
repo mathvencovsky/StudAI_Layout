@@ -10,6 +10,7 @@ export type UpdateDailyTaskInput = Schema["DailyTask"]["updateType"];
  * List user's daily tasks
  */
 export const listDailyTasks = async (): Promise<Schema["DailyTask"]["type"][]> => {
+  if (!client.models.DailyTask) return [];
   const result = await client.models.DailyTask.list();
   if (!result.data) {
     console.error("Failed to list daily tasks:", result.errors);

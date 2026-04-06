@@ -7,6 +7,7 @@ const client = generateClient<Schema>();
  * List all programs
  */
 export const listPrograms = async (): Promise<Schema["Program"]["type"][]> => {
+  if (!client.models.Program) return [];
   const result = await client.models.Program.list();
   if (!result.data) {
     console.error("Failed to list programs:", result.errors);

@@ -12,6 +12,7 @@ export type UpdateUserCourseInput = Schema["UserCourse"]["updateType"];
 export const listUserCourses = async (): Promise<
   Schema["UserCourse"]["type"][]
 > => {
+  if (!client.models.UserCourse) return [];
   const result = await client.models.UserCourse.list();
   if (!result.data) {
     console.error("Failed to list user courses:", result.errors);

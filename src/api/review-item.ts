@@ -10,6 +10,7 @@ export type UpdateReviewItemInput = Schema["ReviewItem"]["updateType"];
  * List user's review items
  */
 export const listReviewItems = async (): Promise<Schema["ReviewItem"]["type"][]> => {
+  if (!client.models.ReviewItem) return [];
   const result = await client.models.ReviewItem.list();
   if (!result.data) {
     console.error("Failed to list review items:", result.errors);

@@ -10,6 +10,7 @@ export type UpdateGoalInput = Schema["Goal"]["updateType"];
  * List user's goals
  */
 export const listGoals = async (): Promise<Schema["Goal"]["type"][]> => {
+  if (!client.models.Goal) return [];
   const result = await client.models.Goal.list();
   if (!result.data) {
     console.error("Failed to list goals:", result.errors);

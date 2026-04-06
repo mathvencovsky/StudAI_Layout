@@ -12,6 +12,7 @@ export type UpdateSubscriptionInput = Schema["UserSubscription"]["updateType"];
 export const listSubscriptions = async (): Promise<
   Schema["UserSubscription"]["type"][]
 > => {
+  if (!client.models.UserSubscription) return [];
   const result = await client.models.UserSubscription.list();
   if (!result.data) {
     console.error("Failed to list subscriptions:", result.errors);

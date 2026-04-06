@@ -7,6 +7,7 @@ const client = generateClient<Schema>();
  * List user's assessments
  */
 export const listAssessments = async (): Promise<Schema["Assessment"]["type"][]> => {
+  if (!client.models.Assessment) return [];
   const result = await client.models.Assessment.list();
   if (!result.data) {
     console.error("Failed to list assessments:", result.errors);

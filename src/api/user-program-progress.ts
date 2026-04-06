@@ -9,6 +9,7 @@ const client = generateClient<Schema>();
 export const listUserProgramProgress = async (): Promise<
   Schema["UserProgramProgress"]["type"][]
 > => {
+  if (!client.models.UserProgramProgress) return [];
   const result = await client.models.UserProgramProgress.list();
   if (!result.data) {
     console.error("Failed to list user program progress:", result.errors);

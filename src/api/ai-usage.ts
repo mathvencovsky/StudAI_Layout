@@ -10,6 +10,7 @@ export type UpdateAiUsageInput = Schema["AiUsage"]["updateType"];
  * List user's AI usage records
  */
 export const listAiUsage = async (): Promise<Schema["AiUsage"]["type"][]> => {
+  if (!client.models.AiUsage) return [];
   const result = await client.models.AiUsage.list();
   if (!result.data) {
     console.error("Failed to list AI usage:", result.errors);

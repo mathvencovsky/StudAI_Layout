@@ -7,6 +7,7 @@ const client = generateClient<Schema>();
  * List user's saved items
  */
 export const listSavedItems = async (): Promise<Schema["SavedItem"]["type"][]> => {
+  if (!client.models.SavedItem) return [];
   const result = await client.models.SavedItem.list();
   if (!result.data) {
     console.error("Failed to list saved items:", result.errors);
