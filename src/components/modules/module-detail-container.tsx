@@ -13,6 +13,7 @@ import { useGetUserModuleProgress } from "@/hooks/modules/use-get-user-module-pr
 import { useGetUserContentProgress } from "@/hooks/modules/use-get-user-content-progress";
 import { useStartModule } from "@/hooks/modules/use-start-module";
 import { useToggleContentCompletion } from "@/hooks/modules/use-toggle-content-completion";
+import { ModuleLoadingState } from "@/components/ui/loading-state";
 import { useCompleteModule, useUncompleteModule } from "@/hooks/modules/use-complete-module";
 
 export interface ModuleDetailContainerProps {
@@ -205,12 +206,7 @@ export const ModuleDetailContainer = ({
   }
 
   if (isLoading) {
-    return (
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Loader2 className="h-4 w-4 animate-spin" />
-        {t("loading-module")}
-      </div>
-    );
+    return <ModuleLoadingState />;
   }
 
   return (

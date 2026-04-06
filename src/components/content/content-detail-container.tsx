@@ -5,7 +5,7 @@ import { useModuleContentNavigation } from "@/hooks/modules/use-module-content-n
 import { useCompleteModule } from "@/hooks/modules/use-complete-module";
 import { ContentDetailView } from "./content-detail-view";
 import { AiStudyAssistant } from "./ai-study-assistant";
-import { Skeleton } from "@/components/ui/skeleton";
+import { ContentLoadingState } from "@/components/ui/loading-state";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -127,20 +127,7 @@ export const ContentDetailContainer = ({
 
   const renderContent = () => {
     if (isLoading || navigationData.isLoading) {
-      return (
-        <>
-          <Skeleton className="w-full h-[400px] rounded-lg" />
-          <div className="space-y-4">
-            <Skeleton className="h-10 w-3/4" />
-            <Skeleton className="h-20 w-full" />
-            <div className="flex gap-2">
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-24" />
-            </div>
-          </div>
-        </>
-      );
+      return <ContentLoadingState />;
     }
 
     if (isError) {

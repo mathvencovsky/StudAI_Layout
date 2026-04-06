@@ -18,7 +18,7 @@ export function AppLayout({ children }: AppLayoutProps) {
   const { mutate: recordLogin } = useRecordLoginDay();
   useEffect(() => { recordLogin(); }, []);
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={true}>
       <AppSidebar />
       <SidebarInset>
         <SiteHeader />
