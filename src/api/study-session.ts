@@ -38,6 +38,9 @@ export const getStudySession = async (
 export const createStudySession = async (
   input: CreateStudySessionInput,
 ): Promise<Schema["StudySession"]["type"]> => {
+  if (!client.models.StudySession) {
+    throw new Error("StudySession model not available in deployed backend");
+  }
   const result = await client.models.StudySession.create(input);
 
   if (!result.data) {

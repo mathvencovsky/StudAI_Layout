@@ -14,7 +14,6 @@ export const trackSelectionSet = [
   "rootModuleId",
   "parentByModuleId",
   "positionByModuleId",
-  "categories",
   "createdAt",
   "updatedAt",
 ] as const;

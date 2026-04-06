@@ -81,15 +81,20 @@ export function useSessionTracker() {
       }
 
       if (!sessionRef.current) {
-        const session = await createSession({ startedAt: now, lastActiveAt: now });
-        sessionRef.current = {
-          sessionId: session.id,
-          startedAt: now,
-          lastActiveAt: now,
-          accumulatedMinutes: 0,
-        };
-        lastHeartbeatRef.current = now;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(sessionRef.current));
+        try {
+          const session = await createSession({ startedAt: now, lastActiveAt: now });
+          sessionRef.current = {
+            sessionId: session.id,
+            startedAt: now,
+            lastActiveAt: now,
+            accumulatedMinutes: 0,
+          };
+          lastHeartbeatRef.current = now;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(sessionRef.current));
+        } catch {
+          // Session tracking unavailable — continue without it
+          return () => {};
+        }
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);
