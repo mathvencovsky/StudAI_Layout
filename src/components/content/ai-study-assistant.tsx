@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Loader2, Send, Sparkles, X, ChevronDown, BookOpen, HelpCircle, FileText, Lightbulb } from "lucide-react";
+import {
+  Loader2, Sparkles, X, ArrowLeft,
+  BookOpen, HelpCircle, Dumbbell, Lightbulb, MessageSquare, RotateCcw,
+} from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
 import { useIsAiUser } from "@/hooks/use-is-ai-user";
 import { type Content } from "@/model/content";
@@ -18,137 +20,233 @@ export interface AiStudyAssistantProps {
   onClose: () => void;
 }
 
-const SUGGESTED_QUESTIONS = [
-  { icon: HelpCircle, labelKey: "ai-chat-suggest-explain" },
-  { icon: BookOpen, labelKey: "ai-chat-suggest-summary" },
-  { icon: FileText, labelKey: "ai-chat-suggest-quiz" },
-  { icon: Lightbulb, labelKey: "ai-chat-suggest-examples" },
+// ─── Mode definitions ────────────────────────────────────────────────────────
+
+type ModeId = "explain" | "quiz" | "examples" | "simplify" | "ask";
+
+interface Mode {
+  id: ModeId;
+  icon: React.ElementType;
+  titleKey: string;
+  descKey: string;
+  promptKey: string;
+  color: string;
+  followUpKeys: string[];
+}
+
+const MODES: Mode[] = [
+  {
+    id: "explain",
+    icon: BookOpen,
+    titleKey: "ai-mode-explain-title",
+    descKey: "ai-mode-explain-desc",
+    promptKey: "ai-mode-explain-prompt",
+    color: "text-blue-500 bg-blue-500/10",
+    followUpKeys: ["ai-followup-deeper", "ai-followup-simpler"],
+  },
+  {
+    id: "quiz",
+    icon: Dumbbell,
+    titleKey: "ai-mode-quiz-title",
+    descKey: "ai-mode-quiz-desc",
+    promptKey: "ai-mode-quiz-prompt",
+    color: "text-orange-500 bg-orange-500/10",
+    followUpKeys: ["ai-followup-another-question", "ai-followup-explain-answer"],
+  },
+  {
+    id: "examples",
+    icon: Lightbulb,
+    titleKey: "ai-mode-examples-title",
+    descKey: "ai-mode-examples-desc",
+    promptKey: "ai-mode-examples-prompt",
+    color: "text-yellow-500 bg-yellow-500/10",
+    followUpKeys: ["ai-followup-more-examples", "ai-followup-real-world"],
+  },
+  {
+    id: "simplify",
+    icon: HelpCircle,
+    titleKey: "ai-mode-simplify-title",
+    descKey: "ai-mode-simplify-desc",
+    promptKey: "ai-mode-simplify-prompt",
+    color: "text-green-500 bg-green-500/10",
+    followUpKeys: ["ai-followup-deeper", "ai-followup-analogy"],
+  },
+  {
+    id: "ask",
+    icon: MessageSquare,
+    titleKey: "ai-mode-ask-title",
+    descKey: "ai-mode-ask-desc",
+    promptKey: "",
+    color: "text-purple-500 bg-purple-500/10",
+    followUpKeys: [],
+  },
 ];
 
+// ─── Main component ───────────────────────────────────────────────────────────
+
 /**
- * AI Study Assistant panel — inspired by Coursera/Khan Academy.
- * Shows suggested prompts, conversation history, and a send input.
+ * Structured AI Study Assistant — no free-form chat by default.
+ * Student picks a mode (Explain, Quiz, Examples, Simplify, Ask).
+ * Each mode sends a precise, pre-built prompt to the AI.
+ * Inspired by: https://zehfernandes.com/posts/why-is-everyone-obsessed-with-chat-interfaces
  */
 export const AiStudyAssistant = ({ content, onClose }: AiStudyAssistantProps) => {
   const { t } = useTranslation();
   const { isAiUser, isLoading: isChecking } = useIsAiUser();
-  const [input, setInput] = useState("");
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [activeMode, setActiveMode] = useState<Mode | null>(null);
+  const [askInput, setAskInput] = useState("");
   const [{ data, isLoading }, sendMessage] = useAIConversation("Chat");
 
-  const hasMessages = data.messages.length > 0;
+  const isResponding = isLoading;
+  const lastAssistantMsg = [...data.messages].reverse().find((m) => m.role === "assistant");
 
-  const handleSend = (text?: string) => {
-    const msg = text ?? input;
-    if (!msg.trim()) return;
-    const aiContext =
-      data.messages.length === 0
+  const buildPrompt = (mode: Mode, customText?: string): string => {
+    if (mode.id === "ask") return customText ?? "";
+    const base = t(mode.promptKey as any);
+    return `${base}\n\nContent: "${content.title}"${content.aiSummary ? `\n\nSummary: ${content.aiSummary}` : ""}`;
+  };
+
+  const handleSelectMode = (mode: Mode) => {
+    setActiveMode(mode);
+    if (mode.id !== "ask") {
+      const prompt = buildPrompt(mode);
+      sendMessage({
+        content: [{ text: prompt }],
+        aiContext: { contentTitle: content.title, aiSummary: content.aiSummary },
+      });
+    }
+  };
+
+  const handleAsk = () => {
+    if (!askInput.trim()) return;
+    sendMessage({
+      content: [{ text: askInput }],
+      aiContext: data.messages.length === 0
         ? { contentTitle: content.title, aiSummary: content.aiSummary }
-        : undefined;
-    sendMessage({ content: [{ text: msg }], aiContext });
-    setInput("");
+        : undefined,
+    });
+    setAskInput("");
+  };
+
+  const handleFollowUp = (key: string) => {
+    const text = t(key as any);
+    sendMessage({ content: [{ text }] });
+  };
+
+  const handleReset = () => {
+    setActiveMode(null);
   };
 
   if (isChecking) {
     return (
-      <div className="flex flex-col h-full">
-        <AssistantHeader onClose={onClose} onMinimize={() => setIsMinimized(!isMinimized)} isMinimized={isMinimized} />
+      <PanelShell onClose={onClose}>
         <div className="flex items-center justify-center flex-1">
           <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
         </div>
-      </div>
+      </PanelShell>
     );
   }
 
   if (!isAiUser) {
     return (
-      <div className="flex flex-col h-full">
-        <AssistantHeader onClose={onClose} onMinimize={() => setIsMinimized(!isMinimized)} isMinimized={isMinimized} />
-        {!isMinimized && <AiChatWaitlist />}
-      </div>
+      <PanelShell onClose={onClose}>
+        <AiChatWaitlist />
+      </PanelShell>
     );
   }
 
   return (
-    <div className="flex flex-col h-full bg-background">
-      <AssistantHeader
-        onClose={onClose}
-        onMinimize={() => setIsMinimized(!isMinimized)}
-        isMinimized={isMinimized}
-      />
+    <PanelShell onClose={onClose}>
+      {/* Mode picker */}
+      {!activeMode && (
+        <div className="flex flex-col h-full">
+          {/* Context */}
+          <div className="px-4 pt-4 pb-3">
+            <div className="flex items-start gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
+              <Sparkles className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-muted-foreground leading-snug">
+                {t("ai-chat-context-intro")}{" "}
+                <span className="font-medium text-foreground">{content.title}</span>
+              </p>
+            </div>
+          </div>
 
-      {!isMinimized && (
-        <>
-          <ScrollArea className="flex-1 min-h-0">
-            <div className="p-4 space-y-4">
-              {/* Welcome state with suggested prompts */}
-              {!hasMessages && (
-                <div className="space-y-4">
-                  {/* Context badge */}
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-primary/5 border border-primary/10">
-                    <Sparkles className="h-4 w-4 text-primary flex-shrink-0" />
-                    <p className="text-xs text-muted-foreground leading-snug">
-                      {t("ai-chat-context-intro")}{" "}
-                      <span className="font-medium text-foreground line-clamp-1">
-                        {content.title}
-                      </span>
-                    </p>
-                  </div>
-
-                  {/* Suggested questions */}
-                  <div>
-                    <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">
-                      {t("ai-chat-suggestions-label")}
-                    </p>
-                    <div className="grid grid-cols-1 gap-2">
-                      {SUGGESTED_QUESTIONS.map(({ icon: Icon, labelKey }) => (
-                        <button
-                          key={labelKey}
-                          onClick={() => handleSend(t(labelKey as any))}
-                          className="flex items-center gap-3 p-3 rounded-lg border border-border bg-card hover:bg-accent hover:border-primary/30 transition-all text-left group"
-                        >
-                          <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                            <Icon className="h-3.5 w-3.5 text-primary" />
-                          </div>
-                          <span className="text-sm text-foreground/80 group-hover:text-foreground transition-colors">
-                            {t(labelKey as any)}
-                          </span>
-                        </button>
-                      ))}
+          {/* Mode grid */}
+          <ScrollArea className="flex-1 min-h-0 px-4 pb-4">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+              {t("ai-mode-picker-label" as any)}
+            </p>
+            <div className="space-y-2">
+              {MODES.map((mode) => {
+                const Icon = mode.icon;
+                return (
+                  <button
+                    key={mode.id}
+                    onClick={() => handleSelectMode(mode)}
+                    className="w-full flex items-center gap-3 p-3.5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-accent transition-all text-left group"
+                  >
+                    <div className={cn("w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0", mode.color)}>
+                      <Icon className="h-4 w-4" />
                     </div>
-                  </div>
-                </div>
-              )}
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {t(mode.titleKey as any)}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-1">
+                        {t(mode.descKey as any)}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </ScrollArea>
+        </div>
+      )}
 
-              {/* Messages */}
-              {hasMessages && (
+      {/* Active mode — result view */}
+      {activeMode && (
+        <div className="flex flex-col h-full">
+          {/* Mode header */}
+          <div className="flex items-center gap-2 px-4 py-3 border-b flex-shrink-0">
+            <button
+              onClick={handleReset}
+              className="p-1 rounded-md hover:bg-accent transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4 text-muted-foreground" />
+            </button>
+            <div className={cn("w-6 h-6 rounded-md flex items-center justify-center", activeMode.color)}>
+              <activeMode.icon className="h-3.5 w-3.5" />
+            </div>
+            <span className="text-sm font-semibold">{t(activeMode.titleKey as any)}</span>
+          </div>
+
+          {/* Ask mode — free input */}
+          {activeMode.id === "ask" && (
+            <div className="flex flex-col h-full">
+              <ScrollArea className="flex-1 min-h-0 p-4">
+                {data.messages.length === 0 && (
+                  <p className="text-sm text-muted-foreground text-center mt-8">
+                    {t("ai-mode-ask-placeholder" as any)}
+                  </p>
+                )}
                 <div className="space-y-4">
-                  {data.messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={cn(
-                        "flex",
-                        msg.role === "user" ? "justify-end" : "justify-start"
-                      )}
-                    >
+                  {data.messages.map((msg: any) => (
+                    <div key={msg.id} className={cn("flex", msg.role === "user" ? "justify-end" : "justify-start")}>
                       {msg.role === "assistant" && (
                         <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mr-2 mt-1">
                           <Sparkles className="h-3 w-3 text-primary-foreground" />
                         </div>
                       )}
-                      <div
-                        className={cn(
-                          "max-w-[85%] rounded-2xl px-4 py-3 text-sm",
-                          msg.role === "user"
-                            ? "bg-primary text-primary-foreground rounded-tr-sm"
-                            : "bg-muted rounded-tl-sm"
-                        )}
-                      >
+                      <div className={cn(
+                        "max-w-[85%] rounded-2xl px-4 py-3 text-sm",
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground rounded-tr-sm"
+                          : "bg-muted rounded-tl-sm"
+                      )}>
                         {msg.role === "assistant" ? (
-                          <div className="prose prose-sm dark:prose-invert max-w-none [&_*]:break-words [&_code]:break-all [&_pre]:overflow-x-auto">
-                            <ReactMarkdown {...markdownConfig}>
-                              {msg.content[0].text}
-                            </ReactMarkdown>
+                          <div className="prose prose-sm dark:prose-invert max-w-none">
+                            <ReactMarkdown {...markdownConfig}>{msg.content[0].text}</ReactMarkdown>
                           </div>
                         ) : (
                           <p>{msg.content[0].text}</p>
@@ -156,99 +254,111 @@ export const AiStudyAssistant = ({ content, onClose }: AiStudyAssistantProps) =>
                       </div>
                     </div>
                   ))}
+                  {isResponding && <TypingIndicator />}
+                </div>
+              </ScrollArea>
+              <div className="p-3 border-t flex gap-2">
+                <Textarea
+                  value={askInput}
+                  onChange={(e) => setAskInput(e.target.value)}
+                  placeholder={t("ai-chat-input-placeholder")}
+                  className="min-h-[40px] max-h-[100px] resize-none text-sm"
+                  rows={1}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAsk(); }
+                  }}
+                />
+                <Button size="icon" onClick={handleAsk} disabled={isResponding || !askInput.trim()} className="h-10 w-10 flex-shrink-0">
+                  <Sparkles className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          )}
 
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mr-2 mt-1">
-                        <Sparkles className="h-3 w-3 text-primary-foreground" />
-                      </div>
-                      <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3">
-                        <div className="flex gap-1 items-center h-4">
-                          <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:0ms]" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:150ms]" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:300ms]" />
-                        </div>
-                      </div>
+          {/* Structured modes — single result + follow-ups */}
+          {activeMode.id !== "ask" && (
+            <div className="flex flex-col h-full">
+              <ScrollArea className="flex-1 min-h-0 p-4">
+                {isResponding && !lastAssistantMsg && (
+                  <div className="flex justify-start">
+                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mr-2 mt-1">
+                      <Sparkles className="h-3 w-3 text-primary-foreground" />
                     </div>
-                  )}
+                    <TypingIndicator />
+                  </div>
+                )}
+                {lastAssistantMsg && (
+                  <div className="prose prose-sm dark:prose-invert max-w-none text-sm leading-relaxed">
+                    <ReactMarkdown {...markdownConfig}>
+                      {lastAssistantMsg.content[0].text}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </ScrollArea>
+
+              {/* Follow-up actions */}
+              {lastAssistantMsg && !isResponding && (
+                <div className="p-3 border-t space-y-2 flex-shrink-0">
+                  <p className="text-xs text-muted-foreground font-medium">
+                    {t("ai-followup-label" as any)}
+                  </p>
+                  <div className="flex flex-col gap-1.5">
+                    {activeMode.followUpKeys.map((key) => (
+                      <button
+                        key={key}
+                        onClick={() => handleFollowUp(key)}
+                        className="text-left text-sm px-3 py-2 rounded-lg border border-border hover:border-primary/40 hover:bg-accent transition-all text-foreground/80 hover:text-foreground"
+                      >
+                        {t(key as any)}
+                      </button>
+                    ))}
+                    <button
+                      onClick={handleReset}
+                      className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-all"
+                    >
+                      <RotateCcw className="h-3.5 w-3.5" />
+                      {t("ai-back-to-modes" as any)}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
-          </ScrollArea>
-
-          {/* Input area */}
-          <div className="p-3 border-t bg-background space-y-2">
-            {/* Quick chips after first message */}
-            {hasMessages && (
-              <div className="flex gap-1.5 flex-wrap">
-                {["ai-chat-chip-more", "ai-chat-chip-quiz", "ai-chat-chip-simpler"].map((key) => (
-                  <Badge
-                    key={key}
-                    variant="outline"
-                    className="cursor-pointer hover:bg-primary/10 hover:border-primary/40 transition-colors text-xs py-1"
-                    onClick={() => handleSend(t(key as any))}
-                  >
-                    {t(key as any)}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            <div className="flex gap-2">
-              <Textarea
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={t("ai-chat-input-placeholder")}
-                className="min-h-[40px] max-h-[120px] resize-none text-sm"
-                rows={1}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSend();
-                  }
-                }}
-              />
-              <Button
-                size="icon"
-                onClick={() => handleSend()}
-                disabled={isLoading || !input.trim()}
-                className="flex-shrink-0 h-10 w-10"
-              >
-                <Send className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </>
+          )}
+        </div>
       )}
-    </div>
+    </PanelShell>
   );
 };
 
-interface AssistantHeaderProps {
-  onClose: () => void;
-  onMinimize: () => void;
-  isMinimized: boolean;
-}
+// ─── Sub-components ───────────────────────────────────────────────────────────
 
-function AssistantHeader({ onClose, onMinimize, isMinimized }: AssistantHeaderProps) {
+function PanelShell({ children, onClose }: { children: React.ReactNode; onClose: () => void }) {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-b bg-background flex-shrink-0">
-      <div className="flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center">
-          <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
+    <div className="flex flex-col h-full bg-background">
+      <div className="flex items-center justify-between px-4 py-3 border-b flex-shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+            <Sparkles className="h-3.5 w-3.5 text-primary-foreground" />
+          </div>
+          <p className="text-sm font-semibold">{t("ai-chat-title")}</p>
         </div>
-        <div>
-          <p className="text-sm font-semibold leading-none">{t("ai-chat-title")}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{t("ai-chat-subtitle")}</p>
-        </div>
-      </div>
-      <div className="flex items-center gap-1">
-        <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onMinimize}>
-          <ChevronDown className={cn("h-4 w-4 transition-transform", isMinimized && "rotate-180")} />
-        </Button>
         <Button variant="ghost" size="icon" className="h-7 w-7" onClick={onClose}>
           <X className="h-4 w-4" />
         </Button>
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TypingIndicator() {
+  return (
+    <div className="bg-muted rounded-2xl rounded-tl-sm px-4 py-3 inline-flex">
+      <div className="flex gap-1 items-center h-4">
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:0ms]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:150ms]" />
+        <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50 animate-bounce [animation-delay:300ms]" />
       </div>
     </div>
   );
