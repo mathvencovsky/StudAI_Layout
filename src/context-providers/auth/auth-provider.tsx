@@ -6,19 +6,17 @@ import {
   type AuthContextValue,
   type User,
 } from "@/context-providers/auth/auth-context";
+import { getMyLearningPreference } from "@/api/learning-preference";
+import { useQueryClient } from "@tanstack/react-query";
 
-/**
- * AuthProvider component that manages authentication state
- * Supports both Amplify and Mock authentication
- */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // Use Amplify auth
         const currentUser = await getCurrentUser();
         const attributes = await fetchUserAttributes();
         setUser({
@@ -28,8 +26,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             attributes["custom:display_name"] ?? attributes.email ?? attributes.name,
           photoURL: attributes.picture,
         });
-      } catch (error) {
-        console.log("No user authenticated");
+        // Prefetch learning preference immediately after auth — so home page
+        // finds it already in cache and doesn't show a loading state
+        queryClient.prefetchQuery({
+          queryKey: ["learning-preference", "mine"],
+          queryFn: getMyLearningPreference,
+          staleTime: 60000,
+        });
+      } catch {
         setUser(null);
       } finally {
         setLoading(false);
@@ -38,7 +42,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     initializeAuth();
 
-    // Listen for auth changes (Amplify)
     const unsubscribe = Hub.listen("auth", (hubPayload) => {
       const payload = hubPayload.payload as { event: string };
       switch (payload.event) {
@@ -47,16 +50,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           break;
         case "signedOut":
           setUser(null);
+          queryClient.clear();
           break;
         default:
           break;
       }
     });
 
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+    return () => { unsubscribe(); };
+  }, [queryClient]);
 
   const value = useMemo<AuthContextValue>(
     () => ({

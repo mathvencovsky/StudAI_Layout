@@ -22,11 +22,15 @@ export const HomePage = () => {
   const { user } = useAuth();
   const { data: existingPreference, isLoading: isLoadingPreference } =
     useMyLearningPreference();
-  const { isLoading: isDashboardLoading } = useDashboardData();
+
+  // Fetch in background — don't block render
+  useDashboardData();
   const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
   const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
 
-  if (isLoadingPreference || isDashboardLoading) return <LoadingState />;
+  // Only block on the preference check — it determines which page to show.
+  // Thanks to prefetch in AuthProvider this is usually already resolved.
+  if (isLoadingPreference) return <LoadingState />;
 
   if (!existingPreference) {
     return <DiscoveryPage />;
