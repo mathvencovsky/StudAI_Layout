@@ -4,6 +4,7 @@ import { ExternalLink } from "./external-link";
 import { ContentHeader } from "./content-metadata";
 import { ContentDetailTabs } from "./content-detail-tabs";
 import { ContentNavigationButtons } from "./content-navigation-buttons";
+import { AiStudyAssistant } from "./ai-study-assistant";
 import type { Content } from "@/model/content";
 
 export interface ContentDetailViewProps {
@@ -21,8 +22,7 @@ export interface ContentDetailViewProps {
 }
 
 /**
- * Displays content details with embedded media or external link.
- * Includes navigation buttons when viewing content within a module context.
+ * Displays content details with embedded media, AI assistant inline, and navigation.
  */
 export const ContentDetailView = ({
   content,
@@ -41,11 +41,14 @@ export const ContentDetailView = ({
 
   return (
     <div className="space-y-6">
+      {/* Media */}
       {isYouTube ? (
         <YouTubeEmbed url={content.link} />
       ) : (
         <ExternalLink url={content.link} />
       )}
+
+      {/* Title + completion */}
       <ContentHeader
         content={content}
         moduleId={moduleId}
@@ -53,11 +56,18 @@ export const ContentDetailView = ({
         isLoading={isLoading}
         onToggleCompletion={onToggleCompletion}
       />
+
+      {/* AI Assistant — always visible, inline below the video */}
+      <AiStudyAssistant content={content} inline />
+
+      {/* Description / transcript / summary tabs */}
       <ContentDetailTabs
         description={content.description}
         aiTranscript={content.aiTranscript}
         aiSummary={content.aiSummary}
       />
+
+      {/* Module navigation */}
       {moduleId &&
         currentPosition !== undefined &&
         totalItems !== undefined &&
