@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { Check, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 interface PreferenceChipProps {
   id: string;
   label: string;
@@ -97,6 +98,7 @@ export function PreferenceChipsGroup({
   minSelections = 0,
   className
 }: PreferenceChipsGroupProps) {
+  const { t } = useTranslation();
   const canSelectMore = !maxSelections || selectedIds.length < maxSelections;
   const hasMinimumSelections = selectedIds.length >= minSelections;
 
@@ -122,12 +124,12 @@ export function PreferenceChipsGroup({
       {(maxSelections || minSelections > 0) && (
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>
-            {minSelections > 0 && `Mínimo: ${minSelections}`}
+            {minSelections > 0 && `${t("chips-min" as any, "Min")}: ${minSelections}`}
             {minSelections > 0 && maxSelections && ' • '}
-            {maxSelections && `Máximo: ${maxSelections}`}
+            {maxSelections && `${t("chips-max" as any, "Max")}: ${maxSelections}`}
           </span>
           <span>
-            {selectedIds.length} selecionado{selectedIds.length !== 1 ? 's' : ''}
+            {t("chips-selected" as any, "{{count}} selected", { count: selectedIds.length })}
           </span>
         </div>
       )}
@@ -167,7 +169,7 @@ export function PreferenceChipsGroup({
           animate={{ opacity: 1, height: 'auto' }}
           className="text-xs text-destructive"
         >
-          Selecione pelo menos {minSelections} opç{minSelections === 1 ? 'ão' : 'ões'}
+          {t("chips-min-required" as any, "Select at least {{count}}", { count: minSelections })}
         </motion.p>
       )}
 
@@ -178,7 +180,7 @@ export function PreferenceChipsGroup({
           animate={{ opacity: 1, height: 'auto' }}
           className="text-xs text-amber-600"
         >
-          Limite máximo de {maxSelections} seleções atingido
+          {t("chips-max-reached" as any, "Maximum of {{count}} selections reached", { count: maxSelections })}
         </motion.p>
       )}
     </div>
