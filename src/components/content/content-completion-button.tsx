@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { useCelebration } from "@/hooks/use-celebration";
 
 export interface ContentCompletionButtonProps {
   contentId: string;
@@ -10,19 +11,18 @@ export interface ContentCompletionButtonProps {
   onToggle: (isCompleted: boolean) => void;
 }
 
-/**
- * Button component for marking content as completed or incomplete.
- * Displays different labels and styling based on completion state.
- */
 export const ContentCompletionButton = ({
   isCompleted,
   isLoading = false,
   onToggle,
 }: ContentCompletionButtonProps) => {
   const { t } = useTranslation();
+  const { celebrate } = useCelebration();
 
   const handleClick = () => {
-    onToggle(!isCompleted);
+    const newState = !isCompleted;
+    onToggle(newState);
+    if (newState) celebrate(); // 🎉 confetti when marking complete
   };
 
   return (

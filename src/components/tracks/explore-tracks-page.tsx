@@ -106,23 +106,14 @@ export function ExploreTracksPage() {
           {filteredCatalog && filteredCatalog.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCatalog.map((track) => (
-                <Card
-                  key={track.id}
-                  className="hover:shadow-lg transition-shadow"
-                >
-                  <CardHeader>
-                    <CardTitle className="line-clamp-2">
-                      {track.title}
-                    </CardTitle>
-                    <CardDescription className="line-clamp-3">
-                      {track.description}
-                    </CardDescription>
+                <Card key={track.id} className="hover:shadow-lg transition-shadow flex flex-col">
+                  <CardHeader className="flex-1">
+                    <CardTitle className="line-clamp-2">{track.title}</CardTitle>
+                    <CardDescription className="line-clamp-3">{track.description}</CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="pt-0">
                     <Link to="/track/$trackId" params={{ trackId: track.id }}>
-                      <Button className="w-full">
-                        {t("pages-tracks-view-details")}
-                      </Button>
+                      <Button className="w-full">{t("pages-tracks-view-details")}</Button>
                     </Link>
                   </CardContent>
                 </Card>

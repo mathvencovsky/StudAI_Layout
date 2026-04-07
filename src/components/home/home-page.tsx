@@ -3,6 +3,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
 import { DailyProgressWidget } from "@/components/home/daily-progress-widget";
+import { OnboardingChecklist } from "@/components/home/onboarding-checklist";
 import { LastStartedModuleSection } from "@/components/dashboard/last-started-module-section";
 import { LastStartedTrackSection } from "@/components/home/last-started-track-section";
 import { DiscoveryPage } from "@/components/discovery";
@@ -43,6 +44,7 @@ export const HomePage = () => {
       <div className="space-y-4">
         <UserGreeting displayName={user?.displayName} />
         <DailyProgressWidget />
+        <OnboardingChecklist />
         <StatsCards />
         <NewTrackCard />
         <UpgradeCard variant="compact" />

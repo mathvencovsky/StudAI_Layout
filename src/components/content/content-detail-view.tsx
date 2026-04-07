@@ -5,6 +5,7 @@ import { ContentHeader } from "./content-metadata";
 import { ContentDetailTabs } from "./content-detail-tabs";
 import { ContentNavigationButtons } from "./content-navigation-buttons";
 import { AiStudyAssistant } from "./ai-study-assistant";
+import { StudyNotes } from "./study-notes";
 import type { Content } from "@/model/content";
 
 export interface ContentDetailViewProps {
@@ -59,6 +60,9 @@ export const ContentDetailView = ({
 
       {/* AI Assistant — always visible, inline below the video */}
       <AiStudyAssistant content={content} inline />
+
+      {/* Study notes — persistent, auto-saved */}
+      <StudyNotes contentId={content.id} />
 
       {/* Description / transcript / summary tabs */}
       <ContentDetailTabs
