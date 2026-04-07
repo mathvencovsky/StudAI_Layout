@@ -103,12 +103,15 @@ export const completeModule = async (
  * List all module progress records for the current user
  */
 export const listUserModuleProgress = async (): Promise<UserModuleProgress[]> => {
-  const result = await client.models.UserModuleProgress.list();
-  if (!result.data) {
-    console.error("Failed to list user module progress:", result.errors);
+  if (!client.models.UserModuleProgress) return [];
+  try {
+    const result = await client.models.UserModuleProgress.list();
+    if (!result.data) return [];
+    return result.data;
+  } catch (e) {
+    console.warn("listUserModuleProgress failed:", e);
     return [];
   }
-  return result.data;
 };
 
 /**

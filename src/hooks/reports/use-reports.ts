@@ -154,13 +154,18 @@ export const reportDataQueryOptions = (period: ReportPeriod) =>
   queryOptions({
     queryKey: [QUERY_KEYS.REPORTS, period],
     queryFn: async () => {
-      const [sessions, contentProgress, moduleProgress, trackProgress, loginDays] = await Promise.all([
+      const results = await Promise.allSettled([
         listStudySessions(),
         listAllUserContentProgressWithContent(),
         listUserModuleProgress(),
         listUserTrackProgress(),
         listLoginDays(),
       ]);
+      const sessions = results[0].status === "fulfilled" ? results[0].value : [];
+      const contentProgress = results[1].status === "fulfilled" ? results[1].value : [];
+      const moduleProgress = results[2].status === "fulfilled" ? results[2].value : [];
+      const trackProgress = results[3].status === "fulfilled" ? results[3].value : [];
+      const loginDays = results[4].status === "fulfilled" ? results[4].value : [];
       return buildReportData(sessions, contentProgress, moduleProgress, trackProgress, loginDays, period);
     },
     staleTime: 1000 * 60 * 5,

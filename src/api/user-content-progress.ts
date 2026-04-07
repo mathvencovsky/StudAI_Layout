@@ -103,12 +103,15 @@ export const getUserContentProgress = async (
  * Lists all user content progress with related content data
  */
 export const listAllUserContentProgressWithContent = async (): Promise<UserContentProgressWithContent[]> => {
-  const result = await client.models.UserContentProgress.list({
-    selectionSet: progressWithContentSelectionSet,
-  });
-  if (!result.data) {
-    console.error("Failed to list user content progress with content:", result.errors);
+  if (!client.models.UserContentProgress) return [];
+  try {
+    const result = await client.models.UserContentProgress.list({
+      selectionSet: progressWithContentSelectionSet,
+    });
+    if (!result.data) return [];
+    return result.data;
+  } catch (e) {
+    console.warn("listAllUserContentProgressWithContent failed:", e);
     return [];
   }
-  return result.data;
 };
