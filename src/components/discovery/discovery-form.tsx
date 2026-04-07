@@ -7,8 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { discoveryFormSchema, type DiscoveryFormValues } from "./schema";
 import { type LearningPreference } from "@/model/learning-preference";
-import { ObjectivesStep } from "./steps/objectives-step";
-import { ContextStep } from "./steps/context-step";
+import { GoalStep } from "./steps/goal-step";
 import { InterestAreasStep } from "./steps/interest-areas-step";
 import { PreferencesStep } from "./steps/preferences-step";
 import { ConstraintsStep } from "./steps/constraints-step";
@@ -16,7 +15,7 @@ import { ScheduleStep } from "./steps/schedule-step";
 import { ConfirmationStep } from "./steps/confirmation-step";
 import { StepNavigation } from "./ui/step-navigation";
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 
 export interface DiscoveryFormProps {
   existingPreference: LearningPreference | null | undefined;
@@ -67,13 +66,12 @@ export const DiscoveryForm = ({
   });
 
   const stepValidationFields: (keyof DiscoveryFormValues)[][] = [
-    ["objectives"],
-    ["context"],
+    ["context", "objectives"], // GoalStep sets both
     ["interests"],
     ["learningStyles"],
     ["hoursPerWeek", "totalWeeks", "budget", "urgency", "experienceLevel"],
-    [], // schedule step — all optional
-    [], // confirmation step — no additional validation
+    [], // schedule — all optional
+    [], // confirmation
   ];
 
   const handleNext = useCallback(async () => {
@@ -132,13 +130,12 @@ export const DiscoveryForm = ({
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                {currentStep === 0 && <ObjectivesStep />}
-                {currentStep === 1 && <ContextStep />}
-                {currentStep === 2 && <InterestAreasStep />}
-                {currentStep === 3 && <PreferencesStep />}
-                {currentStep === 4 && <ConstraintsStep />}
-                {currentStep === 5 && <ScheduleStep />}
-                {currentStep === 6 && <ConfirmationStep />}
+                {currentStep === 0 && <GoalStep />}
+                {currentStep === 1 && <InterestAreasStep />}
+                {currentStep === 2 && <PreferencesStep />}
+                {currentStep === 3 && <ConstraintsStep />}
+                {currentStep === 4 && <ScheduleStep />}
+                {currentStep === 5 && <ConfirmationStep />}
               </motion.div>
             </AnimatePresence>
           </FormProvider>
