@@ -11,6 +11,9 @@ import ReactMarkdown from "react-markdown";
 import { markdownConfig } from "@/lib/markdown-config";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
+import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
+import { useTranslation as useT } from "react-i18next";
+import { INTEREST_TRANSLATION_KEYS } from "@/components/learning-preferences/constants";
 
 const client = generateClient<Schema>({ authMode: "userPool" });
 const { useAIConversation } = createAIHooks(client);
@@ -101,6 +104,7 @@ function TypingIndicator() {
 export const ChatPage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { data: preference } = useMyLearningPreference();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -108,6 +112,23 @@ export const ChatPage = () => {
   const [{ data: { messages }, isLoading }, sendMessage] = useAIConversation("Chat");
 
   const hasMessages = messages.length > 0;
+
+  // Build student profile context for first message
+  const buildStudentContext = useCallback((): string => {
+    if (!preference) return "";
+    const parts: string[] = ["Perfil do aluno:"];
+    if (preference.context) parts.push(`- Situação: ${preference.context}`);
+    if (preference.experienceLevel) parts.push(`- Nível: ${preference.experienceLevel}`);
+    if (preference.interests?.length) {
+      const labels = preference.interests
+        .map((i) => t(INTEREST_TRANSLATION_KEYS[i as keyof typeof INTEREST_TRANSLATION_KEYS] ?? i))
+        .join(", ");
+      parts.push(`- Interesses: ${labels}`);
+    }
+    if (preference.minutesPerDay) parts.push(`- Tempo disponível: ${preference.minutesPerDay} min/dia`);
+    if (preference.hoursPerWeek) parts.push(`- Horas por semana: ${preference.hoursPerWeek}h`);
+    return parts.length > 1 ? parts.join("\n") : "";
+  }, [preference, t]);
 
   const initials = (user?.displayName ?? "U")
     .split(" ")
@@ -119,10 +140,14 @@ export const ChatPage = () => {
   const handleSend = useCallback((text?: string) => {
     const msg = text ?? input;
     if (!msg.trim() || isLoading) return;
-    sendMessage({ content: [{ text: msg }] });
+    // On first message, prepend student context so AI personalizes responses
+    const isFirst = messages.length === 0;
+    const studentCtx = isFirst ? buildStudentContext() : "";
+    const fullMsg = studentCtx ? `${studentCtx}\n\nPergunta: ${msg}` : msg;
+    sendMessage({ content: [{ text: fullMsg }] });
     setInput("");
     textareaRef.current?.focus();
-  }, [input, isLoading, sendMessage]);
+  }, [input, isLoading, sendMessage, messages.length, buildStudentContext]);
 
   const handleStarterClick = (prompt: string) => {
     setInput(prompt);

@@ -10,10 +10,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
 import { useIsAiUser } from "@/hooks/use-is-ai-user";
+import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
 import { type Content } from "@/model/content";
 import { markdownConfig } from "@/lib/markdown-config";
 import { AiChatWaitlist } from "./ai-chat-waitlist";
 import { cn } from "@/lib/utils";
+import { INTEREST_TRANSLATION_KEYS } from "@/components/learning-preferences/constants";
 
 export interface AiStudyAssistantProps {
   content: Content;
@@ -90,15 +92,34 @@ const MODES: Mode[] = [
 export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAssistantProps) => {
   const { t } = useTranslation();
   const { isAiUser, isLoading: isChecking } = useIsAiUser();
+  const { data: preference } = useMyLearningPreference();
   const [activeMode, setActiveMode] = useState<Mode | null>(null);
   const [askInput, setAskInput] = useState("");
   const [{ data, isLoading }, sendMessage] = useAIConversation("Chat");
 
   const lastAssistantMsg = [...data.messages].reverse().find((m) => m.role === "assistant");
 
+  // Build a rich context string from the student's learning preferences
+  const buildStudentContext = (): string => {
+    if (!preference) return "";
+    const parts: string[] = [];
+    if (preference.context) parts.push(`Situação: ${preference.context}`);
+    if (preference.experienceLevel) parts.push(`Nível: ${preference.experienceLevel}`);
+    if (preference.interests?.length) {
+      const interestLabels = (preference.interests as string[])
+        .map((i: string) => t(INTEREST_TRANSLATION_KEYS[i as keyof typeof INTEREST_TRANSLATION_KEYS] ?? i))
+        .join(", ");
+      parts.push(`Interesses: ${interestLabels}`);
+    }
+    if (preference.minutesPerDay) parts.push(`Tempo disponível: ${preference.minutesPerDay} min/dia`);
+    if (preference.hoursPerWeek) parts.push(`Horas por semana: ${preference.hoursPerWeek}h`);
+    return parts.length > 0 ? `\n\nPerfil do aluno:\n${parts.join("\n")}` : "";
+  };
+
   const buildPrompt = (mode: Mode): string => {
     const base = t(mode.promptKey as any);
-    return `${base}\n\nContent: "${content.title}"${content.aiSummary ? `\n\nSummary: ${content.aiSummary}` : ""}`;
+    const studentCtx = buildStudentContext();
+    return `${base}\n\nConteúdo: "${content.title}"${content.aiSummary ? `\n\nResumo: ${content.aiSummary}` : ""}${studentCtx}`;
   };
 
   const handleSelectMode = (mode: Mode) => {
@@ -113,10 +134,11 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
 
   const handleAsk = () => {
     if (!askInput.trim()) return;
+    const studentCtx = buildStudentContext();
     sendMessage({
       content: [{ text: askInput }],
       aiContext: data.messages.length === 0
-        ? { contentTitle: content.title, aiSummary: content.aiSummary }
+        ? { contentTitle: content.title, aiSummary: content.aiSummary ?? studentCtx }
         : undefined,
     });
     setAskInput("");
