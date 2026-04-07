@@ -13,14 +13,55 @@ import { cn } from "@/lib/utils";
 
 /**
  * Maps a context value to the categories that are already implied by it.
- * These get pre-selected and their group is hidden to avoid redundancy.
+ * These get pre-selected silently — NOT hidden from the UI.
+ * We only hide them if they're the ONLY thing in their group.
  */
 const CONTEXT_IMPLIED_CATEGORIES: Partial<Record<string, Category[]>> = {
-  job_prep: ["concursos_publicos", "certifications", "vestibular_enem"],
-  academic: ["vestibular_enem", "math_logic"],
+  academic: ["vestibular_enem"],
   career_change: ["career_market"],
   upskilling: ["career_market"],
 };
+
+/**
+ * When job_prep is selected, show a focused sub-group of exam-relevant categories
+ * instead of the generic groups.
+ */
+const EXAM_FOCUSED_GROUPS: { label: string; labelKey: string; categories: Category[] }[] = [
+  {
+    label: "Área do concurso / certificação",
+    labelKey: "interest-group-exam-area",
+    categories: [
+      "concursos_publicos",
+      "certifications",
+      "vestibular_enem",
+      "law",
+      "math_logic",
+      "languages",
+    ],
+  },
+  {
+    label: "Tecnologia (TI / Análise de Sistemas)",
+    labelKey: "interest-group-exam-tech",
+    categories: [
+      "web_development",
+      "data_science",
+      "databases",
+      "cybersecurity",
+      "cloud_computing",
+      "devops",
+    ],
+  },
+  {
+    label: "Negócios & Gestão",
+    labelKey: "interest-group-exam-business",
+    categories: [
+      "business_entrepreneurship",
+      "marketing_sales",
+      "career_market",
+      "productivity_tools",
+    ],
+  },
+];
 
 /** Step 2: Interest areas — adapts based on what was chosen in step 1 */
 export function InterestAreasStep() {
@@ -38,7 +79,6 @@ export function InterestAreasStep() {
     if (toAdd.length > 0) {
       setValue("interests", [...current, ...toAdd] as DiscoveryFormValues["interests"]);
     }
-  // Only run when context changes
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [context]);
 
@@ -52,13 +92,15 @@ export function InterestAreasStep() {
     );
   };
 
-  // Hide the group that's already implied by the context choice
+  // For exam/cert context, show focused groups; otherwise show generic groups
+  const isExamContext = context === "job_prep";
   const impliedCategories = new Set(CONTEXT_IMPLIED_CATEGORIES[context ?? ""] ?? []);
-  const visibleGroups = INTEREST_GROUPS.map((group) => ({
-    ...group,
-    // Filter out categories already implied — they're pre-selected but not shown
-    categories: group.categories.filter((c) => !impliedCategories.has(c)),
-  })).filter((group) => group.categories.length > 0);
+  const visibleGroups = isExamContext
+    ? EXAM_FOCUSED_GROUPS
+    : INTEREST_GROUPS.map((group) => ({
+        ...group,
+        categories: group.categories.filter((c) => !impliedCategories.has(c)),
+      })).filter((group) => group.categories.length > 0);
 
   // Adapt the title based on context
   const titleKey = context === "job_prep"
