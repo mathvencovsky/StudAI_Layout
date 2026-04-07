@@ -14,9 +14,11 @@ import { useAuth } from "@/hooks/use-auth";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function SettingsPageIntegrated() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const { mode, setMode, colorTheme, setColorTheme } = useTheme();
   const { user, signOut } = useAuth();
   const { data: profile, isLoading, error, refetch } = useMyProfile();
@@ -147,16 +149,40 @@ export default function SettingsPageIntegrated() {
 
       {/* Other Options */}
       <section className="border rounded-lg bg-card overflow-hidden">
-        <button className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left">
+        <button
+          onClick={() => void navigate({ to: "/privacy" })}
+          className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left"
+        >
           <span className="text-sm text-foreground">
             {t("pages-settings-privacy")}
           </span>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </button>
         <div className="border-t" />
-        <button className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left">
+        <button
+          onClick={() => void navigate({ to: "/support" })}
+          className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left"
+        >
           <span className="text-sm text-foreground">
             {t("pages-settings-help")}
+          </span>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        </button>
+        <div className="border-t" />
+        <button
+          onClick={() => void navigate({ to: "/faq" })}
+          className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left"
+        >
+          <span className="text-sm text-foreground">FAQ</span>
+          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+        </button>
+        <div className="border-t" />
+        <button
+          onClick={() => void navigate({ to: "/terms" })}
+          className="w-full flex items-center justify-between p-4 hover:bg-muted/30 transition-colors text-left"
+        >
+          <span className="text-sm text-foreground">
+            {t("common-terms")}
           </span>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </button>
