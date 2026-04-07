@@ -100,7 +100,7 @@ export function GoalStep() {
               className={cn(
                 "flex items-start gap-4 p-4 rounded-xl border-2 text-left transition-all",
                 isSelected
-                  ? "border-primary bg-primary/5 shadow-sm"
+                  ? "border-primary bg-primary text-primary-foreground shadow-sm"
                   : "border-border bg-card hover:border-primary/40 hover:bg-accent"
               )}
             >
@@ -108,11 +108,14 @@ export function GoalStep() {
               <div className="min-w-0">
                 <p className={cn(
                   "font-semibold text-sm leading-snug",
-                  isSelected ? "text-primary" : "text-foreground"
+                  isSelected ? "text-primary-foreground" : "text-foreground"
                 )}>
                   {t(option.titleKey as any, option.titleKey)}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                <p className={cn(
+                  "text-xs mt-1 leading-relaxed",
+                  isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
+                )}>
                   {t(option.descKey as any, option.descKey)}
                 </p>
               </div>
