@@ -1,6 +1,12 @@
 import { type Category } from "@/model/category";
 
 export const INTEREST_OPTIONS: Category[] = [
+  // Concursos & Certificações (most searched in Brazil)
+  "concursos_publicos",
+  "certifications",
+  "vestibular_enem",
+  "law",
+  // Tech
   "web_development",
   "mobile_development",
   "data_science",
@@ -13,18 +19,70 @@ export const INTEREST_OPTIONS: Category[] = [
   "game_development",
   "blockchain",
   "embedded_systems",
-  "vestibular_enem",
-  "concursos_publicos",
-  "certifications",
-  "languages",
-  "math_logic",
-  "productivity_tools",
+  // Carreira & Negócios
   "career_market",
   "business_entrepreneurship",
   "marketing_sales",
+  "productivity_tools",
+  // Outros
+  "languages",
+  "math_logic",
   "design_creative",
-  "law",
 ];
+
+// Groups for visual organization in the UI
+export const INTEREST_GROUPS: { label: string; labelKey: string; categories: Category[] }[] = [
+  {
+    label: "Concursos & Certificações",
+    labelKey: "interest-group-exams",
+    categories: ["concursos_publicos", "certifications", "vestibular_enem", "law"],
+  },
+  {
+    label: "Tecnologia",
+    labelKey: "interest-group-tech",
+    categories: [
+      "web_development", "mobile_development", "data_science", "machine_learning",
+      "cloud_computing", "devops", "cybersecurity", "databases",
+      "ui_ux_design", "game_development", "blockchain", "embedded_systems",
+    ],
+  },
+  {
+    label: "Carreira & Negócios",
+    labelKey: "interest-group-career",
+    categories: ["career_market", "business_entrepreneurship", "marketing_sales", "productivity_tools"],
+  },
+  {
+    label: "Outros",
+    labelKey: "interest-group-other",
+    categories: ["languages", "math_logic", "design_creative"],
+  },
+];
+
+export const INTEREST_ICONS: Record<Category, string> = {
+  concursos_publicos: "🏛️",
+  certifications: "🏆",
+  vestibular_enem: "📝",
+  law: "⚖️",
+  web_development: "🌐",
+  mobile_development: "📱",
+  data_science: "📊",
+  machine_learning: "🤖",
+  cloud_computing: "☁️",
+  devops: "⚙️",
+  cybersecurity: "🔒",
+  databases: "🗄️",
+  ui_ux_design: "🎨",
+  game_development: "🎮",
+  blockchain: "⛓️",
+  embedded_systems: "🔌",
+  career_market: "💼",
+  business_entrepreneurship: "🚀",
+  marketing_sales: "📣",
+  productivity_tools: "⚡",
+  languages: "🌍",
+  math_logic: "🔢",
+  design_creative: "✏️",
+};
 
 export const INTEREST_TRANSLATION_KEYS = {
   blockchain: "learning-preferences-interest-blockchain",
@@ -46,8 +104,7 @@ export const INTEREST_TRANSLATION_KEYS = {
   math_logic: "learning-preferences-interest-math-logic",
   productivity_tools: "learning-preferences-interest-productivity-tools",
   career_market: "learning-preferences-interest-career-market",
-  business_entrepreneurship:
-    "learning-preferences-interest-business-entrepreneurship",
+  business_entrepreneurship: "learning-preferences-interest-business-entrepreneurship",
   marketing_sales: "learning-preferences-interest-marketing-sales",
   design_creative: "learning-preferences-interest-design-creative",
   law: "learning-preferences-interest-law",
