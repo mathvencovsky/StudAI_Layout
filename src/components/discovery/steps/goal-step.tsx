@@ -106,16 +106,12 @@ export function GoalStep() {
             >
               <span className="text-3xl flex-shrink-0 mt-0.5">{option.icon}</span>
               <div className="min-w-0">
-                <p className={cn(
-                  "font-semibold text-sm leading-snug",
-                  isSelected ? "text-primary-foreground" : "text-foreground"
-                )}>
+                <p className="font-semibold text-sm leading-snug" style={{ color: isSelected ? "var(--color-primary-foreground, white)" : undefined }}>
                   {t(option.titleKey as any, option.titleKey)}
                 </p>
-                <p className={cn(
-                  "text-xs mt-1 leading-relaxed",
-                  isSelected ? "text-primary-foreground/80" : "text-muted-foreground"
-                )}>
+                <p className="text-xs mt-1 leading-relaxed" style={{ color: isSelected ? "rgba(255,255,255,0.85)" : undefined, opacity: isSelected ? 1 : undefined }}
+                  data-selected={isSelected}
+                >
                   {t(option.descKey as any, option.descKey)}
                 </p>
               </div>
