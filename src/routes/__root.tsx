@@ -53,7 +53,16 @@ const RootLayout = () => {
     }
   }, [loading, isAuthenticated, isPublicPath, navigate]);
 
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="flex min-h-svh w-full items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-primary/20 animate-pulse" />
+          <div className="w-24 h-2 rounded-full bg-muted animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   if (!isAuthenticated && !isPublicPath) return null;
 
