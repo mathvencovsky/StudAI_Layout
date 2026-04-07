@@ -23,3 +23,54 @@ export const LEARNING_STYLE_OPTIONS = [
   { id: "self_paced", icon: "⏰", translationKey: "discovery-style-self-paced", descriptionKey: "discovery-style-self-paced-desc" },
   { id: "structured", icon: "📋", translationKey: "discovery-style-structured", descriptionKey: "discovery-style-structured-desc" },
 ] as const;
+
+export const GOAL_OPTIONS = [
+  {
+    id: "job_prep",
+    context: "job_prep" as const,
+    objectives: ["employment", "academic_growth"],
+    icon: "🏛️",
+    titleKey: "goal-concurso-cert",
+    descKey: "goal-concurso-cert-desc",
+  },
+  {
+    id: "career_change",
+    context: "career_change" as const,
+    objectives: ["career_change"],
+    icon: "🔄",
+    titleKey: "goal-career-change",
+    descKey: "goal-career-change-desc",
+  },
+  {
+    id: "upskilling",
+    context: "upskilling" as const,
+    objectives: ["skill_improvement", "employment"],
+    icon: "📈",
+    titleKey: "goal-upskilling",
+    descKey: "goal-upskilling-desc",
+  },
+  {
+    id: "academic",
+    context: "academic" as const,
+    objectives: ["academic_growth"],
+    icon: "🎓",
+    titleKey: "goal-academic",
+    descKey: "goal-academic-desc",
+  },
+  {
+    id: "beginner",
+    context: "beginner" as const,
+    objectives: ["skill_improvement", "personal_project"],
+    icon: "🌱",
+    titleKey: "goal-beginner",
+    descKey: "goal-beginner-desc",
+  },
+  {
+    id: "personal_project",
+    context: "personal_project" as const,
+    objectives: ["personal_project"],
+    icon: "🚀",
+    titleKey: "goal-personal-project",
+    descKey: "goal-personal-project-desc",
+  },
+] as const;

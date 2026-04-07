@@ -24,7 +24,10 @@ export const createLearningPreference = async (
   input: LearningPreferenceCreateInput,
 ): Promise<LearningPreference> => {
   const result = await client.models.LearningPreference.create(input);
-  if (!result.data) throw new Error("Failed to create learning preference");
+  if (!result.data) {
+    console.error("Failed to create learning preference:", result.errors);
+    throw new Error(JSON.stringify(result.errors));
+  }
   return result.data;
 };
 
@@ -35,6 +38,9 @@ export const updateLearningPreference = async (
   input: LearningPreferenceUpdateInput,
 ): Promise<LearningPreference> => {
   const result = await client.models.LearningPreference.update(input);
-  if (!result.data) throw new Error("Failed to update learning preference");
+  if (!result.data) {
+    console.error("Failed to update learning preference:", result.errors);
+    throw new Error(JSON.stringify(result.errors));
+  }
   return result.data;
 };

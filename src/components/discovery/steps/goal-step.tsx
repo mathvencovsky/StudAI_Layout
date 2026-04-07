@@ -2,64 +2,12 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { type DiscoveryFormValues } from "../schema";
+import { GOAL_OPTIONS } from "../constants";
 import { cn } from "@/lib/utils";
 
 /**
  * Combined step 1: replaces the old Objectives + Context steps.
- * The user picks ONE card that describes their situation — this implicitly
- * captures both "what they want" and "where they are now".
  */
-
-const GOAL_OPTIONS = [
-  {
-    id: "job_prep",
-    context: "job_prep" as const,
-    objectives: ["employment", "academic_growth"],
-    icon: "🏛️",
-    titleKey: "goal-concurso-cert",
-    descKey: "goal-concurso-cert-desc",
-  },
-  {
-    id: "career_change",
-    context: "career_change" as const,
-    objectives: ["career_change"],
-    icon: "🔄",
-    titleKey: "goal-career-change",
-    descKey: "goal-career-change-desc",
-  },
-  {
-    id: "upskilling",
-    context: "upskilling" as const,
-    objectives: ["skill_improvement", "employment"],
-    icon: "📈",
-    titleKey: "goal-upskilling",
-    descKey: "goal-upskilling-desc",
-  },
-  {
-    id: "academic",
-    context: "academic" as const,
-    objectives: ["academic_growth"],
-    icon: "🎓",
-    titleKey: "goal-academic",
-    descKey: "goal-academic-desc",
-  },
-  {
-    id: "beginner",
-    context: "beginner" as const,
-    objectives: ["skill_improvement", "personal_project"],
-    icon: "🌱",
-    titleKey: "goal-beginner",
-    descKey: "goal-beginner-desc",
-  },
-  {
-    id: "personal_project",
-    context: "personal_project" as const,
-    objectives: ["personal_project"],
-    icon: "🚀",
-    titleKey: "goal-personal-project",
-    descKey: "goal-personal-project-desc",
-  },
-] as const;
 
 export function GoalStep() {
   const { t } = useTranslation();
