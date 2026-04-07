@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
+import { DailyProgressWidget } from "@/components/home/daily-progress-widget";
 import { LastStartedModuleSection } from "@/components/dashboard/last-started-module-section";
 import { LastStartedTrackSection } from "@/components/home/last-started-track-section";
 import { DiscoveryPage } from "@/components/discovery";
@@ -41,6 +42,7 @@ export const HomePage = () => {
     <div className="px-4 sm:px-6 lg:px-8 py-4 pb-24 md:pb-6 max-w-6xl mx-auto">
       <div className="space-y-4">
         <UserGreeting displayName={user?.displayName} />
+        <DailyProgressWidget />
         <StatsCards />
         <NewTrackCard />
         <UpgradeCard variant="compact" />

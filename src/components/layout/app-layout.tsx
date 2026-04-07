@@ -5,6 +5,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useSessionTracker } from "@/hooks/session-tracker/use-session-tracker";
 import { useRecordLoginDay } from "@/hooks/user/use-record-login-day";
 import { useEffect } from "react";
+import { CommandPalette } from "@/components/ui/command-palette";
 
 export interface AppLayoutProps {
   children: React.ReactNode;
@@ -27,6 +28,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         </div>
         <GlobalFooter />
       </SidebarInset>
+      {/* Global command palette — Cmd+K / Ctrl+K */}
+      <CommandPalette />
     </SidebarProvider>
   );
 }
