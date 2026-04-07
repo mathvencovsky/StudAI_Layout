@@ -12,6 +12,7 @@ import { UpgradeCard } from "@/components/upgrade/upgrade-card";
 import { useLastStartedTrackWithDetails } from "@/hooks/track/use-last-started-track-with-details";
 import { useLastStartedModuleWithContents } from "@/hooks/modules/use-last-started-module-with-contents";
 import { RecommendedTracksEmptyState } from "@/components/home/recommended-tracks-empty-state";
+import { NewTrackCard } from "@/components/home/new-track-card";
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
@@ -41,6 +42,7 @@ export const HomePage = () => {
       <div className="space-y-4">
         <UserGreeting displayName={user?.displayName} />
         <StatsCards />
+        <NewTrackCard />
         <UpgradeCard variant="compact" />
 
         {isLoadingTrack || isLoadingModule ? (
