@@ -6,7 +6,6 @@ import {
   IconFileText,
   IconHeart,
   IconHome,
-  IconInnerShadowTop,
   IconMessage,
   IconMessageCircle,
   IconRoute,
@@ -221,8 +220,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link to="/">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Stud AI</span>
+                {/* Open book logo — matches StudAI brand */}
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="!size-5 text-primary"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+                <span className="text-base font-bold">StudAI</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
