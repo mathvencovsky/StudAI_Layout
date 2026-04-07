@@ -249,7 +249,7 @@ export function MultiComparisonSlider({
 function getCurrentDescription(percentage: number, leftLabel: string, rightLabel: string): string {
   if (percentage < 20) return `↑ ${leftLabel}`;
   if (percentage < 40) return leftLabel;
-  if (percentage < 60) return '—';
+  if (percentage < 60) return `${leftLabel} · ${rightLabel}`;
   if (percentage < 80) return rightLabel;
   return `↑ ${rightLabel}`;
 }
