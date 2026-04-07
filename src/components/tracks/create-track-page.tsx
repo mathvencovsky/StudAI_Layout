@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, CheckCircle2, Brain } from "lucide-react";
 import { toast } from "sonner";
+import { generateClient } from "aws-amplify/api";
+import { createAIHooks } from "@aws-amplify/ui-react-ai";
+import { type Schema } from "../../../amplify/data/resource";
+import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
+import {
+  buildTrackGenerationPrompt,
+  parseTrackPlan,
+  createTrackFromPlan,
+} from "@/lib/ai/generate-track";
+
+const client = generateClient<Schema>({ authMode: "userPool" });
+const { useAIConversation } = createAIHooks(client);
 
 interface QuestionnaireData {
   topic: string;
@@ -27,7 +39,11 @@ export function CreateTrackPage() {
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generatingStep, setGeneratingStep] = useState("");
   const totalSteps = 6;
+
+  const { data: preference } = useMyLearningPreference();
+  const [{ data: aiData, isLoading: aiLoading }, sendAiMessage] = useAIConversation("Chat");
 
   const [formData, setFormData] = useState<QuestionnaireData>({
     topic: "",
@@ -45,50 +61,66 @@ export function CreateTrackPage() {
 
   const canProceed = () => {
     switch (step) {
-      case 1:
-        return formData.topic.trim().length > 0;
-      case 2:
-        return formData.goal.trim().length > 0;
-      case 3:
-        return formData.currentKnowledge.length > 0;
-      case 4:
-        return formData.timeAvailable.length > 0;
-      case 5:
-        return formData.learningStyle.length > 0;
-      case 6:
-        return true; // Última etapa é opcional
-      default:
-        return false;
+      case 1: return formData.topic.trim().length > 0;
+      case 2: return formData.goal.trim().length > 0;
+      case 3: return formData.currentKnowledge.length > 0;
+      case 4: return formData.timeAvailable.length > 0;
+      case 5: return formData.learningStyle.length > 0;
+      case 6: return true;
+      default: return false;
     }
   };
 
-  const handleNext = () => {
-    if (step < totalSteps) {
-      setStep(step + 1);
-    }
-  };
+  const handleNext = () => { if (step < totalSteps) setStep(step + 1); };
+  const handleBack = () => { if (step > 1) setStep(step - 1); };
 
-  const handleBack = () => {
-    if (step > 1) {
-      setStep(step - 1);
-    }
-  };
-
-  const handleGenerate = async () => {
+  const handleGenerate = useCallback(async () => {
     setIsGenerating(true);
-    
     try {
-      // TODO: Chamar API para gerar trilha com IA usando as preferências salvas + questionário
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      // Step 1: Build prompt from questionnaire + learning preferences
+      setGeneratingStep("Preparando seu perfil...");
+      const prompt = buildTrackGenerationPrompt(formData, preference);
+
+      // Step 2: Call AI to generate the track plan
+      setGeneratingStep("IA criando sua trilha personalizada...");
+      await sendAiMessage({ content: [{ text: prompt }] });
+
+      // Wait for AI response (poll aiData.messages)
+      // The response will be in the last assistant message
+      let attempts = 0;
+      let aiResponse = "";
+      while (attempts < 30) {
+        await new Promise(r => setTimeout(r, 1000));
+        const msgs = aiData?.messages ?? [];
+        const lastAssistant = [...msgs].reverse().find(m => m.role === "assistant");
+        if (lastAssistant?.content?.[0]?.text) {
+          aiResponse = lastAssistant.content[0].text;
+          break;
+        }
+        attempts++;
+      }
+
+      if (!aiResponse) throw new Error("AI did not respond in time");
+
+      // Step 3: Parse the JSON plan
+      setGeneratingStep("Estruturando os módulos...");
+      const plan = parseTrackPlan(aiResponse);
+      if (!plan) throw new Error("Could not parse AI response as track plan");
+
+      // Step 4: Create modules + track in Amplify
+      setGeneratingStep(`Criando ${plan.modules.length} módulos...`);
+      const trackId = await createTrackFromPlan(plan);
+
       toast.success(t("questionnaire-track-created"));
-      navigate({ to: "/explore" });
+      void navigate({ to: "/track/$trackId", params: { trackId } });
     } catch (error) {
+      console.error("Track generation failed:", error);
       toast.error(t("questionnaire-track-error"));
     } finally {
       setIsGenerating(false);
+      setGeneratingStep("");
     }
-  };
+  }, [formData, preference, sendAiMessage, aiData, navigate, t]);
 
   const renderStep = () => {
     switch (step) {
@@ -406,8 +438,8 @@ export function CreateTrackPage() {
           >
             {isGenerating ? (
               <>
-                <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                {t("questionnaire-generating")}
+                <Brain className="h-4 w-4 animate-pulse" />
+                {generatingStep || t("questionnaire-generating")}
               </>
             ) : (
               <>
