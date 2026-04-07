@@ -80,12 +80,6 @@ export function ComparisonSlider({
           {/* Visual Indicators */}
           <div className="absolute top-6 left-0 right-0 flex justify-between text-xs text-muted-foreground">
             <span>←</span>
-            <span className={cn(
-              'transition-opacity duration-300',
-              isCenter ? 'opacity-100' : 'opacity-50'
-            )}>
-              Equilibrado
-            </span>
             <span>→</span>
           </div>
         </div>
@@ -132,15 +126,8 @@ export function TimeSlider({
   className
 }: TimeSliderProps) {
   const getTimeLabel = (val: number) => {
-    if (unit === 'hours') {
-      return `${val}h por semana`;
-    }
-    if (unit === 'months') {
-      return `${val} ${val === 1 ? 'mês' : 'meses'}`;
-    }
-    if (unit === 'weeks') {
-      return `${val} ${val === 1 ? 'semana' : 'semanas'}`;
-    }
+    if (unit === 'hours') return `${val}h`;
+    if (unit === 'weeks') return `${val}w`;
     return `${val}`;
   };
 
@@ -153,9 +140,9 @@ export function TimeSlider({
 
   const getIntensityLabel = (val: number) => {
     const percentage = ((val - min) / (max - min)) * 100;
-    if (percentage < 33) return 'Tranquilo';
-    if (percentage < 66) return 'Moderado';
-    return 'Intenso';
+    if (percentage < 33) return '🟢';
+    if (percentage < 66) return '🟡';
+    return '🔴';
   };
 
   return (
@@ -260,9 +247,9 @@ export function MultiComparisonSlider({
 // ============================================================================
 
 function getCurrentDescription(percentage: number, leftLabel: string, rightLabel: string): string {
-  if (percentage < 20) return `Muito mais ${leftLabel.toLowerCase()}`;
-  if (percentage < 40) return `Mais ${leftLabel.toLowerCase()}`;
-  if (percentage < 60) return 'Equilibrado';
-  if (percentage < 80) return `Mais ${rightLabel.toLowerCase()}`;
-  return `Muito mais ${rightLabel.toLowerCase()}`;
+  if (percentage < 20) return `↑ ${leftLabel}`;
+  if (percentage < 40) return leftLabel;
+  if (percentage < 60) return '—';
+  if (percentage < 80) return rightLabel;
+  return `↑ ${rightLabel}`;
 }
