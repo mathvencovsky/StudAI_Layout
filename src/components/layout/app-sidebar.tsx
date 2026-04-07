@@ -14,6 +14,7 @@ import {
   IconSettings,
   IconShield,
   IconSparkles,
+  IconUser,
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/layout/nav-main";
@@ -74,6 +75,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       avatar: user?.photoURL ?? undefined,
     },
     userNav: [
+      {
+        title: t("pages-profile-title"),
+        onClick: navigateTo("/profile"),
+        icon: IconUser,
+      },
       {
         title: t("learning-preferences"),
         onClick: navigateTo("/learning-preferences"),
