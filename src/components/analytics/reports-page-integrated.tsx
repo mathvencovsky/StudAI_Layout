@@ -4,6 +4,7 @@ import { useReportData } from "@/hooks/reports/use-reports";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { ActivityChart } from "@/components/analytics/activity-chart";
+import { ProGate } from "@/components/upgrade/pro-gate";
 import { useTranslation } from "react-i18next";
 import type { ReportPeriod } from "@/hooks/reports/use-reports";
 
@@ -50,7 +51,7 @@ export function ReportsPageIntegrated() {
 
           {reportData && (
             <>
-              {/* Completions Section */}
+              {/* Completions Section — available to all users */}
               <section className="space-y-4">
                 <h2 className="text-sm font-semibold text-foreground">
                   {t("pages-reports-completions-title")}
@@ -83,108 +84,114 @@ export function ReportsPageIntegrated() {
                 </div>
               </section>
 
-              {/* Content Hours Section */}
-              <section className="space-y-4">
-                <h2 className="text-sm font-semibold text-foreground">
-                  {t("pages-reports-content-hours-title")}
-                </h2>
-                <div className="grid grid-cols-3 gap-3 border rounded-lg p-4 bg-card">
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.contentHours}h
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-total-time")}
-                    </p>
+              {/* Advanced analytics — Pro only */}
+              <ProGate
+                feature="progressAnalytics"
+                lockLabel="Advanced analytics and insights are available with StudAI Pro"
+              >
+                {/* Content Hours Section */}
+                <section className="space-y-4">
+                  <h2 className="text-sm font-semibold text-foreground">
+                    {t("pages-reports-content-hours-title")}
+                  </h2>
+                  <div className="grid grid-cols-3 gap-3 border rounded-lg p-4 bg-card">
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.contentHours}h
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-total-time")}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.contentActiveDays}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-active-days")}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {avgContentPerDay}h
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-average-day")}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.contentActiveDays}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-active-days")}
-                    </p>
+                  <div className="border rounded-lg bg-card p-4">
+                    <h3 className="font-medium text-foreground text-sm mb-3">
+                      {t("pages-reports-content-activity")}
+                    </h3>
+                    <ActivityChart data={reportData.contentChartData} period={period} />
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {avgContentPerDay}h
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-average-day")}
-                    </p>
-                  </div>
-                </div>
-                <div className="border rounded-lg bg-card p-4">
-                  <h3 className="font-medium text-foreground text-sm mb-3">
-                    {t("pages-reports-content-activity")}
-                  </h3>
-                  <ActivityChart data={reportData.contentChartData} period={period} />
-                </div>
-              </section>
+                </section>
 
-              {/* Active Time Section */}
-              <section className="space-y-4">
-                <h2 className="text-sm font-semibold text-foreground">
-                  {t("pages-reports-active-time-title")}
-                </h2>
-                <div className="grid grid-cols-3 gap-3 border rounded-lg p-4 bg-card">
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.activeTimeHours}h
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-total-time")}
-                    </p>
+                {/* Active Time Section */}
+                <section className="space-y-4">
+                  <h2 className="text-sm font-semibold text-foreground">
+                    {t("pages-reports-active-time-title")}
+                  </h2>
+                  <div className="grid grid-cols-3 gap-3 border rounded-lg p-4 bg-card">
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.activeTimeHours}h
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-total-time")}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.activeTimeSessions}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-active-time-sessions")}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {avgSessionMinutes}m
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-active-time-avg-session")}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.activeTimeSessions}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-active-time-sessions")}
-                    </p>
+                  <div className="border rounded-lg bg-card p-4">
+                    <h3 className="font-medium text-foreground text-sm mb-3">
+                      {t("pages-reports-active-time-activity")}
+                    </h3>
+                    <ActivityChart data={reportData.activeTimeChartData} period={period} />
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {avgSessionMinutes}m
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-active-time-avg-session")}
-                    </p>
-                  </div>
-                </div>
-                <div className="border rounded-lg bg-card p-4">
-                  <h3 className="font-medium text-foreground text-sm mb-3">
-                    {t("pages-reports-active-time-activity")}
-                  </h3>
-                  <ActivityChart data={reportData.activeTimeChartData} period={period} />
-                </div>
-              </section>
+                </section>
 
-              {/* Streak Section */}
-              <section className="space-y-4">
-                <h2 className="text-sm font-semibold text-foreground">
-                  {t("pages-reports-streak-title")}
-                </h2>
-                <div className="grid grid-cols-2 gap-3 border rounded-lg p-4 bg-card">
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.currentStreak} {t("pages-reports-streak-days")}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-streak-current")}
-                    </p>
+                {/* Streak Section */}
+                <section className="space-y-4">
+                  <h2 className="text-sm font-semibold text-foreground">
+                    {t("pages-reports-streak-title")}
+                  </h2>
+                  <div className="grid grid-cols-2 gap-3 border rounded-lg p-4 bg-card">
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.currentStreak} {t("pages-reports-streak-days")}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-streak-current")}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        {reportData.longestStreak} {t("pages-reports-streak-days")}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {t("pages-reports-streak-longest")}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <p className="text-sm font-semibold text-foreground">
-                      {reportData.longestStreak} {t("pages-reports-streak-days")}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      {t("pages-reports-streak-longest")}
-                    </p>
-                  </div>
-                </div>
-              </section>
+                </section>
+              </ProGate>
             </>
           )}
         </TabsContent>

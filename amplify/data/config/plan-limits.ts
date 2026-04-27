@@ -7,12 +7,16 @@
 
 export type PlanType = "free" | "pro";
 export type FeatureType =
+  | "ai_session"
   | "course_builder"
   | "coach"
   | "recommendations"
   | "content_generation";
 
 export interface PlanLimits {
+  // AI Study Sessions (Free: 5/day, Pro: unlimited)
+  aiSessionsPerDay: number | null; // null = unlimited
+
   // Course Builder
   courseDraftsPerWeek: number;
   coursePublishPerMonth: number;
@@ -37,13 +41,16 @@ export interface PlanLimits {
 
 export const PLAN_LIMITS: Record<PlanType, PlanLimits> = {
   free: {
+    // AI Study Sessions
+    aiSessionsPerDay: 5,
+
     // Course Builder
     courseDraftsPerWeek: 2,
     coursePublishPerMonth: 1,
 
     // Coach IA
     coachMessagesPerDay: 10,
-    coachTokensPerDay: 50000, // ~50k tokens input + output
+    coachTokensPerDay: 50000,
 
     // Recommendations
     recommendationsPerDay: 5,
@@ -60,16 +67,19 @@ export const PLAN_LIMITS: Record<PlanType, PlanLimits> = {
   },
 
   pro: {
+    // AI Study Sessions — unlimited
+    aiSessionsPerDay: null,
+
     // Course Builder
-    courseDraftsPerWeek: 50, // Fair use
+    courseDraftsPerWeek: 50,
     coursePublishPerMonth: 20,
 
     // Coach IA
-    coachMessagesPerDay: 200, // Fair use
-    coachTokensPerDay: 1000000, // ~1M tokens
+    coachMessagesPerDay: 200,
+    coachTokensPerDay: 1000000,
 
     // Recommendations
-    recommendationsPerDay: 100, // Fair use
+    recommendationsPerDay: 100,
 
     // Content Generation
     contentGenerationsPerDay: 50,
@@ -100,6 +110,8 @@ export function isFeatureAvailable(
   const limits = getPlanLimits(plan);
 
   switch (feature) {
+    case "ai_session":
+      return true; // Both plans can use AI sessions; Free is just limited
     case "course_builder":
       return limits.courseDraftsPerWeek > 0;
     case "coach":
@@ -114,12 +126,15 @@ export function isFeatureAvailable(
 }
 
 /**
- * Get daily limit for a specific feature
+ * Get daily limit for a specific feature.
+ * Returns Infinity for Pro unlimited features, 0 if unknown.
  */
 export function getDailyLimit(plan: PlanType, feature: FeatureType): number {
   const limits = getPlanLimits(plan);
 
   switch (feature) {
+    case "ai_session":
+      return limits.aiSessionsPerDay === null ? Infinity : limits.aiSessionsPerDay;
     case "coach":
       return limits.coachMessagesPerDay;
     case "recommendations":
@@ -127,7 +142,7 @@ export function getDailyLimit(plan: PlanType, feature: FeatureType): number {
     case "content_generation":
       return limits.contentGenerationsPerDay;
     case "course_builder":
-      return Math.floor(limits.courseDraftsPerWeek / 7); // Daily average
+      return Math.floor(limits.courseDraftsPerWeek / 7);
     default:
       return 0;
   }
@@ -173,7 +188,9 @@ export function createPlanLimitError(
   const limit = getDailyLimit(plan, feature);
 
   const messages: Record<PlanLimitErrorCode, string> = {
-    PLAN_LIMIT_REACHED: `Você atingiu o limite de ${limit} requisições por dia para ${feature}. Faça upgrade para Pro!`,
+    PLAN_LIMIT_REACHED: feature === "ai_session"
+      ? `You have used your 5 free AI study sessions for today. Upgrade to Pro for unlimited sessions.`
+      : `Você atingiu o limite de ${limit} requisições por dia para ${feature}. Faça upgrade para Pro!`,
     FEATURE_NOT_AVAILABLE: `Este recurso não está disponível no plano ${plan}. Faça upgrade para Pro!`,
     RATE_LIMIT_EXCEEDED: `Muitas requisições. Aguarde alguns minutos e tente novamente.`,
     INVALID_PLAN: `Plano inválido. Entre em contato com o suporte.`,

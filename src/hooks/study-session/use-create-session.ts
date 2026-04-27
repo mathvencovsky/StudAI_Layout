@@ -9,7 +9,6 @@ export const useCreateStudySession = () => {
 
   return useMutation({
     mutationFn: async (input: CreateStudySessionInput) => {
-      console.log("study session", input);
       return await createStudySession(input);
     },
     onSuccess: () => {

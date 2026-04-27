@@ -369,7 +369,7 @@ const schema = a.schema({
     })
     .authorization((allow) => [
       allow.owner(),
-      allow.authenticated().to(["read"]),
+      allow.group("Admin").to(["read"]),
     ]),
 
   Track: a
@@ -768,9 +768,12 @@ REGRAS GERAIS:
       ]),
       owner: a
         .string()
-        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+        .authorization((allow) => [allow.owner().to(["read"])]),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.owner().to(["read"]),
+      allow.group("Admin").to(["read"]),
+    ]),
 
   UserSubscription: a
     .model({
@@ -781,9 +784,12 @@ REGRAS GERAIS:
       autoRenew: a.boolean().default(false),
       owner: a
         .string()
-        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+        .authorization((allow) => [allow.owner().to(["read"])]),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.owner().to(["read"]),
+      allow.group("Admin").to(["create", "update", "delete"]),
+    ]),
 
   Course: a
     .model({
@@ -848,6 +854,51 @@ REGRAS GERAIS:
       progress: a.integer().default(0),
       streak: a.integer().default(0),
       xpEarned: a.integer().default(0),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [allow.owner()]),
+
+  /**
+   * AnalyticsEvent — stores product analytics events.
+   *
+   * PRIVACY RULES:
+   * - Never store raw AI prompts, private study content, card data, or secrets.
+   * - metadata is sanitized before write (max 2KB, no sensitive keys).
+   * - user_id and plan are always derived server-side; never trust client values.
+   * - source: "frontend" for UI interactions, "backend" for server-authoritative events.
+   *
+   * Backend-authoritative events (source="backend") are written by the Lambda.
+   * Frontend events (source="frontend") are written by the client via AppSync.
+   */
+  AnalyticsEvent: a
+    .model({
+      eventName: a.string().required(),
+      plan: a.enum(["free", "pro"]),
+      source: a.enum(["frontend", "backend", "webhook", "system"]),
+      metadata: a.json(),
+      sessionId: a.string(),
+      owner: a
+        .string()
+        .authorization((allow) => [allow.owner().to(["read", "delete"])]),
+    })
+    .authorization((allow) => [
+      allow.owner(),
+      allow.group("Admin").to(["read"]),
+    ]),
+
+  /**
+   * UserStudyStats — tracks streak and cumulative study stats per user.
+   * Updated server-side when meaningful study actions complete.
+   */
+  UserStudyStats: a
+    .model({
+      currentStreak: a.integer().default(0),
+      longestStreak: a.integer().default(0),
+      lastStudyDate: a.string(), // YYYY-MM-DD UTC
+      totalStudyDays: a.integer().default(0),
+      totalStudySessions: a.integer().default(0),
       owner: a
         .string()
         .authorization((allow) => [allow.owner().to(["read", "delete"])]),

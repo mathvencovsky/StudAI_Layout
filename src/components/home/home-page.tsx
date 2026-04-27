@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { UserGreeting } from "@/components/home/user-greeting";
 import { StatsCards } from "@/components/home/stats-cards";
@@ -15,6 +16,8 @@ import { useLastStartedTrackWithDetails } from "@/hooks/track/use-last-started-t
 import { useLastStartedModuleWithContents } from "@/hooks/modules/use-last-started-module-with-contents";
 import { RecommendedTracksEmptyState } from "@/components/home/recommended-tracks-empty-state";
 import { NewTrackCard } from "@/components/home/new-track-card";
+import { useAnalytics } from "@/hooks/use-analytics";
+import { EVENTS } from "@/lib/analytics-events";
 
 /**
  * Main home page component displaying greeting, stats, and continue learning section.
@@ -25,11 +28,22 @@ export const HomePage = () => {
   const { user } = useAuth();
   const { data: existingPreference, isLoading: isLoadingPreference } =
     useMyLearningPreference();
+  const { track } = useAnalytics();
 
   // Fetch in background — don't block render
   useDashboardData();
   const { data: lastTrack, isLoading: isLoadingTrack } = useLastStartedTrackWithDetails();
   const { data: lastModule, isLoading: isLoadingModule } = useLastStartedModuleWithContents();
+
+  useEffect(() => {
+    if (!isLoadingPreference && existingPreference) {
+      track(EVENTS.DASHBOARD_VIEWED, {
+        hasLastTrack: !!(lastTrack),
+        hasLastModule: !!(lastModule),
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingPreference]);
 
   // Only block on the preference check — it determines which page to show.
   // Thanks to prefetch in AuthProvider this is usually already resolved.

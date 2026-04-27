@@ -23,7 +23,12 @@ class ErrorBoundaryClass extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Error Boundary caught an error:", error, errorInfo);
+    // Only log full details in development — avoid stack trace leaks in production
+    if (process.env.NODE_ENV === "development") {
+      console.error("Error Boundary caught an error:", error, errorInfo);
+    } else {
+      console.error("Application error:", error?.message ?? "Unknown error");
+    }
   }
 
   private handleReload = () => {

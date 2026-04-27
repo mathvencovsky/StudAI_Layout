@@ -1,8 +1,22 @@
 /**
  * Plan Guard - Middleware para verificação de limites por plano
- * 
- * Este módulo implementa o enforcement SERVER-SIDE de limites por plano.
- * Deve ser usado em todos os endpoints de IA.
+ *
+ * ⚠️  SECURITY WARNING — CLIENT-SIDE ONLY
+ *
+ * This module runs in the browser and reads plan/usage data from AppSync.
+ * It is NOT the authoritative enforcement path.
+ *
+ * The authoritative enforcement is in:
+ *   amplify/functions/stripe-billing/entitlements.ts
+ *
+ * The Lambda endpoints /me/ai-session/start and /me/entitlements/check
+ * perform atomic, server-side checks against DynamoDB.
+ *
+ * This file should only be used for UI hints (e.g., showing remaining sessions).
+ * NEVER use it as the sole gate for Pro features or usage limits.
+ *
+ * The UserSubscription and AiUsage AppSync models are now read-only for owners,
+ * so this module can no longer be used to spoof plan or usage data.
  */
 
 import { generateClient } from "aws-amplify/data";
@@ -207,13 +221,16 @@ export async function incrementUsage(
         });
       } else {
         // Create new record
+        // Cast feature: AiUsage model enum excludes "ai_session" (tracked separately
+        // via DynamoDB in the billing Lambda), so we only write known enum values.
+        const aiUsageFeature = feature as "course_builder" | "coach" | "recommendations" | "content_generation";
         await client.models.AiUsage.create({
           plan,
           periodDay: today,
           requestsCount: 1,
           tokensIn,
           tokensOut,
-          feature,
+          feature: aiUsageFeature,
         });
       }
 
@@ -341,7 +358,6 @@ export async function createDefaultSubscription(
     });
 
     if (existing.data && existing.data.length > 0) {
-      console.log("User already has a subscription");
       return;
     }
 
@@ -351,8 +367,6 @@ export async function createDefaultSubscription(
       startDate: Date.now(),
       autoRenew: false,
     });
-
-    console.log("Created default free subscription for user");
   } catch (error) {
     console.error("Error creating default subscription:", error);
     throw error;

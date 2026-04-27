@@ -9,6 +9,19 @@ export interface LoginPageProps {
 }
 
 /**
+ * Validate a redirect target is a safe relative path (no open redirect).
+ * Only allows paths starting with "/" and not "//" (protocol-relative).
+ */
+function safeRedirect(redirect?: string): string {
+  if (!redirect) return "/";
+  // Must be a relative path — reject absolute URLs and protocol-relative URLs
+  if (!redirect.startsWith("/") || redirect.startsWith("//")) return "/";
+  // Reject paths with protocol characters
+  if (/^\/[a-z]+:/i.test(redirect)) return "/";
+  return redirect;
+}
+
+/**
  * Login page container — manages state and API calls for the login form.
  */
 export const LoginPage = ({ redirect }: LoginPageProps) => {
@@ -21,9 +34,10 @@ export const LoginPage = ({ redirect }: LoginPageProps) => {
     setError(null);
     try {
       await emailMutation.mutateAsync({ email: values.email, password: values.password });
-      navigate({ to: redirect || "/" });
+      navigate({ to: safeRedirect(redirect) });
     } catch (e) {
-      console.error(e);
+      // Log only in dev — never expose credentials or stack traces
+      if (import.meta.env.DEV) console.error("[login]", e);
       setError("Invalid credentials. Please try again.");
     }
   };

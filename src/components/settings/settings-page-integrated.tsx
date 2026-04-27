@@ -15,6 +15,7 @@ import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "@tanstack/react-router";
+import { BillingSettingsSection } from "@/components/billing/billing-settings-section";
 
 export default function SettingsPageIntegrated() {
   const { t, i18n } = useTranslation();
@@ -146,6 +147,9 @@ export default function SettingsPageIntegrated() {
           </div>
         </section>
       )}
+
+      {/* Billing */}
+      <BillingSettingsSection />
 
       {/* Other Options */}
       <section className="border rounded-lg bg-card overflow-hidden">

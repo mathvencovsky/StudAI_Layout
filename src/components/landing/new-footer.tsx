@@ -175,6 +175,22 @@ export function NewFooter() {
                     {t("common-security")}
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/ai-disclaimer"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
+                  >
+                    AI Disclaimer
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/refund-policy"
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors block"
+                  >
+                    Política de Reembolso
+                  </Link>
+                </li>
               </ul>
             </nav>
           </div>

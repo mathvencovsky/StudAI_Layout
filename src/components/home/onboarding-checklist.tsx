@@ -69,7 +69,6 @@ export function OnboardingChecklist() {
 
   const completedCount = steps.filter((s) => s.done).length;
   const allDone = completedCount === steps.length;
-  const progress = Math.round((completedCount / steps.length) * 100);
 
   // Auto-dismiss when all done
   if (allDone || dismissed) return null;

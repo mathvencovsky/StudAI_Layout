@@ -1,9 +1,10 @@
 import { useMemo } from "react";
-import { Flame, Target, Zap } from "lucide-react";
+import { Flame, Target, Zap, Sparkles } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useListLoginDays } from "@/hooks/user/use-login-days";
 import { useListStudySessions } from "@/hooks/study-session/use-list-sessions";
 import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
+import { useAiSessionUsage } from "@/hooks/subscription/use-entitlements";
 import { calculateStreak } from "@/utils/calculate-streak";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,7 @@ export function DailyProgressWidget() {
   const { data: loginDays = [] } = useListLoginDays();
   const { data: sessions = [] } = useListStudySessions();
   const { data: preference } = useMyLearningPreference();
+  const aiUsage = useAiSessionUsage();
 
   const { current: streak } = useMemo(() => calculateStreak(loginDays), [loginDays]);
 
@@ -79,6 +81,38 @@ export function DailyProgressWidget() {
           {todayMinutes} / {goalMinutes} min
         </p>
       </div>
+
+      {/* AI session usage card — only shown for Free users */}
+      {!aiUsage.isLoading && !aiUsage.unlimited && (
+        <div className={cn(
+          "col-span-2 rounded-xl border p-3",
+          aiUsage.remaining === 0
+            ? "border-destructive/30 bg-destructive/5"
+            : "border-border bg-card"
+        )}>
+          <div className="flex items-center gap-2 mb-2">
+            <div className={cn(
+              "w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0",
+              aiUsage.remaining === 0 ? "bg-destructive/15" : "bg-primary/10"
+            )}>
+              <Sparkles className={cn("h-3.5 w-3.5", aiUsage.remaining === 0 ? "text-destructive" : "text-primary")} />
+            </div>
+            <p className="text-xs font-medium text-foreground">AI Study Sessions</p>
+            <span className="ml-auto text-xs text-muted-foreground">
+              {aiUsage.remaining} / {aiUsage.limit} remaining today
+            </span>
+          </div>
+          <Progress
+            value={aiUsage.limit ? Math.round((aiUsage.used / aiUsage.limit) * 100) : 0}
+            className={cn("h-1.5", aiUsage.remaining === 0 && "[&>div]:bg-destructive")}
+          />
+          {aiUsage.remaining === 0 && (
+            <p className="text-[10px] text-destructive mt-1">
+              Daily limit reached. Resets at midnight UTC.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 }

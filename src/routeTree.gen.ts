@@ -25,6 +25,7 @@ import { Route as ReviewsRouteImport } from './routes/reviews'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReportsRouteImport } from './routes/reports'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as QuizzesRouteImport } from './routes/quizzes'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -51,6 +52,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as AssessmentsRouteImport } from './routes/assessments'
+import { Route as AiDisclaimerRouteImport } from './routes/ai-disclaimer'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ActivityRouteImport } from './routes/activity'
 import { Route as IndexRouteImport } from './routes/index'
@@ -65,6 +67,8 @@ import { Route as ModuleEditModuleIdRouteImport } from './routes/module-edit/$mo
 import { Route as ExploreTrackIdRouteImport } from './routes/explore/$trackId'
 import { Route as CourseCourseIdRouteImport } from './routes/course/$courseId'
 import { Route as ContentContentIdRouteImport } from './routes/content/$contentId'
+import { Route as BillingSuccessRouteImport } from './routes/billing/success'
+import { Route as BillingCancelRouteImport } from './routes/billing/cancel'
 import { Route as TrackTrackIdIndexRouteImport } from './routes/track/$trackId/index'
 import { Route as ModuleModuleIdIndexRouteImport } from './routes/module/$moduleId/index'
 import { Route as ContentContentIdIndexRouteImport } from './routes/content/$contentId/index'
@@ -150,6 +154,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizzesRoute = QuizzesRouteImport.update({
@@ -282,6 +291,11 @@ const AssessmentsRoute = AssessmentsRouteImport.update({
   path: '/assessments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiDisclaimerRoute = AiDisclaimerRouteImport.update({
+  id: '/ai-disclaimer',
+  path: '/ai-disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -352,6 +366,16 @@ const ContentContentIdRoute = ContentContentIdRouteImport.update({
   path: '/$contentId',
   getParentRoute: () => ContentRoute,
 } as any)
+const BillingSuccessRoute = BillingSuccessRouteImport.update({
+  id: '/billing/success',
+  path: '/billing/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillingCancelRoute = BillingCancelRouteImport.update({
+  id: '/billing/cancel',
+  path: '/billing/cancel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrackTrackIdIndexRoute = TrackTrackIdIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -388,6 +412,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/admin': typeof AdminRoute
+  '/ai-disclaimer': typeof AiDisclaimerRoute
   '/assessments': typeof AssessmentsRoute
   '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
@@ -414,6 +439,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -430,6 +456,8 @@ export interface FileRoutesByFullPath {
   '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/billing/cancel': typeof BillingCancelRoute
+  '/billing/success': typeof BillingSuccessRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/course/$courseId': typeof CourseCourseIdRoute
   '/explore/$trackId': typeof ExploreTrackIdRoute
@@ -452,6 +480,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/admin': typeof AdminRoute
+  '/ai-disclaimer': typeof AiDisclaimerRoute
   '/assessments': typeof AssessmentsRoute
   '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
@@ -475,6 +504,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -490,6 +520,8 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/billing/cancel': typeof BillingCancelRoute
+  '/billing/success': typeof BillingSuccessRoute
   '/course/$courseId': typeof CourseCourseIdRoute
   '/explore/$trackId': typeof ExploreTrackIdRoute
   '/module-edit/$moduleId': typeof ModuleEditModuleIdRoute
@@ -510,6 +542,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/activity': typeof ActivityRoute
   '/admin': typeof AdminRoute
+  '/ai-disclaimer': typeof AiDisclaimerRoute
   '/assessments': typeof AssessmentsRoute
   '/calendar': typeof CalendarRoute
   '/chat': typeof ChatRoute
@@ -536,6 +569,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/programs': typeof ProgramsRoute
   '/quizzes': typeof QuizzesRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/reports': typeof ReportsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/resources': typeof ResourcesRoute
@@ -552,6 +586,8 @@ export interface FileRoutesById {
   '/track': typeof TrackRouteWithChildren
   '/track-create': typeof TrackCreateRoute
   '/verify-email': typeof VerifyEmailRoute
+  '/billing/cancel': typeof BillingCancelRoute
+  '/billing/success': typeof BillingSuccessRoute
   '/content/$contentId': typeof ContentContentIdRouteWithChildren
   '/course/$courseId': typeof CourseCourseIdRoute
   '/explore/$trackId': typeof ExploreTrackIdRoute
@@ -576,6 +612,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/admin'
+    | '/ai-disclaimer'
     | '/assessments'
     | '/calendar'
     | '/chat'
@@ -602,6 +639,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
+    | '/refund-policy'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -618,6 +656,8 @@ export interface FileRouteTypes {
     | '/track'
     | '/track-create'
     | '/verify-email'
+    | '/billing/cancel'
+    | '/billing/success'
     | '/content/$contentId'
     | '/course/$courseId'
     | '/explore/$trackId'
@@ -640,6 +680,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/admin'
+    | '/ai-disclaimer'
     | '/assessments'
     | '/calendar'
     | '/chat'
@@ -663,6 +704,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
+    | '/refund-policy'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -678,6 +720,8 @@ export interface FileRouteTypes {
     | '/terms'
     | '/track-create'
     | '/verify-email'
+    | '/billing/cancel'
+    | '/billing/success'
     | '/course/$courseId'
     | '/explore/$trackId'
     | '/module-edit/$moduleId'
@@ -697,6 +741,7 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/admin'
+    | '/ai-disclaimer'
     | '/assessments'
     | '/calendar'
     | '/chat'
@@ -723,6 +768,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/programs'
     | '/quizzes'
+    | '/refund-policy'
     | '/reports'
     | '/reset-password'
     | '/resources'
@@ -739,6 +785,8 @@ export interface FileRouteTypes {
     | '/track'
     | '/track-create'
     | '/verify-email'
+    | '/billing/cancel'
+    | '/billing/success'
     | '/content/$contentId'
     | '/course/$courseId'
     | '/explore/$trackId'
@@ -762,6 +810,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActivityRoute: typeof ActivityRoute
   AdminRoute: typeof AdminRoute
+  AiDisclaimerRoute: typeof AiDisclaimerRoute
   AssessmentsRoute: typeof AssessmentsRoute
   CalendarRoute: typeof CalendarRoute
   ChatRoute: typeof ChatRoute
@@ -788,6 +837,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ProgramsRoute: typeof ProgramsRoute
   QuizzesRoute: typeof QuizzesRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ReportsRoute: typeof ReportsRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResourcesRoute: typeof ResourcesRoute
@@ -804,6 +854,8 @@ export interface RootRouteChildren {
   TrackRoute: typeof TrackRouteWithChildren
   TrackCreateRoute: typeof TrackCreateRoute
   VerifyEmailRoute: typeof VerifyEmailRoute
+  BillingCancelRoute: typeof BillingCancelRoute
+  BillingSuccessRoute: typeof BillingSuccessRoute
   CourseCourseIdRoute: typeof CourseCourseIdRoute
   ModuleEditModuleIdRoute: typeof ModuleEditModuleIdRoute
   QuizQuizIdRoute: typeof QuizQuizIdRoute
@@ -921,6 +973,13 @@ declare module '@tanstack/react-router' {
       path: '/reports'
       fullPath: '/reports'
       preLoaderRoute: typeof ReportsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quizzes': {
@@ -1105,6 +1164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssessmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-disclaimer': {
+      id: '/ai-disclaimer'
+      path: '/ai-disclaimer'
+      fullPath: '/ai-disclaimer'
+      preLoaderRoute: typeof AiDisclaimerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -1202,6 +1268,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/content/$contentId'
       preLoaderRoute: typeof ContentContentIdRouteImport
       parentRoute: typeof ContentRoute
+    }
+    '/billing/success': {
+      id: '/billing/success'
+      path: '/billing/success'
+      fullPath: '/billing/success'
+      preLoaderRoute: typeof BillingSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/billing/cancel': {
+      id: '/billing/cancel'
+      path: '/billing/cancel'
+      fullPath: '/billing/cancel'
+      preLoaderRoute: typeof BillingCancelRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/track/$trackId/': {
       id: '/track/$trackId/'
@@ -1354,6 +1434,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActivityRoute: ActivityRoute,
   AdminRoute: AdminRoute,
+  AiDisclaimerRoute: AiDisclaimerRoute,
   AssessmentsRoute: AssessmentsRoute,
   CalendarRoute: CalendarRoute,
   ChatRoute: ChatRoute,
@@ -1380,6 +1461,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ProgramsRoute: ProgramsRoute,
   QuizzesRoute: QuizzesRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ReportsRoute: ReportsRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResourcesRoute: ResourcesRoute,
@@ -1396,6 +1478,8 @@ const rootRouteChildren: RootRouteChildren = {
   TrackRoute: TrackRouteWithChildren,
   TrackCreateRoute: TrackCreateRoute,
   VerifyEmailRoute: VerifyEmailRoute,
+  BillingCancelRoute: BillingCancelRoute,
+  BillingSuccessRoute: BillingSuccessRoute,
   CourseCourseIdRoute: CourseCourseIdRoute,
   ModuleEditModuleIdRoute: ModuleEditModuleIdRoute,
   QuizQuizIdRoute: QuizQuizIdRoute,

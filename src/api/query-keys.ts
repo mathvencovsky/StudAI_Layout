@@ -96,4 +96,8 @@ export const queryKeys = {
     preferences: ["settings", "preferences"] as const,
     account: ["settings", "account"] as const,
   },
+
+  subscription: {
+    status: ["subscription", "status"] as const,
+  },
 } as const;

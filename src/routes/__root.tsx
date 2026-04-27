@@ -10,9 +10,7 @@ import {
   useNavigate,
   useRouterState,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
-import { type FileRouteTypes } from "@/routeTree.gen";
 
 export type CrumbLoaderData = {
   crumb: string;
@@ -23,7 +21,7 @@ export interface RouterContext {
   auth?: AuthContextValue;
 }
 
-const PUBLIC_PATHS: ReadonlyArray<FileRouteTypes["fullPaths"]> = [
+const PUBLIC_PATHS: ReadonlyArray<string> = [
   "/",
   "/sign-up",
   "/reset-password",
@@ -32,11 +30,13 @@ const PUBLIC_PATHS: ReadonlyArray<FileRouteTypes["fullPaths"]> = [
   "/plans",
   "/terms",
   "/privacy",
+  "/ai-disclaimer",
   "/faq",
   "/support",
   "/contact",
   "/how-it-works",
   "/security",
+  "/billing/cancel",
 ];
 
 const RootLayout = () => {
@@ -70,7 +70,6 @@ const RootLayout = () => {
     return (
       <>
         <Outlet />
-        <TanStackRouterDevtools />
       </>
     );
   }
@@ -81,7 +80,6 @@ const RootLayout = () => {
         <AppLayout>
           <Outlet />
         </AppLayout>
-        <TanStackRouterDevtools />
       </AiIconProvider>
     </AiChatProvider>
   );

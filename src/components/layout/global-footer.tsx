@@ -198,6 +198,14 @@ export function GlobalFooter() {
               </li>
               <li>
                 <Link
+                  to="/ai-disclaimer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  AI Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/security"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >

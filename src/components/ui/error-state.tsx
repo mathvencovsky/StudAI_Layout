@@ -9,7 +9,11 @@ interface ErrorStateProps {
 
 export function ErrorState({ error, onRetry }: ErrorStateProps) {
   const { t } = useTranslation();
-  console.error(error);
+
+  // Log safely — only in development to avoid leaking stack traces in production
+  if (import.meta.env.DEV) {
+    console.error("[ErrorState]", error?.message ?? "Unknown error");
+  }
 
   return (
     <div

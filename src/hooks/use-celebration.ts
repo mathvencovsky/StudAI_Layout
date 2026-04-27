@@ -31,6 +31,7 @@ export function useCelebration() {
         opacity:1;
         animation:confetti-fall ${duration}s ${delay}s ease-in forwards;
         transform:rotate(0deg);
+        --r:${rotation}deg;
       `;
       container.appendChild(piece);
     }

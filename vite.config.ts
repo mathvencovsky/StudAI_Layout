@@ -16,7 +16,7 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
-    basicSsl(),
+    ...(process.env.NODE_ENV !== "production" ? [basicSsl()] : []),
   ],
   resolve: {
     alias: {

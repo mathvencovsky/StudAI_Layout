@@ -159,7 +159,7 @@ export function ProfilePage() {
                   )}
                   {preference?.interests && preference.interests.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {preference.interests.slice(0, 4).map((cat) => (
+                      {preference.interests.slice(0, 4).map((cat: string) => (
                         <Badge key={cat} variant="secondary" className="text-xs">
                           {CATEGORY_LABELS[cat] ?? cat}
                         </Badge>
@@ -264,7 +264,7 @@ export function ProfilePage() {
                   <div>
                     <p className="text-xs text-muted-foreground mb-1.5">Áreas de interesse</p>
                     <div className="flex flex-wrap gap-1.5">
-                      {preference.interests.map((cat) => (
+                      {preference.interests.map((cat: string) => (
                         <Badge key={cat} variant="secondary" className="text-xs">
                           {CATEGORY_LABELS[cat] ?? cat}
                         </Badge>

@@ -11,6 +11,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAIConversation } from "@/hooks/ai/use-ai-hooks";
 import { useIsAiUser } from "@/hooks/use-is-ai-user";
 import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
+import { useStartAiSession, useAiSessionUsage } from "@/hooks/subscription/use-entitlements";
+import { UpgradeModal } from "@/components/upgrade/upgrade-modal";
 import { type Content } from "@/model/content";
 import { markdownConfig } from "@/lib/markdown-config";
 import { AiChatWaitlist } from "./ai-chat-waitlist";
@@ -95,7 +97,10 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
   const { data: preference } = useMyLearningPreference();
   const [activeMode, setActiveMode] = useState<Mode | null>(null);
   const [askInput, setAskInput] = useState("");
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [{ data, isLoading }, sendMessage] = useAIConversation("Chat");
+  const startAiSession = useStartAiSession();
+  const aiUsage = useAiSessionUsage();
 
   const lastAssistantMsg = [...data.messages].reverse().find((m) => m.role === "assistant");
 
@@ -122,7 +127,18 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
     return `${base}\n\nConteúdo: "${content.title}"${content.aiSummary ? `\n\nResumo: ${content.aiSummary}` : ""}${studentCtx}`;
   };
 
-  const handleSelectMode = (mode: Mode) => {
+  const handleSelectMode = async (mode: Mode) => {
+    // Check and increment server-side usage before starting the session
+    try {
+      await startAiSession.mutateAsync();
+    } catch (err: unknown) {
+      const e = err as { code?: string };
+      if (e?.code === "FREE_DAILY_LIMIT_REACHED" || (err as { status?: number })?.status === 429) {
+        setUpgradeOpen(true);
+        return;
+      }
+      // On unexpected errors, allow the session (fail open — backend is the enforcer)
+    }
     setActiveMode(mode);
     if (mode.id !== "ask") {
       sendMessage({
@@ -219,6 +235,21 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
   if (!activeMode) {
     return wrapper(
       <div className={cn("p-4", inline ? "" : "flex-1 overflow-y-auto")}>
+        {/* AI session usage indicator for Free users */}
+        {!aiUsage.isLoading && !aiUsage.unlimited && (
+          <div className={cn(
+            "flex items-center gap-2 rounded-lg px-3 py-2 mb-3 text-xs",
+            aiUsage.remaining === 0
+              ? "bg-destructive/10 border border-destructive/20 text-destructive"
+              : "bg-muted text-muted-foreground"
+          )}>
+            <Sparkles className="h-3.5 w-3.5 shrink-0" />
+            {aiUsage.remaining === 0
+              ? "Daily limit reached — upgrade for unlimited sessions"
+              : `${aiUsage.remaining} of ${aiUsage.limit} free AI sessions remaining today`
+            }
+          </div>
+        )}
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
           {t("ai-mode-picker-label" as any)}
         </p>
@@ -233,10 +264,12 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
             return (
               <button
                 key={mode.id}
-                onClick={() => handleSelectMode(mode)}
+                onClick={() => void handleSelectMode(mode)}
+                disabled={startAiSession.isPending}
                 className={cn(
                   "flex items-center gap-3 p-3 rounded-xl border border-border bg-background",
                   "hover:border-primary/40 hover:bg-accent transition-all text-left group",
+                  "disabled:opacity-50 disabled:cursor-not-allowed",
                   inline && "flex-col items-center text-center gap-2 p-4"
                 )}
               >
@@ -259,6 +292,11 @@ export const AiStudyAssistant = ({ content, inline = false, onClose }: AiStudyAs
             );
           })}
         </div>
+        <UpgradeModal
+          open={upgradeOpen}
+          onClose={() => setUpgradeOpen(false)}
+          feature="aiStudySessions"
+        />
       </div>
     );
   }

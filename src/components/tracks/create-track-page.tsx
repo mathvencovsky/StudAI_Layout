@@ -43,7 +43,7 @@ export function CreateTrackPage() {
   const totalSteps = 6;
 
   const { data: preference } = useMyLearningPreference();
-  const [{ data: aiData, isLoading: aiLoading }, sendAiMessage] = useAIConversation("Chat");
+  const [{ data: aiData, isLoading: _aiLoading }, sendAiMessage] = useAIConversation("Chat");
 
   const [formData, setFormData] = useState<QuestionnaireData>({
     topic: "",

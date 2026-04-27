@@ -32,7 +32,6 @@ export function ComparisonSlider({
   const percentage = ((value - min) / (max - min)) * 100;
   const isLeftSide = percentage < 50;
   const isRightSide = percentage > 50;
-  const isCenter = percentage === 50;
 
   return (
     <div className={cn('space-y-4', className)}>

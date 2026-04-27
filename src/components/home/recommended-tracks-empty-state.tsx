@@ -61,19 +61,22 @@ export const RecommendedTracksEmptyState = ({
                 <p className="text-xs text-muted-foreground">
                   {track.description}
                 </p>
-                {track.categories && track.categories.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {track.categories.map((category) => (
-                      <Badge
-                        key={category}
-                        variant="secondary"
-                        className="text-xs"
-                      >
-                        {t(toI18nKey("track-category", category))}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+                {(() => {
+                  const trackWithCats = track as typeof track & { categories?: (string | null)[] };
+                  return trackWithCats.categories && trackWithCats.categories.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {trackWithCats.categories.map((category) => (
+                        <Badge
+                          key={category}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {(t as (k: string) => string)(toI18nKey("track-category", category as string))}
+                        </Badge>
+                      ))}
+                    </div>
+                  );
+                })()}
               </CardContent>
             </Card>
           ))}

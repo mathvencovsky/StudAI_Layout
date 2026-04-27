@@ -19,6 +19,10 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Amplify
+# Amplify — generated at deploy time, never commit
+amplify_outputs.json
 amplify_outputs*
 .amplify/
+
+# IDE artifacts
+src/components/settings/lsp.json

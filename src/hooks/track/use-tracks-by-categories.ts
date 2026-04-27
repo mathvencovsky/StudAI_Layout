@@ -11,10 +11,11 @@ export const useTracksByCategories = (categories: Category[] | undefined) =>
     ...getTracksQueryOptions(),
     select: (tracks) => {
       if (!categories?.length) return tracks;
-      return tracks.filter((track) =>
-        track.categories?.some(
-          (category) => category !== null && categories.includes(category),
-        ),
-      );
+      return tracks.filter((track) => {
+        const t = track as typeof track & { categories?: (string | null)[] };
+        return t.categories?.some(
+          (category) => category !== null && categories.includes(category as Category),
+        );
+      });
     },
   });

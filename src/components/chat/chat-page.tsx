@@ -10,9 +10,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { markdownConfig } from "@/lib/markdown-config";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/hooks/use-auth";
 import { useMyLearningPreference } from "@/hooks/learning-preference/use-my-learning-preference";
-import { useTranslation as useT } from "react-i18next";
 import { INTEREST_TRANSLATION_KEYS } from "@/components/learning-preferences/constants";
 
 const client = generateClient<Schema>({ authMode: "userPool" });
@@ -103,7 +101,6 @@ function TypingIndicator() {
 
 export const ChatPage = () => {
   const { t } = useTranslation();
-  const { user } = useAuth();
   const { data: preference } = useMyLearningPreference();
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -121,7 +118,7 @@ export const ChatPage = () => {
     if (preference.experienceLevel) parts.push(`- Nível: ${preference.experienceLevel}`);
     if (preference.interests?.length) {
       const labels = preference.interests
-        .map((i) => t(INTEREST_TRANSLATION_KEYS[i as keyof typeof INTEREST_TRANSLATION_KEYS] ?? i))
+        .map((i: string) => t(INTEREST_TRANSLATION_KEYS[i as keyof typeof INTEREST_TRANSLATION_KEYS] ?? i))
         .join(", ");
       parts.push(`- Interesses: ${labels}`);
     }
@@ -130,12 +127,6 @@ export const ChatPage = () => {
     return parts.length > 1 ? parts.join("\n") : "";
   }, [preference, t]);
 
-  const initials = (user?.displayName ?? "U")
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
 
   const handleSend = useCallback((text?: string) => {
     const msg = text ?? input;

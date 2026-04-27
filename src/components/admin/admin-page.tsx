@@ -8,11 +8,15 @@ import {
   BookOpen, 
   BarChart3,
   Database,
-  AlertTriangle
+  AlertTriangle,
+  TrendingUp,
+  Zap,
+  CreditCard,
 } from "lucide-react";
 import { useAdminUsers } from "@/hooks/admin/use-admin-users";
 import { useFeatureToggles, useUpdateFeatureToggle } from "@/hooks/admin/use-feature-toggles";
 import { useCatalogResources } from "@/hooks/admin/use-catalog-resources";
+import { useAdminMetrics } from "@/hooks/admin/use-admin-metrics";
 import { LoadingState } from "@/components/ui/loading-state";
 import { ErrorState } from "@/components/ui/error-state";
 import { useTranslation } from "react-i18next";
@@ -22,6 +26,7 @@ export function AdminPage() {
   const { data: usersData, isLoading: usersLoading, error: usersError, refetch: refetchUsers } = useAdminUsers();
   const { data: features, isLoading: featuresLoading, error: featuresError, refetch: refetchFeatures } = useFeatureToggles();
   const { data: catalog, isLoading: catalogLoading, error: catalogError, refetch: refetchCatalog } = useCatalogResources();
+  const { data: metrics, isLoading: metricsLoading, error: metricsError, refetch: refetchMetrics } = useAdminMetrics();
   const updateFeature = useUpdateFeatureToggle();
 
   const handleToggleFeature = async (id: string, enabled: boolean) => {
@@ -137,6 +142,7 @@ export function AdminPage() {
           <TabsTrigger value="users">{t("pages-admin-users")}</TabsTrigger>
           <TabsTrigger value="features">{t("pages-admin-features")}</TabsTrigger>
           <TabsTrigger value="catalog">{t("pages-admin-catalog")}</TabsTrigger>
+          <TabsTrigger value="metrics">Metrics</TabsTrigger>
           <TabsTrigger value="system">Sistema</TabsTrigger>
         </TabsList>
 
@@ -254,6 +260,77 @@ export function AdminPage() {
           </Card>
         </TabsContent>
 
+        <TabsContent value="metrics" className="mt-6 space-y-4">
+          {metricsLoading && <LoadingState />}
+          {metricsError && <ErrorState error={metricsError} onRetry={refetchMetrics} />}
+          {metrics && (
+            <>
+              <p className="text-xs text-muted-foreground">
+                Generated at {new Date(metrics.generatedAt).toLocaleString()} · 7-day window unless noted
+              </p>
+
+              {/* Feature Usage */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <Zap className="h-4 w-4 text-primary" />
+                    Feature Usage
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 rounded-lg border bg-card">
+                      <p className="text-2xl font-bold">{metrics.featureUsage.aiSessionsToday}</p>
+                      <p className="text-xs text-muted-foreground">AI sessions today</p>
+                    </div>
+                    <div className="p-3 rounded-lg border bg-card">
+                      <p className="text-2xl font-bold">{metrics.featureUsage.aiSessionsThisWeek}</p>
+                      <p className="text-xs text-muted-foreground">AI sessions this week</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Conversion */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <TrendingUp className="h-4 w-4 text-green-500" />
+                    Conversion (7 days)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <MetricCell label="Checkouts started" value={metrics.conversion.checkoutsStartedThisWeek} />
+                    <MetricCell label="Checkouts completed" value={metrics.conversion.checkoutsCompletedThisWeek} />
+                    <MetricCell label="Checkout CVR" value={`${metrics.conversion.checkoutConversionRatePct}%`} highlight />
+                    <MetricCell label="Upgrade prompts shown" value={metrics.conversion.upgradePromptsViewedThisWeek} />
+                    <MetricCell label="Upgrade prompt clicks" value={metrics.conversion.upgradePromptsClickedThisWeek} />
+                    <MetricCell label="Prompt CTR" value={`${metrics.conversion.upgradeClickThroughRatePct}%`} highlight />
+                    <MetricCell label="Free limit reached" value={metrics.conversion.freeLimitReachedThisWeek} />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Subscription Health */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <CreditCard className="h-4 w-4 text-blue-500" />
+                    Subscription Health (30 days)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <MetricCell label="Cancellations" value={metrics.subscriptionHealth.cancellationsThisMonth} />
+                    <MetricCell label="Payment failures" value={metrics.subscriptionHealth.paymentFailuresThisMonth} />
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
+        </TabsContent>
+
         <TabsContent value="system" className="mt-6">
           <Card>
             <CardHeader>
@@ -290,6 +367,15 @@ export function AdminPage() {
           </Card>
         </TabsContent>
       </Tabs>
+    </div>
+  );
+}
+
+function MetricCell({ label, value, highlight }: { label: string; value: number | string; highlight?: boolean }) {
+  return (
+    <div className="p-3 rounded-lg border bg-card">
+      <p className={`text-2xl font-bold ${highlight ? "text-primary" : ""}`}>{value}</p>
+      <p className="text-xs text-muted-foreground">{label}</p>
     </div>
   );
 }
